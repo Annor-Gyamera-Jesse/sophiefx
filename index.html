@@ -2135,10 +2135,13 @@ const CONFIG = Object.freeze({
   VERIFY_ENDPOINT: null, // Optional server endpoint for transaction verification
 
   // ── EMAILJS — paste your three values here ───────────────
+  // Get them from https://dashboard.emailjs.com:
+  //   Public Key  → Account → General
+  //   Service ID  → Email Services → your Gmail service
+  //   Template ID → Email Templates → your template
   EMAILJS_PUBLIC_KEY:   'kaAcwVVVxd-gVw1vU',
   EMAILJS_SERVICE_ID:   'service_gx05yel',
-  EMAILJS_TEMPLATE_ID:  'template_1a9pekg',
-
+  EMAILJS_TEMPLATE_ID:  'template_c6vxg9o',
 
   // ── DESTINATIONS ─────────────────────────────────────────
   SOPHIE_EMAIL:    'andersonwalker509@gmail.com',
@@ -2670,59 +2673,90 @@ const App = (() => {
     }
 
     const tierName = state.tier === 'onsite' ? 'Face-to-Face Mentorship' : 'Online Mentorship';
+    const amount   = 'GH₵ ' + fmt(state.ghs);
+    const a        = state.applicant;
+    const waClean  = (a.whatsapp || a.phone || '').replace(/\D/g, '');
+    const firstName= (a.name || 'there').split(' ')[0];
 
-    const common = {
-      booking_ref:           state.bookingRef,
-      client_name:           state.applicant.name,
-      client_email:          state.applicant.email,
-      client_phone:          state.applicant.phone,
-      client_whatsapp:       state.applicant.whatsapp || state.applicant.phone,
-      client_whatsapp_clean: (state.applicant.whatsapp || state.applicant.phone || '').replace(/\D/g, ''),
-      client_country:        state.applicant.country,
-      tier:                  tierName,
-      amount_ghs:            'GH₵ ' + fmt(state.ghs),
-      amount_usd:            '$' + state.usd,
-      payment_method:        payment.method,
-      payment_ref:           payment.reference,
-      status:                payment.status,
-      experience:            state.applicant.experience || '—',
-      start_date:            state.applicant.startDate || '—',
-      source:                state.applicant.source || '—',
-      message:               state.applicant.message || '',
+    // ─────────────────────────────────────────────────────────
+    // Email 1 → Mentee confirmation
+    // Build the universal-template fields for this audience
+    // ─────────────────────────────────────────────────────────
+    const menteePayload = {
+      to_email:       a.email,
+      reply_to:       CONFIG.SOPHIE_EMAIL,
+      subject:        `Welcome to Sophie FX — Booking ${state.bookingRef}`,
+
+      headline:       `Welcome aboard, ${firstName}.`,
+      tagline:        'SOPHIE FX · BOOKING CONFIRMED',
+      intro_line_1:   `Hi ${a.name},`,
+      intro_line_2:   `Your booking is confirmed and your seat in the next cohort is reserved. I've been notified directly and will reach out within 24 hours to schedule your first session.`,
+      callout:        '"The market will pay you what you are. Mentorship is the shortest path to becoming what you need to be."',
+
+      details_title:  'Your booking',
+      row_1_label:    'Reference',     row_1_value: state.bookingRef,
+      row_2_label:    'Tier',          row_2_value: tierName,
+      row_3_label:    'Amount',        row_3_value: `${amount} (≈ $${state.usd})`,
+      row_4_label:    'Payment',       row_4_value: payment.method,
+      row_5_label:    'Transaction',   row_5_value: payment.reference,
+      row_6_label:    'Status',        row_6_value: payment.status,
+      row_7_label:    '',              row_7_value: '',
+      row_8_label:    '',              row_8_value: '',
+
+      message_title:  'What happens next',
+      message_body:   `1. Sophie reviews your application within 24 hours.\n2. You'll receive a WhatsApp message to schedule your first session.\n3. Bring a notebook to the first session — we'll audit your trading journal together.`,
+
+      closing_line:   'If you have questions before then, just reply to this email or message Sophie on WhatsApp:',
+      cta_text:       'Message Sophie on WhatsApp',
+      cta_url:        `https://wa.me/${CONFIG.SOPHIE_WHATSAPP}`,
+      signoff:        '— Sophie',
     };
 
-    // Email 1 → Mentee confirmation
     try {
-      await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, {
-        ...common,
-        is_booking_client: 'true',
-        is_booking_sophie: '',
-        is_contact:        '',
-        is_pending:        '',
-        has_message:       '',
-        to_email: state.applicant.email,
-        reply_to: CONFIG.SOPHIE_EMAIL,
-        subject:  `Welcome to Sophie FX — Booking ${state.bookingRef}`,
-      });
+      await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, menteePayload);
       result.email = true;
-      console.log('[notify] ✓ confirmation sent to', state.applicant.email);
+      console.log('[notify] ✓ confirmation sent to', a.email);
     } catch (err) {
       console.error('[notify] ✗ client email failed:', err?.text || err?.message || err);
     }
 
-    // Email 2 → Sophie notification
+    // ─────────────────────────────────────────────────────────
+    // Email 2 → Sophie's admin notification
+    // ─────────────────────────────────────────────────────────
+    const sophiePayload = {
+      to_email:       CONFIG.SOPHIE_EMAIL,
+      reply_to:       a.email,
+      subject:        `🎉 New booking: ${a.name} — ${amount}`,
+
+      headline:       'New booking received',
+      tagline:        'SOPHIE FX · ADMIN NOTIFICATION',
+      intro_line_1:   `${a.name} just booked the ${tierName} tier.`,
+      intro_line_2:   payment.status === 'pending_verification'
+                        ? '⚠️ Payment is pending verification — confirm in your Paystack dashboard before contacting the mentee.'
+                        : '',
+      callout:        '',
+
+      details_title:  'Mentee & payment',
+      row_1_label:    'Name',          row_1_value: a.name,
+      row_2_label:    'Email',         row_2_value: a.email,
+      row_3_label:    'Phone',         row_3_value: a.phone,
+      row_4_label:    'Amount',        row_4_value: `${amount} (≈ $${state.usd})`,
+      row_5_label:    'Tier',          row_5_value: tierName,
+      row_6_label:    'Country',       row_6_value: a.country,
+      row_7_label:    'Booking ref',   row_7_value: state.bookingRef,
+      row_8_label:    'Status',        row_8_value: payment.status,
+
+      message_title:  'Why they booked',
+      message_body:   a.message || '(no message provided)',
+
+      closing_line:   `Experience: ${a.experience || '—'} · Heard via: ${a.source || '—'} · Preferred start: ${a.startDate || '—'}`,
+      cta_text:       `Reply to ${firstName}`,
+      cta_url:        `mailto:${a.email}`,
+      signoff:        '',
+    };
+
     try {
-      await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, {
-        ...common,
-        is_booking_client: '',
-        is_booking_sophie: 'true',
-        is_contact:        '',
-        is_pending:        (payment.status === 'pending_verification') ? 'true' : '',
-        has_message:       (state.applicant.message && state.applicant.message.length > 0) ? 'true' : '',
-        to_email: CONFIG.SOPHIE_EMAIL,
-        reply_to: state.applicant.email,
-        subject:  `🎉 New booking: ${state.applicant.name} — ${common.amount_ghs}`,
-      });
+      await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, sophiePayload);
       result.sophie = true;
       console.log('[notify] ✓ admin notification sent to', CONFIG.SOPHIE_EMAIL);
     } catch (err) {
@@ -2794,16 +2828,33 @@ const App = (() => {
 
     try {
       await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, {
-        is_booking_client: '',
-        is_booking_sophie: '',
-        is_contact:        'true',
-        to_email:        CONFIG.SOPHIE_EMAIL,
-        reply_to:        email,
-        subject:         `📬 New contact message from ${name}`,
-        from_name:       name,
-        from_email:      email,
-        contact_subject: subject,
-        message:         message,
+        to_email:       CONFIG.SOPHIE_EMAIL,
+        reply_to:       email,
+        subject:        `📬 New contact message from ${name}`,
+
+        headline:       'New contact message',
+        tagline:        'SOPHIE FX · WEBSITE ENQUIRY',
+        intro_line_1:   `You received a new message via the website contact form from ${name}.`,
+        intro_line_2:   '',
+        callout:        '',
+
+        details_title:  'Sender details',
+        row_1_label:    'Name',     row_1_value: name,
+        row_2_label:    'Email',    row_2_value: email,
+        row_3_label:    'Subject',  row_3_value: subject,
+        row_4_label:    '',         row_4_value: '',
+        row_5_label:    '',         row_5_value: '',
+        row_6_label:    '',         row_6_value: '',
+        row_7_label:    '',         row_7_value: '',
+        row_8_label:    '',         row_8_value: '',
+
+        message_title:  'Their message',
+        message_body:   message,
+
+        closing_line:   '',
+        cta_text:       `Reply to ${name}`,
+        cta_url:        `mailto:${email}`,
+        signoff:        '',
       });
       toast('Message sent. Sophie will reply within 24 hours.', 'success');
       console.log('[contact] ✓ sent');
