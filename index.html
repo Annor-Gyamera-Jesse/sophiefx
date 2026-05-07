@@ -2109,60 +2109,33 @@ footer{
   </p>
 </footer>
 
-<!-- ============================================== -->
-<!-- ===========       JAVASCRIPT       =========== -->
-<!-- ============================================== -->
 <script>
 'use strict';
 
-/* ============================================================
- * CONFIGURATION
- * ============================================================
- * Three EmailJS values you need to fill in below. Get them from
- * https://dashboard.emailjs.com:
- *   1. Public Key  → Account → General
- *   2. Service ID  → Email Services → your Gmail service
- *   3. Template ID → Email Templates → your "Sophie FX — Universal" template
- *
- * Until you fill these in, the site runs in DEMO mode (no emails).
- * The console will print a yellow warning so you'll know.
- * ============================================================ */
 const CONFIG = Object.freeze({
-  // ── PAYSTACK ─────────────────────────────────────────────
-  // Must start with pk_ (public). Never paste sk_ keys here — they're secret.
   PAYSTACK_PUBLIC_KEY: 'pk_live_2f1640fbe9f3e67bf60aa009e1ee7ba0e9696249',
   CURRENCY: 'GHS',
-  VERIFY_ENDPOINT: null, // Optional server endpoint for transaction verification
+  VERIFY_ENDPOINT: null,
 
-  // ── EMAILJS — paste your three values here ───────────────
-  // Get them from https://dashboard.emailjs.com:
-  //   Public Key  → Account → General
-  //   Service ID  → Email Services → your Gmail service
-  //   Template ID → Email Templates → your template
   EMAILJS_PUBLIC_KEY:   'kaAcwVVVxd-gVw1vU',
   EMAILJS_SERVICE_ID:   'service_gx05yel',
   EMAILJS_TEMPLATE_ID:  'template_c6vxg9o',
 
-  // ── DESTINATIONS ─────────────────────────────────────────
   SOPHIE_EMAIL:    'andersonwalker509@gmail.com',
   SOPHIE_WHATSAPP: '233503254226',
   USD_GHS_RATE:    15.0,
 });
 
-/* ============================================================
- * INITIALISE EMAILJS ONCE on page load.
- * Logs clearly to the console so you know if your keys are working.
- * ============================================================ */
 (function initEmailJS(){
   const configured = CONFIG.EMAILJS_PUBLIC_KEY &&
                      !CONFIG.EMAILJS_PUBLIC_KEY.includes('REPLACE');
   if(!configured){
-    console.warn('%c[EmailJS] NOT CONFIGURED — emails will not send. Edit CONFIG.EMAILJS_PUBLIC_KEY in index.html.',
+    console.warn('%c[EmailJS] NOT CONFIGURED — emails will not send.',
       'color:#e07060;font-weight:bold;font-size:12px;');
     return;
   }
   if(typeof emailjs === 'undefined'){
-    console.error('[EmailJS] SDK failed to load — check the <script> tag in <head>');
+    console.error('[EmailJS] SDK failed to load');
     return;
   }
   try {
@@ -2173,18 +2146,12 @@ const CONFIG = Object.freeze({
   }
 })();
 
-/* ============================================================
- * GHANA MOBILE MONEY DATA
- * ============================================================ */
 const MOMO_PROVIDERS = {
   mtn: { name: 'MTN MoMo',         paystackProvider: 'mtn', prefixes: ['024','054','055','059','025','053'], color: '#ffcb05' },
   vod: { name: 'Telecel Cash',     paystackProvider: 'vod', prefixes: ['020','050'],                          color: '#e60000' },
   atl: { name: 'AirtelTigo Money', paystackProvider: 'atl', prefixes: ['026','027','056','057'],              color: '#0072ce' },
 };
 
-/* ============================================================
- * APP MODULE
- * ============================================================ */
 const App = (() => {
 
   const state = {
@@ -2380,6 +2347,12 @@ const App = (() => {
     return true;
   }
 
+  function normaliseGhanaPhone(raw){
+    let n = (raw || '').replace(/\D/g, '');
+    if(n.startsWith('233')) n = '0' + n.slice(3);
+    return n;
+  }
+
   function copy(text, btn){
     navigator.clipboard.writeText(text).then(() => {
       btn.classList.add('copied');
@@ -2458,16 +2431,36 @@ const App = (() => {
     };
     const channels = channelMap[state.method] || ['card'];
 
+    // ── Pre-compute the normalised MoMo phone once ──────────
+    const normPhone = (state.method === 'mobile_money' && state.momoPhone)
+      ? normaliseGhanaPhone(state.momoPhone)
+      : '';
+
     try {
+      // ── Build the full txConfig in one place ────────────────
+      // phone_number at the top level → Paystack v2 pre-fills
+      //   the phone field in the MoMo dialog automatically.
+      // mobile_money.provider → pre-selects the network so the
+      //   user never has to pick it again in the dialog.
       const txConfig = {
-        key:       CONFIG.PAYSTACK_PUBLIC_KEY,
-        email:     state.applicant.email,
-        amount:    state.ghs * 100,
-        currency:  CONFIG.CURRENCY,
-        ref:       state.bookingRef,
-        channels:  channels,
-        firstname: state.applicant.name.split(' ')[0] || '',
-        lastname:  state.applicant.name.split(' ').slice(1).join(' ') || '',
+        key:          CONFIG.PAYSTACK_PUBLIC_KEY,
+        email:        state.applicant.email,
+        amount:       state.ghs * 100,
+        currency:     CONFIG.CURRENCY,
+        ref:          state.bookingRef,
+        channels:     channels,
+        phone_number: normPhone || undefined,
+        firstname:    state.applicant.name.split(' ')[0] || '',
+        lastname:     state.applicant.name.split(' ').slice(1).join(' ') || '',
+
+        // Pre-select network + pre-fill number inside the MoMo dialog
+        ...(state.method === 'mobile_money' && state.momoProvider && normPhone ? {
+          mobile_money: {
+            phone:    normPhone,
+            provider: MOMO_PROVIDERS[state.momoProvider].paystackProvider,
+          }
+        } : {}),
+
         metadata: {
           booking_ref: state.bookingRef,
           tier:        state.tier,
@@ -2483,7 +2476,9 @@ const App = (() => {
             { display_name: 'Start Date',  variable_name: 'start_date',  value: state.applicant.startDate || 'n/a' },
           ]
         },
+
         onLoad: (response) => { console.log('[paystack] loaded', response); hideStatus(); },
+
         onSuccess: async (transaction) => {
           console.log('[paystack] frontend success', transaction);
           showStatus('processing', 'Verifying transaction…', 'Confirming with Paystack.');
@@ -2496,11 +2491,13 @@ const App = (() => {
             verified: verified.ok,
           });
         },
+
         onCancel: () => {
           showStatus('error', 'Payment cancelled', "No charge was made. Try again any time.");
           toast('Payment cancelled.', 'error');
           resetPayButton();
         },
+
         onError: (error) => {
           console.error('[paystack] error', error);
           showStatus('error', 'Payment error', error?.message || 'Something went wrong.');
@@ -2509,15 +2506,9 @@ const App = (() => {
         }
       };
 
-      if(state.method === 'mobile_money' && state.momoProvider){
-        txConfig.mobile_money = {
-          phone:    normaliseGhanaPhone(state.momoPhone),
-          provider: MOMO_PROVIDERS[state.momoProvider].paystackProvider,
-        };
-      }
-
       state.paystack = new PaystackPop();
       state.paystack.newTransaction(txConfig);
+
     } catch (err) {
       console.error('[paystack] setup failed', err);
       showStatus('error', 'Could not start payment', err?.message || 'An unexpected error occurred.');
@@ -2533,12 +2524,6 @@ const App = (() => {
                 state.method === 'bank' ? 'Bank Transfer' :
                 state.method === 'ussd' ? 'USSD' : 'Manual';
     return state.method === 'manual' ? tag : 'Paystack — ' + tag;
-  }
-
-  function normaliseGhanaPhone(raw){
-    let n = (raw || '').replace(/\D/g, '');
-    if(n.startsWith('233')) n = '0' + n.slice(3);
-    return n;
   }
 
   function resetPayButton(){
@@ -2591,7 +2576,7 @@ const App = (() => {
   }
 
   /* ============================================================
-   * FINALIZE BOOKING — show success modal & fire emails
+   * FINALIZE BOOKING
    * ============================================================ */
   async function finalizeBooking(payment){
     hideStatus();
@@ -2656,12 +2641,7 @@ const App = (() => {
   }
 
   /* ============================================================
-   * NOTIFICATIONS — sends TWO emails per booking via EmailJS:
-   *   1. Confirmation to the mentee
-   *   2. Notification to Sophie
-   * Both use the same template, distinguished by truthy flags
-   * (is_booking_client / is_booking_sophie). EmailJS uses Mustache
-   * syntax: {{#var}}...{{/var}} renders the block when var is truthy.
+   * NOTIFICATIONS
    * ============================================================ */
   async function sendNotifications(payment){
     const result = { email: false, sophie: false };
@@ -2675,13 +2655,8 @@ const App = (() => {
     const tierName = state.tier === 'onsite' ? 'Face-to-Face Mentorship' : 'Online Mentorship';
     const amount   = 'GH₵ ' + fmt(state.ghs);
     const a        = state.applicant;
-    const waClean  = (a.whatsapp || a.phone || '').replace(/\D/g, '');
     const firstName= (a.name || 'there').split(' ')[0];
 
-    // ─────────────────────────────────────────────────────────
-    // Email 1 → Mentee confirmation
-    // Build the universal-template fields for this audience
-    // ─────────────────────────────────────────────────────────
     const menteePayload = {
       to_email:       a.email,
       reply_to:       CONFIG.SOPHIE_EMAIL,
@@ -2720,9 +2695,6 @@ const App = (() => {
       console.error('[notify] ✗ client email failed:', err?.text || err?.message || err);
     }
 
-    // ─────────────────────────────────────────────────────────
-    // Email 2 → Sophie's admin notification
-    // ─────────────────────────────────────────────────────────
     const sophiePayload = {
       to_email:       CONFIG.SOPHIE_EMAIL,
       reply_to:       a.email,
@@ -2815,7 +2787,6 @@ const App = (() => {
     const configured = !CONFIG.EMAILJS_PUBLIC_KEY.includes('REPLACE');
     if(!configured || typeof emailjs === 'undefined'){
       toast('Email is not configured. Please write to ' + CONFIG.SOPHIE_EMAIL + ' directly.', 'error');
-      console.warn('[contact] EmailJS not configured');
       return;
     }
 
@@ -2857,8 +2828,6 @@ const App = (() => {
         signoff:        '',
       });
       toast('Message sent. Sophie will reply within 24 hours.', 'success');
-      console.log('[contact] ✓ sent');
-
       $('c-name').value = '';
       $('c-email').value = '';
       $('c-message').value = '';
@@ -2943,5 +2912,38 @@ console.log('%c Sophie — Forex Mentorship ', 'background:#e0b35a;color:#0a0907
 console.log('%c Paystack InlineJS v2 · GHS · 2026 ', 'color:#e0b35a;font-family:monospace;');
 </script>
 
+<script>
+/* SophieFX Monitor — logs to localStorage → open admin.html to see */
+(function SophieFXMonitor(){
+  'use strict';
+  const KEY='sophiefx_log',MAX=500;
+  function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+  function save(evt){try{let l=[];try{l=JSON.parse(localStorage.getItem(KEY)||'[]');}catch(_){}l.push(evt);if(l.length>MAX)l=l.slice(-MAX);localStorage.setItem(KEY,JSON.stringify(l));}catch(e){}}
+  function log(level,tag,msg,extra){const evt={id:uid(),ts:Date.now(),level,tag,msg:String(msg),...extra};save(evt);return evt;}
+  const _log=console.log.bind(console),_warn=console.warn.bind(console),_error=console.error.bind(console);
+  console.log=function(...args){_log(...args);const msg=args.map(a=>typeof a==='object'?JSON.stringify(a):String(a)).join(' ');const tag=extractTag(msg);log(msg.includes('✓')||msg.includes('success')||msg.includes('Initialised')?'success':'info',tag,msg,{data:args.length>1?args:null});};
+  console.warn=function(...args){_warn(...args);const msg=args[0]&&typeof args[0]==='string'?args[0].replace(/%c/g,'').replace(/[^\x20-\x7E]/g,'').trim():args.map(a=>String(a)).join(' ');log('warn',extractTag(msg),msg,{data:args.length>1?args.slice(1):null});};
+  console.error=function(...args){_error(...args);const msg=args.map(a=>a instanceof Error?a.message:typeof a==='object'?JSON.stringify(a):String(a)).join(' ');const stack=args.find(a=>a instanceof Error)?.stack||null;log('error',extractTag(msg),msg,{data:args.length>1?args:null,stack});};
+  function extractTag(msg){const m=msg.match(/\[([a-z_]+)\]/i);return m?m[1].toLowerCase():'general';}
+  const _fetch=window.fetch.bind(window);
+  window.fetch=async function(url,opts){const t0=Date.now();const tag=url.includes('verify')?'verify':url.includes('paystack')?'paystack':'network';log('info',tag,`→ FETCH ${opts?.method||'GET'} ${url}`,{data:{url,body:safeBody(opts?.body)}});try{const res=await _fetch(url,opts);const dur=Date.now()-t0;const cl=res.clone();let body=null;try{body=await cl.json();}catch(_){}log(res.ok?'success':'error',tag,`← ${res.status} ${url} (${dur}ms)`,{data:body,duration:dur});return res;}catch(err){log('error',tag,`✗ FETCH failed: ${url} — ${err.message}`,{stack:err.stack,duration:Date.now()-t0});throw err;}};
+  function patchPaystack(){if(typeof PaystackPop==='undefined')return;const _o=PaystackPop.prototype.newTransaction;PaystackPop.prototype.newTransaction=function(cfg){const ref=cfg.ref||cfg.reference,amnt=((cfg.amount||0)/100).toFixed(2);log('payment','paystack',`Payment initiated — GH₵${amnt} ref:${ref}`,{ref,amount:amnt,email:cfg.email,data:{ref,amount:cfg.amount,currency:cfg.currency,channels:cfg.channels,email:cfg.email,tier:cfg.metadata?.tier,booking_ref:cfg.metadata?.booking_ref}});const _s=cfg.onSuccess,_c=cfg.onCancel,_e=cfg.onError,_l=cfg.onLoad;cfg.onSuccess=function(tx){log('success','paystack',`Payment success — ref:${tx.reference} status:${tx.status}`,{ref:tx.reference,amount:amnt,data:tx});if(_s)_s(tx);};cfg.onCancel=function(){log('warn','paystack',`Payment cancelled — ref:${ref}`,{ref,amount:amnt});if(_c)_c();};cfg.onError=function(err){log('error','paystack',`Payment error — ${err?.message||JSON.stringify(err)}`,{ref,amount:amnt,data:err,stack:err?.stack});if(_e)_e(err);};cfg.onLoad=function(res){log('info','paystack',`Paystack popup loaded — ref:${ref}`,{ref,data:res});if(_l)_l(res);};return _o.call(this,cfg);};}
+  let psA=0;const psT=setInterval(()=>{if(typeof PaystackPop!=='undefined'){patchPaystack();clearInterval(psT);return;}if(++psA>20)clearInterval(psT);},500);
+  function patchEmailJS(){if(typeof emailjs==='undefined')return;const _s=emailjs.send.bind(emailjs);emailjs.send=async function(sId,tId,p){log('info','emailjs',`EmailJS send — to:${p?.to_email} subject:${p?.subject?.slice(0,40)||''}`,{email:p?.to_email,data:{sId,tId,to:p?.to_email,subject:p?.subject}});try{const r=await _s(sId,tId,p);log('success','emailjs',`EmailJS sent ✓ — to:${p?.to_email} status:${r?.status}`,{email:p?.to_email,data:r});return r;}catch(err){log('error','emailjs',`EmailJS failed ✗ — to:${p?.to_email} — ${err?.text||err?.message||err}`,{email:p?.to_email,data:err,stack:err?.stack});throw err;}};}
+  let ejA=0;const ejT=setInterval(()=>{if(typeof emailjs!=='undefined'){patchEmailJS();clearInterval(ejT);return;}if(++ejA>20)clearInterval(ejT);},500);
+  window.addEventListener('error',(e)=>{log('error','general',`JS Error: ${e.message} (${e.filename}:${e.lineno})`,{data:{message:e.message,filename:e.filename,lineno:e.lineno,colno:e.colno},stack:e.error?.stack});});
+  window.addEventListener('unhandledrejection',(e)=>{const r=e.reason;log('error','general',`Unhandled rejection: ${r instanceof Error?r.message:JSON.stringify(r)}`,{data:r,stack:r?.stack});});
+  document.addEventListener('DOMContentLoaded',()=>{
+    document.querySelectorAll('[onclick*="App.go"]').forEach(el=>{el.addEventListener('click',()=>{const m=el.getAttribute('onclick')?.match(/App\.go\(['"](\w+)['"]\)/);if(m)log('info','nav','Navigated to: '+m[1]);});});
+    document.querySelectorAll('.tier').forEach(el=>{el.addEventListener('click',()=>{log('info','form',`Tier selected: ${el.dataset.tier} — GH₵${el.dataset.ghs}`);});});
+    document.querySelectorAll('.payment-method').forEach(el=>{el.addEventListener('click',()=>{log('info','form','Payment method selected: '+el.dataset.method);});});
+    document.querySelectorAll('.momo-option').forEach(el=>{el.addEventListener('click',()=>{log('info','form','MoMo network selected: '+el.dataset.provider);});});
+  });
+  function safeBody(b){if(!b)return null;try{return JSON.parse(b);}catch(_){return String(b).slice(0,200);}}
+  log('info','general','SophieFX Monitor initialised ✓',{data:{userAgent:navigator.userAgent,url:location.href,time:new Date().toISOString()}});
+})();
+</script>
+
+</body>
 </body>
 </html>
