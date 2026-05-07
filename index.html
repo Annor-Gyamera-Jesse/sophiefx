@@ -2916,7 +2916,7 @@ console.log('%c Paystack InlineJS v2 · GHS · 2026 ', 'color:#e0b35a;font-famil
 /* SophieFX Monitor — logs to localStorage → open admin.html to see */
 (function SophieFXMonitor(){
   'use strict';
-  const KEY='sophiefx_log',MAX=500;
+  const KEY='sophiefx_log',MAX=100000;
   function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
   function save(evt){try{let l=[];try{l=JSON.parse(localStorage.getItem(KEY)||'[]');}catch(_){}l.push(evt);if(l.length>MAX)l=l.slice(-MAX);localStorage.setItem(KEY,JSON.stringify(l));}catch(e){}}
   function log(level,tag,msg,extra){const evt={id:uid(),ts:Date.now(),level,tag,msg:String(msg),...extra};save(evt);return evt;}
