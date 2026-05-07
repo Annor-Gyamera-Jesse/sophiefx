@@ -17,34 +17,26 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- ================================================================== -->
-<!-- PAYSTACK INLINE JS v2 — CURRENT PRODUCTION SDK                      -->
-<!-- Docs: https://paystack.com/docs/developer-tools/inlinejs/           -->
-<!-- ================================================================== -->
+<!-- Paystack InlineJS v2 -->
 <script src="https://js.paystack.co/v2/inline.js"></script>
 
-<!-- EmailJS for client-side notifications -->
+<!-- EmailJS Browser SDK v4 -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <style>
 :root{
-  /* ============================================================
-   * CONTRAST FIX — every text colour now has WCAG AA contrast on
-   * the dark background. Old --ink-dim (#b8ad95) was borderline,
-   * old --ink-faded (#6e6553) was unreadable on small text.
-   * ============================================================ */
   --bg:           #0a0907;
-  --bg-2:         #14120d;          /* slightly lighter than before for card lift */
+  --bg-2:         #14120d;
   --bg-3:         #1c1913;
-  --ink:          #f7f1e4;          /* primary text — high contrast */
-  --ink-dim:      #d2c7af;          /* secondary — was #b8ad95 (too dim) */
-  --ink-faded:    #8a8170;          /* tertiary — was #6e6553 (unreadable) */
+  --ink:          #f7f1e4;
+  --ink-dim:      #d2c7af;
+  --ink-faded:    #8a8170;
   --rule:         #2a261d;
   --rule-soft:    #1a1813;
-  --gold:         #e0b35a;          /* slightly brighter for better contrast */
+  --gold:         #e0b35a;
   --gold-bright:  #f0c977;
   --gold-deep:    #8a6a26;
-  --red:          #e07060;          /* brighter red for dark bg */
+  --red:          #e07060;
   --red-bg:       rgba(192,57,43,0.12);
   --green:        #7fbc6a;
   --green-bg:     rgba(74,124,58,0.15);
@@ -59,7 +51,7 @@ body{
   background: var(--bg);
   color: var(--ink);
   font-family: var(--sans);
-  font-weight: 400;                 /* was 300 — bumped for readability */
+  font-weight: 400;
   line-height: 1.55;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -72,12 +64,11 @@ body::before{
   inset:0;
   pointer-events:none;
   z-index:1000;
-  opacity:0.05;                     /* was 0.06 — slightly less noisy */
+  opacity:0.05;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   mix-blend-mode: overlay;
 }
 
-/* ========== TICKER ========== */
 .ticker-bar{
   background: #000;
   border-bottom: 1px solid var(--rule);
@@ -103,7 +94,6 @@ body::before{
 .ticker-pair .chg.down{color:#e07060}
 @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* ========== NAV ========== */
 nav{
   position: sticky;
   top:0;
@@ -190,7 +180,6 @@ nav{
 .panel.active{display:block; animation: fadeIn 0.6s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-/* ========== HERO ========== */
 .hero{
   position: relative;
   padding: 6rem 2.5rem 5rem;
@@ -406,7 +395,7 @@ nav{
 .stat .lab{
   font-family: var(--mono);
   font-size: 10px;
-  color: var(--ink-dim);                /* was --ink-faded — improved contrast */
+  color: var(--ink-dim);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   font-weight: 500;
@@ -549,7 +538,6 @@ section{
   font-weight: 500;
 }
 
-/* ========== BOOKING ========== */
 .booking-intro{
   max-width: 720px;
   font-size: 1.05rem;
@@ -731,7 +719,7 @@ section{
 .field label{
   font-family: var(--mono);
   font-size: 10px;
-  color: var(--ink-dim);            /* improved contrast — was --ink-faded */
+  color: var(--ink-dim);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   margin-bottom: 0.7rem;
@@ -800,7 +788,6 @@ section{
 }
 .form-summary strong{color: var(--gold); font-weight: 600;}
 
-/* ========== PAYMENT PAGE ========== */
 .payment-wrap{
   display: grid;
   grid-template-columns: 1fr 1.2fr;
@@ -954,12 +941,6 @@ section{
   background: var(--gold);
 }
 
-/* ============================================================
- * MOBILE MONEY NETWORK PICKER (NEW)
- * Slides out beneath the Mobile Money option when selected.
- * Lets the user pick MTN / Vodafone / AirtelTigo, since Paystack
- * sends mobile_money charge to that specific provider.
- * ============================================================ */
 .momo-picker{
   display: none;
   margin-top: 0;
@@ -976,7 +957,7 @@ section{
   max-height: 500px;
   padding: 1.5rem 1rem 1.8rem;
   border-top: 1px dashed var(--gold-deep);
-  margin-top: -1.2rem;          /* tuck under the parent card */
+  margin-top: -1.2rem;
   border-color: var(--gold-deep);
 }
 .momo-picker-head{
@@ -1172,7 +1153,6 @@ section{
 .security-strip .sec-item:last-child{border-right: none; padding-right: 0;}
 .security-strip .sec-icon{color: var(--gold);}
 
-/* Status banner — replaces the verify-banner with a richer states machine */
 .status-banner{
   display: none;
   margin-top: 1.5rem;
@@ -1214,7 +1194,6 @@ section{
 }
 @keyframes spin{to{transform: rotate(360deg)}}
 
-/* ========== CONTACT ========== */
 .contact-grid{
   display:grid;
   grid-template-columns: 1fr 1fr;
@@ -1269,7 +1248,6 @@ section{
   padding: 3rem;
 }
 
-/* ========== SUCCESS MODAL ========== */
 .modal-overlay{
   position: fixed;
   inset: 0;
@@ -1540,12 +1518,10 @@ footer{
 
 <body>
 
-<!-- LIVE TICKER -->
 <div class="ticker-bar">
   <div class="ticker-track" id="ticker"></div>
 </div>
 
-<!-- NAV -->
 <nav>
   <div class="nav-inner">
     <a href="#" class="brand" onclick="App.go('home');return false;">
@@ -1873,7 +1849,6 @@ footer{
         </h4>
 
         <div class="payment-methods">
-          <!-- CARD -->
           <div class="payment-method selected" data-method="card" onclick="App.selectMethod(this)">
             <div class="pm-radio"></div>
             <div class="pm-info">
@@ -1886,7 +1861,6 @@ footer{
             </div>
           </div>
 
-          <!-- MOBILE MONEY (with network picker) -->
           <div class="payment-method" data-method="mobile_money" onclick="App.selectMethod(this)">
             <div class="pm-radio"></div>
             <div class="pm-info">
@@ -1896,14 +1870,12 @@ footer{
             <div class="pm-tags"><span class="pm-tag">GH ONLY</span><span class="pm-tag">INSTANT</span></div>
           </div>
 
-          <!-- MOMO PICKER — slides down when Mobile Money selected -->
           <div class="momo-picker" id="momo-picker">
             <div class="momo-picker-head">SELECT YOUR NETWORK</div>
             <div class="momo-grid">
 
               <div class="momo-option" data-provider="mtn" onclick="App.selectMomo(this)">
                 <div class="momo-logo">
-                  <!-- MTN — yellow rounded square -->
                   <svg viewBox="0 0 70 36" xmlns="http://www.w3.org/2000/svg">
                     <rect x="1" y="1" width="68" height="34" rx="6" fill="#ffcb05" stroke="#caa200" stroke-width="1"/>
                     <text x="35" y="24" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="16" fill="#003a82">MTN</text>
@@ -1915,7 +1887,6 @@ footer{
 
               <div class="momo-option" data-provider="vod" onclick="App.selectMomo(this)">
                 <div class="momo-logo">
-                  <!-- Telecel (formerly Vodafone Ghana) — red square with white T -->
                   <svg viewBox="0 0 70 36" xmlns="http://www.w3.org/2000/svg">
                     <rect x="1" y="1" width="68" height="34" rx="6" fill="#e60000" stroke="#a00000" stroke-width="1"/>
                     <text x="35" y="25" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="14" fill="#ffffff" letter-spacing="0.5">TELECEL</text>
@@ -1927,7 +1898,6 @@ footer{
 
               <div class="momo-option" data-provider="atl" onclick="App.selectMomo(this)">
                 <div class="momo-logo">
-                  <!-- AirtelTigo — split red/blue -->
                   <svg viewBox="0 0 70 36" xmlns="http://www.w3.org/2000/svg">
                     <rect x="1" y="1" width="34" height="34" rx="6" fill="#ed1c24" stroke="#a01015" stroke-width="1"/>
                     <rect x="35" y="1" width="34" height="34" rx="6" fill="#0072ce" stroke="#004a8a" stroke-width="1"/>
@@ -1948,7 +1918,6 @@ footer{
             </div>
           </div>
 
-          <!-- BANK -->
           <div class="payment-method" data-method="bank" onclick="App.selectMethod(this)">
             <div class="pm-radio"></div>
             <div class="pm-info">
@@ -1958,7 +1927,6 @@ footer{
             <div class="pm-tags"><span class="pm-tag">GH ONLY</span></div>
           </div>
 
-          <!-- USSD -->
           <div class="payment-method" data-method="ussd" onclick="App.selectMethod(this)">
             <div class="pm-radio"></div>
             <div class="pm-info">
@@ -1968,7 +1936,6 @@ footer{
             <div class="pm-tags"><span class="pm-tag">GH</span></div>
           </div>
 
-          <!-- MANUAL WIRE -->
           <div class="payment-method" data-method="manual" onclick="App.selectMethod(this)">
             <div class="pm-radio"></div>
             <div class="pm-info">
@@ -2006,7 +1973,6 @@ footer{
           ← Back to Form
         </button>
 
-        <!-- Status banner — replaces the old verify-banner -->
         <div class="status-banner" id="status-banner">
           <span class="status-title" id="status-title"><span class="spinner"></span>Processing…</span>
           <span id="status-detail">Your payment is being processed.</span>
@@ -2057,7 +2023,7 @@ footer{
           </div>
           <div class="field full"><label>Message</label><textarea id="c-message" rows="5" maxlength="2000"></textarea></div>
         </div>
-        <button class="btn btn-primary" style="margin-top:2rem;width:100%;justify-content:center;" onclick="App.sendContact()">
+        <button class="btn btn-primary" id="contact-send-btn" style="margin-top:2rem;width:100%;justify-content:center;" onclick="App.sendContact()">
           Send Message <span class="arrow">→</span>
         </button>
       </div>
@@ -2076,7 +2042,6 @@ footer{
       Sophie has been notified directly. You'll hear from her within 24 hours to schedule your first session.
     </p>
 
-    <!-- Receipt block — gives users something tangible -->
     <div class="modal-receipt">
       <div class="modal-receipt-row"><span class="lab">Reference</span><span class="val gold" id="modal-ref">SA-XXXX-XXXX</span></div>
       <div class="modal-receipt-row"><span class="lab">Tier</span><span class="val" id="modal-tier">—</span></div>
@@ -2151,118 +2116,84 @@ footer{
 'use strict';
 
 /* ============================================================
- * ⚠️  CRITICAL SECURITY NOTICE — READ THIS BEFORE GOING LIVE  ⚠️
+ * CONFIGURATION
  * ============================================================
+ * Three EmailJS values you need to fill in below. Get them from
+ * https://dashboard.emailjs.com:
+ *   1. Public Key  → Account → General
+ *   2. Service ID  → Email Services → your Gmail service
+ *   3. Template ID → Email Templates → your "Sophie FX — Universal" template
  *
- * The previous version of this file contained:
- *   PAYSTACK_PUBLIC_KEY: 'sk_live_8e306ba1b6d55884d12e4775b2c13f060f7f0a47'
- *
- * That is NOT a public key — the "sk_live_" prefix means it is
- * the SECRET key for live (real-money) transactions. It was
- * exposed in the browser, where ANYONE who viewed the source of
- * the page could read it. With a live secret key, an attacker
- * could:
- *
- *   - Refund any transaction back to themselves
- *   - View every customer's full transaction history (PII)
- *   - Initiate transfers from your Paystack balance
- *   - Create fake transactions in your name
- *
- * IMMEDIATE ACTION REQUIRED:
- *   1. Log in to https://dashboard.paystack.com
- *   2. Go to Settings → API Keys & Webhooks
- *   3. Click "Generate New Secret Key" — this revokes the old one
- *   4. Move the NEW secret key to your SERVER environment only
- *      (never put it in HTML/JS again)
- *   5. Use the PUBLIC key (starts with pk_live_ or pk_test_)
- *      here in the browser
- *
- * The PUBLIC key below is left blank intentionally. Paste your
- * pk_live_xxxxx key when ready to go live, or pk_test_xxxxx for
- * testing. Keys never starting with "sk_" are safe in the browser.
+ * Until you fill these in, the site runs in DEMO mode (no emails).
+ * The console will print a yellow warning so you'll know.
  * ============================================================ */
 const CONFIG = Object.freeze({
-  // ⚠️ PUT YOUR PUBLIC KEY HERE — starts with pk_test_ or pk_live_
-  // Leave empty to run in DEMO mode (simulates payment without charging).
-  // PRODUCTION KEY (uncomment when ready):
-  // PAYSTACK_PUBLIC_KEY: 'pk_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-
-  // TEST/DEMO — currently empty so the site runs in safe demo mode.
-  // Replace with your pk_test_… key for sandbox testing,
-  // or your pk_live_… key for live payments.
+  // ── PAYSTACK ─────────────────────────────────────────────
+  // Must start with pk_ (public). Never paste sk_ keys here — they're secret.
   PAYSTACK_PUBLIC_KEY: 'pk_live_2f1640fbe9f3e67bf60aa009e1ee7ba0e9696249',
-
-  // Currency — Paystack Ghana accounts are GHS.
   CURRENCY: 'GHS',
+  VERIFY_ENDPOINT: null, // Optional server endpoint for transaction verification
 
-  // Server endpoint that calls Paystack /transaction/verify/:reference
-  // using your SECRET key (which lives on the server, NEVER here).
-  // Until you deploy the server (server/verify-payment.js), leave this null.
-  // When null, the site warns the user that verification is pending manual review.
-  VERIFY_ENDPOINT: null, // e.g. 'https://api.sophie.fx/verify-payment'
+  // ── EMAILJS — paste your three values here ───────────────
+  EMAILJS_PUBLIC_KEY:   'kaAcwVVVxd-gVw1vU',
+  EMAILJS_SERVICE_ID:   'service_gx05yel',
+  EMAILJS_TEMPLATE_ID:  'template_1a9pekg',
 
-  // EmailJS (browser-side notification fallback for confirmation emails)
-  EMAILJS_PUBLIC_KEY:   'REPLACE_EMAILJS_PUBLIC_KEY',
-  EMAILJS_SERVICE_ID:   'REPLACE_SERVICE_ID',
-  EMAILJS_TEMPLATE_ID:  'REPLACE_TEMPLATE_ID',
-
+  // ── DESTINATIONS ─────────────────────────────────────────
   SOPHIE_EMAIL:    'andersonwalker509@gmail.com',
   SOPHIE_WHATSAPP: '233503254226',
-
-  // Approximate USD/GHS rate for display only (refresh as needed).
-  USD_GHS_RATE: 15.0,
+  USD_GHS_RATE:    15.0,
 });
 
 /* ============================================================
- * GHANA MOBILE MONEY — provider data + prefix validation.
- * Paystack's mobile_money channel needs the provider explicitly:
- *   - 'mtn'  → MTN MoMo
- *   - 'vod'  → Telecel Cash (formerly Vodafone Ghana)
- *   - 'atl'  → AirtelTigo Money
+ * INITIALISE EMAILJS ONCE on page load.
+ * Logs clearly to the console so you know if your keys are working.
+ * ============================================================ */
+(function initEmailJS(){
+  const configured = CONFIG.EMAILJS_PUBLIC_KEY &&
+                     !CONFIG.EMAILJS_PUBLIC_KEY.includes('REPLACE');
+  if(!configured){
+    console.warn('%c[EmailJS] NOT CONFIGURED — emails will not send. Edit CONFIG.EMAILJS_PUBLIC_KEY in index.html.',
+      'color:#e07060;font-weight:bold;font-size:12px;');
+    return;
+  }
+  if(typeof emailjs === 'undefined'){
+    console.error('[EmailJS] SDK failed to load — check the <script> tag in <head>');
+    return;
+  }
+  try {
+    emailjs.init({ publicKey: CONFIG.EMAILJS_PUBLIC_KEY });
+    console.log('%c[EmailJS] Initialised ✓','color:#7fbc6a;font-weight:bold;font-size:12px;');
+  } catch (err) {
+    console.error('[EmailJS] Init failed:', err);
+  }
+})();
+
+/* ============================================================
+ * GHANA MOBILE MONEY DATA
  * ============================================================ */
 const MOMO_PROVIDERS = {
-  mtn: {
-    name: 'MTN MoMo',
-    paystackProvider: 'mtn',
-    prefixes: ['024', '054', '055', '059', '025', '053'],
-    color: '#ffcb05',
-  },
-  vod: {
-    name: 'Telecel Cash',
-    paystackProvider: 'vod',          // Paystack still uses 'vod' code post-rebrand
-    prefixes: ['020', '050'],
-    color: '#e60000',
-  },
-  atl: {
-    name: 'AirtelTigo Money',
-    paystackProvider: 'atl',
-    prefixes: ['026', '027', '056', '057'],
-    color: '#0072ce',
-  },
+  mtn: { name: 'MTN MoMo',         paystackProvider: 'mtn', prefixes: ['024','054','055','059','025','053'], color: '#ffcb05' },
+  vod: { name: 'Telecel Cash',     paystackProvider: 'vod', prefixes: ['020','050'],                          color: '#e60000' },
+  atl: { name: 'AirtelTigo Money', paystackProvider: 'atl', prefixes: ['026','027','056','057'],              color: '#0072ce' },
 };
 
 /* ============================================================
- * APP STATE & MODULE
+ * APP MODULE
  * ============================================================ */
 const App = (() => {
 
   const state = {
-    tier: null,
-    ghs: 0,
-    usd: 0,
+    tier: null, ghs: 0, usd: 0,
     method: 'card',
-    momoProvider: null,           // 'mtn' | 'vod' | 'atl'
-    momoPhone: '',
-    bookingRef: null,
-    applicant: {},
-    paystack: null,
-    isPaying: false,
+    momoProvider: null, momoPhone: '',
+    bookingRef: null, applicant: {},
+    paystack: null, isPaying: false,
   };
 
   const $ = (id) => document.getElementById(id);
   const fmt = (n) => Number(n).toLocaleString('en-US');
 
-  /* ---------- Tab navigation ---------- */
   function go(tab){
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -2273,7 +2204,6 @@ const App = (() => {
     window.scrollTo({top: 0, behavior: 'smooth'});
   }
 
-  /* ---------- Tier selection ---------- */
   function selectTier(el){
     document.querySelectorAll('.tier').forEach(t => t.classList.remove('selected'));
     el.classList.add('selected');
@@ -2285,7 +2215,6 @@ const App = (() => {
     $('summary-amount').textContent = 'GH₵ ' + fmt(state.ghs);
   }
 
-  /* ---------- Validation ---------- */
   function validateForm(){
     const fields = [
       {id:'f-name',     hint:'h-name',    test: v => v.length >= 2,                msg:'Please enter your full name'},
@@ -2315,17 +2244,12 @@ const App = (() => {
     return true;
   }
 
-  /* ---------- Reference generator ----------
-   * SA-<base36 timestamp>-<random base36>
-   * Example: SA-LXJ2K9P-A4ZB
-   */
   function generateRef(){
     const ts = Date.now().toString(36).toUpperCase();
     const rand = Math.random().toString(36).toUpperCase().slice(2, 6);
     return `SA-${ts}-${rand}`;
   }
 
-  /* ---------- Pay button label updater ---------- */
   function updatePayButton(){
     const label = $('pay-label');
     const amount = state.ghs ? 'GH₵ ' + fmt(state.ghs) : 'GH₵ 0';
@@ -2336,7 +2260,6 @@ const App = (() => {
     }
   }
 
-  /* ---------- Proceed to payment ---------- */
   function proceedToPayment(){
     if(!state.tier){
       toast('Please select a mentorship tier first.', 'error');
@@ -2349,11 +2272,11 @@ const App = (() => {
     if(!whatsapp) whatsapp = $('f-phone').value.trim();
 
     state.applicant = {
-      name:    $('f-name').value.trim(),
-      email:   $('f-email').value.trim().toLowerCase(),
-      phone:   $('f-phone').value.trim(),
+      name:       $('f-name').value.trim(),
+      email:      $('f-email').value.trim().toLowerCase(),
+      phone:      $('f-phone').value.trim(),
       whatsapp,
-      country: $('f-country').value.trim(),
+      country:    $('f-country').value.trim(),
       experience: $('f-exp').value,
       startDate:  $('f-date').value,
       source:     $('f-source').value,
@@ -2362,7 +2285,6 @@ const App = (() => {
 
     state.bookingRef = generateRef();
 
-    // Hydrate order summary
     $('ord-ref').textContent = state.bookingRef;
     $('ord-name').textContent = state.applicant.name;
     $('ord-email').textContent = state.applicant.email;
@@ -2377,17 +2299,14 @@ const App = (() => {
     go('payment');
   }
 
-  /* ---------- Payment method select ---------- */
   function selectMethod(el){
     document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
     el.classList.add('selected');
     state.method = el.dataset.method;
 
-    // Show/hide momo picker
     const momoPicker = $('momo-picker');
     if(state.method === 'mobile_money'){
       momoPicker.classList.add('show');
-      // If MTN is the most common in Ghana, pre-select it for convenience
       if(!state.momoProvider){
         const mtnEl = momoPicker.querySelector('[data-provider="mtn"]');
         if(mtnEl) selectMomo(mtnEl);
@@ -2396,7 +2315,6 @@ const App = (() => {
       momoPicker.classList.remove('show');
     }
 
-    // Show/hide manual bank details
     const bankDetails = $('bank-details');
     if(state.method === 'manual'){
       bankDetails.classList.add('show');
@@ -2407,7 +2325,6 @@ const App = (() => {
     updatePayButton();
   }
 
-  /* ---------- Mobile money network picker ---------- */
   function selectMomo(el){
     document.querySelectorAll('.momo-option').forEach(o => o.classList.remove('selected'));
     el.classList.add('selected');
@@ -2419,12 +2336,9 @@ const App = (() => {
       hint.textContent = `Use a ${provider.name} number — accepted prefixes: ${provider.prefixes.join(' · ')}`;
       hint.style.color = 'var(--ink-dim)';
     }
-
-    // Re-validate phone when network changes
     validateMomoPhone();
   }
 
-  /* ---------- Validate momo phone live as user types ---------- */
   function validateMomoPhone(){
     const input = $('momo-phone');
     const hint = $('momo-phone-hint');
@@ -2439,7 +2353,6 @@ const App = (() => {
 
     const provider = MOMO_PROVIDERS[state.momoProvider];
 
-    // Normalise to 0-prefixed 10-digit Ghana number
     let normalised = raw;
     if(normalised.startsWith('233')) normalised = '0' + normalised.slice(3);
     if(normalised.length < 10) {
@@ -2463,7 +2376,6 @@ const App = (() => {
     return true;
   }
 
-  /* ---------- Copy helper ---------- */
   function copy(text, btn){
     navigator.clipboard.writeText(text).then(() => {
       btn.classList.add('copied');
@@ -2476,26 +2388,11 @@ const App = (() => {
   }
 
   /* ============================================================
-   * PAYSTACK INTEGRATION (InlineJS v2)
-   * ============================================================
-   * Docs: https://paystack.com/docs/developer-tools/inlinejs/
-   *
-   * Trust model:
-   *   1. Frontend: PaystackPop.newTransaction(...) opens Paystack iframe
-   *   2. User pays inside the iframe (we never touch their card)
-   *   3. Paystack fires onSuccess in our browser with { reference }
-   *   4. We POST that reference to OUR server
-   *   5. Server calls https://api.paystack.co/transaction/verify/:reference
-   *      with the SECRET key (which lives only on the server)
-   *   6. Server checks status === 'success', amount, and currency
-   *   7. Only then do we grant access / send confirmation email
-   *
-   * The browser onSuccess can be spoofed, so it is NEVER trusted alone.
+   * PAYMENT EXECUTION
    * ============================================================ */
   function executePayment(){
     if(state.isPaying) return;
 
-    // Mobile money: require provider + valid phone
     if(state.method === 'mobile_money'){
       if(!state.momoProvider){
         toast('Please select a mobile money network first.', 'error');
@@ -2514,7 +2411,6 @@ const App = (() => {
     btn.disabled = true;
     showStatus('processing', 'Opening secure payment…', 'Connecting to Paystack — this should take just a moment.');
 
-    // Manual transfer flow — no Paystack call
     if(state.method === 'manual'){
       setTimeout(() => {
         finalizeBooking({
@@ -2527,7 +2423,6 @@ const App = (() => {
       return;
     }
 
-    // Paystack SDK guard
     if(typeof PaystackPop === 'undefined'){
       showStatus('error', 'Could not load Paystack', 'Check your internet connection and try again.');
       toast('Paystack SDK failed to load. Please refresh and try again.', 'error');
@@ -2535,24 +2430,22 @@ const App = (() => {
       return;
     }
 
-    // Demo mode — no public key configured
     if(!CONFIG.PAYSTACK_PUBLIC_KEY ||
         CONFIG.PAYSTACK_PUBLIC_KEY === '' ||
         CONFIG.PAYSTACK_PUBLIC_KEY.includes('REPLACE')){
-      console.warn('[paystack] No public key configured — running in DEMO mode (no real charge).');
-      showStatus('processing', 'Demo mode — simulating payment', 'No real charge. Replace PAYSTACK_PUBLIC_KEY to take live payments.');
+      console.warn('[paystack] No public key — running in DEMO mode.');
+      showStatus('processing', 'Demo mode — simulating payment', 'No real charge. Replace PAYSTACK_PUBLIC_KEY for live.');
       setTimeout(() => {
         finalizeBooking({
           reference: state.bookingRef + '-DEMO',
           method: methodLabel(),
           status: 'success',
-          gateway_response: 'Demo simulation — replace public key for live'
+          gateway_response: 'Demo simulation'
         });
       }, 1800);
       return;
     }
 
-    // Map UI methods → Paystack channels
     const channelMap = {
       card:         ['card'],
       mobile_money: ['mobile_money'],
@@ -2561,10 +2454,6 @@ const App = (() => {
     };
     const channels = channelMap[state.method] || ['card'];
 
-    /* ----------------------------------------------------------
-     * Paystack InlineJS v2 — open the checkout iframe
-     * Amount in subunit (pesewas for GHS): GH₵ × 100
-     * ---------------------------------------------------------- */
     try {
       const txConfig = {
         key:       CONFIG.PAYSTACK_PUBLIC_KEY,
@@ -2590,15 +2479,11 @@ const App = (() => {
             { display_name: 'Start Date',  variable_name: 'start_date',  value: state.applicant.startDate || 'n/a' },
           ]
         },
-        onLoad: (response) => {
-          console.log('[paystack] loaded', response);
-          hideStatus();
-        },
+        onLoad: (response) => { console.log('[paystack] loaded', response); hideStatus(); },
         onSuccess: async (transaction) => {
           console.log('[paystack] frontend success', transaction);
-          showStatus('processing', 'Verifying transaction…', 'Confirming with Paystack — takes 2–5 seconds.');
+          showStatus('processing', 'Verifying transaction…', 'Confirming with Paystack.');
           const verified = await verifyOnServer(transaction.reference);
-
           finalizeBooking({
             reference: transaction.reference,
             method: methodLabel(),
@@ -2608,20 +2493,18 @@ const App = (() => {
           });
         },
         onCancel: () => {
-          console.log('[paystack] cancelled by user');
-          showStatus('error', 'Payment cancelled', "No charge was made. You can try again any time you're ready.");
-          toast('Payment cancelled — no charge was made.', 'error');
+          showStatus('error', 'Payment cancelled', "No charge was made. Try again any time.");
+          toast('Payment cancelled.', 'error');
           resetPayButton();
         },
         onError: (error) => {
           console.error('[paystack] error', error);
-          showStatus('error', 'Payment error', error?.message || 'Something went wrong. Please try again or use another method.');
+          showStatus('error', 'Payment error', error?.message || 'Something went wrong.');
           toast('Payment error: ' + (error?.message || 'unknown'), 'error');
           resetPayButton();
         }
       };
 
-      // Add mobile money provider + phone for momo charges
       if(state.method === 'mobile_money' && state.momoProvider){
         txConfig.mobile_money = {
           phone:    normaliseGhanaPhone(state.momoPhone),
@@ -2633,13 +2516,12 @@ const App = (() => {
       state.paystack.newTransaction(txConfig);
     } catch (err) {
       console.error('[paystack] setup failed', err);
-      showStatus('error', 'Could not start payment', err?.message || 'An unexpected error occurred. Please try again.');
-      toast('Could not start payment. Please try again.', 'error');
+      showStatus('error', 'Could not start payment', err?.message || 'An unexpected error occurred.');
+      toast('Could not start payment.', 'error');
       resetPayButton();
     }
   }
 
-  /* ---------- Helpers for payment flow ---------- */
   function methodLabel(){
     const tag = state.method === 'card' ? 'Card' :
                 state.method === 'mobile_money' ?
@@ -2662,27 +2544,10 @@ const App = (() => {
     updatePayButton();
   }
 
-  /* ============================================================
-   * SERVER-SIDE VERIFICATION
-   * ============================================================
-   * Sends the reference to your backend, which calls:
-   *   GET https://api.paystack.co/transaction/verify/:reference
-   *   Headers: Authorization: Bearer sk_live_…   ← SECRET key, server-only
-   *
-   * The server must check:
-   *   - data.status === 'success'
-   *   - data.amount === expected_amount (in pesewas)
-   *   - data.currency === expected_currency
-   * Only then deliver value (send confirmation, mark booking paid).
-   *
-   * Returns { ok: boolean, message?: string, data?: object }.
-   * If VERIFY_ENDPOINT is null, we mark the booking as
-   * pending_verification — Sophie reviews manually before the cohort.
-   * ============================================================ */
   async function verifyOnServer(reference){
     if(!CONFIG.VERIFY_ENDPOINT){
-      console.warn('[verify] No VERIFY_ENDPOINT configured. Marking as pending_verification.');
-      return { ok: false, message: 'Pending — server verification not yet configured' };
+      console.warn('[verify] No VERIFY_ENDPOINT configured. Marking as pending.');
+      return { ok: false, message: 'Pending — server verification not configured' };
     }
     try {
       const res = await fetch(CONFIG.VERIFY_ENDPOINT, {
@@ -2695,22 +2560,15 @@ const App = (() => {
           booking_ref: state.bookingRef,
         })
       });
-      if(!res.ok){
-        return { ok: false, message: `Verification HTTP ${res.status}` };
-      }
+      if(!res.ok) return { ok: false, message: `Verification HTTP ${res.status}` };
       const data = await res.json();
-      return {
-        ok: !!data.success,
-        message: data.message || (data.success ? 'Verified' : 'Not verified'),
-        data
-      };
+      return { ok: !!data.success, message: data.message || (data.success ? 'Verified' : 'Not verified'), data };
     } catch (err) {
       console.error('[verify] failed', err);
-      return { ok: false, message: 'Verification network error — Sophie will reconcile manually' };
+      return { ok: false, message: 'Verification network error' };
     }
   }
 
-  /* ---------- Status banner machine ---------- */
   function showStatus(kind, title, detail){
     const banner = $('status-banner');
     banner.className = 'status-banner show ' + (kind === 'error' ? 'error' : kind === 'success' ? 'success' : '');
@@ -2729,15 +2587,13 @@ const App = (() => {
   }
 
   /* ============================================================
-   * FINALIZE BOOKING — show success modal and fire notifications
+   * FINALIZE BOOKING — show success modal & fire emails
    * ============================================================ */
   async function finalizeBooking(payment){
     hideStatus();
 
-    // Send notifications (email + log)
     const notif = await sendNotifications(payment);
 
-    // Hydrate modal
     $('modal-name').textContent = (state.applicant.name.split(' ')[0] || 'trader') + '.';
     $('modal-ref').textContent = state.bookingRef;
     $('modal-email').textContent = state.applicant.email;
@@ -2748,24 +2604,21 @@ const App = (() => {
       payment.status === 'success' ? 'Confirmed ✓' :
       payment.status === 'pending_verification' ? 'Pending verification' : 'Received';
 
-    // Different copy based on payment status
     if(payment.status === 'pending_verification'){
       $('modal-eyebrow').textContent = 'BOOKING RECEIVED — VERIFICATION PENDING';
-      $('modal-text').textContent = 'Your booking is reserved. Sophie will verify your payment within 24 hours and contact you to schedule your first session. If you paid by card, this is normal — verification just takes a moment.';
+      $('modal-text').textContent = 'Your booking is reserved. Sophie will verify your payment within 24 hours and contact you to schedule your first session.';
     } else if(payment.verified === false){
       $('modal-eyebrow').textContent = 'PAYMENT RECEIVED — VERIFICATION PENDING';
-      $('modal-text').textContent = 'Paystack confirmed your payment, but our server is still verifying. This is normal during peak hours. Sophie has been notified and will reach out within 24 hours.';
+      $('modal-text').textContent = 'Paystack confirmed your payment. Sophie has been notified and will reach out within 24 hours.';
     } else {
       $('modal-eyebrow').textContent = 'BOOKING CONFIRMED';
-      $('modal-text').textContent = "Your payment has been received and your seat in the next cohort is reserved. Sophie has been notified directly. You'll hear from her within 24 hours to schedule your first session.";
+      $('modal-text').textContent = "Your payment has been received and your seat in the next cohort is reserved. Sophie has been notified directly. You'll hear from her within 24 hours.";
     }
 
-    // Update notif icons
     setNotif('notif-email', notif.email ? 'ok' : 'failed');
     setNotif('notif-sophie', notif.sophie ? 'ok' : 'failed');
     setNotif('notif-wa', 'ok');
 
-    // Build WhatsApp link
     const tierName = state.tier === 'onsite' ? 'Face-to-Face' : 'Online';
     const waMessage = encodeURIComponent(
       `Hi Sophie! 👋\n\nI just booked the ${tierName} Mentorship.\n\n` +
@@ -2799,41 +2652,72 @@ const App = (() => {
   }
 
   /* ============================================================
-   * NOTIFICATIONS (EmailJS + WhatsApp deeplink)
+   * NOTIFICATIONS — sends TWO emails per booking via EmailJS:
+   *   1. Confirmation to the mentee
+   *   2. Notification to Sophie
+   * Both use the same template, distinguished by `email_type`.
    * ============================================================ */
   async function sendNotifications(payment){
     const result = { email: false, sophie: false };
 
-    if(!CONFIG.EMAILJS_PUBLIC_KEY.includes('REPLACE') && typeof emailjs !== 'undefined'){
-      try {
-        emailjs.init({publicKey: CONFIG.EMAILJS_PUBLIC_KEY});
-        const tierName = state.tier === 'onsite' ? 'Face-to-Face Mentorship' : 'Online Mentorship';
-        const params = {
-          booking_ref:    state.bookingRef,
-          client_name:    state.applicant.name,
-          client_email:   state.applicant.email,
-          client_phone:   state.applicant.phone,
-          client_country: state.applicant.country,
-          tier:           tierName,
-          amount_ghs:     'GH₵ ' + fmt(state.ghs),
-          amount_usd:     '$' + state.usd,
-          payment_method: payment.method,
-          payment_ref:    payment.reference,
-          status:         payment.status,
-          message:        state.applicant.message || '(none)',
-          sophie_email:   CONFIG.SOPHIE_EMAIL,
-          to_email_client: state.applicant.email,
-          to_email_sophie: CONFIG.SOPHIE_EMAIL,
-        };
-        await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, params);
-        result.email = true;
-        result.sophie = true;
-      } catch (err) {
-        console.error('[notify] EmailJS error', err);
-      }
-    } else {
-      console.warn('[notify] EmailJS not configured. Notification skipped.');
+    const configured = !CONFIG.EMAILJS_PUBLIC_KEY.includes('REPLACE');
+    if(!configured || typeof emailjs === 'undefined'){
+      console.warn('[notify] EmailJS not configured — skipping email send');
+      return result;
     }
+
+    const tierName = state.tier === 'onsite' ? 'Face-to-Face Mentorship' : 'Online Mentorship';
+
+    const common = {
+      booking_ref:           state.bookingRef,
+      client_name:           state.applicant.name,
+      client_email:          state.applicant.email,
+      client_phone:          state.applicant.phone,
+      client_whatsapp:       state.applicant.whatsapp || state.applicant.phone,
+      client_whatsapp_clean: (state.applicant.whatsapp || state.applicant.phone || '').replace(/\D/g, ''),
+      client_country:        state.applicant.country,
+      tier:                  tierName,
+      amount_ghs:            'GH₵ ' + fmt(state.ghs),
+      amount_usd:            '$' + state.usd,
+      payment_method:        payment.method,
+      payment_ref:           payment.reference,
+      status:                payment.status,
+      experience:            state.applicant.experience || '—',
+      start_date:            state.applicant.startDate || '—',
+      source:                state.applicant.source || '—',
+      message:               state.applicant.message || '',
+    };
+
+    // Email 1 → Mentee confirmation
+    try {
+      await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, {
+        ...common,
+        email_type: 'booking_client',
+        to_email:   state.applicant.email,
+        reply_to:   CONFIG.SOPHIE_EMAIL,
+        subject:    `Welcome to Sophie FX — Booking ${state.bookingRef}`,
+      });
+      result.email = true;
+      console.log('[notify] ✓ confirmation sent to', state.applicant.email);
+    } catch (err) {
+      console.error('[notify] ✗ client email failed:', err?.text || err?.message || err);
+    }
+
+    // Email 2 → Sophie notification
+    try {
+      await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, {
+        ...common,
+        email_type: 'booking_sophie',
+        to_email:   CONFIG.SOPHIE_EMAIL,
+        reply_to:   state.applicant.email,
+        subject:    `🎉 New booking: ${state.applicant.name} — ${common.amount_ghs}`,
+      });
+      result.sophie = true;
+      console.log('[notify] ✓ admin notification sent to', CONFIG.SOPHIE_EMAIL);
+    } catch (err) {
+      console.error('[notify] ✗ admin email failed:', err?.text || err?.message || err);
+    }
+
     return result;
   }
 
@@ -2869,8 +2753,8 @@ const App = (() => {
    * CONTACT FORM
    * ============================================================ */
   async function sendContact(){
-    const name = $('c-name').value.trim();
-    const email = $('c-email').value.trim();
+    const name    = $('c-name').value.trim();
+    const email   = $('c-email').value.trim();
     const subject = $('c-subject').value;
     const message = $('c-message').value.trim();
 
@@ -2883,27 +2767,49 @@ const App = (() => {
       return;
     }
 
-    if(!CONFIG.EMAILJS_PUBLIC_KEY.includes('REPLACE') && typeof emailjs !== 'undefined'){
-      try {
-        emailjs.init({publicKey: CONFIG.EMAILJS_PUBLIC_KEY});
-        await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, {
-          from_name: name, from_email: email, subject, message,
-          to_email_sophie: CONFIG.SOPHIE_EMAIL
-        });
-        toast('Message sent. Sophie will reply within 24 hours.', 'success');
-      } catch (err) {
-        toast('Could not send. Please email directly: ' + CONFIG.SOPHIE_EMAIL, 'error');
-      }
-    } else {
-      toast('EmailJS not configured. Please email Sophie directly.', 'error');
+    const configured = !CONFIG.EMAILJS_PUBLIC_KEY.includes('REPLACE');
+    if(!configured || typeof emailjs === 'undefined'){
+      toast('Email is not configured. Please write to ' + CONFIG.SOPHIE_EMAIL + ' directly.', 'error');
+      console.warn('[contact] EmailJS not configured');
+      return;
     }
 
-    $('c-name').value = '';
-    $('c-email').value = '';
-    $('c-message').value = '';
+    const btn = $('contact-send-btn');
+    const originalLabel = btn ? btn.innerHTML : '';
+    if(btn){
+      btn.disabled = true;
+      btn.innerHTML = 'Sending… <span class="arrow">→</span>';
+    }
+
+    try {
+      await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, {
+        email_type:      'contact',
+        to_email:        CONFIG.SOPHIE_EMAIL,
+        reply_to:        email,
+        subject:         `📬 New contact message from ${name}`,
+        from_name:       name,
+        from_email:      email,
+        contact_subject: subject,
+        message:         message,
+      });
+      toast('Message sent. Sophie will reply within 24 hours.', 'success');
+      console.log('[contact] ✓ sent');
+
+      $('c-name').value = '';
+      $('c-email').value = '';
+      $('c-message').value = '';
+    } catch (err) {
+      const detail = err?.text || err?.message || 'unknown error';
+      toast('Could not send: ' + detail + '. Email Sophie directly: ' + CONFIG.SOPHIE_EMAIL, 'error');
+      console.error('[contact] ✗ send failed:', err);
+    } finally {
+      if(btn){
+        btn.disabled = false;
+        btn.innerHTML = originalLabel;
+      }
+    }
   }
 
-  /* ---------- Toast ---------- */
   function toast(msg, kind = ''){
     const t = $('toast');
     t.textContent = msg;
@@ -2915,7 +2821,6 @@ const App = (() => {
     t._timer = setTimeout(() => t.classList.remove('show'), 4000);
   }
 
-  // Wire momo phone input to live validation
   document.addEventListener('DOMContentLoaded', () => {
     const momo = document.getElementById('momo-phone');
     if(momo){
@@ -2931,7 +2836,7 @@ const App = (() => {
 })();
 
 /* ============================================================
- * TICKER (decorative — no functional purpose)
+ * TICKER
  * ============================================================ */
 (function buildTicker(){
   const pairs = [
@@ -2972,7 +2877,6 @@ const App = (() => {
 
 console.log('%c Sophie — Forex Mentorship ', 'background:#e0b35a;color:#0a0907;padding:8px 16px;font-family:serif;font-style:italic;font-size:14px;');
 console.log('%c Paystack InlineJS v2 · GHS · 2026 ', 'color:#e0b35a;font-family:monospace;');
-console.log('%c ⚠️ If you see this site running with sk_live_ in source — REVOKE THAT KEY IMMEDIATELY in your Paystack dashboard.', 'color:#e07060;font-weight:bold;');
 </script>
 
 </body>
