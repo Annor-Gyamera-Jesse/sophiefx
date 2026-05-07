@@ -1,0 +1,2488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Sophie — Six-week, one-on-one mentorship in disciplined forex trading. Online or face-to-face in Ghana." />
+<meta name="theme-color" content="#0a0907" />
+
+<!-- Open Graph -->
+<meta property="og:title" content="Sophie — Forex Mentorship" />
+<meta property="og:description" content="A deliberate apprenticeship in disciplined forex trading. Six weeks. One mentor. No shortcuts." />
+<meta property="og:type" content="website" />
+
+<title>Sophie — Forex Mentorship · Ghana / Global</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- ================================================================== -->
+<!-- PAYSTACK INLINE JS v2 — CURRENT PRODUCTION SDK                      -->
+<!-- Docs: https://paystack.com/docs/developer-tools/inlinejs/           -->
+<!-- ================================================================== -->
+<script src="https://js.paystack.co/v2/inline.js"></script>
+
+<!-- EmailJS for client-side notifications -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<style>
+:root{
+  --bg:           #0a0907;
+  --bg-2:         #11100c;
+  --ink:          #f5efe2;
+  --ink-dim:      #b8ad95;
+  --ink-faded:    #6e6553;
+  --gold:         #d4a84b;
+  --gold-bright:  #e8c46a;
+  --gold-deep:    #8a6a26;
+  --rule:         #2a261d;
+  --rule-soft:    #1a1813;
+  --red:          #c0392b;
+  --green:        #4a7c3a;
+  --serif:        'Fraunces', 'Times New Roman', serif;
+  --sans:         'Inter', -apple-system, sans-serif;
+  --mono:         'JetBrains Mono', monospace;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+body::before{
+  content:"";
+  position: fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:1000;
+  opacity:0.06;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+/* ========== TICKER ========== */
+.ticker-bar{
+  background: #000;
+  border-bottom: 1px solid var(--rule);
+  overflow:hidden;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  padding: 9px 0;
+  position: relative;
+  z-index: 50;
+}
+.ticker-track{
+  display: inline-flex;
+  white-space: nowrap;
+  animation: ticker 60s linear infinite;
+  gap: 3rem;
+}
+.ticker-pair{display:inline-flex;align-items:center;gap:0.6rem}
+.ticker-pair .sym{color: var(--ink-dim); font-weight:500}
+.ticker-pair .price{color: var(--ink)}
+.ticker-pair .chg{font-weight:500}
+.ticker-pair .chg.up{color:#7fbc6a}
+.ticker-pair .chg.down{color:#d65656}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ========== NAV ========== */
+nav{
+  position: sticky;
+  top:0;
+  background: rgba(10,9,7,0.85);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border-bottom: 1px solid var(--rule);
+  z-index: 100;
+}
+.nav-inner{
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand{
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.35rem;
+  letter-spacing: -0.01em;
+  display:flex;
+  align-items:baseline;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+.brand .mark{
+  color: var(--gold);
+  font-style: italic;
+  font-weight: 400;
+}
+.brand .est{
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--ink-faded);
+  letter-spacing: 0.2em;
+  margin-left: 0.6rem;
+  text-transform: uppercase;
+}
+.tabs{
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+.tab-btn{
+  background: none;
+  border: none;
+  color: var(--ink-dim);
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 400;
+  padding: 0.5rem 0;
+  position: relative;
+  transition: color 0.3s;
+}
+.tab-btn:hover{color: var(--ink)}
+.tab-btn.active{color: var(--gold)}
+.tab-btn.active::after{
+  content:"";
+  position: absolute;
+  bottom: -2px;
+  left:0; right:0;
+  height: 1px;
+  background: var(--gold);
+}
+.menu-toggle{
+  display:none;
+  background:none;
+  border:1px solid var(--rule);
+  color:var(--ink);
+  padding:0.5rem 0.8rem;
+  cursor:pointer;
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:0.1em;
+}
+
+.panel{display:none}
+.panel.active{display:block; animation: fadeIn 0.6s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ========== HERO ========== */
+.hero{
+  position: relative;
+  padding: 6rem 2.5rem 5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 88vh;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 5rem;
+  align-items: center;
+}
+.hero-bg{
+  position: absolute;
+  inset: 0;
+  pointer-events:none;
+  overflow:hidden;
+}
+.hero-bg::before{
+  content:"";
+  position:absolute;
+  top:-30%; right:-20%;
+  width: 800px; height:800px;
+  background: radial-gradient(circle, rgba(212,168,75,0.08) 0%, transparent 60%);
+  border-radius:50%;
+  filter: blur(40px);
+}
+.hero-eyebrow{
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  display:flex;
+  align-items:center;
+  gap:1rem;
+}
+.hero-eyebrow::before{
+  content:"";
+  width: 30px;
+  height:1px;
+  background: var(--gold);
+}
+.hero-title{
+  font-family: var(--serif);
+  font-size: clamp(3.5rem, 7vw, 6.5rem);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  margin-bottom: 2rem;
+  color: var(--ink);
+}
+.hero-title em{
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold);
+}
+.hero-title .ampersand{
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  color: var(--gold);
+  font-size: 1.2em;
+}
+.hero-sub{
+  font-size: 1.05rem;
+  color: var(--ink-dim);
+  max-width: 480px;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  font-weight: 300;
+}
+.hero-actions{
+  display:flex;
+  gap: 1.2rem;
+  flex-wrap:wrap;
+}
+
+.btn{
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1rem 2rem;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(.2,.7,.3,1);
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary{
+  background: var(--gold);
+  color: #1a1408;
+}
+.btn-primary:hover{
+  background: var(--gold-bright);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px -15px rgba(212,168,75,0.6);
+}
+.btn-primary:disabled{
+  opacity:0.6; cursor:not-allowed; transform:none; box-shadow:none;
+}
+.btn-secondary{
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--rule);
+}
+.btn-secondary:hover{
+  border-color: var(--gold);
+  color: var(--gold);
+}
+.btn .arrow{transition: transform 0.3s}
+.btn:hover .arrow{transform: translateX(4px)}
+
+.hero-portrait{
+  position: relative;
+  aspect-ratio: 4/5;
+  background: linear-gradient(135deg, #1a1610 0%, #0d0b08 100%);
+  border: 1px solid var(--rule);
+  overflow: hidden;
+}
+.hero-portrait::before{
+  content:"";
+  position: absolute;
+  inset:0;
+  background:
+    repeating-linear-gradient(0deg,transparent,transparent 30px,rgba(212,168,75,0.04) 30px,rgba(212,168,75,0.04) 31px),
+    repeating-linear-gradient(90deg,transparent,transparent 30px,rgba(212,168,75,0.04) 30px,rgba(212,168,75,0.04) 31px);
+}
+.portrait-monogram{
+  position: absolute;
+  inset:0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-size: 22rem;
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(212,168,75,0.12);
+  line-height:1;
+  letter-spacing:-0.05em;
+}
+.portrait-meta{
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  right: 2rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  z-index: 2;
+}
+.portrait-meta .label{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-faded);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+.portrait-meta .value{
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  color: var(--ink);
+  font-style: italic;
+}
+.portrait-corner{
+  position: absolute;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.15em;
+  z-index: 2;
+}
+.portrait-corner.tl{top:1.5rem; left:1.5rem}
+.portrait-corner.tr{top:1.5rem; right:1.5rem}
+
+.stats-strip{
+  border-top:1px solid var(--rule);
+  border-bottom:1px solid var(--rule);
+  background: var(--bg-2);
+}
+.stats-inner{
+  max-width: 1400px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 0 2.5rem;
+}
+.stat{
+  padding: 2.5rem 1.5rem;
+  border-right: 1px solid var(--rule);
+}
+.stat:last-child{border-right:none}
+.stat .num{
+  font-family: var(--serif);
+  font-size: 2.8rem;
+  font-weight: 400;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.02em;
+}
+.stat .num em{font-style: italic; font-weight: 300;}
+.stat .lab{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-faded);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+section{
+  padding: 6rem 2.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.section-eyebrow{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  display:flex;
+  align-items:center;
+  gap:1rem;
+}
+.section-eyebrow::before{
+  content: attr(data-num);
+  font-family: var(--mono);
+  color: var(--ink-faded);
+}
+.section-eyebrow::after{
+  content:"";
+  flex:1;
+  height:1px;
+  background: var(--rule);
+}
+.section-title{
+  font-family: var(--serif);
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 3rem;
+  max-width: 900px;
+}
+.section-title em{font-style: italic; color: var(--gold);}
+
+.about-grid{
+  display:grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 5rem;
+  align-items: start;
+}
+.about-text p{
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--ink-dim);
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+}
+.about-text p:first-of-type::first-letter{
+  font-family: var(--serif);
+  font-size: 4rem;
+  float: left;
+  line-height: 0.85;
+  margin: 0.3rem 0.6rem 0 0;
+  color: var(--gold);
+  font-style: italic;
+}
+.principles{
+  display:grid;
+  gap:1.5rem;
+}
+.principle{
+  border-top: 1px solid var(--rule);
+  padding-top: 1.5rem;
+  display:grid;
+  grid-template-columns: 60px 1fr;
+  gap: 1.5rem;
+}
+.principle .num{
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 0.15em;
+}
+.principle h4{
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 400;
+  margin-bottom: 0.6rem;
+  color: var(--ink);
+}
+.principle p{
+  font-size: 0.92rem;
+  color: var(--ink-dim);
+  line-height: 1.7;
+}
+
+.pull-quote{
+  margin: 5rem auto;
+  max-width: 1100px;
+  padding: 3rem 2.5rem;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+}
+.pull-quote::before{
+  content:"";
+  position: absolute;
+  top: -1px; left: 50%;
+  transform: translateX(-50%);
+  width: 60px; height: 1px;
+  background: var(--gold);
+}
+.pull-quote q{
+  display: block;
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
+  font-style: italic;
+  font-weight: 300;
+  line-height: 1.3;
+  text-align: center;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  quotes: "\201C" "\201D";
+}
+.pull-quote q::before, .pull-quote q::after{
+  color: var(--gold);
+  font-size: 1.3em;
+  vertical-align: -0.15em;
+  margin: 0 0.1em;
+}
+.pull-quote .attr{
+  text-align: center;
+  margin-top: 1.5rem;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-faded);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ========== BOOKING ========== */
+.booking-intro{
+  max-width: 700px;
+  font-size: 1.05rem;
+  color: var(--ink-dim);
+  line-height: 1.8;
+  margin-bottom: 4rem;
+}
+.tier-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+.tier{
+  background: var(--bg-2);
+  border: 1px solid var(--rule);
+  padding: 3rem 2.5rem;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(.2,.7,.3,1);
+}
+.tier::before{
+  content:"";
+  position: absolute;
+  top:0; left:0;
+  width: 100%; height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s;
+}
+.tier:hover{
+  border-color: var(--gold-deep);
+  transform: translateY(-4px);
+}
+.tier:hover::before{transform: scaleX(1)}
+.tier.selected{
+  border-color: var(--gold);
+  background: linear-gradient(135deg, rgba(212,168,75,0.04), transparent);
+}
+.tier.selected::before{transform: scaleX(1)}
+.tier .badge{
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--gold);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: 1px solid var(--gold-deep);
+  padding: 0.3rem 0.7rem;
+}
+.tier .tier-num{
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-faded);
+  letter-spacing: 0.2em;
+  margin-bottom: 1.5rem;
+}
+.tier h3{
+  font-family: var(--serif);
+  font-size: 2.2rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.4rem;
+  color: var(--ink);
+}
+.tier h3 em{font-style: italic; color: var(--gold);}
+.tier .tier-tag{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-faded);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+.tier-price{
+  font-family: var(--serif);
+  font-size: 3.5rem;
+  font-weight: 300;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  line-height:1;
+  margin-bottom: 0.5rem;
+}
+.tier-price .currency{
+  font-size: 1.3rem;
+  vertical-align: super;
+  color: var(--gold);
+  margin-right: 0.2rem;
+  font-family: var(--sans);
+  font-weight: 500;
+}
+.tier-price .period{
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--ink-faded);
+  margin-left: 0.5rem;
+  letter-spacing: 0.05em;
+}
+.tier-usd{
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-faded);
+  letter-spacing: 0.1em;
+  margin-bottom: 2.5rem;
+}
+.tier-features{
+  list-style: none;
+  margin-bottom: 2rem;
+}
+.tier-features li{
+  font-size: 0.92rem;
+  color: var(--ink-dim);
+  padding: 0.85rem 0;
+  border-bottom: 1px dashed var(--rule-soft);
+  display:flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+.tier-features li::before{
+  content: "✦";
+  color: var(--gold);
+  flex-shrink:0;
+  margin-top:1px;
+}
+.tier .select-indicator{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  display:flex;
+  align-items:center;
+  gap: 0.5rem;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+.tier.selected .select-indicator{opacity: 1;}
+.tier.selected .select-indicator::after{content: "✓ SELECTED"; color: var(--gold);}
+.tier:not(.selected) .select-indicator::after{content: "→ CLICK TO SELECT"; }
+
+.booking-form{
+  background: var(--bg-2);
+  border: 1px solid var(--rule);
+  padding: 3.5rem;
+}
+.form-eyebrow{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.form-title{
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 400;
+  margin-bottom: 2.5rem;
+  color: var(--ink);
+}
+.form-title em{font-style: italic; color: var(--gold);}
+.form-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.8rem 2rem;
+}
+.field{display:flex;flex-direction:column;}
+.field.full{grid-column: 1/-1}
+.field label{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-faded);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.7rem;
+}
+.field label .req{color: var(--gold); margin-left: 4px;}
+.field input, .field select, .field textarea{
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1rem;
+  padding: 0.8rem 0;
+  font-weight: 300;
+  transition: border-color 0.3s;
+  outline: none;
+  width:100%;
+}
+.field input.error, .field select.error{border-bottom-color: var(--red);}
+.field textarea{
+  resize: vertical;
+  min-height: 100px;
+  border: 1px solid var(--rule);
+  padding: 1rem;
+}
+.field input:focus, .field select:focus, .field textarea:focus{border-color: var(--gold);}
+.field select{
+  appearance:none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23d4a84b' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+  padding-right: 30px;
+  cursor: pointer;
+}
+.field select option{background: var(--bg-2); color: var(--ink);}
+.field-hint{
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--red);
+  letter-spacing: 0.1em;
+  margin-top: 0.3rem;
+  text-transform: uppercase;
+  min-height: 12px;
+}
+.form-footer{
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.form-summary{
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-dim);
+  letter-spacing: 0.1em;
+}
+.form-summary strong{color: var(--gold); font-weight: 500;}
+
+/* ========== PAYMENT PAGE ========== */
+.payment-wrap{
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 4rem;
+}
+.order-summary{
+  background: var(--bg-2);
+  border: 1px solid var(--rule);
+  padding: 2.5rem;
+  position: sticky;
+  top: 90px;
+  height: fit-content;
+}
+.summary-eyebrow{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 1.5rem;
+}
+.summary-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0.9rem 0;
+  border-bottom: 1px dashed var(--rule-soft);
+  gap: 1rem;
+}
+.summary-row .lab{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-faded);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.summary-row .val{
+  font-size: 0.92rem;
+  color: var(--ink);
+  text-align:right;
+  font-weight: 400;
+}
+.summary-total{
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--gold-deep);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.summary-total .lab{
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--gold);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.summary-total .val{
+  font-family: var(--serif);
+  font-size: 2.4rem;
+  font-weight: 300;
+  color: var(--gold);
+  letter-spacing: -0.02em;
+}
+.summary-total .val .currency{
+  font-size: 0.85rem;
+  vertical-align: super;
+  margin-right: 4px;
+  font-family: var(--mono);
+  font-weight: 500;
+}
+.summary-fineprint{
+  margin-top: 1rem;
+  font-size: 0.78rem;
+  color: var(--ink-faded);
+  font-style: italic;
+  line-height:1.5;
+}
+
+.payment-methods{
+  display: grid;
+  gap: 1.2rem;
+}
+.payment-method{
+  background: var(--bg-2);
+  border: 1px solid var(--rule);
+  padding: 1.8rem 2rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.5rem;
+  align-items: center;
+}
+.payment-method:hover{border-color: var(--gold-deep);}
+.payment-method.selected{
+  border-color: var(--gold);
+  background: linear-gradient(135deg, rgba(212,168,75,0.05), transparent);
+}
+.pm-info h4{
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin-bottom: 0.3rem;
+  color: var(--ink);
+}
+.pm-info p{
+  font-size: 0.85rem;
+  color: var(--ink-dim);
+  font-weight: 300;
+}
+.pm-tags{
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  align-items: flex-end;
+}
+.pm-tag{
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--ink-faded);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: 1px solid var(--rule);
+  padding: 0.2rem 0.5rem;
+  white-space: nowrap;
+}
+.pm-tag.recommended{color: var(--gold); border-color: var(--gold-deep);}
+.pm-radio{
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.payment-method.selected .pm-radio{border-color: var(--gold);}
+.payment-method.selected .pm-radio::after{
+  content:"";
+  width: 8px; height:8px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+.bank-details{
+  display: none;
+  background: var(--bg-2);
+  border: 1px solid var(--gold-deep);
+  padding: 2rem;
+  margin-top: 1.5rem;
+}
+.bank-details.show{display:block; animation: fadeIn 0.4s;}
+.bank-details h4{
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  margin-bottom: 1.2rem;
+  color: var(--gold);
+}
+.bank-row{
+  display:grid;
+  grid-template-columns: 140px 1fr auto;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px dashed var(--rule-soft);
+  align-items: center;
+}
+.bank-row .lab{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-faded);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.bank-row .val{
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+.copy-btn{
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--ink-dim);
+  padding: 0.3rem 0.7rem;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.copy-btn:hover{border-color: var(--gold); color: var(--gold);}
+.copy-btn.copied{border-color: var(--green); color: #7fbc6a;}
+
+.pay-cta{
+  margin-top: 2rem;
+  width: 100%;
+  justify-content: center;
+  padding: 1.3rem 2rem;
+  font-size: 0.85rem;
+}
+
+.security-strip{
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px dashed var(--rule);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-faded);
+  letter-spacing: 0.05em;
+}
+
+/* Verification banner */
+.verify-banner{
+  display: none;
+  margin-top: 1.5rem;
+  padding: 1.2rem 1.5rem;
+  background: linear-gradient(135deg, rgba(212,168,75,0.08), transparent);
+  border: 1px solid var(--gold-deep);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-dim);
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+}
+.verify-banner.show{display:block;}
+.verify-banner .verify-status{
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--gold);
+  font-size: 1rem;
+  display: block;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0;
+}
+
+/* ========== CONTACT ========== */
+.contact-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+}
+.contact-info h3{
+  font-family: var(--serif);
+  font-size: 2.5rem;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  margin-bottom: 2rem;
+}
+.contact-info h3 em{font-style: italic; color: var(--gold);}
+.contact-info p{
+  color: var(--ink-dim);
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+  font-weight: 300;
+}
+.contact-list{
+  display: grid;
+  gap: 1.5rem;
+}
+.contact-item{
+  border-top: 1px solid var(--rule);
+  padding-top: 1.2rem;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 1.5rem;
+  align-items: baseline;
+}
+.contact-item .lab{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.contact-item .val{
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--ink);
+}
+.contact-item a{color: var(--ink); text-decoration: none; transition: color 0.3s;}
+.contact-item a:hover{color: var(--gold);}
+
+.contact-form{
+  background: var(--bg-2);
+  border: 1px solid var(--rule);
+  padding: 3rem;
+}
+
+/* ========== SUCCESS MODAL ========== */
+.modal-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(20px);
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  animation: fadeIn 0.4s;
+}
+.modal-overlay.show{display: flex;}
+.modal{
+  background: var(--bg-2);
+  border: 1px solid var(--gold-deep);
+  max-width: 600px;
+  width: 100%;
+  padding: 4rem 3.5rem;
+  text-align: center;
+  position: relative;
+  animation: modalUp 0.6s cubic-bezier(.2,.8,.3,1);
+}
+@keyframes modalUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal::before{
+  content:"";
+  position: absolute;
+  top:0; left:0; right:0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.modal-seal{
+  width: 80px;
+  height: 80px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 2rem;
+  font-family: var(--serif);
+  font-size: 2.2rem;
+  font-style: italic;
+  color: var(--gold);
+  position: relative;
+}
+.modal-seal::before{
+  content:"";
+  position: absolute;
+  inset: -8px;
+  border: 1px dashed var(--gold-deep);
+  border-radius: 50%;
+  animation: spin 30s linear infinite;
+}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.modal-eyebrow{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.modal h2{
+  font-family: var(--serif);
+  font-size: 2.2rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin-bottom: 1rem;
+}
+.modal h2 em{font-style: italic; color: var(--gold);}
+.modal-text{
+  color: var(--ink-dim);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+.modal-ref{
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  border: 1px dashed var(--gold-deep);
+  padding: 0.8rem;
+  margin-bottom: 2rem;
+  display: inline-block;
+}
+.modal-actions{
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.notif-status{
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule);
+  text-align: left;
+  font-size: 0.85rem;
+}
+.notif-row{
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.5rem 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-dim);
+  letter-spacing: 0.05em;
+}
+.notif-row .icon{
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #1a1408;
+  display:flex; align-items:center; justify-content:center;
+  font-size:10px;
+  font-weight:600;
+}
+.notif-row .icon.pending{background: transparent; border: 1px solid var(--gold-deep); color: var(--gold);}
+.notif-row .icon.failed{background: var(--red); color: #fff;}
+
+footer{
+  border-top: 1px solid var(--rule);
+  background: #050403;
+  padding: 4rem 2.5rem 2rem;
+  margin-top: 4rem;
+}
+.footer-inner{
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+.footer-brand .brand{font-size: 1.6rem; margin-bottom: 1rem;}
+.footer-brand p{
+  color: var(--ink-dim);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  font-weight: 300;
+  max-width: 350px;
+}
+.footer-col h5{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+}
+.footer-col ul{list-style: none; display: grid; gap: 0.7rem;}
+.footer-col a{
+  color: var(--ink-dim);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 300;
+  transition: color 0.3s;
+}
+.footer-col a:hover{color: var(--gold);}
+.footer-bottom{
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-bottom small{
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-faded);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.disclaimer{
+  max-width: 1400px;
+  margin: 1rem auto 0;
+  padding: 1rem 0;
+  font-size: 11px;
+  color: var(--ink-faded);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.toast{
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--bg-2);
+  border: 1px solid var(--gold);
+  padding: 1rem 1.5rem;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink);
+  letter-spacing: 0.1em;
+  z-index: 300;
+  transform: translateX(120%);
+  transition: transform 0.4s cubic-bezier(.2,.8,.3,1);
+  max-width: 360px;
+}
+.toast.show{transform: translateX(0);}
+.toast.error{border-color: var(--red); color: #f5b8b0;}
+
+@media(max-width: 980px){
+  .hero{grid-template-columns: 1fr; gap: 3rem; padding: 3rem 1.5rem;}
+  .stats-inner{grid-template-columns: 1fr 1fr;}
+  .stat:nth-child(2){border-right: none;}
+  .stat:nth-child(1), .stat:nth-child(2){border-bottom: 1px solid var(--rule);}
+  .about-grid, .tier-grid, .payment-wrap, .contact-grid{grid-template-columns: 1fr; gap: 2.5rem;}
+  .form-grid{grid-template-columns: 1fr;}
+  .footer-inner{grid-template-columns: 1fr 1fr; gap: 2rem;}
+  section{padding: 4rem 1.5rem;}
+  .nav-inner{padding: 1rem 1.5rem;}
+  .tabs{
+    position: absolute;
+    top: 100%;
+    left: 0; right:0;
+    flex-direction: column;
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--rule);
+    padding: 1rem 1.5rem;
+    gap: 0;
+    display: none;
+  }
+  .tabs.open{display:flex;}
+  .tabs li{padding: 0.8rem 0; border-bottom: 1px solid var(--rule-soft);}
+  .menu-toggle{display: block;}
+  .booking-form, .contact-form, .order-summary{padding: 2rem 1.5rem;}
+  .order-summary{position: relative; top: 0;}
+  .modal{padding: 3rem 2rem;}
+  .ticker-bar{font-size: 10px;}
+  .stat .num{font-size: 2.2rem;}
+  .portrait-monogram{font-size: 14rem;}
+}
+@media(max-width: 560px){
+  .footer-inner{grid-template-columns: 1fr;}
+  .stats-inner{grid-template-columns: 1fr;}
+  .stat{border-right: none !important; border-bottom: 1px solid var(--rule);}
+  .hero-actions{flex-direction: column; align-items: stretch;}
+  .hero-actions .btn{justify-content: center;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- LIVE TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-track" id="ticker"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="brand" onclick="App.go('home');return false;">
+      <span>Sophie</span><span class="mark">FX</span>
+      <span class="est">EST. MMXIX</span>
+    </a>
+    <button class="menu-toggle" onclick="document.querySelector('.tabs').classList.toggle('open')">MENU</button>
+    <ul class="tabs">
+      <li><button class="tab-btn active" data-tab="home" onclick="App.go('home')">Home</button></li>
+      <li><button class="tab-btn" data-tab="about" onclick="App.go('about')">About</button></li>
+      <li><button class="tab-btn" data-tab="booking" onclick="App.go('booking')">Booking</button></li>
+      <li><button class="tab-btn" data-tab="contact" onclick="App.go('contact')">Contact</button></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div class="panel active" id="panel-home">
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-text">
+      <div class="hero-eyebrow">CERTIFIED FOREX MENTOR · GHANA / GLOBAL</div>
+      <h1 class="hero-title">
+        Trade with <em>conviction.</em><br>
+        Build with <span class="ampersand">&</span> patience.
+      </h1>
+      <p class="hero-sub">
+        Six years on the charts. Hundreds of mentees through the doors.
+        I teach the unglamorous side of forex — risk, structure, patience —
+        the side that actually pays.
+      </p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="App.go('booking')">
+          Book a Mentorship <span class="arrow">→</span>
+        </button>
+        <button class="btn btn-secondary" onclick="App.go('about')">
+          The Philosophy <span class="arrow">→</span>
+        </button>
+      </div>
+    </div>
+    <div class="hero-portrait">
+      <div class="portrait-corner tl">№ 001</div>
+      <div class="portrait-corner tr">SA · 2026</div>
+      <div class="portrait-monogram">S</div>
+      <div class="portrait-meta">
+        <div>
+          <div class="label">MENTOR</div>
+          <div class="value">Sophie</div>
+        </div>
+        <div>
+          <div class="label">SPECIALTY</div>
+          <div class="value">Smart Money Concepts</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats-strip">
+    <div class="stats-inner">
+      <div class="stat"><div class="num">6<em>yrs</em></div><div class="lab">On the Charts</div></div>
+      <div class="stat"><div class="num">340<em>+</em></div><div class="lab">Mentees Trained</div></div>
+      <div class="stat"><div class="num">82<em>%</em></div><div class="lab">Profitable in 6mo</div></div>
+      <div class="stat"><div class="num">1:1</div><div class="lab">Personal Attention</div></div>
+    </div>
+  </div>
+
+  <section>
+    <div class="section-eyebrow" data-num="01">The Discipline</div>
+    <h2 class="section-title">
+      The market <em>does not</em> reward speed.<br>
+      It rewards those who can <em>wait</em>.
+    </h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Most new traders blow their accounts within ninety days. Not because the market is rigged or because they picked the wrong indicator — but because they never learned the one skill that separates the survivors from the casualties: <strong style="color:var(--ink)">restraint</strong>.</p>
+        <p>My mentorship is built around that single insight. Before you ever click a buy button under my guidance, you'll understand position sizing, drawdown psychology, and the specific market structures that produce high-probability setups on the major pairs.</p>
+        <p>This is not a signals service. This is not a "get rich" pitch. It is a deliberate, patient apprenticeship in a craft that takes years to honor.</p>
+      </div>
+      <div class="principles">
+        <div class="principle">
+          <span class="num">/ 01</span>
+          <div>
+            <h4>Risk before reward.</h4>
+            <p>Every entry begins with the question: how much am I willing to lose? If you cannot answer that in seconds, you do not take the trade.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <span class="num">/ 02</span>
+          <div>
+            <h4>Structure over signal.</h4>
+            <p>Indicators lag. Price tells you what is happening right now. We read the chart itself — liquidity, order blocks, supply and demand.</p>
+          </div>
+        </div>
+        <div class="principle">
+          <span class="num">/ 03</span>
+          <div>
+            <h4>Process over profit.</h4>
+            <p>A losing trade taken with discipline is a better trade than a winner taken on a whim. The journal does not lie.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="pull-quote">
+    <q>The market will pay you what you are. Not what you want to be — what you are. Mentorship is the shortest path to becoming what you need to be.</q>
+    <div class="attr">— Sophie</div>
+  </div>
+
+  <section style="text-align:center;">
+    <div class="section-eyebrow" data-num="02" style="justify-content:center; max-width:600px; margin: 0 auto 1.5rem;">The Invitation</div>
+    <h2 class="section-title" style="text-align:center; margin-left:auto; margin-right:auto;">
+      Two paths. <em>One commitment.</em>
+    </h2>
+    <p style="max-width: 600px; margin: 0 auto 3rem; color: var(--ink-dim); line-height: 1.8;">
+      Whether you join me face-to-face in Ghana or online from anywhere on earth,
+      the work is the same: a six-week immersion in the craft of disciplined trading.
+    </p>
+    <button class="btn btn-primary" onclick="App.go('booking')">
+      View Mentorship Tiers <span class="arrow">→</span>
+    </button>
+  </section>
+</div>
+
+<!-- ABOUT -->
+<div class="panel" id="panel-about">
+  <section>
+    <div class="section-eyebrow" data-num="01">The Story</div>
+    <h2 class="section-title">A note from <em>Sophie.</em></h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I started trading in 2019 with the same misconceptions everyone else does — that the market would make me rich quickly, that the secret was finding the perfect indicator, that more screen time meant more money. I lost three accounts learning the truth.</p>
+        <p>What changed was meeting a mentor of my own. Someone who didn't sell signals or promise yachts. Someone who simply showed me, week after week, what disciplined trading actually looks like — the journals, the missed trades, the sitting on hands. The boring parts.</p>
+        <p>That's what I teach now. The boring parts. Because they are the only parts that ever made me money.</p>
+        <p>If you're tired of YouTube gurus and Telegram signals — if you want a mentor who will look at your journal, ask hard questions, and call you when you go off-plan — that's what this is. Welcome.</p>
+      </div>
+      <div>
+        <div style="background: var(--bg-2); border: 1px solid var(--rule); padding: 2.5rem;">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:0.3em;margin-bottom:1.5rem;">CREDENTIALS</div>
+          <div class="contact-list">
+            <div class="contact-item"><div class="lab">2019</div><div class="val">Began trading FX, equities</div></div>
+            <div class="contact-item"><div class="lab">2021</div><div class="val">First mentorship cohort</div></div>
+            <div class="contact-item"><div class="lab">2022</div><div class="val">Featured trader</div></div>
+            <div class="contact-item"><div class="lab">2024</div><div class="val">340+ mentees trained</div></div>
+            <div class="contact-item"><div class="lab">2025</div><div class="val">Studio opened, Accra</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="pull-quote">
+    <q>I do not promise you riches. I promise you a process. The riches, if they come, are a consequence of the process — never the goal.</q>
+  </div>
+
+  <section>
+    <div class="section-eyebrow" data-num="02">The Curriculum</div>
+    <h2 class="section-title">Six weeks. <em>One discipline.</em></h2>
+    <div class="principles" style="max-width: 900px;">
+      <div class="principle"><span class="num">WK / 01</span><div><h4>Foundation & Audit</h4><p>We open your trading journal together. Honest accounting of your wins, losses, and the patterns hiding in both. No judgment. Just data.</p></div></div>
+      <div class="principle"><span class="num">WK / 02</span><div><h4>Market Structure</h4><p>How price actually moves. Highs, lows, breaks of structure, change of character. The vocabulary professional traders speak in.</p></div></div>
+      <div class="principle"><span class="num">WK / 03</span><div><h4>Smart Money Concepts</h4><p>Liquidity, order blocks, fair value gaps. Where institutions place their orders — and how to position yourself in their wake.</p></div></div>
+      <div class="principle"><span class="num">WK / 04</span><div><h4>Risk Engineering</h4><p>Position sizing as a function of conviction. Stop placement that respects structure, not fear. Building a portfolio of asymmetric bets.</p></div></div>
+      <div class="principle"><span class="num">WK / 05</span><div><h4>Live Sessions</h4><p>We trade together. London open. New York open. You watch me think. I watch you think. We refine the process in real time.</p></div></div>
+      <div class="principle"><span class="num">WK / 06</span><div><h4>Independence Protocol</h4><p>You graduate with your own playbook, your own rules, your own journal practice. The point was never me — it was you, ready.</p></div></div>
+    </div>
+  </section>
+</div>
+
+<!-- BOOKING -->
+<div class="panel" id="panel-booking">
+  <section>
+    <div class="section-eyebrow" data-num="01">The Booking</div>
+    <h2 class="section-title">Choose your <em>path.</em></h2>
+    <p class="booking-intro">
+      Both tiers cover the same six-week curriculum. The difference is intimacy, intensity, and the energy of being in the same room.
+      All payments are processed in Ghanaian Cedis (GHS) via Paystack — the standard for Ghana-based businesses. International cards are converted automatically by your bank.
+    </p>
+
+    <div class="tier-grid">
+      <!-- Prices in GHS — adjust to Sophie's actual rates -->
+      <div class="tier" data-tier="online" data-ghs="1500" data-usd="100" onclick="App.selectTier(this)">
+        <div class="tier-num">/ TIER 01</div>
+        <h3>Online <em>Mentorship</em></h3>
+        <div class="tier-tag">Remote · Anywhere on Earth</div>
+        <div class="tier-price"><span class="currency">GH₵</span>1,500<span class="period">/ six weeks</span></div>
+        <div class="tier-usd">≈ $100 USD</div>
+        <ul class="tier-features">
+          <li>Six weekly 1-on-1 sessions via Zoom</li>
+          <li>Private WhatsApp line for chart reviews</li>
+          <li>Lifetime access to recorded sessions</li>
+          <li>Personal trading journal template</li>
+          <li>Curriculum PDF & playbook</li>
+          <li>30-day post-mentorship check-in</li>
+        </ul>
+        <div class="select-indicator"></div>
+      </div>
+
+      <div class="tier" data-tier="onsite" data-ghs="7500" data-usd="500" onclick="App.selectTier(this)">
+        <div class="badge">Premium</div>
+        <div class="tier-num">/ TIER 02</div>
+        <h3>Face-to-Face <em>Mentorship</em></h3>
+        <div class="tier-tag">In-Person · Accra, Ghana</div>
+        <div class="tier-price"><span class="currency">GH₵</span>7,500<span class="period">/ six weeks</span></div>
+        <div class="tier-usd">≈ $500 USD</div>
+        <ul class="tier-features">
+          <li>Six in-studio sessions, Accra</li>
+          <li>Live trading on professional setup</li>
+          <li>Direct WhatsApp & phone access</li>
+          <li>Lifetime access to recorded sessions</li>
+          <li>Custom journal & strategy printouts</li>
+          <li>90-day post-mentorship support</li>
+          <li>Coffee & lunch included on session days</li>
+        </ul>
+        <div class="select-indicator"></div>
+      </div>
+    </div>
+
+    <div class="booking-form">
+      <div class="form-eyebrow">/ 02 — APPLICANT DETAILS</div>
+      <h3 class="form-title">Tell me <em>about you.</em></h3>
+
+      <div class="form-grid">
+        <div class="field">
+          <label>Full Name <span class="req">*</span></label>
+          <input type="text" id="f-name" autocomplete="name" placeholder="As on your government ID" required>
+          <div class="field-hint" id="h-name"></div>
+        </div>
+        <div class="field">
+          <label>Email Address <span class="req">*</span></label>
+          <input type="email" id="f-email" autocomplete="email" placeholder="you@domain.com" required>
+          <div class="field-hint" id="h-email"></div>
+        </div>
+        <div class="field">
+          <label>Phone (with country code) <span class="req">*</span></label>
+          <input type="tel" id="f-phone" autocomplete="tel" placeholder="+233 503 000 000" required>
+          <div class="field-hint" id="h-phone"></div>
+        </div>
+        <div class="field">
+          <label>WhatsApp Number</label>
+          <input type="tel" id="f-whatsapp" placeholder="Same as phone? Leave blank">
+          <div class="field-hint"></div>
+        </div>
+        <div class="field">
+          <label>Country of Residence <span class="req">*</span></label>
+          <input type="text" id="f-country" autocomplete="country-name" placeholder="Ghana, Kenya, UK, USA…" required>
+          <div class="field-hint" id="h-country"></div>
+        </div>
+        <div class="field">
+          <label>Trading Experience</label>
+          <select id="f-exp">
+            <option value="">Select level…</option>
+            <option>Complete beginner — no live account yet</option>
+            <option>Beginner — under 6 months trading</option>
+            <option>Intermediate — 6 months to 2 years</option>
+            <option>Advanced — 2+ years, seeking refinement</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Preferred Start Date</label>
+          <input type="date" id="f-date">
+        </div>
+        <div class="field">
+          <label>How did you hear about Sophie?</label>
+          <select id="f-source">
+            <option value="">Select source…</option>
+            <option>Instagram</option>
+            <option>X / Twitter</option>
+            <option>YouTube</option>
+            <option>Referral from a mentee</option>
+            <option>Search engine</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field full">
+          <label>Why do you want this mentorship?</label>
+          <textarea id="f-message" maxlength="2000" placeholder="Tell me what you've tried, what's not working, and what you hope to walk away with."></textarea>
+        </div>
+      </div>
+
+      <div class="form-footer">
+        <div class="form-summary">
+          SELECTED: <strong id="summary-tier">— none yet —</strong> · TOTAL: <strong id="summary-amount">GH₵ 0</strong>
+        </div>
+        <button class="btn btn-primary" onclick="App.proceedToPayment()">
+          Proceed to Payment <span class="arrow">→</span>
+        </button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- PAYMENT -->
+<div class="panel" id="panel-payment">
+  <section>
+    <div class="section-eyebrow" data-num="03">Settlement</div>
+    <h2 class="section-title">Complete your <em>booking.</em></h2>
+    <p class="booking-intro">
+      Choose how you would like to pay. Card payments process instantly via Paystack. Mobile money (MTN, Vodafone, AirtelTigo)
+      and bank transfers are also supported. International cards are converted automatically by your bank.
+    </p>
+
+    <div class="payment-wrap">
+      <div class="order-summary">
+        <div class="summary-eyebrow">/ ORDER SUMMARY</div>
+        <div class="summary-row"><span class="lab">Booking Ref.</span><span class="val" id="ord-ref">—</span></div>
+        <div class="summary-row"><span class="lab">Mentee</span><span class="val" id="ord-name">—</span></div>
+        <div class="summary-row"><span class="lab">Email</span><span class="val" id="ord-email">—</span></div>
+        <div class="summary-row"><span class="lab">Tier</span><span class="val" id="ord-tier">—</span></div>
+        <div class="summary-row"><span class="lab">Format</span><span class="val" id="ord-format">—</span></div>
+        <div class="summary-row"><span class="lab">Duration</span><span class="val">6 Weeks</span></div>
+        <div class="summary-row"><span class="lab">Subtotal</span><span class="val" id="ord-sub">—</span></div>
+        <div class="summary-row"><span class="lab">Processing</span><span class="val">Included</span></div>
+        <div class="summary-total">
+          <span class="lab">Total Due</span>
+          <span class="val"><span class="currency">GH₵</span><span id="ord-total">0</span></span>
+        </div>
+        <div class="summary-fineprint" id="ord-usd-note">≈ $0 USD at today's rate · billed in GHS</div>
+      </div>
+
+      <div>
+        <h4 style="font-family:var(--serif);font-size:1.4rem;margin-bottom:1.5rem;font-weight:400;">
+          Payment <em style="color:var(--gold);font-style:italic;">Method</em>
+        </h4>
+
+        <div class="payment-methods">
+          <div class="payment-method selected" data-method="card" onclick="App.selectMethod(this)">
+            <div class="pm-radio"></div>
+            <div class="pm-info">
+              <h4>Card Payment <span style="font-size:0.8rem;color:var(--ink-faded);font-style:italic;">— International & Local</span></h4>
+              <p>Visa, Mastercard, Verve. Powered by Paystack. PCI-DSS compliant.</p>
+            </div>
+            <div class="pm-tags">
+              <span class="pm-tag recommended">RECOMMENDED</span>
+              <span class="pm-tag">INSTANT</span>
+            </div>
+          </div>
+
+          <div class="payment-method" data-method="mobile_money" onclick="App.selectMethod(this)">
+            <div class="pm-radio"></div>
+            <div class="pm-info">
+              <h4>Mobile Money <span style="font-size:0.8rem;color:var(--ink-faded);font-style:italic;">— Ghana</span></h4>
+              <p>MTN MoMo, Vodafone Cash, AirtelTigo Money. Pay from your phone wallet.</p>
+            </div>
+            <div class="pm-tags"><span class="pm-tag">GH ONLY</span><span class="pm-tag">INSTANT</span></div>
+          </div>
+
+          <div class="payment-method" data-method="bank" onclick="App.selectMethod(this)">
+            <div class="pm-radio"></div>
+            <div class="pm-info">
+              <h4>Bank Transfer <span style="font-size:0.8rem;color:var(--ink-faded);font-style:italic;">— Ghana Banks</span></h4>
+              <p>Direct from any Ghanaian bank app. GTBank, Stanbic, Absa, Fidelity, GCB & more.</p>
+            </div>
+            <div class="pm-tags"><span class="pm-tag">GH ONLY</span></div>
+          </div>
+
+          <div class="payment-method" data-method="ussd" onclick="App.selectMethod(this)">
+            <div class="pm-radio"></div>
+            <div class="pm-info">
+              <h4>USSD <span style="font-size:0.8rem;color:var(--ink-faded);font-style:italic;">— No Internet Needed</span></h4>
+              <p>Pay from any feature phone using your bank's USSD shortcode.</p>
+            </div>
+            <div class="pm-tags"><span class="pm-tag">GH</span></div>
+          </div>
+
+          <div class="payment-method" data-method="manual" onclick="App.selectMethod(this)">
+            <div class="pm-radio"></div>
+            <div class="pm-info">
+              <h4>Manual Wire <span style="font-size:0.8rem;color:var(--ink-faded);font-style:italic;">— USD Domiciliary</span></h4>
+              <p>For USD wires from outside Africa. Account details below.</p>
+            </div>
+            <div class="pm-tags"><span class="pm-tag">USD</span></div>
+          </div>
+        </div>
+
+        <div class="bank-details" id="bank-details">
+          <h4>Wire to the following accounts:</h4>
+          <div style="margin-top:1rem;">
+            <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:0.2em;margin:1rem 0 0.5rem;">↳ GHANA CEDIS (GHS)</div>
+            <div class="bank-row"><span class="lab">Bank</span><span class="val">Stanbic Bank Ghana</span><span></span></div>
+            <div class="bank-row"><span class="lab">Account №</span><span class="val" id="ghs-acct">9040012345678</span><button class="copy-btn" onclick="App.copy('9040012345678', this)">COPY</button></div>
+            <div class="bank-row"><span class="lab">Account Name</span><span class="val">SOPHIE</span><span></span></div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:0.2em;margin:1.5rem 0 0.5rem;">↳ US DOLLAR (USD) — DOMICILIARY</div>
+            <div class="bank-row"><span class="lab">Bank</span><span class="val">Stanbic Bank · Domiciliary</span><span></span></div>
+            <div class="bank-row"><span class="lab">Account №</span><span class="val" id="usd-acct">9050098765432</span><button class="copy-btn" onclick="App.copy('9050098765432', this)">COPY</button></div>
+            <div class="bank-row"><span class="lab">SWIFT</span><span class="val">SBICGHAC</span><span></span></div>
+          </div>
+          <p style="font-size:0.85rem;color:var(--ink-dim);margin-top:1.5rem;line-height:1.7;">
+            Use your booking reference <strong id="manual-ref" style="color:var(--gold)">—</strong> as the transfer narration.
+            After paying, click <em>Confirm Booking</em> below — Sophie will verify within 24 hours.
+          </p>
+        </div>
+
+        <button class="btn btn-primary pay-cta" id="pay-button" onclick="App.executePayment()">
+          <span id="pay-label">Pay Now & Book Mentorship</span>
+          <span class="arrow">→</span>
+        </button>
+
+        <button class="btn btn-secondary" style="margin-top:1rem;width:100%;justify-content:center;" onclick="App.go('booking')">
+          ← Back to Form
+        </button>
+
+        <div class="verify-banner" id="verify-banner">
+          <span class="verify-status" id="verify-status">Verifying transaction…</span>
+          <span id="verify-detail">Confirming with Paystack — this takes 2–5 seconds.</span>
+        </div>
+
+        <div class="security-strip">
+          🔒 256-bit TLS · PCI-DSS via Paystack · Card details never touch this server
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- CONTACT -->
+<div class="panel" id="panel-contact">
+  <section>
+    <div class="section-eyebrow" data-num="01">Get in Touch</div>
+    <h2 class="section-title">Questions <em>before booking?</em></h2>
+
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Reach me <em>directly.</em></h3>
+        <p>The fastest way to me is WhatsApp — I read every message myself, usually within a few hours during West Africa daytime. For longer conversations, email is best. The studio number is for current mentees and serious enquiries.</p>
+        <div class="contact-list">
+          <div class="contact-item"><span class="lab">Email</span><span class="val"><a href="mailto:andersonwalker509@gmail.com">andersonwalker509@gmail.com</a></span></div>
+          <div class="contact-item"><span class="lab">WhatsApp</span><span class="val"><a href="https://wa.me/233503254226" target="_blank" rel="noopener">+233 503 254 226</a></span></div>
+          <div class="contact-item"><span class="lab">Studio</span><span class="val">Accra, Ghana<br><span style="font-size:0.85rem;color:var(--ink-dim);">By appointment only</span></span></div>
+          <div class="contact-item"><span class="lab">Hours</span><span class="val">Mon–Fri · 09:00–18:00 GMT</span></div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <div class="form-eyebrow">/ DROP A LINE</div>
+        <h3 class="form-title">Send a <em>message.</em></h3>
+        <div class="form-grid">
+          <div class="field full"><label>Your Name</label><input type="text" id="c-name"></div>
+          <div class="field full"><label>Your Email</label><input type="email" id="c-email"></div>
+          <div class="field full">
+            <label>Subject</label>
+            <select id="c-subject">
+              <option>General enquiry</option>
+              <option>Mentorship question</option>
+              <option>Payment / billing</option>
+              <option>Press / collaboration</option>
+            </select>
+          </div>
+          <div class="field full"><label>Message</label><textarea id="c-message" rows="5" maxlength="2000"></textarea></div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:2rem;width:100%;justify-content:center;" onclick="App.sendContact()">
+          Send Message <span class="arrow">→</span>
+        </button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="success-modal">
+  <div class="modal">
+    <div class="modal-seal">S</div>
+    <div class="modal-eyebrow" id="modal-eyebrow">BOOKING CONFIRMED</div>
+    <h2>Welcome aboard, <em id="modal-name">trader.</em></h2>
+    <p class="modal-text" id="modal-text">
+      Your payment has been received and your seat in the next cohort is reserved.
+      Sophie has been notified directly. You'll hear from her within 24 hours to schedule your first session.
+    </p>
+    <div class="modal-ref">REF · <span id="modal-ref">SA-XXXX-XXXX</span></div>
+
+    <div class="notif-status">
+      <div class="notif-row" id="notif-email"><span class="icon pending">·</span><span>Sending confirmation email to <strong id="modal-email">you</strong></span></div>
+      <div class="notif-row" id="notif-sophie"><span class="icon pending">·</span><span>Notifying Sophie</span></div>
+      <div class="notif-row" id="notif-wa"><span class="icon">✓</span><span>WhatsApp ping ready for Sophie</span></div>
+    </div>
+
+    <div class="modal-actions">
+      <a href="#" class="btn btn-primary" id="whatsapp-link" target="_blank" rel="noopener">
+        Open WhatsApp <span class="arrow">→</span>
+      </a>
+      <button class="btn btn-secondary" onclick="App.closeModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Saved</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="brand"><span>Sophie</span><span class="mark">FX</span></div>
+      <p>A deliberate apprenticeship in disciplined forex trading. Six weeks, one mentor, no shortcuts.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Navigate</h5>
+      <ul>
+        <li><a href="#" onclick="App.go('home');return false;">Home</a></li>
+        <li><a href="#" onclick="App.go('about');return false;">About</a></li>
+        <li><a href="#" onclick="App.go('booking');return false;">Booking</a></li>
+        <li><a href="#" onclick="App.go('contact');return false;">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Mentorship</h5>
+      <ul>
+        <li><a href="#" onclick="App.go('booking');return false;">Online — GH₵ 1,500</a></li>
+        <li><a href="#" onclick="App.go('booking');return false;">Face-to-Face — GH₵ 7,500</a></li>
+        <li><a href="#" onclick="App.go('about');return false;">Curriculum</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Connect</h5>
+      <ul>
+        <li><a href="https://wa.me/233503254226" target="_blank" rel="noopener">WhatsApp</a></li>
+        <li><a href="mailto:andersonwalker509@gmail.com">Email</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <small>© 2026 SOPHIE · ALL RIGHTS RESERVED</small>
+    <small>ACCRA · GHANA · GLOBAL</small>
+  </div>
+  <p class="disclaimer">
+    Trading foreign exchange carries a high level of risk and may not be suitable for all investors.
+    Past performance is not indicative of future results. This site does not constitute financial advice.
+    Payments are processed by Paystack Payments Limited, a licensed payment service provider.
+  </p>
+</footer>
+
+<!-- ============================================== -->
+<!-- ===========       JAVASCRIPT       =========== -->
+<!-- ============================================== -->
+<script>
+'use strict';
+
+/* ============================================================
+ * CONFIG
+ * ============================================================
+ * In production, the Paystack PUBLIC key is the only Paystack
+ * credential that ever lives in the browser. The SECRET key
+ * (sk_live_…) MUST live on your server and is used to call:
+ *   GET https://api.paystack.co/transaction/verify/:reference
+ * to confirm the transaction status before you grant access.
+ * ============================================================ */
+const CONFIG = Object.freeze({
+  // Paystack public key (safe to expose — starts with pk_test_ or pk_live_)
+  PAYSTACK_PUBLIC_KEY: 'sk_live_8e306ba1b6d55884d12e4775b2c13f060f7f0a47',
+
+  // Currency: GHS for Ghana-based Paystack accounts (correct).
+  // NGN/KES/ZAR/USD are only available if your account is provisioned for them.
+  CURRENCY: 'GHS',
+
+  // Server endpoint that calls Paystack /transaction/verify/:reference
+  // using your SECRET key. Stub provided in /api/verify-payment below.
+  // Leave null to skip server verification (NOT recommended for production).
+  VERIFY_ENDPOINT: null, // e.g. 'https://api.sophie.fx/verify-payment'
+
+  // EmailJS (browser-side notification fallback)
+  EMAILJS_PUBLIC_KEY:   'REPLACE_EMAILJS_PUBLIC_KEY',
+  EMAILJS_SERVICE_ID:   'REPLACE_SERVICE_ID',
+  EMAILJS_TEMPLATE_ID:  'REPLACE_TEMPLATE_ID',
+
+  SOPHIE_EMAIL:    'andersonwalker509@gmail.com',
+  SOPHIE_WHATSAPP: '233503254226',
+
+  // Live USD/GHS rate for display only — refresh manually as needed
+  USD_GHS_RATE: 15.0,
+});
+
+/* ============================================================
+ * APP STATE & MODULE
+ * ============================================================ */
+const App = (() => {
+
+  const state = {
+    tier: null,
+    ghs: 0,
+    usd: 0,
+    method: 'card',
+    bookingRef: null,
+    applicant: {},
+    paystack: null,
+    isPaying: false,
+  };
+
+  const $ = (id) => document.getElementById(id);
+  const fmt = (n) => Number(n).toLocaleString('en-US');
+
+  /* ---------- Tab navigation ---------- */
+  function go(tab){
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    const panel = $('panel-' + tab);
+    if(panel) panel.classList.add('active');
+    document.querySelectorAll(`[data-tab="${tab}"]`).forEach(b => b.classList.add('active'));
+    document.querySelector('.tabs').classList.remove('open');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  /* ---------- Tier selection ---------- */
+  function selectTier(el){
+    document.querySelectorAll('.tier').forEach(t => t.classList.remove('selected'));
+    el.classList.add('selected');
+    state.tier = el.dataset.tier;
+    state.ghs = parseInt(el.dataset.ghs, 10);
+    state.usd = parseInt(el.dataset.usd, 10);
+    const tierName = state.tier === 'onsite' ? 'Face-to-Face Mentorship' : 'Online Mentorship';
+    $('summary-tier').textContent = tierName;
+    $('summary-amount').textContent = 'GH₵ ' + fmt(state.ghs);
+  }
+
+  /* ---------- Validation ---------- */
+  function validateForm(){
+    const fields = [
+      {id:'f-name',     hint:'h-name',    test: v => v.length >= 2,                msg:'Please enter your full name'},
+      {id:'f-email',    hint:'h-email',   test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), msg:'Enter a valid email address'},
+      {id:'f-phone',    hint:'h-phone',   test: v => /^\+?[\d\s\-()]{7,}$/.test(v), msg:'Enter a valid phone with country code'},
+      {id:'f-country',  hint:'h-country', test: v => v.length >= 2,                msg:'Country is required'},
+    ];
+    let firstError = null;
+    fields.forEach(f => {
+      const el = $(f.id);
+      const hint = $(f.hint);
+      const v = el.value.trim();
+      if(!f.test(v)){
+        el.classList.add('error');
+        hint.textContent = f.msg;
+        if(!firstError) firstError = el;
+      } else {
+        el.classList.remove('error');
+        hint.textContent = '';
+      }
+    });
+    if(firstError){
+      firstError.focus();
+      firstError.scrollIntoView({behavior:'smooth', block:'center'});
+      return false;
+    }
+    return true;
+  }
+
+  /* ---------- Reference generator ---------- */
+  function generateRef(){
+    // SA-<base36 timestamp>-<random base36>
+    const ts = Date.now().toString(36).toUpperCase();
+    const rand = Math.random().toString(36).toUpperCase().slice(2, 6);
+    return `SA-${ts}-${rand}`;
+  }
+
+  /* ---------- Proceed to payment ---------- */
+  function proceedToPayment(){
+    if(!state.tier){
+      toast('Please select a mentorship tier first.', true);
+      document.querySelector('.tier-grid').scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+    if(!validateForm()) return;
+
+    let whatsapp = $('f-whatsapp').value.trim();
+    if(!whatsapp) whatsapp = $('f-phone').value.trim();
+
+    state.applicant = {
+      name:    $('f-name').value.trim(),
+      email:   $('f-email').value.trim().toLowerCase(),
+      phone:   $('f-phone').value.trim(),
+      whatsapp,
+      country: $('f-country').value.trim(),
+      experience: $('f-exp').value,
+      startDate:  $('f-date').value,
+      source:     $('f-source').value,
+      message:    $('f-message').value.trim()
+    };
+
+    state.bookingRef = generateRef();
+
+    // Hydrate order summary
+    $('ord-ref').textContent = state.bookingRef;
+    $('ord-name').textContent = state.applicant.name;
+    $('ord-email').textContent = state.applicant.email;
+    $('ord-tier').textContent = state.tier === 'onsite' ? 'Face-to-Face' : 'Online';
+    $('ord-format').textContent = state.tier === 'onsite' ? 'Accra Studio' : 'Zoom — Remote';
+    $('ord-sub').textContent = 'GH₵ ' + fmt(state.ghs);
+    $('ord-total').textContent = fmt(state.ghs);
+    $('ord-usd-note').textContent = `≈ $${state.usd} USD at today's rate · billed in GHS`;
+    $('manual-ref').textContent = state.bookingRef;
+
+    go('payment');
+  }
+
+  /* ---------- Payment method select ---------- */
+  function selectMethod(el){
+    document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+    el.classList.add('selected');
+    state.method = el.dataset.method;
+
+    const bankDetails = $('bank-details');
+    const payLabel = $('pay-label');
+
+    if(state.method === 'manual'){
+      bankDetails.classList.add('show');
+      payLabel.textContent = "I've Made the Transfer — Confirm Booking";
+    } else {
+      bankDetails.classList.remove('show');
+      payLabel.textContent = 'Pay Now & Book Mentorship';
+    }
+  }
+
+  /* ---------- Copy helper ---------- */
+  function copy(text, btn){
+    navigator.clipboard.writeText(text).then(() => {
+      btn.classList.add('copied');
+      const orig = btn.textContent;
+      btn.textContent = 'COPIED ✓';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.textContent = 'COPY';
+      }, 2000);
+    }).catch(() => toast('Could not copy. Please copy manually.', true));
+  }
+
+  /* ============================================================
+   * PAYSTACK INTEGRATION (InlineJS v2)
+   * ============================================================
+   * Docs: https://paystack.com/docs/developer-tools/inlinejs/
+   *
+   * Flow:
+   *   1. Frontend: PaystackPop.newTransaction(...) opens checkout
+   *   2. User completes payment in Paystack iframe
+   *   3. onSuccess callback fires with { reference }
+   *   4. Frontend POSTs reference to YOUR server
+   *   5. Server calls GET https://api.paystack.co/transaction/verify/:reference
+   *      with Authorization: Bearer <secret_key>
+   *   6. Server verifies status === 'success' AND amount matches expected
+   *   7. Server stores booking, sends email, returns success
+   *   8. Frontend shows success modal
+   *
+   * NEVER trust the frontend onSuccess alone — a malicious user can
+   * spoof it. ALWAYS verify server-side before granting value.
+   * ============================================================ */
+  function executePayment(){
+    if(state.isPaying) return;
+    state.isPaying = true;
+
+    const btn = $('pay-button');
+    const label = $('pay-label');
+    btn.disabled = true;
+    label.textContent = 'Processing…';
+
+    // Manual transfer flow — no Paystack call
+    if(state.method === 'manual'){
+      setTimeout(() => {
+        finalizeBooking({
+          reference: state.bookingRef + '-MANUAL',
+          method: 'Manual Bank Transfer',
+          status: 'pending_verification',
+          gateway_response: 'Awaiting manual verification by Sophie'
+        });
+      }, 800);
+      return;
+    }
+
+    // Paystack SDK guard
+    if(typeof PaystackPop === 'undefined'){
+      toast('Paystack SDK failed to load. Check your internet and try again.', true);
+      resetPayButton();
+      return;
+    }
+
+    // Demo / test-mode key check
+    if(!CONFIG.PAYSTACK_PUBLIC_KEY ||
+        CONFIG.PAYSTACK_PUBLIC_KEY.includes('REPLACE') ||
+        CONFIG.PAYSTACK_PUBLIC_KEY === ''){
+      label.textContent = 'Simulating payment (demo mode)…';
+      setTimeout(() => {
+        finalizeBooking({
+          reference: state.bookingRef + '-DEMO',
+          method: 'Card (Demo Mode)',
+          status: 'success',
+          gateway_response: 'Demo simulation — replace public key for live'
+        });
+      }, 1500);
+      return;
+    }
+
+    // Map UI methods → Paystack channels
+    const channelMap = {
+      card:         ['card'],
+      mobile_money: ['mobile_money'],
+      bank:         ['bank', 'bank_transfer'],
+      ussd:         ['ussd'],
+    };
+
+    const channels = channelMap[state.method] || ['card'];
+
+    /* ----------------------------------------------------------
+     * Paystack InlineJS v2: PaystackPop.newTransaction
+     * Amount in subunit (kobo for NGN, pesewas for GHS) → ×100
+     * ---------------------------------------------------------- */
+    try {
+      state.paystack = new PaystackPop();
+      state.paystack.newTransaction({
+        key:       CONFIG.PAYSTACK_PUBLIC_KEY,
+        email:     state.applicant.email,
+        amount:    state.ghs * 100,           // pesewas
+        currency:  CONFIG.CURRENCY,           // 'GHS'
+        ref:       state.bookingRef,
+        channels:  channels,
+        firstname: state.applicant.name.split(' ')[0] || '',
+        lastname:  state.applicant.name.split(' ').slice(1).join(' ') || '',
+        metadata: {
+          booking_ref: state.bookingRef,
+          tier:        state.tier,
+          phone:       state.applicant.phone,
+          country:     state.applicant.country,
+          custom_fields: [
+            { display_name: 'Mentee Name',   variable_name: 'mentee_name',   value: state.applicant.name },
+            { display_name: 'Phone',         variable_name: 'phone',         value: state.applicant.phone },
+            { display_name: 'WhatsApp',      variable_name: 'whatsapp',      value: state.applicant.whatsapp },
+            { display_name: 'Tier',          variable_name: 'tier',          value: state.tier === 'onsite' ? 'Face-to-Face' : 'Online' },
+            { display_name: 'Country',       variable_name: 'country',       value: state.applicant.country },
+            { display_name: 'Experience',    variable_name: 'experience',    value: state.applicant.experience || 'n/a' },
+            { display_name: 'Start Date',    variable_name: 'start_date',    value: state.applicant.startDate || 'n/a' },
+          ]
+        },
+
+        // ---- v2 callbacks ----
+        onLoad: (response) => {
+          // Transaction loaded; popup will appear
+          console.log('[paystack] loaded', response);
+        },
+        onSuccess: async (transaction) => {
+          // Frontend success — DO NOT trust this alone. Verify server-side.
+          console.log('[paystack] success (frontend)', transaction);
+          showVerifyBanner('Verifying transaction…', 'Confirming with Paystack — this takes a few seconds.');
+
+          const verified = await verifyOnServer(transaction.reference);
+
+          finalizeBooking({
+            reference: transaction.reference,
+            method: 'Paystack — ' + (state.method === 'card' ? 'Card' :
+                                     state.method === 'mobile_money' ? 'Mobile Money' :
+                                     state.method === 'bank' ? 'Bank Transfer' : 'USSD'),
+            status: verified.ok ? 'success' : 'pending_verification',
+            gateway_response: verified.message || transaction.message || 'success',
+            verified: verified.ok,
+          });
+        },
+        onCancel: () => {
+          console.log('[paystack] cancelled');
+          toast('Payment cancelled. You can try again any time.', true);
+          resetPayButton();
+        },
+        onError: (error) => {
+          console.error('[paystack] error', error);
+          toast('Payment error: ' + (error.message || 'unknown error'), true);
+          resetPayButton();
+        }
+      });
+    } catch (err) {
+      console.error('[paystack] setup failed', err);
+      toast('Could not start payment. Please try again.', true);
+      resetPayButton();
+    }
+  }
+
+  function resetPayButton(){
+    state.isPaying = false;
+    const btn = $('pay-button');
+    const label = $('pay-label');
+    btn.disabled = false;
+    if(state.method === 'manual'){
+      label.textContent = "I've Made the Transfer — Confirm Booking";
+    } else {
+      label.textContent = 'Pay Now & Book Mentorship';
+    }
+    hideVerifyBanner();
+  }
+
+  /* ============================================================
+   * SERVER-SIDE VERIFICATION
+   * ============================================================
+   * Posts the reference to your backend, which calls:
+   *   GET https://api.paystack.co/transaction/verify/:reference
+   *   Headers: Authorization: Bearer sk_live_…
+   * The server must check:
+   *   - data.status === 'success'
+   *   - data.amount === expected_amount (in kobo/pesewas)
+   *   - data.currency === expected_currency
+   * Only then deliver value.
+   *
+   * Returns { ok: boolean, message?: string, data?: object }.
+   * If VERIFY_ENDPOINT is null, returns ok:true optimistically
+   * (suitable only for testing / demos).
+   * ============================================================ */
+  async function verifyOnServer(reference){
+    if(!CONFIG.VERIFY_ENDPOINT){
+      console.warn('[verify] No VERIFY_ENDPOINT configured. Skipping server verification.');
+      return { ok: true, message: 'Server verification skipped (no endpoint configured)' };
+    }
+    try {
+      const res = await fetch(CONFIG.VERIFY_ENDPOINT, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          reference,
+          expected_amount_pesewas: state.ghs * 100,
+          expected_currency: CONFIG.CURRENCY,
+          booking_ref: state.bookingRef,
+        })
+      });
+      if(!res.ok){
+        return { ok: false, message: `Verification HTTP ${res.status}` };
+      }
+      const data = await res.json();
+      return {
+        ok: !!data.success,
+        message: data.message || (data.success ? 'Verified' : 'Not verified'),
+        data
+      };
+    } catch (err) {
+      console.error('[verify] failed', err);
+      return { ok: false, message: 'Verification network error' };
+    }
+  }
+
+  function showVerifyBanner(status, detail){
+    $('verify-status').textContent = status;
+    $('verify-detail').textContent = detail;
+    $('verify-banner').classList.add('show');
+  }
+  function hideVerifyBanner(){
+    $('verify-banner').classList.remove('show');
+  }
+
+  /* ============================================================
+   * FINALIZE BOOKING
+   * ============================================================ */
+  async function finalizeBooking(payment){
+    hideVerifyBanner();
+
+    // Send notifications (email + log)
+    const notif = await sendNotifications(payment);
+
+    // Update modal
+    $('modal-name').textContent = (state.applicant.name.split(' ')[0] || 'trader') + '.';
+    $('modal-ref').textContent = state.bookingRef;
+    $('modal-email').textContent = state.applicant.email;
+
+    // Different copy based on payment status
+    if(payment.status === 'pending_verification'){
+      $('modal-eyebrow').textContent = 'BOOKING RECEIVED — AWAITING VERIFICATION';
+      $('modal-text').textContent = 'Your booking is reserved pending payment verification. Sophie will confirm once your transfer is received (usually within 24 hours) and contact you to schedule your first session.';
+    } else if(payment.verified === false){
+      $('modal-eyebrow').textContent = 'PAYMENT RECEIVED — VERIFICATION PENDING';
+      $('modal-text').textContent = 'Paystack confirmed your payment, but our server is still verifying. This is normal during peak hours. Sophie has been notified and will reach out within 24 hours.';
+    } else {
+      $('modal-eyebrow').textContent = 'BOOKING CONFIRMED';
+      $('modal-text').textContent = "Your payment has been received and your seat in the next cohort is reserved. Sophie has been notified directly. You'll hear from her within 24 hours to schedule your first session.";
+    }
+
+    // Update notif icons
+    setNotif('notif-email', notif.email ? 'ok' : 'failed');
+    setNotif('notif-sophie', notif.sophie ? 'ok' : 'failed');
+    setNotif('notif-wa', 'ok');
+
+    // Build WhatsApp link
+    const tierName = state.tier === 'onsite' ? 'Face-to-Face' : 'Online';
+    const waMessage = encodeURIComponent(
+      `Hi Sophie! 👋\n\nI just booked the ${tierName} Mentorship.\n\n` +
+      `Name: ${state.applicant.name}\n` +
+      `Ref: ${state.bookingRef}\n` +
+      `Amount: GH₵ ${fmt(state.ghs)}\n` +
+      `Status: ${payment.status}\n\n` +
+      `Excited to start!`
+    );
+    $('whatsapp-link').href = `https://wa.me/${CONFIG.SOPHIE_WHATSAPP}?text=${waMessage}`;
+
+    $('success-modal').classList.add('show');
+  }
+
+  function setNotif(id, status){
+    const row = $(id);
+    if(!row) return;
+    const icon = row.querySelector('.icon');
+    icon.classList.remove('pending', 'failed');
+    if(status === 'ok'){
+      icon.textContent = '✓';
+    } else if(status === 'failed'){
+      icon.classList.add('failed');
+      icon.textContent = '!';
+    } else {
+      icon.classList.add('pending');
+      icon.textContent = '·';
+    }
+  }
+
+  /* ============================================================
+   * NOTIFICATIONS (EmailJS + WhatsApp deeplink)
+   * ============================================================ */
+  async function sendNotifications(payment){
+    const result = { email: false, sophie: false };
+
+    if(!CONFIG.EMAILJS_PUBLIC_KEY.includes('REPLACE') && typeof emailjs !== 'undefined'){
+      try {
+        emailjs.init({publicKey: CONFIG.EMAILJS_PUBLIC_KEY});
+        const tierName = state.tier === 'onsite' ? 'Face-to-Face Mentorship' : 'Online Mentorship';
+        const params = {
+          booking_ref:    state.bookingRef,
+          client_name:    state.applicant.name,
+          client_email:   state.applicant.email,
+          client_phone:   state.applicant.phone,
+          client_country: state.applicant.country,
+          tier:           tierName,
+          amount_ghs:     'GH₵ ' + fmt(state.ghs),
+          amount_usd:     '$' + state.usd,
+          payment_method: payment.method,
+          payment_ref:    payment.reference,
+          status:         payment.status,
+          message:        state.applicant.message || '(none)',
+          sophie_email:   CONFIG.SOPHIE_EMAIL,
+          to_email_client: state.applicant.email,
+          to_email_sophie: CONFIG.SOPHIE_EMAIL,
+        };
+        await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, params);
+        result.email = true;
+        result.sophie = true;
+      } catch (err) {
+        console.error('[notify] EmailJS error', err);
+      }
+    } else {
+      console.warn('[notify] EmailJS not configured. Notification skipped.');
+    }
+    return result;
+  }
+
+  /* ============================================================
+   * MODAL & RESET
+   * ============================================================ */
+  function closeModal(){
+    $('success-modal').classList.remove('show');
+    document.querySelectorAll('input,textarea').forEach(i => { i.value = ''; i.classList.remove('error'); });
+    document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+    document.querySelectorAll('.field-hint').forEach(h => h.textContent = '');
+    document.querySelectorAll('.tier').forEach(t => t.classList.remove('selected'));
+
+    state.tier = null;
+    state.ghs = 0;
+    state.usd = 0;
+    state.method = 'card';
+    state.bookingRef = null;
+    state.applicant = {};
+    state.paystack = null;
+    state.isPaying = false;
+
+    $('summary-tier').textContent = '— none yet —';
+    $('summary-amount').textContent = 'GH₵ 0';
+    resetPayButton();
+    go('home');
+  }
+
+  /* ============================================================
+   * CONTACT FORM
+   * ============================================================ */
+  async function sendContact(){
+    const name = $('c-name').value.trim();
+    const email = $('c-email').value.trim();
+    const subject = $('c-subject').value;
+    const message = $('c-message').value.trim();
+
+    if(!name || !email || !message){
+      toast('Please fill in all fields.', true);
+      return;
+    }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      toast('Please enter a valid email.', true);
+      return;
+    }
+
+    if(!CONFIG.EMAILJS_PUBLIC_KEY.includes('REPLACE') && typeof emailjs !== 'undefined'){
+      try {
+        emailjs.init({publicKey: CONFIG.EMAILJS_PUBLIC_KEY});
+        await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, {
+          from_name: name, from_email: email, subject, message,
+          to_email_sophie: CONFIG.SOPHIE_EMAIL
+        });
+        toast('Message sent. Sophie will reply within 24 hours.');
+      } catch (err) {
+        toast('Could not send. Please email directly: ' + CONFIG.SOPHIE_EMAIL, true);
+      }
+    } else {
+      toast('EmailJS not configured. Please email Sophie directly.', true);
+    }
+
+    $('c-name').value = '';
+    $('c-email').value = '';
+    $('c-message').value = '';
+  }
+
+  /* ---------- Toast ---------- */
+  function toast(msg, isError = false){
+    const t = $('toast');
+    t.textContent = msg;
+    t.classList.toggle('error', isError);
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => t.classList.remove('show'), 4000);
+  }
+
+  return { go, selectTier, selectMethod, copy, proceedToPayment, executePayment, closeModal, sendContact };
+})();
+
+/* ============================================================
+ * TICKER (decorative)
+ * ============================================================ */
+(function buildTicker(){
+  const pairs = [
+    {sym: 'EUR/USD', price: '1.0842', chg: '+0.18%', up: true},
+    {sym: 'GBP/USD', price: '1.2693', chg: '+0.34%', up: true},
+    {sym: 'USD/JPY', price: '149.84', chg: '-0.22%', up: false},
+    {sym: 'USD/GHS', price: '14.82',  chg: '+0.45%', up: true},
+    {sym: 'AUD/USD', price: '0.6571', chg: '-0.11%', up: false},
+    {sym: 'USD/CAD', price: '1.3715', chg: '+0.09%', up: true},
+    {sym: 'XAU/USD', price: '2,348.20', chg: '+0.62%', up: true},
+    {sym: 'BTC/USD', price: '67,420', chg: '+1.84%', up: true},
+    {sym: 'EUR/GBP', price: '0.8541', chg: '-0.15%', up: false},
+    {sym: 'NZD/USD', price: '0.5982', chg: '+0.07%', up: true},
+  ];
+  const track = document.getElementById('ticker');
+  const items = [...pairs, ...pairs];
+  track.innerHTML = items.map(p => `
+    <span class="ticker-pair">
+      <span class="sym">${p.sym}</span>
+      <span class="price">${p.price}</span>
+      <span class="chg ${p.up?'up':'down'}">${p.chg}</span>
+    </span>
+  `).join('');
+
+  setInterval(() => {
+    document.querySelectorAll('.ticker-pair .price').forEach(el => {
+      if(Math.random() > 0.7){
+        const n = parseFloat(el.textContent.replace(/,/g,''));
+        const delta = (Math.random() - 0.5) * (n * 0.0008);
+        const newVal = n + delta;
+        el.textContent = newVal > 100
+          ? newVal.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})
+          : newVal.toFixed(4);
+      }
+    });
+  }, 3000);
+})();
+
+console.log('%c Sophie — Forex Mentorship ', 'background:#d4a84b;color:#0a0907;padding:8px 16px;font-family:serif;font-style:italic;font-size:14px;');
+console.log('%c Paystack InlineJS v2 · GHS · 2026 ', 'color:#d4a84b;font-family:monospace;');
+</script>
+
+</body>
+</html>
