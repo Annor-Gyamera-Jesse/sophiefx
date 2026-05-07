@@ -2135,7 +2135,7 @@ const CONFIG = Object.freeze({
   VERIFY_ENDPOINT: null, // Optional server endpoint for transaction verification
 
   // ── EMAILJS — paste your three values here ───────────────
-  EMAILJS_PUBLIC_KEY:   'kaAcwVVVxd-gVw1vU',
+   EMAILJS_PUBLIC_KEY:   'kaAcwVVVxd-gVw1vU',
   EMAILJS_SERVICE_ID:   'service_gx05yel',
   EMAILJS_TEMPLATE_ID:  'template_1a9pekg',
 
@@ -2655,7 +2655,9 @@ const App = (() => {
    * NOTIFICATIONS — sends TWO emails per booking via EmailJS:
    *   1. Confirmation to the mentee
    *   2. Notification to Sophie
-   * Both use the same template, distinguished by `email_type`.
+   * Both use the same template, distinguished by boolean flags
+   * (is_booking_client / is_booking_sophie) — EmailJS only supports
+   * basic {{#if var}} blocks, not Handlebars helpers like (eq ...).
    * ============================================================ */
   async function sendNotifications(payment){
     const result = { email: false, sophie: false };
@@ -2692,10 +2694,14 @@ const App = (() => {
     try {
       await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, {
         ...common,
-        email_type: 'booking_client',
-        to_email:   state.applicant.email,
-        reply_to:   CONFIG.SOPHIE_EMAIL,
-        subject:    `Welcome to Sophie FX — Booking ${state.bookingRef}`,
+        is_booking_client: 'true',
+        is_booking_sophie: '',
+        is_contact:        '',
+        is_pending:        '',
+        has_message:       '',
+        to_email: state.applicant.email,
+        reply_to: CONFIG.SOPHIE_EMAIL,
+        subject:  `Welcome to Sophie FX — Booking ${state.bookingRef}`,
       });
       result.email = true;
       console.log('[notify] ✓ confirmation sent to', state.applicant.email);
@@ -2707,10 +2713,14 @@ const App = (() => {
     try {
       await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, {
         ...common,
-        email_type: 'booking_sophie',
-        to_email:   CONFIG.SOPHIE_EMAIL,
-        reply_to:   state.applicant.email,
-        subject:    `🎉 New booking: ${state.applicant.name} — ${common.amount_ghs}`,
+        is_booking_client: '',
+        is_booking_sophie: 'true',
+        is_contact:        '',
+        is_pending:        (payment.status === 'pending_verification') ? 'true' : '',
+        has_message:       (state.applicant.message && state.applicant.message.length > 0) ? 'true' : '',
+        to_email: CONFIG.SOPHIE_EMAIL,
+        reply_to: state.applicant.email,
+        subject:  `🎉 New booking: ${state.applicant.name} — ${common.amount_ghs}`,
       });
       result.sophie = true;
       console.log('[notify] ✓ admin notification sent to', CONFIG.SOPHIE_EMAIL);
@@ -2783,7 +2793,9 @@ const App = (() => {
 
     try {
       await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, {
-        email_type:      'contact',
+        is_booking_client: '',
+        is_booking_sophie: '',
+        is_contact:        'true',
         to_email:        CONFIG.SOPHIE_EMAIL,
         reply_to:        email,
         subject:         `📬 New contact message from ${name}`,
