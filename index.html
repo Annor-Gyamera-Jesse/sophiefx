@@ -2135,9 +2135,10 @@ const CONFIG = Object.freeze({
   VERIFY_ENDPOINT: null, // Optional server endpoint for transaction verification
 
   // ── EMAILJS — paste your three values here ───────────────
-   EMAILJS_PUBLIC_KEY:   'kaAcwVVVxd-gVw1vU',
+  EMAILJS_PUBLIC_KEY:   'kaAcwVVVxd-gVw1vU',
   EMAILJS_SERVICE_ID:   'service_gx05yel',
   EMAILJS_TEMPLATE_ID:  'template_1a9pekg',
+
 
   // ── DESTINATIONS ─────────────────────────────────────────
   SOPHIE_EMAIL:    'andersonwalker509@gmail.com',
@@ -2655,9 +2656,9 @@ const App = (() => {
    * NOTIFICATIONS — sends TWO emails per booking via EmailJS:
    *   1. Confirmation to the mentee
    *   2. Notification to Sophie
-   * Both use the same template, distinguished by boolean flags
-   * (is_booking_client / is_booking_sophie) — EmailJS only supports
-   * basic {{#if var}} blocks, not Handlebars helpers like (eq ...).
+   * Both use the same template, distinguished by truthy flags
+   * (is_booking_client / is_booking_sophie). EmailJS uses Mustache
+   * syntax: {{#var}}...{{/var}} renders the block when var is truthy.
    * ============================================================ */
   async function sendNotifications(payment){
     const result = { email: false, sophie: false };
