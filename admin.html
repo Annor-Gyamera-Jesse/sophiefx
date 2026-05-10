@@ -239,7 +239,7 @@ body {
 
 .log-entry {
   display: grid;
-  grid-template-columns: 130px 70px 120px 1fr 30px;
+  grid-template-columns: 175px 70px 120px 1fr 30px;
   gap: 0;
   border-bottom: 1px solid var(--border);
   min-height: 36px;
@@ -848,8 +848,9 @@ const Monitor = (() => {
 
   function entryHTML(evt){
     const t = new Date(evt.ts);
-    const time = t.toLocaleTimeString('en-GB', {hour12:false}) + '.' +
-                 String(t.getMilliseconds()).padStart(3,'0');
+    const date = t.toLocaleDateString('en-GB', {day:'2-digit', month:'short'});
+    const time = date + ' ' + t.toLocaleTimeString('en-GB', {hour12:false}) + '.' +
+             String(t.getMilliseconds()).padStart(3,'0');
     const hasData = evt.data || evt.stack || evt.duration;
     return `<div class="log-entry level-${evt.level}${evt.id===selectedId?' selected':''}"
                  data-id="${evt.id}">
