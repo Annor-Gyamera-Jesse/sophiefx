@@ -2913,223 +2913,37 @@ console.log('%c Paystack InlineJS v2 · GHS · 2026 ', 'color:#e0b35a;font-famil
 </script>
 
 <script>
+/* SophieFX Monitor — logs to localStorage → open admin.html to see */
 (function SophieFXMonitor(){
   'use strict';
-
-  const ENDPOINT = '/.netlify/functions/verify-payment';
-
-  function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
-
-  async function send(evt){
-    try {
-      await fetch(ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type':       'application/json',
-          'x-sophiefx-event':   '1',
-        },
-        body: JSON.stringify(evt),
-      });
-    } catch(_){}
-  }
-
-  function log(level, tag, msg, extra){
-    const evt = {
-      id:    uid(),
-      ts:    Date.now(),
-      level,
-      tag,
-      msg:   String(msg),
-      ...extra,
-    };
-    send(evt);
-    return evt;
-  }
-
-  // Patch console
-  const _log   = console.log.bind(console);
-  const _warn  = console.warn.bind(console);
-  const _error = console.error.bind(console);
-
-  console.log = function(...args){
-    _log(...args);
-    const msg = args.map(a => typeof a==='object'?JSON.stringify(a):String(a)).join(' ');
-    const tag = extractTag(msg);
-    const level = (msg.includes('✓')||msg.includes('success')||msg.includes('Initialised')) ? 'success' : 'info';
-    log(level, tag, msg, { data: args.length>1 ? args : null });
-  };
-
-  console.warn = function(...args){
-    _warn(...args);
-    const msg = args[0]&&typeof args[0]==='string'
-      ? args[0].replace(/%c/g,'').replace(/[^\x20-\x7E]/g,'').trim()
-      : args.map(a=>String(a)).join(' ');
-    log('warn', extractTag(msg), msg, { data: args.length>1 ? args.slice(1) : null });
-  };
-
-  console.error = function(...args){
-    _error(...args);
-    const msg = args.map(a => a instanceof Error ? a.message : typeof a==='object' ? JSON.stringify(a) : String(a)).join(' ');
-    const stack = args.find(a => a instanceof Error)?.stack || null;
-    log('error', extractTag(msg), msg, { data: args.length>1 ? args : null, stack });
-  };
-
-  function extractTag(msg){
-    const m = msg.match(/\[([a-z_]+)\]/i);
-    return m ? m[1].toLowerCase() : 'general';
-  }
-
-  // Patch fetch to log network calls
-  const _fetch = window.fetch.bind(window);
-  window.fetch = async function(url, opts){
-    // Don't log calls to our own monitor endpoint — infinite loop
-    if(typeof url === 'string' && url.includes('x-sophiefx-event')) return _fetch(url, opts);
-
-    const t0  = Date.now();
-    const tag = url.includes('verify') ? 'verify' :
-                url.includes('paystack') ? 'paystack' :
-                url.includes('emailjs') ? 'emailjs' : 'network';
-
-    log('info', tag, `→ FETCH ${opts?.method||'GET'} ${url}`, {
-      data: { url, body: safeBody(opts?.body) }
-    });
-
-    try {
-      const res = await _fetch(url, opts);
-      const dur = Date.now() - t0;
-      const cl  = res.clone();
-      let body  = null;
-      try { body = await cl.json(); } catch(_){}
-      log(res.ok?'success':'error', tag, `← ${res.status} ${url} (${dur}ms)`, {
-        data: body, duration: dur
-      });
-      return res;
-    } catch(err){
-      log('error', tag, `✗ FETCH failed: ${url} — ${err.message}`, {
-        stack: err.stack, duration: Date.now()-t0
-      });
-      throw err;
-    }
-  };
-
-  // Patch Paystack
-  function patchPaystack(){
-    if(typeof PaystackPop==='undefined') return;
-    const _o = PaystackPop.prototype.newTransaction;
-    PaystackPop.prototype.newTransaction = function(cfg){
-      const ref  = cfg.ref||cfg.reference;
-      const amnt = ((cfg.amount||0)/100).toFixed(2);
-      log('payment','paystack',`Payment initiated — GH₵${amnt} ref:${ref}`,{
-        ref, amount: amnt, email: cfg.email,
-        data:{ ref, amount:cfg.amount, currency:cfg.currency, channels:cfg.channels,
-               email:cfg.email, tier:cfg.metadata?.tier, booking_ref:cfg.metadata?.booking_ref }
-      });
-      const _s=cfg.onSuccess,_c=cfg.onCancel,_e=cfg.onError,_l=cfg.onLoad;
-      cfg.onSuccess = function(tx){
-        log('success','paystack',`Payment success — ref:${tx.reference} status:${tx.status}`,
-          { ref:tx.reference, amount:amnt, data:tx });
-        if(_s) _s(tx);
-      };
-      cfg.onCancel = function(){
-        log('warn','paystack',`Payment cancelled — ref:${ref}`,{ref,amount:amnt});
-        if(_c) _c();
-      };
-      cfg.onError = function(err){
-        log('error','paystack',`Payment error — ${err?.message||JSON.stringify(err)}`,
-          { ref, amount:amnt, data:err, stack:err?.stack });
-        if(_e) _e(err);
-      };
-      cfg.onLoad = function(res){
-        log('info','paystack',`Paystack popup loaded — ref:${ref}`,{ref,data:res});
-        if(_l) _l(res);
-      };
-      return _o.call(this, cfg);
-    };
-  }
-
-  // Patch EmailJS
-  function patchEmailJS(){
-    if(typeof emailjs==='undefined') return;
-    const _s = emailjs.send.bind(emailjs);
-    emailjs.send = async function(sId, tId, p){
-      log('info','emailjs',`EmailJS send — to:${p?.to_email} subject:${(p?.subject||'').slice(0,40)}`,{
-        email: p?.to_email, data:{ sId, tId, to:p?.to_email, subject:p?.subject }
-      });
-      try {
-        const r = await _s(sId, tId, p);
-        log('success','emailjs',`EmailJS sent ✓ — to:${p?.to_email} status:${r?.status}`,{
-          email: p?.to_email, data:r
-        });
-        return r;
-      } catch(err){
-        log('error','emailjs',`EmailJS failed ✗ — to:${p?.to_email} — ${err?.text||err?.message||err}`,{
-          email: p?.to_email, data:err, stack:err?.stack
-        });
-        throw err;
-      }
-    };
-  }
-
-  // Poll for Paystack and EmailJS patches
-  let psA=0; const psT=setInterval(()=>{
-    if(typeof PaystackPop!=='undefined'){ patchPaystack(); clearInterval(psT); return; }
-    if(++psA>20) clearInterval(psT);
-  },500);
-
-  let ejA=0; const ejT=setInterval(()=>{
-    if(typeof emailjs!=='undefined'){ patchEmailJS(); clearInterval(ejT); return; }
-    if(++ejA>20) clearInterval(ejT);
-  },500);
-
-  // Global error handlers
-  window.addEventListener('error', e => {
-    log('error','general',`JS Error: ${e.message} (${e.filename}:${e.lineno})`,{
-      data:{ message:e.message, filename:e.filename, lineno:e.lineno },
-      stack:e.error?.stack
-    });
+  const KEY='sophiefx_log',MAX=100000;
+  function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+  function save(evt){try{let l=[];try{l=JSON.parse(localStorage.getItem(KEY)||'[]');}catch(_){}l.push(evt);if(l.length>MAX)l=l.slice(-MAX);localStorage.setItem(KEY,JSON.stringify(l));}catch(e){}}
+  function log(level,tag,msg,extra){const evt={id:uid(),ts:Date.now(),level,tag,msg:String(msg),...extra};save(evt);return evt;}
+  const _log=console.log.bind(console),_warn=console.warn.bind(console),_error=console.error.bind(console);
+  console.log=function(...args){_log(...args);const msg=args.map(a=>typeof a==='object'?JSON.stringify(a):String(a)).join(' ');const tag=extractTag(msg);log(msg.includes('✓')||msg.includes('success')||msg.includes('Initialised')?'success':'info',tag,msg,{data:args.length>1?args:null});};
+  console.warn=function(...args){_warn(...args);const msg=args[0]&&typeof args[0]==='string'?args[0].replace(/%c/g,'').replace(/[^\x20-\x7E]/g,'').trim():args.map(a=>String(a)).join(' ');log('warn',extractTag(msg),msg,{data:args.length>1?args.slice(1):null});};
+  console.error=function(...args){_error(...args);const msg=args.map(a=>a instanceof Error?a.message:typeof a==='object'?JSON.stringify(a):String(a)).join(' ');const stack=args.find(a=>a instanceof Error)?.stack||null;log('error',extractTag(msg),msg,{data:args.length>1?args:null,stack});};
+  function extractTag(msg){const m=msg.match(/\[([a-z_]+)\]/i);return m?m[1].toLowerCase():'general';}
+  const _fetch=window.fetch.bind(window);
+  window.fetch=async function(url,opts){const t0=Date.now();const tag=url.includes('verify')?'verify':url.includes('paystack')?'paystack':'network';log('info',tag,`→ FETCH ${opts?.method||'GET'} ${url}`,{data:{url,body:safeBody(opts?.body)}});try{const res=await _fetch(url,opts);const dur=Date.now()-t0;const cl=res.clone();let body=null;try{body=await cl.json();}catch(_){}log(res.ok?'success':'error',tag,`← ${res.status} ${url} (${dur}ms)`,{data:body,duration:dur});return res;}catch(err){log('error',tag,`✗ FETCH failed: ${url} — ${err.message}`,{stack:err.stack,duration:Date.now()-t0});throw err;}};
+  function patchPaystack(){if(typeof PaystackPop==='undefined')return;const _o=PaystackPop.prototype.newTransaction;PaystackPop.prototype.newTransaction=function(cfg){const ref=cfg.ref||cfg.reference,amnt=((cfg.amount||0)/100).toFixed(2);log('payment','paystack',`Payment initiated — GH₵${amnt} ref:${ref}`,{ref,amount:amnt,email:cfg.email,data:{ref,amount:cfg.amount,currency:cfg.currency,channels:cfg.channels,email:cfg.email,tier:cfg.metadata?.tier,booking_ref:cfg.metadata?.booking_ref}});const _s=cfg.onSuccess,_c=cfg.onCancel,_e=cfg.onError,_l=cfg.onLoad;cfg.onSuccess=function(tx){log('success','paystack',`Payment success — ref:${tx.reference} status:${tx.status}`,{ref:tx.reference,amount:amnt,data:tx});if(_s)_s(tx);};cfg.onCancel=function(){log('warn','paystack',`Payment cancelled — ref:${ref}`,{ref,amount:amnt});if(_c)_c();};cfg.onError=function(err){log('error','paystack',`Payment error — ${err?.message||JSON.stringify(err)}`,{ref,amount:amnt,data:err,stack:err?.stack});if(_e)_e(err);};cfg.onLoad=function(res){log('info','paystack',`Paystack popup loaded — ref:${ref}`,{ref,data:res});if(_l)_l(res);};return _o.call(this,cfg);};}
+  let psA=0;const psT=setInterval(()=>{if(typeof PaystackPop!=='undefined'){patchPaystack();clearInterval(psT);return;}if(++psA>20)clearInterval(psT);},500);
+  function patchEmailJS(){if(typeof emailjs==='undefined')return;const _s=emailjs.send.bind(emailjs);emailjs.send=async function(sId,tId,p){log('info','emailjs',`EmailJS send — to:${p?.to_email} subject:${p?.subject?.slice(0,40)||''}`,{email:p?.to_email,data:{sId,tId,to:p?.to_email,subject:p?.subject}});try{const r=await _s(sId,tId,p);log('success','emailjs',`EmailJS sent ✓ — to:${p?.to_email} status:${r?.status}`,{email:p?.to_email,data:r});return r;}catch(err){log('error','emailjs',`EmailJS failed ✗ — to:${p?.to_email} — ${err?.text||err?.message||err}`,{email:p?.to_email,data:err,stack:err?.stack});throw err;}};}
+  let ejA=0;const ejT=setInterval(()=>{if(typeof emailjs!=='undefined'){patchEmailJS();clearInterval(ejT);return;}if(++ejA>20)clearInterval(ejT);},500);
+  window.addEventListener('error',(e)=>{log('error','general',`JS Error: ${e.message} (${e.filename}:${e.lineno})`,{data:{message:e.message,filename:e.filename,lineno:e.lineno,colno:e.colno},stack:e.error?.stack});});
+  window.addEventListener('unhandledrejection',(e)=>{const r=e.reason;log('error','general',`Unhandled rejection: ${r instanceof Error?r.message:JSON.stringify(r)}`,{data:r,stack:r?.stack});});
+  document.addEventListener('DOMContentLoaded',()=>{
+    document.querySelectorAll('[onclick*="App.go"]').forEach(el=>{el.addEventListener('click',()=>{const m=el.getAttribute('onclick')?.match(/App\.go\(['"](\w+)['"]\)/);if(m)log('info','nav','Navigated to: '+m[1]);});});
+    document.querySelectorAll('.tier').forEach(el=>{el.addEventListener('click',()=>{log('info','form',`Tier selected: ${el.dataset.tier} — GH₵${el.dataset.ghs}`);});});
+    document.querySelectorAll('.payment-method').forEach(el=>{el.addEventListener('click',()=>{log('info','form','Payment method selected: '+el.dataset.method);});});
+    document.querySelectorAll('.momo-option').forEach(el=>{el.addEventListener('click',()=>{log('info','form','MoMo network selected: '+el.dataset.provider);});});
   });
-  window.addEventListener('unhandledrejection', e => {
-    const r = e.reason;
-    log('error','general',`Unhandled rejection: ${r instanceof Error?r.message:JSON.stringify(r)}`,{
-      data:r, stack:r?.stack
-    });
-  });
-
-  // Log navigation and UI events
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('[onclick*="App.go"]').forEach(el => {
-      el.addEventListener('click', () => {
-        const m = el.getAttribute('onclick')?.match(/App\.go\(['"](\w+)['"]\)/);
-        if(m) log('info','nav','Navigated to: '+m[1]);
-      });
-    });
-    document.querySelectorAll('.tier').forEach(el => {
-      el.addEventListener('click', () => {
-        log('info','form',`Tier selected: ${el.dataset.tier} — GH₵${el.dataset.ghs}`);
-      });
-    });
-    document.querySelectorAll('.payment-method').forEach(el => {
-      el.addEventListener('click', () => {
-        log('info','form','Payment method selected: '+el.dataset.method);
-      });
-    });
-    document.querySelectorAll('.momo-option').forEach(el => {
-      el.addEventListener('click', () => {
-        log('info','form','MoMo network selected: '+el.dataset.provider);
-      });
-    });
-  });
-
-  function safeBody(b){
-    if(!b) return null;
-    try { return JSON.parse(b); } catch(_){ return String(b).slice(0,200); }
-  }
-
-  log('info','general','SophieFX Monitor initialised ✓',{
-    data:{ userAgent:navigator.userAgent, url:location.href, time:new Date().toISOString() }
-  });
+  function safeBody(b){if(!b)return null;try{return JSON.parse(b);}catch(_){return String(b).slice(0,200);}}
+  log('info','general','SophieFX Monitor initialised ✓',{data:{userAgent:navigator.userAgent,url:location.href,time:new Date().toISOString()}});
 })();
 </script>
+
 </body>
 </body>
 </html>
