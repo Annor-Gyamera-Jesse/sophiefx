@@ -44,6 +44,7 @@
 import express from 'express';
 import cors from 'cors';
 import crypto from 'crypto';
+import { Pool } from 'pg';
 
 const app = express();
 app.use(express.json({ limit: '64kb' }));
@@ -57,10 +58,18 @@ app.use(cors({
 
 const PAYSTACK_SECRET = process.env.PAYSTACK_SECRET_KEY;
 const PAYSTACK_API = 'https://api.paystack.co';
+const DATABASE_URL = process.env.DATABASE_URL;
 
 if (!PAYSTACK_SECRET) {
   console.error('FATAL: PAYSTACK_SECRET_KEY env var not set');
   process.exit(1);
+}
+
+const pgPool = DATABASE_URL ? new Pool({ connectionString: DATABASE_URL }) : null;
+if (!DATABASE_URL) {
+  console.warn('[db] DATABASE_URL is not set; booking persistence disabled');
+} else {
+  initPostgres().catch(err => console.error('[db] init failed', err));
 }
 
 /* ============================================================
@@ -266,8 +275,68 @@ app.post('/paystack-webhook',
  * Side effects — replace with your real DB + email logic
  * ============================================================ */
 async function persistBooking(payload) {
-  // TODO: insert into Postgres / Supabase / Firestore / Airtable
-  console.log('[persist] booking', payload.reference);
+  if (!pgPool) {
+    console.warn('[persist] skipping Postgres persistence because DATABASE_URL is not set');
+    return;
+  }
+
+  const sql = `
+    INSERT INTO bookings (
+      reference,
+      booking_ref,
+      tier,
+      amount,
+      currency,
+      paid_at,
+      channel,
+      customer_email,
+      customer_name,
+      gateway_response
+    ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
+    ON CONFLICT (reference) DO UPDATE SET
+      booking_ref = EXCLUDED.booking_ref,
+      tier = EXCLUDED.tier,
+      amount = EXCLUDED.amount,
+      currency = EXCLUDED.currency,
+      paid_at = EXCLUDED.paid_at,
+      channel = EXCLUDED.channel,
+      customer_email = EXCLUDED.customer_email,
+      customer_name = EXCLUDED.customer_name,
+      gateway_response = EXCLUDED.gateway_response;
+  `;
+
+  await pgPool.query(sql, [
+    payload.reference,
+    payload.booking_ref,
+    payload.tier,
+    payload.amount,
+    payload.currency,
+    payload.paid_at || null,
+    payload.channel,
+    payload.customer_email,
+    payload.customer_name,
+    payload.gateway_response,
+  ]);
+  console.log('[persist] saved booking', payload.reference);
+}
+
+async function initPostgres() {
+  if (!pgPool) return;
+  await pgPool.query(`
+    CREATE TABLE IF NOT EXISTS bookings (
+      reference TEXT PRIMARY KEY,
+      booking_ref TEXT,
+      tier TEXT,
+      amount BIGINT NOT NULL,
+      currency TEXT NOT NULL,
+      paid_at TIMESTAMPTZ,
+      channel TEXT,
+      customer_email TEXT,
+      customer_name TEXT,
+      gateway_response TEXT,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `);
 }
 
 async function sendConfirmationEmails(payload) {

@@ -10,7 +10,16 @@
  * ============================================================
  */
 
+import { Pool } from 'pg';
 import crypto from 'crypto';
+
+const DATABASE_URL = process.env.DATABASE_URL;
+const pgPool = DATABASE_URL ? new Pool({ connectionString: DATABASE_URL }) : null;
+if (!DATABASE_URL) {
+  console.warn('[db] DATABASE_URL is not set; booking persistence disabled');
+} else {
+  initPostgres().catch(err => console.error('[db] init failed', err));
+}
 
 // ── Netlify Functions entry point ──────────────────────────
 // Every Netlify function exports a single `handler` function.
@@ -184,6 +193,12 @@ export const handler = async (event, context) => {
     tier:             tx.metadata?.tier,
   };
 
+  try {
+    await persistBooking(payload);
+  } catch (err) {
+    console.error('[verify] booking persistence failed', err);
+  }
+
   console.log('[verify] ✓ Verified:', reference, '— GH₵', (tx.amount / 100).toFixed(2));
 
   return {
@@ -192,6 +207,71 @@ export const handler = async (event, context) => {
     body: JSON.stringify({ success: true, message: 'Verified', data: payload }),
   };
 };
+
+async function persistBooking(payload) {
+  if (!pgPool) {
+    console.warn('[persist] skipping Postgres persistence because DATABASE_URL is not set');
+    return;
+  }
+
+  const sql = `
+    INSERT INTO bookings (
+      reference,
+      booking_ref,
+      tier,
+      amount,
+      currency,
+      paid_at,
+      channel,
+      customer_email,
+      customer_name,
+      gateway_response
+    ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
+    ON CONFLICT (reference) DO UPDATE SET
+      booking_ref = EXCLUDED.booking_ref,
+      tier = EXCLUDED.tier,
+      amount = EXCLUDED.amount,
+      currency = EXCLUDED.currency,
+      paid_at = EXCLUDED.paid_at,
+      channel = EXCLUDED.channel,
+      customer_email = EXCLUDED.customer_email,
+      customer_name = EXCLUDED.customer_name,
+      gateway_response = EXCLUDED.gateway_response;
+  `;
+
+  await pgPool.query(sql, [
+    payload.reference,
+    payload.booking_ref,
+    payload.tier,
+    payload.amount,
+    payload.currency,
+    payload.paid_at || null,
+    payload.channel,
+    payload.customer_email,
+    payload.customer_name,
+    payload.gateway_response,
+  ]);
+  console.log('[persist] saved booking', payload.reference);
+}
+
+async function initPostgres() {
+  if (!pgPool) return;
+  await pgPool.query(`
+    CREATE TABLE IF NOT EXISTS bookings (
+      reference TEXT PRIMARY KEY,
+      booking_ref TEXT,
+      tier TEXT,
+      amount BIGINT NOT NULL,
+      currency TEXT NOT NULL,
+      paid_at TIMESTAMPTZ,
+      channel TEXT,
+      customer_email TEXT,
+      customer_name TEXT,
+      gateway_response TEXT,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `);
+}
 
 
 // ============================================================
