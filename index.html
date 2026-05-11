@@ -2657,7 +2657,7 @@ const App = (() => {
     const amount   = 'GH₵ ' + fmt(state.ghs);
     const a        = state.applicant;
     const firstName= (a.name || 'there').split(' ')[0];
-
+//now connected to postgres db online
     const menteePayload = {
       to_email:       a.email,
       reply_to:       CONFIG.SOPHIE_EMAIL,
