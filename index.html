@@ -2124,6 +2124,9 @@ const CONFIG = Object.freeze({
   CURRENCY: 'GHS',
   VERIFY_ENDPOINT: '/.netlify/functions/verify-payment',
 
+  // One-time WhatsApp channel gate — appends ?ref=BK-XXXXXX at send time
+  JOIN_CHANNEL_ENDPOINT: '/.netlify/functions/join-channel',
+
   EMAILJS_PUBLIC_KEY:   'kaAcwVVVxd-gVw1vU',
   EMAILJS_SERVICE_ID:   'service_a9lza8t',
   EMAILJS_TEMPLATE_ID:  'template_c6vxg9o',
@@ -2682,15 +2685,15 @@ const App = (() => {
       row_4_label:    'Payment',       row_4_value: payment.method,
       row_5_label:    'Transaction',   row_5_value: payment.reference,
       row_6_label:    'Status',        row_6_value: payment.status,
-      row_7_label:    'WhatsApp Group', row_7_value: 'https://whatsapp.com/channel/0029Vb8KAD87DAX2iNNp9x0z',
-      row_8_label:    '⚠ Action Required', row_8_value: 'Join the group above, then send a screenshot of this booking card — or you will be removed.',
+      row_7_label:    '',              row_7_value: '',
+      row_8_label:    '',              row_8_value: '',
 
       message_title:  'What happens next',
-      message_body:   `1. Join the Sophie FX WhatsApp channel using the link in your booking details above.\n2. Once inside, send a screenshot of this booking confirmation card — members who do not verify will be removed.\n3. Sophie reviews your application within 24 hours.\n4. You'll receive a WhatsApp message to schedule your first session.\n5. Bring a notebook to the first session — we'll audit your trading journal together.`,
+      message_body:   `1. Click the green "Join Sophie FX Channel" button in your booking details above — it is a one-time link tied to your booking reference.\n2. Once inside, send a screenshot of this booking confirmation into the group to verify your spot.\n3. Members who do not verify within 24 hours will be removed.\n4. Sophie reviews your application within 24 hours and will reach out via WhatsApp to schedule your first session.\n5. Bring a notebook to the first session — we'll audit your trading journal together.`,
 
-      closing_line:   '👉 Join the WhatsApp channel now and send your screenshot to secure your spot:',
+      closing_line:   '\u{1F449} Your WhatsApp channel join button is in the booking details above. It is single-use — do not share it.',
       cta_text:       'Join Sophie FX WhatsApp Channel',
-      cta_url:        'https://whatsapp.com/channel/0029Vb8KAD87DAX2iNNp9x0z',
+      cta_url:        `${window.location.origin}${CONFIG.JOIN_CHANNEL_ENDPOINT}?ref=${state.bookingRef}`,
       signoff:        '— Sophie',
     };
 
