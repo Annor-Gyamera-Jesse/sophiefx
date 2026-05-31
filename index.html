@@ -1576,21 +1576,44 @@ img, video { max-width: 100%; height: auto; }
     <div class="section-label">Mentorship Booking</div>
     <h2 class="section-title">Choose your <em>path.</em></h2>
     <p class="booking-intro">
-      Both tiers cover the same six-week curriculum. The difference is intimacy, intensity, and the energy of being in the same room.
-      All payments are processed in Ghanaian Cedis (GH₵) via Paystack.
+      Every tier covers the same six-week curriculum. What changes is intimacy, intensity, and the energy of being in the same room.
+      Prices are shown in US dollars (USD) — at checkout the amount is converted to Ghanaian Cedis (GH₵) and charged securely via Paystack.
     </p>
 
     <div class="tier-grid">
-      <div class="tier-card" data-tier="online" data-ghs="1" data-usd="100" onclick="App.selectTier(this)">
-        <div class="tier-tag">/ Tier 01 · Remote</div>
-        <h3>Online <em>Mentorship</em></h3>
-        <div class="tier-sub">Zoom · Anywhere on Earth</div>
+      <div class="tier-card" data-tier="group" data-usd="50" onclick="App.selectTier(this)">
+        <div class="tier-badge">Starter</div>
+        <div class="tier-tag">/ Tier 01 · Group · Remote</div>
+        <h3>Group Online <em>Mentorship</em></h3>
+        <div class="tier-sub">Zoom · Small Cohort</div>
         <div class="tier-price-row">
-          <span class="tier-currency">GH₵</span>
-          <span class="tier-amount">1</span>
+          <span class="tier-currency">$</span>
+          <span class="tier-amount">50</span>
           <span class="tier-period">/ six weeks</span>
         </div>
-        <div class="tier-usd">≈ $100 USD</div>
+        <div class="tier-usd">≈ GH₵ <span class="ghs-equiv">—</span> · charged in cedis</div>
+        <ul class="tier-features">
+          <li>Six weekly group sessions via Zoom</li>
+          <li>Shared WhatsApp community for chart reviews</li>
+          <li>Lifetime access to recorded sessions</li>
+          <li>Personal trading journal template</li>
+          <li>Curriculum PDF & playbook</li>
+          <li>Best value to get started</li>
+        </ul>
+        <div class="tier-select-indicator">Click to select →</div>
+      </div>
+
+      <div class="tier-card" data-tier="online" data-usd="100" onclick="App.selectTier(this)">
+        <div class="tier-badge">Popular</div>
+        <div class="tier-tag">/ Tier 02 · 1-on-1 · Remote</div>
+        <h3>Online 1-on-1 <em>Mentorship</em></h3>
+        <div class="tier-sub">Zoom · Anywhere on Earth</div>
+        <div class="tier-price-row">
+          <span class="tier-currency">$</span>
+          <span class="tier-amount">100</span>
+          <span class="tier-period">/ six weeks</span>
+        </div>
+        <div class="tier-usd">≈ GH₵ <span class="ghs-equiv">—</span> · charged in cedis</div>
         <ul class="tier-features">
           <li>Six weekly 1-on-1 sessions via Zoom</li>
           <li>Private WhatsApp line for chart reviews</li>
@@ -1602,25 +1625,48 @@ img, video { max-width: 100%; height: auto; }
         <div class="tier-select-indicator">Click to select →</div>
       </div>
 
-      <div class="tier-card" data-tier="onsite" data-ghs="7500" data-usd="500" onclick="App.selectTier(this)">
+      <div class="tier-card" data-tier="onsite" data-usd="500" onclick="App.selectTier(this)">
         <div class="tier-badge">Premium</div>
-        <div class="tier-tag">/ Tier 02 · In-Person</div>
+        <div class="tier-tag">/ Tier 03 · In-Person</div>
         <h3>Face-to-Face <em>Mentorship</em></h3>
         <div class="tier-sub">Accra Studio · Ghana</div>
         <div class="tier-price-row">
-          <span class="tier-currency">GH₵</span>
-          <span class="tier-amount">7,500</span>
+          <span class="tier-currency">$</span>
+          <span class="tier-amount">500</span>
           <span class="tier-period">/ six weeks</span>
         </div>
-        <div class="tier-usd">≈ $500 USD</div>
+        <div class="tier-usd">≈ GH₵ <span class="ghs-equiv">—</span> · charged in cedis</div>
         <ul class="tier-features">
-          <li>Six in-studio sessions, Accra</li>
+          <li>Six in-studio 1-on-1 sessions, Accra</li>
           <li>Live trading on professional setup</li>
           <li>Direct WhatsApp & phone access</li>
           <li>Lifetime access to recorded sessions</li>
           <li>Custom journal & strategy printouts</li>
           <li>90-day post-mentorship support</li>
           <li>Coffee & lunch on session days</li>
+        </ul>
+        <div class="tier-select-indicator">Click to select →</div>
+      </div>
+
+      <div class="tier-card" data-tier="elite" data-usd="1200" onclick="App.selectTier(this)">
+        <div class="tier-badge">Elite</div>
+        <div class="tier-tag">/ Tier 04 · VIP · Hybrid</div>
+        <h3>Elite VIP <em>Mentorship</em></h3>
+        <div class="tier-sub">Studio + Remote · Priority Access</div>
+        <div class="tier-price-row">
+          <span class="tier-currency">$</span>
+          <span class="tier-amount">1,200</span>
+          <span class="tier-period">/ six weeks</span>
+        </div>
+        <div class="tier-usd">≈ GH₵ <span class="ghs-equiv">—</span> · charged in cedis</div>
+        <ul class="tier-features">
+          <li>Everything in Face-to-Face, plus:</li>
+          <li>Unlimited 1-on-1 sessions for six weeks</li>
+          <li>Daily live trading alongside Sophie</li>
+          <li>24/7 priority WhatsApp & phone line</li>
+          <li>Personalised strategy built around you</li>
+          <li>Hybrid: in-studio or remote, your choice</li>
+          <li>6-month post-mentorship mentorship support</li>
         </ul>
         <div class="tier-select-indicator">Click to select →</div>
       </div>
@@ -1690,7 +1736,7 @@ img, video { max-width: 100%; height: auto; }
         </div>
         <div class="form-footer">
           <div class="form-summary">
-            Selected: <strong id="summary-tier">— none yet —</strong> · Total: <strong id="summary-amount">GH₵ 0</strong>
+            Selected: <strong id="summary-tier">— none yet —</strong> · Total: <strong id="summary-amount">$0</strong>
           </div>
           <button class="btn btn-primary" onclick="App.proceedToPayment()">
             Proceed to Payment <span class="arrow">→</span>
@@ -1722,13 +1768,13 @@ img, video { max-width: 100%; height: auto; }
           <div class="os-row"><span class="lab">Duration</span><span class="val">6 Weeks</span></div>
           <div class="os-total">
             <span class="lab">Total</span>
-            <span class="val">GH₵<span id="ord-total">0</span></span>
+            <span class="val">$<span id="ord-total">0</span></span>
           </div>
-          <div class="os-usd" id="ord-usd-note">≈ $0 USD</div>
+          <div class="os-usd" id="ord-usd-note">≈ GH₵ 0 · charged in cedis</div>
         </div>
         <div class="os-footer">
           <div style="font-size:12px;color:rgba(255,255,255,0.35);line-height:1.6;">
-            Payments processed by Paystack. Billed in GH₵. International cards converted automatically.
+            Payments processed by Paystack. Prices set in USD, charged in GH₵. International cards converted automatically.
           </div>
         </div>
       </div>
@@ -1846,7 +1892,7 @@ img, video { max-width: 100%; height: auto; }
 
         <div class="pay-btn-wrap">
           <button class="btn btn-primary btn-lg" id="pay-button" onclick="App.executePayment()">
-            <span id="pay-label">Pay GH₵ 0 Securely</span>
+            <span id="pay-label">Pay $0 Securely</span>
             <span class="arrow">→</span>
           </button>
         </div>
@@ -1942,7 +1988,7 @@ img, video { max-width: 100%; height: auto; }
       <div class="receipt">
         <div class="receipt-row"><span class="lab">Reference</span><span class="val gold" id="modal-ref">SA-XXXX</span></div>
         <div class="receipt-row"><span class="lab">Tier</span><span class="val" id="modal-tier">—</span></div>
-        <div class="receipt-row"><span class="lab">Amount</span><span class="val gold" id="modal-amount">GH₵ 0</span></div>
+        <div class="receipt-row"><span class="lab">Amount</span><span class="val gold" id="modal-amount">$0</span></div>
         <div class="receipt-row"><span class="lab">Method</span><span class="val" id="modal-method">—</span></div>
         <div class="receipt-row"><span class="lab">Status</span><span class="val" id="modal-status">—</span></div>
       </div>
@@ -1984,8 +2030,10 @@ img, video { max-width: 100%; height: auto; }
     <div class="footer-col">
       <h5>Mentorship</h5>
       <ul>
-        <li><a href="#" onclick="App.go('booking');return false;">Online — GH₵ 1</a></li>
-        <li><a href="#" onclick="App.go('booking');return false;">Face-to-Face — GH₵ 7,500</a></li>
+        <li><a href="#" onclick="App.go('booking');return false;">Group Online — $50</a></li>
+        <li><a href="#" onclick="App.go('booking');return false;">Online 1-on-1 — $100</a></li>
+        <li><a href="#" onclick="App.go('booking');return false;">Face-to-Face — $500</a></li>
+        <li><a href="#" onclick="App.go('booking');return false;">Elite VIP — $1,200</a></li>
         <li><a href="#" onclick="App.go('about');return false;">Curriculum</a></li>
       </ul>
     </div>
@@ -2020,7 +2068,7 @@ const CONFIG = Object.freeze({
   EMAILJS_TEMPLATE_ID: 'template_c6vxg9o',
   SOPHIE_EMAIL:    'thetradingdesk02@gmail.com',
   SOPHIE_WHATSAPP: '233242154944',
-  USD_GHS_RATE:    15.0,
+  USD_GHS_RATE:    12.0,   // <- USD->GHS rate. Update when the cedi moves (live ~11.7 mid-2026). Prices are set in USD; Paystack charges GH(cedis) = usd * this rate.
 });
 
 (function initEmailJS(){
@@ -2035,6 +2083,17 @@ const MOMO_PROVIDERS = {
   vod: { name:'Telecel Cash',     paystackProvider:'vod', prefixes:['020','050'] },
   atl: { name:'AirtelTigo Money', paystackProvider:'atl', prefixes:['026','027','056','057'] },
 };
+
+// Single source of truth for tier display names + format label.
+// The data-tier on each card must match a key here.
+const TIERS = {
+  group:  { name:'Group Online Mentorship',   format:'Zoom — Group Cohort' },
+  online: { name:'Online 1-on-1 Mentorship',  format:'Zoom — Private' },
+  onsite: { name:'Face-to-Face Mentorship',   format:'Accra Studio' },
+  elite:  { name:'Elite VIP Mentorship',      format:'Hybrid — Studio + Remote' },
+};
+const tierName   = t => (TIERS[t] && TIERS[t].name)   || 'Mentorship';
+const tierFormat = t => (TIERS[t] && TIERS[t].format) || '—';
 
 const App = (() => {
   const state = { tier:null, ghs:0, usd:0, method:'card', momoProvider:null, momoPhone:'', bookingRef:null, applicant:{}, paystack:null, isPaying:false };
@@ -2053,10 +2112,11 @@ const App = (() => {
   function selectTier(el){
     document.querySelectorAll('.tier-card').forEach(t=>t.classList.remove('selected'));
     el.classList.add('selected');
-    state.tier=el.dataset.tier; state.ghs=parseInt(el.dataset.ghs,10); state.usd=parseInt(el.dataset.usd,10);
-    const tierName=state.tier==='onsite'?'Face-to-Face Mentorship':'Online Mentorship';
-    $('summary-tier').textContent=tierName;
-    $('summary-amount').textContent='GH₵ '+fmt(state.ghs);
+    state.tier=el.dataset.tier;
+    state.usd=parseFloat(String(el.dataset.usd).replace(/,/g,''))||0;
+    state.ghs=Math.round(state.usd*CONFIG.USD_GHS_RATE); // converted to cedis for Paystack
+    $('summary-tier').textContent=tierName(state.tier);
+    $('summary-amount').textContent=`$${fmt(state.usd)} (≈ GH₵ ${fmt(state.ghs)})`;
   }
 
   function validateForm(){
@@ -2082,7 +2142,7 @@ const App = (() => {
 
   function updatePayButton(){
     const label=$('pay-label');
-    const amount=state.ghs?'GH₵ '+fmt(state.ghs):'GH₵ 0';
+    const amount=state.usd?`$${fmt(state.usd)} (GH₵ ${fmt(state.ghs)})`:'$0';
     label.textContent=state.method==='manual'?"I've Made the Transfer — Confirm Booking":`Pay ${amount} Securely`;
   }
 
@@ -2095,10 +2155,10 @@ const App = (() => {
     $('ord-ref').textContent=state.bookingRef;
     $('ord-name').textContent=state.applicant.name;
     $('ord-email').textContent=state.applicant.email;
-    $('ord-tier').textContent=state.tier==='onsite'?'Face-to-Face':'Online';
-    $('ord-format').textContent=state.tier==='onsite'?'Accra Studio':'Zoom — Remote';
-    $('ord-total').textContent=fmt(state.ghs);
-    $('ord-usd-note').textContent=`≈ $${state.usd} USD · billed in GH₵`;
+    $('ord-tier').textContent=tierName(state.tier);
+    $('ord-format').textContent=tierFormat(state.tier);
+    $('ord-total').textContent=fmt(state.usd);
+    $('ord-usd-note').textContent=`≈ GH₵ ${fmt(state.ghs)} · charged in cedis via Paystack`;
     $('manual-ref').textContent=state.bookingRef;
     updatePayButton(); go('payment');
   }
@@ -2165,7 +2225,7 @@ const App = (() => {
         phone_number:normPhone||undefined,
         firstname:state.applicant.name.split(' ')[0]||'', lastname:state.applicant.name.split(' ').slice(1).join(' ')||'',
         ...(state.method==='mobile_money'&&state.momoProvider&&normPhone?{mobile_money:{phone:normPhone,provider:MOMO_PROVIDERS[state.momoProvider].paystackProvider}}:{}),
-        metadata:{booking_ref:state.bookingRef,tier:state.tier,phone:state.applicant.phone,country:state.applicant.country,custom_fields:[{display_name:'Mentee',variable_name:'mentee_name',value:state.applicant.name},{display_name:'Tier',variable_name:'tier',value:state.tier==='onsite'?'Face-to-Face':'Online'}]},
+        metadata:{booking_ref:state.bookingRef,tier:state.tier,phone:state.applicant.phone,country:state.applicant.country,usd_amount:state.usd,ghs_amount:state.ghs,custom_fields:[{display_name:'Mentee',variable_name:'mentee_name',value:state.applicant.name},{display_name:'Tier',variable_name:'tier',value:tierName(state.tier)},{display_name:'USD Price',variable_name:'usd_price',value:`$${fmt(state.usd)}`}]},
         onLoad:r=>{console.log('[ps] loaded',r);hideStatus();},
         onSuccess:async tx=>{
           showStatus('processing','Verifying…','Confirming with Paystack.');
@@ -2204,8 +2264,8 @@ const App = (() => {
     $('modal-name').textContent=(state.applicant.name.split(' ')[0]||'trader')+'.';
     $('modal-ref').textContent=state.bookingRef;
     $('modal-email').textContent=state.applicant.email;
-    $('modal-tier').textContent=state.tier==='onsite'?'Face-to-Face Mentorship':'Online Mentorship';
-    $('modal-amount').textContent='GH₵ '+fmt(state.ghs);
+    $('modal-tier').textContent=tierName(state.tier);
+    $('modal-amount').textContent=`$${fmt(state.usd)} (GH₵ ${fmt(state.ghs)})`;
     $('modal-method').textContent=payment.method;
     $('modal-status').textContent=payment.status==='success'?'Confirmed ✓':payment.status==='pending_verification'?'Pending verification':'Received';
     if(payment.status==='pending_verification'){ $('modal-eyebrow').textContent='BOOKING RECEIVED — PENDING'; $('modal-text').textContent='Your booking is reserved. Sophie will verify within 24 hours.'; }
@@ -2213,7 +2273,7 @@ const App = (() => {
     setNotif('notif-email',notif.email?'ok':'failed');
     setNotif('notif-sophie',notif.sophie?'ok':'failed');
     setNotif('notif-wa','ok');
-    const waMsg=encodeURIComponent(`Hi Sophie! 👋\n\nI just booked the ${state.tier==='onsite'?'Face-to-Face':'Online'} Mentorship.\n\nName: ${state.applicant.name}\nRef: ${state.bookingRef}\nAmount: GH₵ ${fmt(state.ghs)}\nMethod: ${payment.method}\n\nExcited to start!`);
+    const waMsg=encodeURIComponent(`Hi Sophie! 👋\n\nI just booked the ${tierName(state.tier)}.\n\nName: ${state.applicant.name}\nRef: ${state.bookingRef}\nAmount: $${fmt(state.usd)} (GH₵ ${fmt(state.ghs)})\nMethod: ${payment.method}\n\nExcited to start!`);
     $('whatsapp-link').href=`https://wa.me/${CONFIG.SOPHIE_WHATSAPP}?text=${waMsg}`;
     $('success-modal').classList.add('show');
     state.isPaying=false;
@@ -2230,16 +2290,16 @@ const App = (() => {
     const result={email:false,sophie:false};
     const configured=!CONFIG.EMAILJS_PUBLIC_KEY.includes('REPLACE');
     if(!configured||typeof emailjs==='undefined') return result;
-    const tierName=state.tier==='onsite'?'Face-to-Face Mentorship':'Online Mentorship';
-    const amount='GH₵ '+fmt(state.ghs); const a=state.applicant; const firstName=(a.name||'there').split(' ')[0];
+    const tierLabel=tierName(state.tier);
+    const amount=`$${fmt(state.usd)} (GH₵ ${fmt(state.ghs)})`; const a=state.applicant; const firstName=(a.name||'there').split(' ')[0];
     const mp={
       to_email:a.email, reply_to:CONFIG.SOPHIE_EMAIL, subject:`Welcome to Sophie FX — Booking ${state.bookingRef}`,
       headline:`Welcome aboard, ${firstName}.`, tagline:'SOPHIE FX · BOOKING CONFIRMED',
       intro_line_1:`Hi ${a.name},`, intro_line_2:`Your booking is confirmed. Sophie will reach out within 24 hours to schedule your first session.`,
       callout:'"The market will pay you what you are. Mentorship is the shortest path."',
       details_title:'Your booking',
-      row_1_label:'Reference',row_1_value:state.bookingRef,row_2_label:'Tier',row_2_value:tierName,
-      row_3_label:'Amount',row_3_value:`${amount} (≈ $${state.usd})`,row_4_label:'Payment',row_4_value:payment.method,
+      row_1_label:'Reference',row_1_value:state.bookingRef,row_2_label:'Tier',row_2_value:tierLabel,
+      row_3_label:'Amount',row_3_value:amount,row_4_label:'Payment',row_4_value:payment.method,
       row_5_label:'Transaction',row_5_value:payment.reference,row_6_label:'Status',row_6_value:payment.status,
       row_7_label:'',row_7_value:'',row_8_label:'',row_8_value:'',
       message_title:'What happens next',
@@ -2250,12 +2310,12 @@ const App = (() => {
     const sp={
       to_email:CONFIG.SOPHIE_EMAIL, reply_to:a.email, subject:`🎉 New booking: ${a.name} — ${amount}`,
       headline:'New booking received', tagline:'SOPHIE FX · ADMIN',
-      intro_line_1:`${a.name} just booked the ${tierName} tier.`,
+      intro_line_1:`${a.name} just booked the ${tierLabel} tier.`,
       intro_line_2:payment.status==='pending_verification'?'⚠️ Pending verification — confirm in your Paystack dashboard.':'',
       callout:'', details_title:'Mentee & payment',
       row_1_label:'Name',row_1_value:a.name,row_2_label:'Email',row_2_value:a.email,
-      row_3_label:'Phone',row_3_value:a.phone,row_4_label:'Amount',row_4_value:`${amount} (≈ $${state.usd})`,
-      row_5_label:'Tier',row_5_value:tierName,row_6_label:'Country',row_6_value:a.country,
+      row_3_label:'Phone',row_3_value:a.phone,row_4_label:'Amount',row_4_value:amount,
+      row_5_label:'Tier',row_5_value:tierLabel,row_6_label:'Country',row_6_value:a.country,
       row_7_label:'Ref',row_7_value:state.bookingRef,row_8_label:'Status',row_8_value:payment.status,
       message_title:'Why they booked', message_body:a.message||'(no message)',
       closing_line:`Exp: ${a.experience||'—'} · Source: ${a.source||'—'} · Start: ${a.startDate||'—'}`,
@@ -2272,7 +2332,7 @@ const App = (() => {
     document.querySelectorAll('.field-hint').forEach(h=>h.textContent='');
     document.querySelectorAll('.tier-card,.momo-option').forEach(t=>t.classList.remove('selected'));
     Object.assign(state,{tier:null,ghs:0,usd:0,method:'card',momoProvider:null,momoPhone:'',bookingRef:null,applicant:{},paystack:null,isPaying:false});
-    $('summary-tier').textContent='— none yet —'; $('summary-amount').textContent='GH₵ 0';
+    $('summary-tier').textContent='— none yet —'; $('summary-amount').textContent='$0';
     resetPayButton(); go('home');
   }
 
@@ -2305,8 +2365,18 @@ const App = (() => {
     t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),4000);
   }
 
+  // Fill each tier card's "≈ GH₵ —" with the live cedi equivalent of its USD price.
+  function refreshGhsEquivalents(){
+    document.querySelectorAll('.tier-card').forEach(card=>{
+      const usd=parseFloat(String(card.dataset.usd||'').replace(/,/g,''))||0;
+      const span=card.querySelector('.ghs-equiv');
+      if(span) span.textContent=fmt(Math.round(usd*CONFIG.USD_GHS_RATE));
+    });
+  }
+
   document.addEventListener('DOMContentLoaded',()=>{
     const mp=$('momo-phone'); if(mp){ mp.addEventListener('input',validateMomoPhone); mp.addEventListener('blur',validateMomoPhone); }
+    refreshGhsEquivalents();
   });
 
   return { go,selectTier,selectMethod,selectMomo,copy,proceedToPayment,executePayment,closeModal,sendContact };
@@ -2316,7 +2386,7 @@ const App = (() => {
 (function buildTicker(){
   const pairs=[
     {sym:'EUR/USD',price:'1.0842',chg:'+0.18%',up:true},{sym:'GBP/USD',price:'1.2693',chg:'+0.34%',up:true},
-    {sym:'USD/JPY',price:'149.84',chg:'-0.22%',up:false},{sym:'USD/GHS',price:'14.82',chg:'+0.45%',up:true},
+    {sym:'USD/JPY',price:'149.84',chg:'-0.22%',up:false},{sym:'USD/GHS',price:'11.74',chg:'-0.31%',up:false},
     {sym:'AUD/USD',price:'0.6571',chg:'-0.11%',up:false},{sym:'XAU/USD',price:'2,348.20',chg:'+0.62%',up:true},
     {sym:'BTC/USD',price:'67,420',chg:'+1.84%',up:true},{sym:'EUR/GBP',price:'0.8541',chg:'-0.15%',up:false},
   ];
