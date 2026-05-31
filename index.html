@@ -1311,6 +1311,50 @@ footer {
   .hero-stats { gap: 1.5rem; }
   .momo-grid { grid-template-columns: 1fr; }
   .toast { left: 1rem; right: 1rem; max-width: none; }
+
+  /* ════ FULL RESPONSIVE PASS ════════════════════════ */
+
+/* Safety: nothing overflows sideways, media scales down */
+html, body { max-width: 100%; }
+img, video { max-width: 100%; height: auto; }
+
+/* Fluid spacing — scales smoothly across ALL widths */
+.section      { padding: clamp(2.5rem, 6vw, 5rem) clamp(1.1rem, 4vw, 2rem); }
+.section-full { padding: clamp(2.5rem, 6vw, 5rem) clamp(1.1rem, 4vw, 2rem); }
+.hero         { padding: clamp(3rem, 7vw, 5rem) clamp(1.1rem, 4vw, 2rem); }
+.pullquote    { padding: clamp(3rem, 7vw, 5rem) clamp(1.1rem, 4vw, 2rem); }
+
+/* Nav: logo left, CTA + menu grouped right, no crowding */
+@media (max-width: 960px) {
+  .nav-inner   { padding: 0 clamp(1rem, 4vw, 2rem); gap: 0.6rem; }
+  .brand       { margin-right: auto; }
+  .nav-cta     { order: 2; }
+  .menu-toggle { order: 3; }
+}
+
+/* Small phones: trim oversized padding so content breathes */
+@media (max-width: 600px) {
+  .brand-sub        { display: none; }
+  .nav-cta .btn     { padding: 0.5rem 0.85rem; font-size: 12px; }
+  .feature-card     { padding: 1.5rem; }
+  .tier-card        { padding: 1.6rem; }
+  .form-body        { padding: 1.5rem; }
+  .form-header      { padding: 1.5rem; }
+  .modal-body       { padding: 1.5rem; }
+  .modal-top        { padding: 2rem 1.5rem 1.5rem; }
+  .pm-item          { padding: 1rem 1.1rem; }
+  .os-header, .os-body, .os-footer { padding-left: 1.3rem; padding-right: 1.3rem; }
+}
+
+/* Tiny phones: stack rows/buttons that would otherwise squeeze */
+@media (max-width: 480px) {
+  .bank-row       { flex-wrap: wrap; }
+  .bank-row .lab  { width: 100%; }
+  .pm-item        { flex-wrap: wrap; }
+}
+@media (max-width: 380px) {
+  .modal-actions { flex-direction: column; }
+ }
 }
 </style>
 </head>
