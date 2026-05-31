@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Sophie FX — Six-week, one-on-one forex mentorship. Online or face-to-face in Ghana." />
+<meta name="description" content="PIPS BUILT FOREX ACADEMY — Six-week, one-on-one forex mentorship. Online or face-to-face in Ghana." />
 <meta name="theme-color" content="#0d2137" />
-<title>Sophie FX — Forex Mentorship · Ghana / Global</title>
+<title>PIPS BUILT FOREX ACADEMY — Forex Mentorship · Ghana / Global</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -650,7 +650,7 @@ nav {
 
 .tier-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
   margin-bottom: 3rem;
 }
@@ -1581,9 +1581,30 @@ img, video { max-width: 100%; height: auto; }
     </p>
 
     <div class="tier-grid">
+      <div class="tier-card" data-tier="course" data-usd="50" onclick="App.selectTier(this)">
+        <div class="tier-tag">/ Tier 01 · Copy Trading</div>
+        <h3>Self-Paced <em>Course</em></h3>
+        <div class="tier-sub">Recorded · Learn On Your Schedule</div>
+        <div class="tier-price-row">
+          <span class="tier-currency">$</span>
+          <span class="tier-amount">50</span>
+          <span class="tier-period">/ lifetime</span>
+        </div>
+        <div class="tier-usd">≈ GH₵ <span class="ghs-equiv">—</span> · charged in cedis</div>
+        <ul class="tier-features">
+          <li>Full six-week curriculum, pre-recorded</li>
+          <li>Watch anytime, lifetime access</li>
+          <li>Trading journal template & playbook</li>
+          <li>Curriculum PDF & resource pack</li>
+          <li>Self-study at your own pace</li>
+          <li>Upgrade to live mentorship anytime</li>
+        </ul>
+        <div class="tier-select-indicator">Click to select →</div>
+      </div>
+
       <div class="tier-card" data-tier="group" data-usd="50" onclick="App.selectTier(this)">
         <div class="tier-badge">Starter</div>
-        <div class="tier-tag">/ Tier 01 · Group · Remote</div>
+        <div class="tier-tag">/ Tier 02 · Group · Remote</div>
         <h3>Group Online <em>Mentorship</em></h3>
         <div class="tier-sub">Zoom · Small Cohort</div>
         <div class="tier-price-row">
@@ -1605,7 +1626,7 @@ img, video { max-width: 100%; height: auto; }
 
       <div class="tier-card" data-tier="online" data-usd="100" onclick="App.selectTier(this)">
         <div class="tier-badge">Popular</div>
-        <div class="tier-tag">/ Tier 02 · 1-on-1 · Remote</div>
+        <div class="tier-tag">/ Tier 03 · 1-on-1 · Remote</div>
         <h3>Online 1-on-1 <em>Mentorship</em></h3>
         <div class="tier-sub">Zoom · Anywhere on Earth</div>
         <div class="tier-price-row">
@@ -1627,7 +1648,7 @@ img, video { max-width: 100%; height: auto; }
 
       <div class="tier-card" data-tier="onsite" data-usd="500" onclick="App.selectTier(this)">
         <div class="tier-badge">Premium</div>
-        <div class="tier-tag">/ Tier 03 · In-Person</div>
+        <div class="tier-tag">/ Tier 04 · In-Person</div>
         <h3>Face-to-Face <em>Mentorship</em></h3>
         <div class="tier-sub">Accra Studio · Ghana</div>
         <div class="tier-price-row">
@@ -1650,7 +1671,7 @@ img, video { max-width: 100%; height: auto; }
 
       <div class="tier-card" data-tier="elite" data-usd="1200" onclick="App.selectTier(this)">
         <div class="tier-badge">Elite</div>
-        <div class="tier-tag">/ Tier 04 · VIP · Hybrid</div>
+        <div class="tier-tag">/ Tier 05 · VIP · Hybrid</div>
         <h3>Elite VIP <em>Mentorship</em></h3>
         <div class="tier-sub">Studio + Remote · Priority Access</div>
         <div class="tier-price-row">
@@ -2030,6 +2051,7 @@ img, video { max-width: 100%; height: auto; }
     <div class="footer-col">
       <h5>Mentorship</h5>
       <ul>
+        <li><a href="#" onclick="App.go('booking');return false;">Self-Paced Course — $50</a></li>
         <li><a href="#" onclick="App.go('booking');return false;">Group Online — $50</a></li>
         <li><a href="#" onclick="App.go('booking');return false;">Online 1-on-1 — $100</a></li>
         <li><a href="#" onclick="App.go('booking');return false;">Face-to-Face — $500</a></li>
@@ -2087,6 +2109,7 @@ const MOMO_PROVIDERS = {
 // Single source of truth for tier display names + format label.
 // The data-tier on each card must match a key here.
 const TIERS = {
+  course: { name:'Self-Paced Course',         format:'Recorded — On Demand' },
   group:  { name:'Group Online Mentorship',   format:'Zoom — Group Cohort' },
   online: { name:'Online 1-on-1 Mentorship',  format:'Zoom — Private' },
   onsite: { name:'Face-to-Face Mentorship',   format:'Accra Studio' },
@@ -2293,8 +2316,8 @@ const App = (() => {
     const tierLabel=tierName(state.tier);
     const amount=`$${fmt(state.usd)} (GH₵ ${fmt(state.ghs)})`; const a=state.applicant; const firstName=(a.name||'there').split(' ')[0];
     const mp={
-      to_email:a.email, reply_to:CONFIG.SOPHIE_EMAIL, subject:`Welcome to Sophie FX — Booking ${state.bookingRef}`,
-      headline:`Welcome aboard, ${firstName}.`, tagline:'SOPHIE FX · BOOKING CONFIRMED',
+      to_email:a.email, reply_to:CONFIG.SOPHIE_EMAIL, subject:`Welcome to PIPS BUILT FOREX ACADEMY — Booking ${state.bookingRef}`,
+      headline:`Welcome aboard, ${firstName}.`, tagline:'PIPS BUILT FOREX ACADEMY · BOOKING CONFIRMED',
       intro_line_1:`Hi ${a.name},`, intro_line_2:`Your booking is confirmed. Sophie will reach out within 24 hours to schedule your first session.`,
       callout:'"The market will pay you what you are. Mentorship is the shortest path."',
       details_title:'Your booking',
@@ -2309,7 +2332,7 @@ const App = (() => {
     try{ await emailjs.send(CONFIG.EMAILJS_SERVICE_ID,CONFIG.EMAILJS_TEMPLATE_ID,mp); result.email=true; }catch(e){ console.error('[notify] client email failed:',e); }
     const sp={
       to_email:CONFIG.SOPHIE_EMAIL, reply_to:a.email, subject:`🎉 New booking: ${a.name} — ${amount}`,
-      headline:'New booking received', tagline:'SOPHIE FX · ADMIN',
+      headline:'New booking received', tagline:'PIPS BUILT FOREX ACADEMY · ADMIN',
       intro_line_1:`${a.name} just booked the ${tierLabel} tier.`,
       intro_line_2:payment.status==='pending_verification'?'⚠️ Pending verification — confirm in your Paystack dashboard.':'',
       callout:'', details_title:'Mentee & payment',
@@ -2346,7 +2369,7 @@ const App = (() => {
     try{
       await emailjs.send(CONFIG.EMAILJS_SERVICE_ID,CONFIG.EMAILJS_TEMPLATE_ID,{
         to_email:CONFIG.SOPHIE_EMAIL, reply_to:email, subject:`📬 New contact from ${name}`,
-        headline:'New contact message', tagline:'SOPHIE FX · ENQUIRY',
+        headline:'New contact message', tagline:'PIPS BUILT FOREX ACADEMY · ENQUIRY',
         intro_line_1:`New message from ${name} via the website.`, intro_line_2:'', callout:'',
         details_title:'Sender', row_1_label:'Name',row_1_value:name, row_2_label:'Email',row_2_value:email,
         row_3_label:'Subject',row_3_value:subject, row_4_label:'',row_4_value:'', row_5_label:'',row_5_value:'',
