@@ -3,1653 +3,1469 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="Sophie — Six-week, one-on-one mentorship in disciplined forex trading. Online or face-to-face in Ghana." />
-<meta name="theme-color" content="#0a0907" />
-
-<!-- Open Graph -->
-<meta property="og:title" content="Sophie — Forex Mentorship" />
-<meta property="og:description" content="A deliberate apprenticeship in disciplined forex trading. Six weeks. One mentor. No shortcuts." />
-<meta property="og:type" content="website" />
-
-<title>Sophie — Forex Mentorship · Ghana / Global</title>
+<meta name="description" content="Sophie FX — Six-week, one-on-one forex mentorship. Online or face-to-face in Ghana." />
+<meta name="theme-color" content="#0d2137" />
+<title>Sophie FX — Forex Mentorship · Ghana / Global</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 
-<!-- Paystack InlineJS v2 -->
 <script src="https://js.paystack.co/v2/inline.js"></script>
-
-<!-- EmailJS Browser SDK v4 -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <style>
-:root{
-  --bg:           #0a0907;
-  --bg-2:         #14120d;
-  --bg-3:         #1c1913;
-  --ink:          #f7f1e4;
-  --ink-dim:      #d2c7af;
-  --ink-faded:    #8a8170;
-  --rule:         #2a261d;
-  --rule-soft:    #1a1813;
-  --gold:         #e0b35a;
-  --gold-bright:  #f0c977;
-  --gold-deep:    #8a6a26;
-  --red:          #e07060;
-  --red-bg:       rgba(192,57,43,0.12);
-  --green:        #7fbc6a;
-  --green-bg:     rgba(74,124,58,0.15);
-  --serif:        'Fraunces', 'Times New Roman', serif;
-  --sans:         'Inter', -apple-system, sans-serif;
-  --mono:         'JetBrains Mono', monospace;
+:root {
+  --navy:        #0d2137;
+  --navy-deep:   #091929;
+  --navy-mid:    #163250;
+  --teal:        #1a7fa8;
+  --teal-bright: #22a8df;
+  --teal-light:  #e8f6fc;
+  --teal-pale:   #f0faff;
+  --gold:        #f0a500;
+  --gold-light:  #fff3cd;
+  --white:       #ffffff;
+  --off-white:   #f8fafc;
+  --grey-100:    #f1f5f9;
+  --grey-200:    #e2e8f0;
+  --grey-300:    #cbd5e1;
+  --grey-400:    #94a3b8;
+  --grey-600:    #475569;
+  --grey-800:    #1e293b;
+  --ink:         #0f172a;
+  --red:         #ef4444;
+  --green:       #22c55e;
+  --serif:       'DM Serif Display', Georgia, serif;
+  --sans:        'Plus Jakarta Sans', -apple-system, sans-serif;
+  --radius:      12px;
+  --radius-lg:   20px;
+  --shadow-sm:   0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:   0 4px 16px rgba(0,0,0,0.10), 0 2px 6px rgba(0,0,0,0.06);
+  --shadow-lg:   0 12px 40px rgba(0,0,0,0.14), 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-teal: 0 8px 30px rgba(26,127,168,0.35);
 }
 
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  background: var(--bg);
-  color: var(--ink);
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
   font-family: var(--sans);
-  font-weight: 400;
-  line-height: 1.55;
-  overflow-x: hidden;
+  background: var(--white);
+  color: var(--ink);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  position: relative;
+  overflow-x: hidden;
 }
 
-body::before{
-  content:"";
-  position: fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:1000;
-  opacity:0.05;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode: overlay;
+/* ── TICKER ─────────────────────────────────────────────── */
+.ticker-bar {
+  background: var(--navy-deep);
+  overflow: hidden;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
-
-.ticker-bar{
-  background: #000;
-  border-bottom: 1px solid var(--rule);
-  overflow:hidden;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  padding: 9px 0;
-  position: relative;
-  z-index: 50;
-}
-.ticker-track{
+.ticker-track {
   display: inline-flex;
   white-space: nowrap;
   animation: ticker 60s linear infinite;
   gap: 3rem;
 }
-.ticker-pair{display:inline-flex;align-items:center;gap:0.6rem}
-.ticker-pair .sym{color: var(--ink-dim); font-weight:500}
-.ticker-pair .price{color: var(--ink)}
-.ticker-pair .chg{font-weight:500}
-.ticker-pair .chg.up{color:#7fbc6a}
-.ticker-pair .chg.down{color:#e07060}
-@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker-pair { display:inline-flex; align-items:center; gap:0.5rem; font-size:12px; font-weight:500; }
+.ticker-pair .sym { color: rgba(255,255,255,0.5); font-size:11px; }
+.ticker-pair .price { color: #fff; }
+.ticker-pair .chg { font-size:11px; }
+.ticker-pair .chg.up { color: #4ade80; }
+.ticker-pair .chg.down { color: #f87171; }
+@keyframes ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
-nav{
+/* ── NAV ─────────────────────────────────────────────────── */
+nav {
   position: sticky;
-  top:0;
-  background: rgba(10,9,7,0.92);
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
-  border-bottom: 1px solid var(--rule);
+  top: 0;
   z-index: 100;
+  background: var(--white);
+  border-bottom: 1px solid var(--grey-200);
+  box-shadow: var(--shadow-sm);
 }
-.nav-inner{
-  max-width: 1400px;
+.nav-inner {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 1.2rem 2.5rem;
+  padding: 0 2rem;
+  height: 68px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-.brand{
-  font-family: var(--serif);
-  font-weight: 500;
-  font-size: 1.35rem;
-  letter-spacing: -0.01em;
-  display:flex;
-  align-items:baseline;
-  gap: 0.5rem;
-  text-decoration: none;
-  color: var(--ink);
-}
-.brand .mark{
-  color: var(--gold);
-  font-style: italic;
-  font-weight: 400;
-}
-.brand .est{
-  font-family: var(--mono);
-  font-size: 9px;
-  color: var(--ink-faded);
-  letter-spacing: 0.2em;
-  margin-left: 0.6rem;
-  text-transform: uppercase;
-}
-.tabs{
-  display: flex;
-  gap: 2.5rem;
-  list-style: none;
-}
-.tab-btn{
-  background: none;
-  border: none;
-  color: var(--ink-dim);
-  cursor: pointer;
-  font-family: var(--sans);
-  font-size: 0.78rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  font-weight: 500;
-  padding: 0.5rem 0;
-  position: relative;
-  transition: color 0.3s;
-}
-.tab-btn:hover{color: var(--ink)}
-.tab-btn.active{color: var(--gold)}
-.tab-btn.active::after{
-  content:"";
-  position: absolute;
-  bottom: -2px;
-  left:0; right:0;
-  height: 1px;
-  background: var(--gold);
-}
-.menu-toggle{
-  display:none;
-  background:none;
-  border:1px solid var(--rule);
-  color:var(--ink);
-  padding:0.5rem 0.8rem;
-  cursor:pointer;
-  font-family:var(--mono);
-  font-size:11px;
-  letter-spacing:0.1em;
-}
-
-.panel{display:none}
-.panel.active{display:block; animation: fadeIn 0.6s ease}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-
-.hero{
-  position: relative;
-  padding: 6rem 2.5rem 5rem;
-  max-width: 1400px;
-  margin: 0 auto;
-  min-height: 88vh;
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 5rem;
-  align-items: center;
-}
-.hero-bg{
-  position: absolute;
-  inset: 0;
-  pointer-events:none;
-  overflow:hidden;
-}
-.hero-bg::before{
-  content:"";
-  position:absolute;
-  top:-30%; right:-20%;
-  width: 800px; height:800px;
-  background: radial-gradient(circle, rgba(224,179,90,0.08) 0%, transparent 60%);
-  border-radius:50%;
-  filter: blur(40px);
-}
-.hero-eyebrow{
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--gold);
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  margin-bottom: 2rem;
-  display:flex;
-  align-items:center;
-  gap:1rem;
-  font-weight: 500;
-}
-.hero-eyebrow::before{
-  content:"";
-  width: 30px;
-  height:1px;
-  background: var(--gold);
-}
-.hero-title{
-  font-family: var(--serif);
-  font-size: clamp(3.5rem, 7vw, 6.5rem);
-  font-weight: 300;
-  line-height: 0.95;
-  letter-spacing: -0.025em;
-  margin-bottom: 2rem;
-  color: var(--ink);
-}
-.hero-title em{
-  font-style: italic;
-  font-weight: 400;
-  color: var(--gold);
-}
-.hero-title .ampersand{
-  font-family: var(--serif);
-  font-style: italic;
-  font-weight: 300;
-  color: var(--gold);
-  font-size: 1.2em;
-}
-.hero-sub{
-  font-size: 1.08rem;
-  color: var(--ink-dim);
-  max-width: 480px;
-  line-height: 1.75;
-  margin-bottom: 2.5rem;
-  font-weight: 400;
-}
-.hero-actions{
-  display:flex;
-  gap: 1.2rem;
-  flex-wrap:wrap;
-}
-
-.btn{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.7rem;
-  padding: 1rem 2rem;
-  font-family: var(--sans);
-  font-size: 0.78rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.4s cubic-bezier(.2,.7,.3,1);
-  position: relative;
-  overflow: hidden;
-}
-.btn-primary{
-  background: var(--gold);
-  color: #1a1408;
-}
-.btn-primary:hover{
-  background: var(--gold-bright);
-  transform: translateY(-2px);
-  box-shadow: 0 18px 40px -15px rgba(224,179,90,0.6);
-}
-.btn-primary:disabled{
-  opacity:0.6; cursor:not-allowed; transform:none; box-shadow:none;
-}
-.btn-secondary{
-  background: transparent;
-  color: var(--ink);
-  border: 1px solid var(--rule);
-}
-.btn-secondary:hover{
-  border-color: var(--gold);
-  color: var(--gold);
-}
-.btn .arrow{transition: transform 0.3s; display:inline-block;}
-.btn:hover .arrow{transform: translateX(4px)}
-
-.hero-portrait{
-  position: relative;
-  aspect-ratio: 4/5;
-  background: linear-gradient(135deg, #1a1610 0%, #0d0b08 100%);
-  border: 1px solid var(--rule);
-  overflow: hidden;
-}
-.hero-portrait::before{
-  content:"";
-  position: absolute;
-  inset:0;
-  background:
-    repeating-linear-gradient(0deg,transparent,transparent 30px,rgba(224,179,90,0.04) 30px,rgba(224,179,90,0.04) 31px),
-    repeating-linear-gradient(90deg,transparent,transparent 30px,rgba(224,179,90,0.04) 30px,rgba(224,179,90,0.04) 31px);
-}
-.portrait-monogram{
-  position: absolute;
-  inset:0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--serif);
-  font-size: 22rem;
-  font-style: italic;
-  font-weight: 300;
-  color: rgba(224,179,90,0.14);
-  line-height:1;
-  letter-spacing:-0.05em;
-}
-.portrait-meta{
-  position: absolute;
-  bottom: 2rem;
-  left: 2rem;
-  right: 2rem;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 1rem;
-  z-index: 2;
-}
-.portrait-meta .label{
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--ink-faded);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  margin-bottom: 0.4rem;
-}
-.portrait-meta .value{
-  font-family: var(--serif);
-  font-size: 0.95rem;
-  color: var(--ink);
-  font-style: italic;
-}
-.portrait-corner{
-  position: absolute;
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--gold);
-  letter-spacing: 0.15em;
-  z-index: 2;
-}
-.portrait-corner.tl{top:1.5rem; left:1.5rem}
-.portrait-corner.tr{top:1.5rem; right:1.5rem}
-
-.stats-strip{
-  border-top:1px solid var(--rule);
-  border-bottom:1px solid var(--rule);
-  background: var(--bg-2);
-}
-.stats-inner{
-  max-width: 1400px;
-  margin:0 auto;
-  display:grid;
-  grid-template-columns: repeat(4, 1fr);
-  padding: 0 2.5rem;
-}
-.stat{
-  padding: 2.5rem 1.5rem;
-  border-right: 1px solid var(--rule);
-}
-.stat:last-child{border-right:none}
-.stat .num{
-  font-family: var(--serif);
-  font-size: 2.8rem;
-  font-weight: 400;
-  color: var(--gold);
-  line-height: 1;
-  margin-bottom: 0.6rem;
-  letter-spacing: -0.02em;
-}
-.stat .num em{font-style: italic; font-weight: 300;}
-.stat .lab{
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--ink-dim);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-section{
-  padding: 6rem 2.5rem;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-.section-eyebrow{
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--gold);
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  display:flex;
-  align-items:center;
-  gap:1rem;
-  font-weight: 600;
-}
-.section-eyebrow::before{
-  content: attr(data-num);
-  font-family: var(--mono);
-  color: var(--ink-dim);
-}
-.section-eyebrow::after{
-  content:"";
-  flex:1;
-  height:1px;
-  background: var(--rule);
-}
-.section-title{
-  font-family: var(--serif);
-  font-size: clamp(2.5rem, 4.5vw, 4rem);
-  font-weight: 300;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-  margin-bottom: 3rem;
-  max-width: 900px;
-}
-.section-title em{font-style: italic; color: var(--gold);}
-
-.about-grid{
-  display:grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 5rem;
-  align-items: start;
-}
-.about-text p{
-  font-size: 1.05rem;
-  line-height: 1.85;
-  color: var(--ink-dim);
-  margin-bottom: 1.5rem;
-  font-weight: 400;
-}
-.about-text p:first-of-type::first-letter{
-  font-family: var(--serif);
-  font-size: 4rem;
-  float: left;
-  line-height: 0.85;
-  margin: 0.3rem 0.6rem 0 0;
-  color: var(--gold);
-  font-style: italic;
-}
-.principles{
-  display:grid;
-  gap:1.5rem;
-}
-.principle{
-  border-top: 1px solid var(--rule);
-  padding-top: 1.5rem;
-  display:grid;
-  grid-template-columns: 60px 1fr;
-  gap: 1.5rem;
-}
-.principle .num{
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--gold);
-  letter-spacing: 0.15em;
-  font-weight: 600;
-}
-.principle h4{
-  font-family: var(--serif);
-  font-size: 1.4rem;
-  font-weight: 400;
-  margin-bottom: 0.6rem;
-  color: var(--ink);
-}
-.principle p{
-  font-size: 0.95rem;
-  color: var(--ink-dim);
-  line-height: 1.7;
-}
-
-.pull-quote{
-  margin: 5rem auto;
-  max-width: 1100px;
-  padding: 3rem 2.5rem;
-  border-top: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
-  position: relative;
-}
-.pull-quote::before{
-  content:"";
-  position: absolute;
-  top: -1px; left: 50%;
-  transform: translateX(-50%);
-  width: 60px; height: 1px;
-  background: var(--gold);
-}
-.pull-quote q{
-  display: block;
-  font-family: var(--serif);
-  font-size: clamp(1.6rem, 3vw, 2.5rem);
-  font-style: italic;
-  font-weight: 300;
-  line-height: 1.3;
-  text-align: center;
-  color: var(--ink);
-  letter-spacing: -0.01em;
-  quotes: "\201C" "\201D";
-}
-.pull-quote q::before, .pull-quote q::after{
-  color: var(--gold);
-  font-size: 1.3em;
-  vertical-align: -0.15em;
-  margin: 0 0.1em;
-}
-.pull-quote .attr{
-  text-align: center;
-  margin-top: 1.5rem;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--ink-dim);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-.booking-intro{
-  max-width: 720px;
-  font-size: 1.05rem;
-  color: var(--ink-dim);
-  line-height: 1.8;
-  margin-bottom: 4rem;
-}
-.tier-grid{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 2rem;
-  margin-bottom: 4rem;
 }
-.tier{
-  background: var(--bg-2);
-  border: 1px solid var(--rule);
-  padding: 3rem 2.5rem;
-  position: relative;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(.2,.7,.3,1);
-}
-.tier::before{
-  content:"";
-  position: absolute;
-  top:0; left:0;
-  width: 100%; height: 2px;
-  background: var(--gold);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.5s;
-}
-.tier:hover{
-  border-color: var(--gold-deep);
-  transform: translateY(-4px);
-}
-.tier:hover::before{transform: scaleX(1)}
-.tier.selected{
-  border-color: var(--gold);
-  background: linear-gradient(135deg, rgba(224,179,90,0.05), transparent);
-}
-.tier.selected::before{transform: scaleX(1)}
-.tier .badge{
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  font-family: var(--mono);
-  font-size: 9px;
-  color: var(--gold);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  border: 1px solid var(--gold-deep);
-  padding: 0.3rem 0.7rem;
-  font-weight: 600;
-}
-.tier .tier-num{
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--ink-dim);
-  letter-spacing: 0.2em;
-  margin-bottom: 1.5rem;
-  font-weight: 500;
-}
-.tier h3{
-  font-family: var(--serif);
-  font-size: 2.2rem;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  margin-bottom: 0.4rem;
-  color: var(--ink);
-}
-.tier h3 em{font-style: italic; color: var(--gold);}
-.tier .tier-tag{
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--ink-dim);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  margin-bottom: 2rem;
-  font-weight: 500;
-}
-.tier-price{
-  font-family: var(--serif);
-  font-size: 3.5rem;
-  font-weight: 300;
-  color: var(--ink);
-  letter-spacing: -0.02em;
-  line-height:1;
-  margin-bottom: 0.5rem;
-}
-.tier-price .currency{
-  font-size: 1.3rem;
-  vertical-align: super;
-  color: var(--gold);
-  margin-right: 0.2rem;
-  font-family: var(--sans);
-  font-weight: 600;
-}
-.tier-price .period{
-  font-family: var(--sans);
-  font-size: 0.85rem;
-  font-weight: 400;
-  color: var(--ink-dim);
-  margin-left: 0.5rem;
-  letter-spacing: 0.05em;
-}
-.tier-usd{
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--ink-dim);
-  letter-spacing: 0.1em;
-  margin-bottom: 2.5rem;
-  font-weight: 500;
-}
-.tier-features{
-  list-style: none;
-  margin-bottom: 2rem;
-}
-.tier-features li{
-  font-size: 0.95rem;
-  color: var(--ink-dim);
-  padding: 0.85rem 0;
-  border-bottom: 1px dashed var(--rule-soft);
-  display:flex;
-  align-items: flex-start;
-  gap: 0.8rem;
-}
-.tier-features li::before{
-  content: "✦";
-  color: var(--gold);
-  flex-shrink:0;
-  margin-top:1px;
-}
-.tier .select-indicator{
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--gold);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  display:flex;
-  align-items:center;
-  gap: 0.5rem;
-  opacity: 0.6;
-  transition: opacity 0.3s;
-  font-weight: 600;
-}
-.tier.selected .select-indicator{opacity: 1;}
-.tier.selected .select-indicator::after{content: "✓ SELECTED"; color: var(--gold);}
-.tier:not(.selected) .select-indicator::after{content: "→ CLICK TO SELECT"; }
-
-.booking-form{
-  background: var(--bg-2);
-  border: 1px solid var(--rule);
-  padding: 3.5rem;
-}
-.form-eyebrow{
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--gold);
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-.form-title{
-  font-family: var(--serif);
-  font-size: 2rem;
-  font-weight: 400;
-  margin-bottom: 2.5rem;
-  color: var(--ink);
-}
-.form-title em{font-style: italic; color: var(--gold);}
-.form-grid{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.8rem 2rem;
-}
-.field{display:flex;flex-direction:column;}
-.field.full{grid-column: 1/-1}
-.field label{
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--ink-dim);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  margin-bottom: 0.7rem;
-  font-weight: 600;
-}
-.field label .req{color: var(--gold); margin-left: 4px;}
-.field input, .field select, .field textarea{
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--rule);
-  color: var(--ink);
-  font-family: var(--sans);
-  font-size: 1rem;
-  padding: 0.8rem 0;
-  font-weight: 400;
-  transition: border-color 0.3s;
-  outline: none;
-  width:100%;
-}
-.field input::placeholder, .field textarea::placeholder{
-  color: var(--ink-faded);
-}
-.field input.error, .field select.error{border-bottom-color: var(--red);}
-.field textarea{
-  resize: vertical;
-  min-height: 100px;
-  border: 1px solid var(--rule);
-  padding: 1rem;
-}
-.field input:focus, .field select:focus, .field textarea:focus{border-color: var(--gold);}
-.field select{
-  appearance:none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23e0b35a' stroke-width='1.5'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 4px center;
-  padding-right: 30px;
-  cursor: pointer;
-}
-.field select option{background: var(--bg-2); color: var(--ink);}
-.field-hint{
-  font-family: var(--mono);
-  font-size: 9px;
-  color: var(--red);
-  letter-spacing: 0.1em;
-  margin-top: 0.3rem;
-  text-transform: uppercase;
-  min-height: 12px;
-  font-weight: 500;
-}
-.form-footer{
-  margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--rule);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-}
-.form-summary{
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--ink-dim);
-  letter-spacing: 0.1em;
-  font-weight: 500;
-}
-.form-summary strong{color: var(--gold); font-weight: 600;}
-
-.payment-wrap{
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 4rem;
-}
-.order-summary{
-  background: var(--bg-2);
-  border: 1px solid var(--rule);
-  padding: 2.5rem;
-  position: sticky;
-  top: 90px;
-  height: fit-content;
-}
-.summary-eyebrow{
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--gold);
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  padding-bottom: 1.2rem;
-  border-bottom: 1px solid var(--rule);
-  margin-bottom: 1.5rem;
-  font-weight: 600;
-}
-.summary-row{
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 0.9rem 0;
-  border-bottom: 1px dashed var(--rule-soft);
-  gap: 1rem;
-}
-.summary-row .lab{
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--ink-dim);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-.summary-row .val{
-  font-size: 0.95rem;
-  color: var(--ink);
-  text-align:right;
-  font-weight: 500;
-}
-.summary-total{
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--gold-deep);
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-.summary-total .lab{
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--gold);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  font-weight: 600;
-}
-.summary-total .val{
-  font-family: var(--serif);
-  font-size: 2.4rem;
-  font-weight: 300;
-  color: var(--gold);
-  letter-spacing: -0.02em;
-}
-.summary-total .val .currency{
-  font-size: 0.85rem;
-  vertical-align: super;
-  margin-right: 4px;
-  font-family: var(--mono);
-  font-weight: 600;
-}
-.summary-fineprint{
-  margin-top: 1rem;
-  font-size: 0.82rem;
-  color: var(--ink-dim);
-  font-style: italic;
-  line-height:1.5;
-}
-
-.payment-methods{
-  display: grid;
-  gap: 1.2rem;
-}
-.payment-method{
-  background: var(--bg-2);
-  border: 1px solid var(--rule);
-  padding: 1.8rem 2rem;
-  cursor: pointer;
-  transition: all 0.3s;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 1.5rem;
-  align-items: center;
-}
-.payment-method:hover{border-color: var(--gold-deep);}
-.payment-method.selected{
-  border-color: var(--gold);
-  background: linear-gradient(135deg, rgba(224,179,90,0.06), transparent);
-}
-.pm-info h4{
-  font-family: var(--serif);
-  font-size: 1.25rem;
-  font-weight: 500;
-  margin-bottom: 0.3rem;
-  color: var(--ink);
-}
-.pm-info p{
-  font-size: 0.88rem;
-  color: var(--ink-dim);
-  font-weight: 400;
-  line-height: 1.5;
-}
-.pm-tags{
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  align-items: flex-end;
-}
-.pm-tag{
-  font-family: var(--mono);
-  font-size: 9px;
-  color: var(--ink-dim);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  border: 1px solid var(--rule);
-  padding: 0.2rem 0.5rem;
-  white-space: nowrap;
-  font-weight: 500;
-}
-.pm-tag.recommended{color: var(--gold); border-color: var(--gold-deep);}
-.pm-radio{
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 1px solid var(--rule);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-.payment-method.selected .pm-radio{border-color: var(--gold);}
-.payment-method.selected .pm-radio::after{
-  content:"";
-  width: 8px; height:8px;
-  border-radius: 50%;
-  background: var(--gold);
-}
-
-.momo-picker{
-  display: none;
-  margin-top: 0;
-  padding: 0 1rem;
-  background: linear-gradient(135deg, rgba(224,179,90,0.04), transparent);
-  border: 1px solid var(--rule);
-  border-top: none;
-  overflow: hidden;
-  max-height: 0;
-  transition: max-height 0.4s cubic-bezier(.2,.7,.3,1), padding 0.4s;
-}
-.momo-picker.show{
-  display: block;
-  max-height: 500px;
-  padding: 1.5rem 1rem 1.8rem;
-  border-top: 1px dashed var(--gold-deep);
-  margin-top: -1.2rem;
-  border-color: var(--gold-deep);
-}
-.momo-picker-head{
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--gold);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
+.brand {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  font-weight: 600;
+  text-decoration: none;
 }
-.momo-picker-head::before{
-  content:"↳";
-  color: var(--gold);
-}
-.momo-grid{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.8rem;
-}
-.momo-option{
-  background: var(--bg);
-  border: 1px solid var(--rule);
-  padding: 1rem 0.8rem;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.25s;
-  position: relative;
-}
-.momo-option:hover{
-  border-color: var(--gold-deep);
-  transform: translateY(-2px);
-}
-.momo-option.selected{
-  border-color: var(--gold);
-  background: linear-gradient(135deg, rgba(224,179,90,0.1), transparent);
-}
-.momo-option.selected::after{
-  content: "✓";
-  position: absolute;
-  top: 6px;
-  right: 8px;
-  color: var(--gold);
-  font-size: 12px;
-  font-weight: 700;
-}
-.momo-logo{
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 0.5rem;
-}
-.momo-logo svg{height: 100%; width: auto;}
-.momo-name{
-  font-family: var(--sans);
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--ink);
-  letter-spacing: 0.05em;
-  margin-bottom: 0.15rem;
-}
-.momo-tag{
-  font-family: var(--mono);
-  font-size: 9px;
-  color: var(--ink-dim);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-.momo-phone-field{
-  margin-top: 1.2rem;
-  padding-top: 1.2rem;
-  border-top: 1px dashed var(--rule);
-}
-.momo-phone-field label{
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--gold);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  display: block;
-  margin-bottom: 0.6rem;
-  font-weight: 600;
-}
-.momo-phone-field input{
-  width: 100%;
-  background: var(--bg);
-  border: 1px solid var(--rule);
-  color: var(--ink);
-  padding: 0.85rem 1rem;
-  font-family: var(--mono);
-  font-size: 1rem;
-  letter-spacing: 0.05em;
-  transition: border-color 0.3s;
-  outline: none;
-}
-.momo-phone-field input:focus{border-color: var(--gold);}
-.momo-phone-field input.error{border-color: var(--red);}
-.momo-phone-hint{
-  font-family: var(--mono);
-  font-size: 9px;
-  color: var(--ink-dim);
-  margin-top: 0.4rem;
-  letter-spacing: 0.05em;
-  font-weight: 500;
-}
-
-.bank-details{
-  display: none;
-  background: var(--bg-2);
-  border: 1px solid var(--gold-deep);
-  padding: 2rem;
-  margin-top: 1.5rem;
-}
-.bank-details.show{display:block; animation: fadeIn 0.4s;}
-.bank-details h4{
+.brand-icon {
+  width: 36px; height: 36px;
+  background: var(--navy);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
   font-family: var(--serif);
-  font-size: 1.2rem;
-  margin-bottom: 1.2rem;
+  font-size: 18px;
   color: var(--gold);
+  font-style: italic;
+  flex-shrink: 0;
+}
+.brand-text { line-height: 1.1; }
+.brand-name {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+}
+.brand-sub {
+  font-size: 11px;
+  color: var(--teal);
   font-weight: 500;
+  letter-spacing: 0.02em;
 }
-.bank-row{
-  display:grid;
-  grid-template-columns: 140px 1fr auto;
-  gap: 1rem;
-  padding: 0.7rem 0;
-  border-bottom: 1px dashed var(--rule-soft);
-  align-items: center;
-}
-.bank-row .lab{
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--ink-dim);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-.bank-row .val{
-  font-family: var(--mono);
-  font-size: 0.92rem;
-  color: var(--ink);
-  font-weight: 500;
-}
-.copy-btn{
-  background: transparent;
-  border: 1px solid var(--rule);
-  color: var(--ink-dim);
-  padding: 0.3rem 0.7rem;
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-weight: 600;
-}
-.copy-btn:hover{border-color: var(--gold); color: var(--gold);}
-.copy-btn.copied{border-color: var(--green); color: var(--green);}
-
-.pay-cta{
-  margin-top: 2rem;
-  width: 100%;
-  justify-content: center;
-  padding: 1.3rem 2rem;
-  font-size: 0.85rem;
-}
-
-.security-strip{
-  margin-top: 2rem;
-  padding: 1.2rem 1.5rem;
-  border: 1px dashed var(--rule);
+.nav-links {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--ink-dim);
-  letter-spacing: 0.05em;
-  font-weight: 500;
-  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
 }
-.security-strip .sec-item{
-  display:flex;
-  align-items:center;
-  gap: 0.4rem;
-  border-right: 1px solid var(--rule-soft);
-  padding-right: 0.8rem;
-}
-.security-strip .sec-item:last-child{border-right: none; padding-right: 0;}
-.security-strip .sec-icon{color: var(--gold);}
-
-.status-banner{
-  display: none;
-  margin-top: 1.5rem;
-  padding: 1.4rem 1.5rem;
-  border: 1px solid var(--gold-deep);
-  background: linear-gradient(135deg, rgba(224,179,90,0.08), transparent);
+.nav-links .tab-btn {
+  background: none;
+  border: none;
+  padding: 0.5rem 0.9rem;
   font-family: var(--sans);
-  font-size: 0.9rem;
-  color: var(--ink-dim);
-  line-height: 1.6;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--grey-600);
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+.nav-links .tab-btn:hover { background: var(--grey-100); color: var(--ink); }
+.nav-links .tab-btn.active { color: var(--navy); background: var(--teal-light); }
+.nav-cta {
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.menu-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--grey-200);
+  padding: 0.4rem 0.7rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  color: var(--ink);
+}
+
+/* ── PANELS ──────────────────────────────────────────────── */
+.panel { display: none; }
+.panel.active { display: block; animation: fadeUp 0.4s ease; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── BUTTONS ─────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.75rem 1.6rem;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  letter-spacing: 0.01em;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--teal), #1590be);
+  color: var(--white);
+  box-shadow: var(--shadow-teal);
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--teal-bright), var(--teal));
+  transform: translateY(-1px);
+  box-shadow: 0 12px 36px rgba(26,127,168,0.45);
+}
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.btn-outline {
+  background: transparent;
+  color: var(--navy);
+  border: 2px solid var(--grey-200);
+}
+.btn-outline:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-pale); }
+.btn-white {
+  background: var(--white);
+  color: var(--navy);
+  box-shadow: var(--shadow-md);
+}
+.btn-white:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+.btn-gold {
+  background: linear-gradient(135deg, #f0a500, #d4920a);
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(240,165,0,0.35);
+}
+.btn-gold:hover { transform: translateY(-1px); box-shadow: 0 10px 28px rgba(240,165,0,0.45); }
+.btn .arrow { transition: transform 0.2s; }
+.btn:hover .arrow { transform: translateX(3px); }
+.btn-sm { padding: 0.5rem 1.1rem; font-size: 13px; }
+.btn-lg { padding: 0.95rem 2rem; font-size: 15px; }
+
+/* ── HERO ─────────────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #1a4a6e 100%);
+  padding: 5rem 2rem 4rem;
   position: relative;
   overflow: hidden;
 }
-.status-banner.show{display: block;}
-.status-banner.error{border-color: var(--red); background: var(--red-bg); color: #f5d0c8;}
-.status-banner.success{border-color: var(--green); background: var(--green-bg);}
-.status-banner .status-title{
-  font-family: var(--serif);
-  font-style: italic;
-  color: var(--gold);
-  font-size: 1.1rem;
-  display: block;
-  margin-bottom: 0.4rem;
-  letter-spacing: 0;
-  font-weight: 500;
-}
-.status-banner.error .status-title{color: var(--red);}
-.status-banner.success .status-title{color: var(--green);}
-.status-banner .spinner{
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  border: 2px solid var(--gold-deep);
-  border-top-color: var(--gold);
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 600px; height: 600px;
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-  margin-right: 0.5rem;
-  vertical-align: -2px;
+  background: radial-gradient(circle, rgba(26,127,168,0.25) 0%, transparent 65%);
+  pointer-events: none;
 }
-@keyframes spin{to{transform: rotate(360deg)}}
-
-.contact-grid{
-  display:grid;
+.hero::after {
+  content: "";
+  position: absolute;
+  bottom: -80px; left: -80px;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(240,165,0,0.08) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hero-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 5rem;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
+  z-index: 2;
 }
-.contact-info h3{
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  letter-spacing: 0.05em;
+  margin-bottom: 1.5rem;
+}
+.hero-badge .dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(2.6rem, 5vw, 4rem);
+  line-height: 1.1;
+  color: var(--white);
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.01em;
+}
+.hero-title em { color: var(--gold); font-style: italic; }
+.hero-sub {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.75;
+  margin-bottom: 2.5rem;
+  max-width: 480px;
+}
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.hero-stats {
+  display: flex;
+  gap: 2rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  flex-wrap: wrap;
+}
+.hero-stat .num {
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  color: var(--white);
+  line-height: 1;
+}
+.hero-stat .num em { color: var(--gold); font-style: italic; }
+.hero-stat .lab {
+  font-size: 12px;
+  color: rgba(255,255,255,0.55);
+  font-weight: 500;
+  margin-top: 3px;
+}
+
+/* Hero image panel */
+.hero-image-panel {
+  position: relative;
+}
+.hero-card {
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+}
+.hero-card-img {
+  background: linear-gradient(135deg, #1a3a55 0%, #0d2137 100%);
+  aspect-ratio: 4/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero-monogram {
+  font-family: var(--serif);
+  font-size: 160px;
+  font-style: italic;
+  color: rgba(255,255,255,0.07);
+  line-height: 1;
+  user-select: none;
+}
+.hero-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(13,33,55,0.85) 100%);
+}
+.hero-card-info {
+  position: absolute;
+  bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
+}
+.hero-card-info h3 {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  color: var(--white);
+  font-style: italic;
+  margin-bottom: 0.2rem;
+}
+.hero-card-info p { font-size: 12px; color: rgba(255,255,255,0.6); font-weight: 500; letter-spacing: 0.05em; }
+.hero-card-footer {
+  padding: 1.2rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem;
+}
+.card-tag {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--teal-bright);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.rating-stars { color: var(--gold); font-size: 13px; }
+.floating-badge {
+  position: absolute;
+  top: 1.5rem; right: -0.8rem;
+  background: var(--gold);
+  color: var(--navy);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: var(--shadow-md);
+  white-space: nowrap;
+}
+
+/* ── SECTIONS ────────────────────────────────────────────── */
+.section {
+  padding: 5rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.section-full { padding: 5rem 2rem; }
+.section-center { text-align: center; }
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--teal);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.section-label::before {
+  content: "";
+  width: 20px; height: 2px;
+  background: var(--teal);
+  border-radius: 2px;
+}
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.15;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+  margin-bottom: 1rem;
+}
+.section-title em { font-style: italic; color: var(--teal); }
+.section-sub {
+  font-size: 1.05rem;
+  color: var(--grey-600);
+  line-height: 1.75;
+  max-width: 600px;
+}
+.section-sub.center { margin: 0 auto; }
+
+/* ── STATS STRIP ─────────────────────────────────────────── */
+.stats-strip {
+  background: var(--grey-100);
+  border-top: 1px solid var(--grey-200);
+  border-bottom: 1px solid var(--grey-200);
+  padding: 0;
+}
+.stats-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+}
+.stat-item {
+  padding: 2.5rem 1.5rem;
+  border-right: 1px solid var(--grey-200);
+  text-align: center;
+}
+.stat-item:last-child { border-right: none; }
+.stat-item .num {
   font-family: var(--serif);
   font-size: 2.5rem;
-  font-weight: 300;
-  letter-spacing: -0.02em;
-  margin-bottom: 2rem;
+  color: var(--navy);
+  line-height: 1;
+  margin-bottom: 0.4rem;
 }
-.contact-info h3 em{font-style: italic; color: var(--gold);}
-.contact-info p{
-  color: var(--ink-dim);
-  line-height: 1.8;
-  margin-bottom: 2.5rem;
-  font-weight: 400;
-}
-.contact-list{
-  display: grid;
-  gap: 1.5rem;
-}
-.contact-item{
-  border-top: 1px solid var(--rule);
-  padding-top: 1.2rem;
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  gap: 1.5rem;
-  align-items: baseline;
-}
-.contact-item .lab{
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--gold);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+.stat-item .num em { font-style: italic; color: var(--teal); }
+.stat-item .lab {
+  font-size: 12px;
   font-weight: 600;
+  color: var(--grey-400);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
-.contact-item .val{
+
+/* ── FEATURE CARDS ───────────────────────────────────────── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.feature-card {
+  background: var(--white);
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+.feature-card:hover {
+  border-color: var(--teal);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+}
+.card-icon {
+  width: 48px; height: 48px;
+  background: var(--teal-light);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.2rem;
+  font-size: 22px;
+}
+.feature-card h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.5rem;
+}
+.feature-card p { font-size: 0.9rem; color: var(--grey-600); line-height: 1.65; }
+
+/* ── ABOUT / STORY ───────────────────────────────────────── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+.about-text p {
+  font-size: 1rem;
+  color: var(--grey-600);
+  line-height: 1.85;
+  margin-bottom: 1.25rem;
+}
+.about-text p:first-of-type { color: var(--grey-800); font-weight: 500; }
+
+.timeline {
+  display: grid;
+  gap: 0;
+  border-left: 2px solid var(--grey-200);
+  margin-left: 0.5rem;
+}
+.timeline-item {
+  padding: 1rem 0 1rem 1.8rem;
+  position: relative;
+}
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -6px; top: 1.4rem;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--teal);
+  border: 2px solid var(--white);
+  box-shadow: 0 0 0 2px var(--teal);
+}
+.timeline-item .year {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--teal);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.2rem;
+}
+.timeline-item .event {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+/* Principles */
+.principles-list { display: grid; gap: 1.2rem; margin-top: 2.5rem; }
+.principle-item {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 1rem;
+  padding: 1.2rem;
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius);
+  transition: all 0.2s;
+}
+.principle-item:hover { border-color: var(--teal); background: var(--teal-pale); }
+.principle-num {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--teal);
+  font-weight: 400;
+  line-height: 1.3;
+}
+.principle-item h5 { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.3rem; }
+.principle-item p { font-size: 0.88rem; color: var(--grey-600); line-height: 1.6; }
+
+/* Curriculum */
+.curriculum-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  margin-top: 3rem;
+}
+.week-card {
+  background: var(--white);
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  display: flex;
+  gap: 1.2rem;
+  transition: all 0.25s;
+}
+.week-card:hover { border-color: var(--teal); box-shadow: var(--shadow-sm); }
+.week-num {
+  background: var(--navy);
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+.week-card h5 { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.3rem; }
+.week-card p { font-size: 0.86rem; color: var(--grey-600); line-height: 1.55; }
+
+/* Pullquote */
+.pullquote {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  padding: 5rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.pullquote::before {
+  content: "\201C";
+  position: absolute;
+  top: -2rem; left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--serif);
+  font-size: 18rem;
+  color: rgba(255,255,255,0.03);
+  line-height: 1;
+  pointer-events: none;
+}
+.pullquote q {
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  font-style: italic;
+  color: var(--white);
+  line-height: 1.4;
+  max-width: 800px;
+  display: block;
+  margin: 0 auto 1.5rem;
+  position: relative;
+  z-index: 1;
+  quotes: none;
+}
+.pullquote .attr {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── BOOKING ─────────────────────────────────────────────── */
+.booking-intro { font-size:1rem; color:var(--grey-600); line-height:1.75; margin-bottom:3rem; max-width:700px; }
+
+.tier-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+.tier-card {
+  background: var(--white);
+  border: 2px solid var(--grey-200);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+.tier-card:hover { border-color: var(--teal); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.tier-card.selected { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(26,127,168,0.15), var(--shadow-md); }
+.tier-badge {
+  position: absolute;
+  top: 1.2rem; right: 1.2rem;
+  background: var(--gold);
+  color: var(--navy);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+}
+.tier-tag {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--teal);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+.tier-card h3 {
+  font-family: var(--serif);
+  font-size: 1.7rem;
+  color: var(--navy);
+  margin-bottom: 0.25rem;
+  line-height: 1.2;
+}
+.tier-card h3 em { font-style: italic; color: var(--teal); }
+.tier-sub {
+  font-size: 12px;
+  color: var(--grey-400);
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+}
+.tier-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+.tier-amount {
+  font-family: var(--serif);
+  font-size: 2.8rem;
+  color: var(--navy);
+  line-height: 1;
+}
+.tier-currency { font-size: 1.1rem; color: var(--teal); font-weight: 700; }
+.tier-period { font-size: 13px; color: var(--grey-400); }
+.tier-usd { font-size: 12px; color: var(--grey-400); margin-bottom: 1.8rem; }
+.tier-features { list-style: none; display: grid; gap: 0.6rem; margin-bottom: 1.5rem; }
+.tier-features li {
+  display: flex; align-items: flex-start; gap: 0.7rem;
+  font-size: 0.88rem; color: var(--grey-600);
+}
+.tier-features li::before {
+  content: "✓";
+  color: var(--teal);
+  font-weight: 700;
+  font-size: 13px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.tier-select-indicator {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--grey-300);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 0.2s;
+}
+.tier-card.selected .tier-select-indicator { color: var(--teal); }
+
+/* Booking Form */
+.booking-form-wrap {
+  background: var(--white);
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.form-header {
+  background: var(--navy);
+  padding: 2rem 2.5rem;
+}
+.form-header h3 {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  color: var(--white);
+  font-style: italic;
+}
+.form-header p { font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 0.3rem; }
+.form-body { padding: 2.5rem; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.form-field { display: flex; flex-direction: column; }
+.form-field.full { grid-column: 1 / -1; }
+.form-field label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--grey-600);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.form-field label .req { color: var(--red); margin-left: 3px; }
+.form-field input,
+.form-field select,
+.form-field textarea {
+  background: var(--grey-100);
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 14px;
+  padding: 0.75rem 1rem;
+  transition: all 0.2s;
+  outline: none;
+  width: 100%;
+}
+.form-field input::placeholder, .form-field textarea::placeholder { color: var(--grey-300); }
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+  border-color: var(--teal);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(26,127,168,0.1);
+}
+.form-field input.error, .form-field select.error { border-color: var(--red); }
+.form-field textarea { resize: vertical; min-height: 100px; }
+.form-field select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%2394a3b8' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+.field-hint {
+  font-size: 11px;
+  color: var(--red);
+  margin-top: 0.3rem;
+  font-weight: 500;
+  min-height: 14px;
+}
+.form-footer {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--grey-200);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.form-summary { font-size: 13px; color: var(--grey-600); }
+.form-summary strong { color: var(--teal); font-weight: 700; }
+
+/* ── PAYMENT PAGE ────────────────────────────────────────── */
+.payment-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+.order-summary-card {
+  background: var(--navy);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: sticky;
+  top: 88px;
+}
+.os-header {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.os-header h4 {
   font-family: var(--serif);
   font-size: 1.1rem;
-  font-weight: 500;
+  color: var(--white);
+  font-style: italic;
+}
+.os-body { padding: 1.5rem 2rem; }
+.os-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  gap: 1rem;
+}
+.os-row .lab { font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.08em; }
+.os-row .val { font-size: 13px; color: rgba(255,255,255,0.85); font-weight: 500; text-align: right; }
+.os-total {
+  margin-top: 1.2rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(240,165,0,0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.os-total .lab { font-size: 12px; font-weight: 700; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; }
+.os-total .val { font-family: var(--serif); font-size: 2rem; color: var(--gold); }
+.os-usd { font-size: 12px; color: rgba(255,255,255,0.3); margin-top: 0.4rem; text-align: right; }
+.os-footer { padding: 1rem 2rem 1.5rem; }
+
+/* Payment methods */
+.payment-section { }
+.payment-section h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 1.2rem;
+}
+.pm-list { display: grid; gap: 0.8rem; }
+.pm-item {
+  background: var(--white);
+  border: 2px solid var(--grey-200);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.25s;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.pm-item:hover { border-color: var(--teal); }
+.pm-item.selected { border-color: var(--teal); background: var(--teal-pale); }
+.pm-radio {
+  width: 20px; height: 20px;
+  border: 2px solid var(--grey-300);
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.2s;
+}
+.pm-item.selected .pm-radio { border-color: var(--teal); }
+.pm-item.selected .pm-radio::after {
+  content: "";
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--teal);
+}
+.pm-text { flex: 1; }
+.pm-text h5 { font-size: 14px; font-weight: 700; color: var(--navy); }
+.pm-text p { font-size: 12px; color: var(--grey-400); margin-top: 1px; }
+.pm-badges { display: flex; gap: 0.4rem; flex-shrink: 0; }
+.pm-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background: var(--grey-100);
+  color: var(--grey-400);
+  border: 1px solid var(--grey-200);
+}
+.pm-badge.best { background: var(--teal-light); color: var(--teal); border-color: rgba(26,127,168,0.2); }
+
+/* MoMo picker */
+.momo-picker {
+  display: none;
+  background: var(--teal-pale);
+  border: 1px solid rgba(26,127,168,0.2);
+  border-top: none;
+  border-radius: 0 0 var(--radius) var(--radius);
+  padding: 1.5rem;
+  margin-top: -0.8rem;
+  margin-bottom: 0.8rem;
+}
+.momo-picker.show { display: block; animation: fadeUp 0.3s ease; }
+.momo-picker-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--teal);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.momo-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.7rem; }
+.momo-option {
+  background: var(--white);
+  border: 2px solid var(--grey-200);
+  border-radius: var(--radius);
+  padding: 0.8rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+.momo-option:hover { border-color: var(--teal); }
+.momo-option.selected { border-color: var(--teal); background: var(--teal-light); }
+.momo-option.selected::after { content: "✓"; position:absolute; top:4px; right:6px; font-size:11px; color:var(--teal); font-weight:700; }
+.momo-logo { height: 30px; display:flex; align-items:center; justify-content:center; margin-bottom:0.4rem; }
+.momo-logo svg { height: 100%; width: auto; }
+.momo-name { font-size: 11px; font-weight: 700; color: var(--navy); }
+.momo-codes { font-size: 10px; color: var(--grey-400); margin-top: 1px; }
+.momo-phone-wrap { margin-top: 1rem; }
+.momo-phone-wrap label { font-size: 11px; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: 0.08em; display:block; margin-bottom: 0.4rem; }
+.momo-phone-wrap input {
+  width: 100%;
+  background: var(--white);
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius);
+  padding: 0.7rem 1rem;
+  font-family: var(--sans);
+  font-size: 14px;
   color: var(--ink);
+  transition: border-color 0.2s;
+  outline: none;
 }
-.contact-item a{color: var(--ink); text-decoration: none; transition: color 0.3s;}
-.contact-item a:hover{color: var(--gold);}
+.momo-phone-wrap input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(26,127,168,0.1); }
+.momo-phone-wrap input.error { border-color: var(--red); }
+.momo-hint { font-size: 11px; color: var(--grey-400); margin-top: 0.3rem; }
 
-.contact-form{
-  background: var(--bg-2);
-  border: 1px solid var(--rule);
-  padding: 3rem;
+/* Bank details */
+.bank-details {
+  display: none;
+  background: var(--grey-100);
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+.bank-details.show { display: block; animation: fadeUp 0.3s ease; }
+.bank-details h5 { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 1rem; }
+.bank-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--grey-200);
+}
+.bank-row .lab { font-size: 11px; font-weight: 600; color: var(--grey-400); text-transform: uppercase; letter-spacing: 0.06em; width: 110px; flex-shrink: 0; }
+.bank-row .val { font-size: 13px; color: var(--navy); font-weight: 600; flex: 1; }
+.copy-btn {
+  background: var(--white);
+  border: 1px solid var(--grey-200);
+  color: var(--grey-600);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.04em;
+}
+.copy-btn:hover { border-color: var(--teal); color: var(--teal); }
+.copy-btn.copied { border-color: var(--green); color: var(--green); }
+.bank-section-head { font-size: 11px; font-weight: 700; color: var(--teal); letter-spacing: 0.1em; text-transform: uppercase; margin: 1.2rem 0 0.5rem; }
+
+.pay-btn-wrap { margin-top: 1.5rem; }
+.pay-btn-wrap .btn { width: 100%; justify-content: center; padding: 1rem; font-size: 15px; }
+.back-btn-wrap { margin-top: 0.8rem; }
+.back-btn-wrap .btn { width: 100%; justify-content: center; }
+
+.security-note {
+  margin-top: 1rem;
+  padding: 0.8rem 1rem;
+  background: var(--grey-100);
+  border-radius: var(--radius);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 11px;
+  color: var(--grey-400);
+  font-weight: 500;
+}
+.sec-item { display:flex; align-items:center; gap: 0.3rem; }
+.sec-item .icon { color: var(--teal); }
+
+.status-banner {
+  display: none;
+  margin-top: 1rem;
+  padding: 1rem 1.2rem;
+  border-radius: var(--radius);
+  font-size: 13px;
+  line-height: 1.6;
+  border: 1px solid;
+}
+.status-banner.show { display: block; }
+.status-banner.processing { border-color: var(--teal); background: var(--teal-pale); color: var(--teal); }
+.status-banner.error { border-color: var(--red); background: #fef2f2; color: #991b1b; }
+.status-banner.success { border-color: var(--green); background: #f0fdf4; color: #14532d; }
+.status-title { font-weight: 700; display: block; margin-bottom: 0.2rem; }
+.spinner {
+  display: inline-block;
+  width: 12px; height: 12px;
+  border: 2px solid rgba(26,127,168,0.3);
+  border-top-color: var(--teal);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-right: 0.4rem;
+  vertical-align: -2px;
+}
+@keyframes spin { to { transform: rotate(360deg) } }
+
+/* ── CONTACT ─────────────────────────────────────────────── */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 4rem;
+  align-items: start;
+}
+.contact-info h3 {
+  font-family: var(--serif);
+  font-size: 2rem;
+  color: var(--navy);
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+.contact-info p { font-size: 0.95rem; color: var(--grey-600); line-height: 1.8; margin-bottom: 2rem; }
+.contact-list { display: grid; gap: 0.8rem; }
+.contact-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  background: var(--grey-100);
+  border-radius: var(--radius);
+  align-items: flex-start;
+}
+.contact-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--teal);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding-top: 2px;
+  width: 70px;
+  flex-shrink: 0;
+}
+.contact-value { font-size: 14px; font-weight: 600; color: var(--navy); }
+.contact-value a { color: var(--navy); text-decoration: none; }
+.contact-value a:hover { color: var(--teal); }
+.contact-value small { display: block; font-size: 12px; color: var(--grey-400); font-weight: 400; }
+.contact-form-wrap {
+  background: var(--white);
+  border: 1px solid var(--grey-200);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
-.modal-overlay{
+/* ── MODAL ───────────────────────────────────────────────── */
+.modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.88);
-  backdrop-filter: blur(20px);
+  background: rgba(13,33,55,0.75);
+  backdrop-filter: blur(12px);
   z-index: 200;
   display: none;
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  animation: fadeIn 0.4s;
 }
-.modal-overlay.show{display: flex;}
-.modal{
-  background: var(--bg-2);
-  border: 1px solid var(--gold-deep);
-  max-width: 600px;
+.modal-overlay.show { display: flex; animation: fadeUp 0.4s ease; }
+.modal {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  max-width: 560px;
   width: 100%;
-  padding: 4rem 3.5rem;
-  text-align: center;
-  position: relative;
-  animation: modalUp 0.6s cubic-bezier(.2,.8,.3,1);
+  overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.3);
   max-height: 90vh;
   overflow-y: auto;
 }
-@keyframes modalUp{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}
-.modal::before{
-  content:"";
-  position: absolute;
-  top:0; left:0; right:0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+.modal-top {
+  background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+  padding: 2.5rem 2.5rem 2rem;
+  text-align: center;
 }
-.modal-seal{
-  width: 80px;
-  height: 80px;
-  border: 1px solid var(--gold);
+.modal-seal {
+  width: 72px; height: 72px;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 2rem;
+  background: rgba(240,165,0,0.15);
+  border: 2px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.2rem;
   font-family: var(--serif);
-  font-size: 2.2rem;
-  font-style: italic;
+  font-size: 2rem;
   color: var(--gold);
+  font-style: italic;
   position: relative;
 }
-.modal-seal::before{
-  content:"";
-  position: absolute;
-  inset: -8px;
-  border: 1px dashed var(--gold-deep);
-  border-radius: 50%;
-  animation: seal-spin 30s linear infinite;
-}
-@keyframes seal-spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-.modal-eyebrow{
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--gold);
-  letter-spacing: 0.3em;
+.modal-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  margin-bottom: 1rem;
-  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
-.modal h2{
+.modal h2 {
   font-family: var(--serif);
-  font-size: 2.2rem;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  color: var(--white);
+  font-style: italic;
 }
-.modal h2 em{font-style: italic; color: var(--gold);}
-.modal-text{
-  color: var(--ink-dim);
-  line-height: 1.7;
-  margin-bottom: 2rem;
-  font-weight: 400;
+.modal h2 em { color: var(--gold); }
+.modal-body { padding: 2rem 2.5rem; }
+.modal-text { font-size: 14px; color: var(--grey-600); line-height: 1.7; margin-bottom: 1.5rem; }
+.receipt {
+  background: var(--grey-100);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
 }
-.modal-receipt{
-  background: var(--bg);
-  border: 1px dashed var(--gold-deep);
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  text-align: left;
-}
-.modal-receipt-row{
+.receipt-row {
   display: flex;
   justify-content: space-between;
-  padding: 0.4rem 0;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.05em;
-}
-.modal-receipt-row .lab{color: var(--ink-dim); text-transform: uppercase;}
-.modal-receipt-row .val{color: var(--ink); font-weight: 500;}
-.modal-receipt-row .val.gold{color: var(--gold);}
-.modal-actions{
-  display: flex;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid var(--grey-200);
   gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
 }
-.notif-status{
-  margin-top: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--rule);
-  text-align: left;
-  font-size: 0.85rem;
-}
-.notif-row{
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  padding: 0.5rem 0;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--ink-dim);
-  letter-spacing: 0.05em;
-  font-weight: 500;
-}
-.notif-row .icon{
-  width: 16px; height: 16px;
-  border-radius: 50%;
-  background: var(--gold);
-  color: #1a1408;
-  display:flex; align-items:center; justify-content:center;
-  font-size:10px;
-  font-weight:700;
-  flex-shrink: 0;
-}
-.notif-row .icon.pending{background: transparent; border: 1px solid var(--gold-deep); color: var(--gold);}
-.notif-row .icon.failed{background: var(--red); color: #fff;}
+.receipt-row:last-child { border-bottom: none; }
+.receipt-row .lab { font-size: 11px; font-weight: 700; color: var(--grey-400); text-transform: uppercase; letter-spacing: 0.06em; }
+.receipt-row .val { font-size: 13px; color: var(--navy); font-weight: 600; }
+.receipt-row .val.gold { color: var(--teal); }
 
-footer{
-  border-top: 1px solid var(--rule);
-  background: #050403;
-  padding: 4rem 2.5rem 2rem;
-  margin-top: 4rem;
+.notif-list { display: grid; gap: 0.5rem; margin-bottom: 1.5rem; }
+.notif-item { display: flex; align-items: center; gap: 0.7rem; font-size: 12px; color: var(--grey-600); }
+.notif-icon {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+  background: var(--grey-200);
+  color: var(--grey-400);
 }
-.footer-inner{
-  max-width: 1400px;
+.notif-icon.ok { background: #dcfce7; color: #16a34a; }
+.notif-icon.failed { background: #fee2e2; color: var(--red); }
+
+.modal-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+.modal-actions .btn { flex: 1; justify-content: center; }
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+footer {
+  background: var(--navy-deep);
+  color: rgba(255,255,255,0.6);
+  padding: 4rem 2rem 2rem;
+  margin-top: 6rem;
+}
+.footer-inner {
+  max-width: 1200px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: 3rem;
   margin-bottom: 3rem;
 }
-.footer-brand .brand{font-size: 1.6rem; margin-bottom: 1rem;}
-.footer-brand p{
-  color: var(--ink-dim);
-  font-size: 0.9rem;
-  line-height: 1.7;
-  font-weight: 400;
-  max-width: 350px;
+.footer-brand-name { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.8rem; text-decoration: none; }
+.footer-brand-name span { font-size: 18px; font-weight: 700; color: var(--white); }
+.footer-brand-name em { color: var(--gold); font-style: normal; }
+.footer-brand p { font-size: 14px; line-height: 1.7; max-width: 300px; }
+.footer-col h5 {
+  font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.9);
+  letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1.2rem;
 }
-.footer-col h5{
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--gold);
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  margin-bottom: 1.2rem;
-  font-weight: 600;
-}
-.footer-col ul{list-style: none; display: grid; gap: 0.7rem;}
-.footer-col a{
-  color: var(--ink-dim);
+.footer-col ul { list-style: none; display: grid; gap: 0.6rem; }
+.footer-col a {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
   text-decoration: none;
-  font-size: 0.92rem;
-  font-weight: 400;
-  transition: color 0.3s;
+  transition: color 0.2s;
 }
-.footer-col a:hover{color: var(--gold);}
-.footer-bottom{
-  max-width: 1400px;
+.footer-col a:hover { color: rgba(255,255,255,0.9); }
+.footer-bottom {
+  max-width: 1200px;
   margin: 0 auto;
   padding-top: 2rem;
-  border-top: 1px solid var(--rule);
+  border-top: 1px solid rgba(255,255,255,0.08);
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
 }
-.footer-bottom small{
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--ink-dim);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-.disclaimer{
-  max-width: 1400px;
-  margin: 1rem auto 0;
-  padding: 1rem 0;
-  font-size: 11px;
-  color: var(--ink-dim);
-  font-style: italic;
-  line-height: 1.6;
-}
+.footer-bottom small { font-size: 12px; }
+.footer-credit { font-size: 12px; color: rgba(255,255,255,0.25); }
+.footer-credit a { color: var(--gold); text-decoration: none; opacity: 0.7; }
+.footer-credit a:hover { opacity: 1; }
+.disclaimer { max-width: 1200px; margin: 1.5rem auto 0; font-size: 12px; line-height: 1.6; color: rgba(255,255,255,0.2); font-style: italic; }
 
-.toast{
+/* ── TOAST ───────────────────────────────────────────────── */
+.toast {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  background: var(--bg-2);
-  border: 1px solid var(--gold);
-  padding: 1rem 1.5rem;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--ink);
-  letter-spacing: 0.1em;
-  z-index: 300;
-  transform: translateX(120%);
-  transition: transform 0.4s cubic-bezier(.2,.8,.3,1);
-  max-width: 360px;
+  bottom: 2rem; right: 2rem;
+  background: var(--navy);
+  color: var(--white);
+  padding: 0.9rem 1.4rem;
+  border-radius: var(--radius);
+  font-size: 13px;
   font-weight: 500;
+  z-index: 300;
+  transform: translateY(120%);
+  transition: transform 0.35s cubic-bezier(.2,.8,.3,1);
+  max-width: 340px;
+  box-shadow: var(--shadow-lg);
+  border-left: 3px solid var(--teal);
 }
-.toast.show{transform: translateX(0);}
-.toast.error{border-color: var(--red); color: #f5d0c8;}
-.toast.success{border-color: var(--green); color: #c4e8b4;}
+.toast.show { transform: translateY(0); }
+.toast.error { border-left-color: var(--red); }
+.toast.success { border-left-color: var(--green); }
 
-@media(max-width: 980px){
-  .hero{grid-template-columns: 1fr; gap: 3rem; padding: 3rem 1.5rem;}
-  .stats-inner{grid-template-columns: 1fr 1fr;}
-  .stat:nth-child(2){border-right: none;}
-  .stat:nth-child(1), .stat:nth-child(2){border-bottom: 1px solid var(--rule);}
-  .about-grid, .tier-grid, .payment-wrap, .contact-grid{grid-template-columns: 1fr; gap: 2.5rem;}
-  .form-grid{grid-template-columns: 1fr;}
-  .footer-inner{grid-template-columns: 1fr 1fr; gap: 2rem;}
-  section{padding: 4rem 1.5rem;}
-  .nav-inner{padding: 1rem 1.5rem;}
-  .tabs{
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-image-panel { display: none; }
+  .stats-inner { grid-template-columns: 1fr 1fr; }
+  .stat-item:nth-child(2) { border-right: none; }
+  .stat-item:nth-child(1), .stat-item:nth-child(2) { border-bottom: 1px solid var(--grey-200); }
+  .cards-grid { grid-template-columns: 1fr 1fr; }
+  .about-grid, .tier-grid, .payment-layout, .contact-layout, .curriculum-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+  .section { padding: 3rem 1.5rem; }
+  .pullquote { padding: 3.5rem 1.5rem; }
+  .nav-links {
+    display: none;
     position: absolute;
     top: 100%;
-    left: 0; right:0;
-    flex-direction: column;
-    background: var(--bg-2);
-    border-bottom: 1px solid var(--rule);
+    left: 0; right: 0;
+    background: var(--white);
+    border-bottom: 1px solid var(--grey-200);
     padding: 1rem 1.5rem;
+    flex-direction: column;
     gap: 0;
-    display: none;
+    box-shadow: var(--shadow-md);
   }
-  .tabs.open{display:flex;}
-  .tabs li{padding: 0.8rem 0; border-bottom: 1px solid var(--rule-soft);}
-  .menu-toggle{display: block;}
-  .booking-form, .contact-form, .order-summary{padding: 2rem 1.5rem;}
-  .order-summary{position: relative; top: 0;}
-  .modal{padding: 3rem 2rem;}
-  .ticker-bar{font-size: 10px;}
-  .stat .num{font-size: 2.2rem;}
-  .portrait-monogram{font-size: 14rem;}
-  .momo-grid{grid-template-columns: 1fr;}
+  .nav-links.open { display: flex; }
+  .nav-links .tab-btn { width: 100%; text-align: left; border-radius: 8px; }
+  .menu-toggle { display: block; }
+  .order-summary-card { position: static; }
 }
-@media(max-width: 560px){
-  .footer-inner{grid-template-columns: 1fr;}
-  .stats-inner{grid-template-columns: 1fr;}
-  .stat{border-right: none !important; border-bottom: 1px solid var(--rule);}
-  .hero-actions{flex-direction: column; align-items: stretch;}
-  .hero-actions .btn{justify-content: center;}
-  .toast{left: 1rem; right: 1rem; bottom: 1rem; max-width: none;}
+@media (max-width: 600px) {
+  .hero { padding: 3rem 1.2rem; }
+  .hero-title { font-size: 2.3rem; }
+  .cards-grid { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .stats-inner { grid-template-columns: 1fr; }
+  .stat-item { border-right: none !important; }
+  .hero-actions { flex-direction: column; }
+  .hero-stats { gap: 1.5rem; }
+  .momo-grid { grid-template-columns: 1fr; }
+  .toast { left: 1rem; right: 1rem; max-width: none; }
 }
 </style>
 </head>
-
 <body>
 
+<!-- TICKER -->
 <div class="ticker-bar">
   <div class="ticker-track" id="ticker"></div>
 </div>
 
+<!-- NAV -->
 <nav>
   <div class="nav-inner">
     <a href="#" class="brand" onclick="App.go('home');return false;">
-      <span>Sophie</span><span class="mark">FX</span>
-      <span class="est">EST. MMXIX</span>
+      <div class="brand-icon">S</div>
+      <div class="brand-text">
+        <div class="brand-name">SophieFX</div>
+        <div class="brand-sub">Forex Mentorship · Ghana</div>
+      </div>
     </a>
-    <button class="menu-toggle" onclick="document.querySelector('.tabs').classList.toggle('open')">MENU</button>
-    <ul class="tabs">
+    <button class="menu-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+    <ul class="nav-links">
       <li><button class="tab-btn active" data-tab="home" onclick="App.go('home')">Home</button></li>
       <li><button class="tab-btn" data-tab="about" onclick="App.go('about')">About</button></li>
       <li><button class="tab-btn" data-tab="booking" onclick="App.go('booking')">Booking</button></li>
       <li><button class="tab-btn" data-tab="contact" onclick="App.go('contact')">Contact</button></li>
     </ul>
+    <div class="nav-cta">
+      <button class="btn btn-primary btn-sm" onclick="App.go('booking')">
+        Get Started <span class="arrow">→</span>
+      </button>
+    </div>
   </div>
 </nav>
 
-<!-- HOME -->
+<!-- ─── HOME ─────────────────────────────────────────────── -->
 <div class="panel active" id="panel-home">
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-text">
-      <div class="hero-eyebrow">CERTIFIED FOREX MENTOR · GHANA / GLOBAL</div>
-      <h1 class="hero-title">
-        Trade with <em>conviction.</em><br>
-        Build with <span class="ampersand">&</span> patience.
-      </h1>
-      <p class="hero-sub">
-        Six years on the charts. Hundreds of mentees through the doors.
-        I teach the unglamorous side of forex — risk, structure, patience —
-        the side that actually pays.
-      </p>
-      <div class="hero-actions">
-        <button class="btn btn-primary" onclick="App.go('booking')">
-          Book a Mentorship <span class="arrow">→</span>
-        </button>
-        <button class="btn btn-secondary" onclick="App.go('about')">
-          The Philosophy <span class="arrow">→</span>
-        </button>
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-badge">
+          <span class="dot"></span>
+          CERTIFIED FOREX MENTOR · ACCRA, GHANA
+        </div>
+        <h1 class="hero-title">
+          Trade with <em>conviction.</em><br>
+          Build with patience.
+        </h1>
+        <p class="hero-sub">
+          Six years on the charts. Hundreds of mentees through the doors.
+          I teach the unglamorous side of forex — risk, structure, patience —
+          the side that actually pays.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-gold btn-lg" onclick="App.go('booking')">
+            Book a Mentorship <span class="arrow">→</span>
+          </button>
+          <button class="btn btn-white btn-lg" onclick="App.go('about')">
+            Our Philosophy
+          </button>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="num">6<em>yrs</em></div>
+            <div class="lab">On the Charts</div>
+          </div>
+          <div class="hero-stat">
+            <div class="num">340+</div>
+            <div class="lab">Mentees Trained</div>
+          </div>
+          <div class="hero-stat">
+            <div class="num">82%</div>
+            <div class="lab">Profitable in 6mo</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-image-panel">
+        <div class="floating-badge">🎓 2026 Cohort Open</div>
+        <div class="hero-card">
+          <div class="hero-card-img">
+            <div class="hero-monogram">S</div>
+            <div class="hero-card-overlay"></div>
+            <div class="hero-card-info">
+              <h3>Sophie</h3>
+              <p>SMART MONEY CONCEPTS · ICT METHODOLOGY</p>
+            </div>
+          </div>
+          <div class="hero-card-footer">
+            <span class="card-tag">⚡ Enrolling Now</span>
+            <div>
+              <div class="rating-stars">★★★★★</div>
+              <div style="font-size:11px;color:var(--grey-400);margin-top:1px;">340+ trained</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="hero-portrait">
-      <div class="portrait-corner tl">№ 001</div>
-      <div class="portrait-corner tr">SA · 2026</div>
-      <div class="portrait-monogram">S</div>
-      <div class="portrait-meta">
-        <div>
-          <div class="label">MENTOR</div>
-          <div class="value">Sophie</div>
-        </div>
-        <div>
-          <div class="label">SPECIALTY</div>
-          <div class="value">Smart Money Concepts</div>
-        </div>
-      </div>
-    </div>
-  </section>
+  </div>
 
   <div class="stats-strip">
     <div class="stats-inner">
-      <div class="stat"><div class="num">6<em>yrs</em></div><div class="lab">On the Charts</div></div>
-      <div class="stat"><div class="num">340<em>+</em></div><div class="lab">Mentees Trained</div></div>
-      <div class="stat"><div class="num">82<em>%</em></div><div class="lab">Profitable in 6mo</div></div>
-      <div class="stat"><div class="num">1:1</div><div class="lab">Personal Attention</div></div>
+      <div class="stat-item"><div class="num">6<em>yrs</em></div><div class="lab">Experience</div></div>
+      <div class="stat-item"><div class="num">340+</div><div class="lab">Mentees</div></div>
+      <div class="stat-item"><div class="num">82%</div><div class="lab">Profitable @ 6mo</div></div>
+      <div class="stat-item"><div class="num">1:1</div><div class="lab">Personal Attention</div></div>
     </div>
   </div>
 
-  <section>
-    <div class="section-eyebrow" data-num="01">The Discipline</div>
-    <h2 class="section-title">
-      The market <em>does not</em> reward speed.<br>
-      It rewards those who can <em>wait</em>.
-    </h2>
-    <div class="about-grid">
-      <div class="about-text">
-        <p>Most new traders blow their accounts within ninety days. Not because the market is rigged or because they picked the wrong indicator — but because they never learned the one skill that separates the survivors from the casualties: <strong style="color:var(--ink)">restraint</strong>.</p>
-        <p>My mentorship is built around that single insight. Before you ever click a buy button under my guidance, you'll understand position sizing, drawdown psychology, and the specific market structures that produce high-probability setups on the major pairs.</p>
-        <p>This is not a signals service. This is not a "get rich" pitch. It is a deliberate, patient apprenticeship in a craft that takes years to honor.</p>
+  <div class="section">
+    <div class="section-label">The Discipline</div>
+    <h2 class="section-title">The market does not reward speed.<br>It rewards those who can <em>wait.</em></h2>
+    <p class="section-sub" style="margin-bottom:3rem;">Most traders blow their accounts within 90 days — not because of bad indicators, but because they never learned <strong>restraint</strong>.</p>
+    <div class="cards-grid">
+      <div class="feature-card">
+        <div class="card-icon">⚖️</div>
+        <h4>Risk Before Reward</h4>
+        <p>Every entry begins with the question: how much am I willing to lose? If you cannot answer that in seconds, you do not take the trade.</p>
       </div>
-      <div class="principles">
-        <div class="principle">
-          <span class="num">/ 01</span>
-          <div>
-            <h4>Risk before reward.</h4>
-            <p>Every entry begins with the question: how much am I willing to lose? If you cannot answer that in seconds, you do not take the trade.</p>
-          </div>
-        </div>
-        <div class="principle">
-          <span class="num">/ 02</span>
-          <div>
-            <h4>Structure over signal.</h4>
-            <p>Indicators lag. Price tells you what is happening right now. We read the chart itself — liquidity, order blocks, supply and demand.</p>
-          </div>
-        </div>
-        <div class="principle">
-          <span class="num">/ 03</span>
-          <div>
-            <h4>Process over profit.</h4>
-            <p>A losing trade taken with discipline is a better trade than a winner taken on a whim. The journal does not lie.</p>
-          </div>
-        </div>
+      <div class="feature-card">
+        <div class="card-icon">📊</div>
+        <h4>Structure Over Signal</h4>
+        <p>Indicators lag. Price tells you what is happening right now. We read the chart itself — liquidity, order blocks, supply and demand.</p>
+      </div>
+      <div class="feature-card">
+        <div class="card-icon">📓</div>
+        <h4>Process Over Profit</h4>
+        <p>A losing trade taken with discipline is a better trade than a winner taken on a whim. The journal does not lie.</p>
       </div>
     </div>
-  </section>
-
-  <div class="pull-quote">
-    <q>The market will pay you what you are. Not what you want to be — what you are. Mentorship is the shortest path to becoming what you need to be.</q>
-    <div class="attr">— Sophie</div>
   </div>
 
-  <section style="text-align:center;">
-    <div class="section-eyebrow" data-num="02" style="justify-content:center; max-width:600px; margin: 0 auto 1.5rem;">The Invitation</div>
-    <h2 class="section-title" style="text-align:center; margin-left:auto; margin-right:auto;">
-      Two paths. <em>One commitment.</em>
-    </h2>
-    <p style="max-width: 600px; margin: 0 auto 3rem; color: var(--ink-dim); line-height: 1.8;">
-      Whether you join me face-to-face in Ghana or online from anywhere on earth,
-      the work is the same: a six-week immersion in the craft of disciplined trading.
+  <div class="pullquote">
+    <q>"The market will pay you what you are. Not what you want to be — what you are. Mentorship is the shortest path to becoming what you need to be."</q>
+    <div class="attr">— Sophie · SophieFX</div>
+  </div>
+
+  <div class="section section-center">
+    <div class="section-label" style="justify-content:center;display:flex;">The Invitation</div>
+    <h2 class="section-title">Two paths. <em>One commitment.</em></h2>
+    <p class="section-sub center" style="margin:0 auto 2.5rem;">
+      Whether you join face-to-face in Accra or online from anywhere on earth,
+      the work is the same: a six-week immersion in disciplined trading.
     </p>
-    <button class="btn btn-primary" onclick="App.go('booking')">
+    <button class="btn btn-primary btn-lg" onclick="App.go('booking')">
       View Mentorship Tiers <span class="arrow">→</span>
     </button>
-  </section>
+  </div>
+
 </div>
 
-<!-- ABOUT -->
+<!-- ─── ABOUT ─────────────────────────────────────────────── -->
 <div class="panel" id="panel-about">
-  <section>
-    <div class="section-eyebrow" data-num="01">The Story</div>
+  <div class="section">
+    <div class="section-label">The Story</div>
     <h2 class="section-title">A note from <em>Sophie.</em></h2>
     <div class="about-grid">
       <div class="about-text">
@@ -1657,57 +1473,79 @@ footer{
         <p>What changed was meeting a mentor of my own. Someone who didn't sell signals or promise yachts. Someone who simply showed me, week after week, what disciplined trading actually looks like — the journals, the missed trades, the sitting on hands. The boring parts.</p>
         <p>That's what I teach now. The boring parts. Because they are the only parts that ever made me money.</p>
         <p>If you're tired of YouTube gurus and Telegram signals — if you want a mentor who will look at your journal, ask hard questions, and call you when you go off-plan — that's what this is. Welcome.</p>
+        <div style="margin-top:2rem;">
+          <button class="btn btn-primary" onclick="App.go('booking')">Book a Spot <span class="arrow">→</span></button>
+        </div>
       </div>
       <div>
-        <div style="background: var(--bg-2); border: 1px solid var(--rule); padding: 2.5rem;">
-          <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:0.3em;margin-bottom:1.5rem;font-weight:600;">CREDENTIALS</div>
-          <div class="contact-list">
-            <div class="contact-item"><div class="lab">2019</div><div class="val">Began trading FX, equities</div></div>
-            <div class="contact-item"><div class="lab">2021</div><div class="val">First mentorship cohort</div></div>
-            <div class="contact-item"><div class="lab">2022</div><div class="val">Featured trader</div></div>
-            <div class="contact-item"><div class="lab">2024</div><div class="val">340+ mentees trained</div></div>
-            <div class="contact-item"><div class="lab">2025</div><div class="val">Studio opened, Accra</div></div>
+        <div style="background:var(--grey-100);border:1px solid var(--grey-200);border-radius:var(--radius-lg);padding:2rem;margin-bottom:1.5rem;">
+          <div class="section-label" style="margin-bottom:1.2rem;">Credentials</div>
+          <div class="timeline">
+            <div class="timeline-item"><div class="year">2019</div><div class="event">Began trading FX & equities</div></div>
+            <div class="timeline-item"><div class="year">2021</div><div class="event">First mentorship cohort launched</div></div>
+            <div class="timeline-item"><div class="year">2022</div><div class="event">Featured forex educator</div></div>
+            <div class="timeline-item"><div class="year">2024</div><div class="event">340+ mentees trained</div></div>
+            <div class="timeline-item"><div class="year">2025</div><div class="event">Studio opened, Accra, Ghana</div></div>
+          </div>
+        </div>
+        <div class="principles-list">
+          <div class="principle-item">
+            <div class="principle-num">01</div>
+            <div><h5>Risk Before Reward</h5><p>Every entry begins with the question: how much am I willing to lose?</p></div>
+          </div>
+          <div class="principle-item">
+            <div class="principle-num">02</div>
+            <div><h5>Structure Over Signal</h5><p>We read the chart itself — liquidity, order blocks, supply and demand.</p></div>
+          </div>
+          <div class="principle-item">
+            <div class="principle-num">03</div>
+            <div><h5>Process Over Profit</h5><p>A losing trade taken with discipline beats a winner taken on a whim.</p></div>
           </div>
         </div>
       </div>
     </div>
-  </section>
-
-  <div class="pull-quote">
-    <q>I do not promise you riches. I promise you a process. The riches, if they come, are a consequence of the process — never the goal.</q>
   </div>
 
-  <section>
-    <div class="section-eyebrow" data-num="02">The Curriculum</div>
+  <div class="pullquote">
+    <q>"I do not promise you riches. I promise you a process. The riches, if they come, are a consequence of the process — never the goal."</q>
+    <div class="attr">— Sophie</div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">The Curriculum</div>
     <h2 class="section-title">Six weeks. <em>One discipline.</em></h2>
-    <div class="principles" style="max-width: 900px;">
-      <div class="principle"><span class="num">WK / 01</span><div><h4>Foundation & Audit</h4><p>We open your trading journal together. Honest accounting of your wins, losses, and the patterns hiding in both. No judgment. Just data.</p></div></div>
-      <div class="principle"><span class="num">WK / 02</span><div><h4>Market Structure</h4><p>How price actually moves. Highs, lows, breaks of structure, change of character. The vocabulary professional traders speak in.</p></div></div>
-      <div class="principle"><span class="num">WK / 03</span><div><h4>Smart Money Concepts</h4><p>Liquidity, order blocks, fair value gaps. Where institutions place their orders — and how to position yourself in their wake.</p></div></div>
-      <div class="principle"><span class="num">WK / 04</span><div><h4>Risk Engineering</h4><p>Position sizing as a function of conviction. Stop placement that respects structure, not fear. Building a portfolio of asymmetric bets.</p></div></div>
-      <div class="principle"><span class="num">WK / 05</span><div><h4>Live Sessions</h4><p>We trade together. London open. New York open. You watch me think. I watch you think. We refine the process in real time.</p></div></div>
-      <div class="principle"><span class="num">WK / 06</span><div><h4>Independence Protocol</h4><p>You graduate with your own playbook, your own rules, your own journal practice. The point was never me — it was you, ready.</p></div></div>
+    <p class="section-sub" style="margin-bottom:0;">A structured, progressive curriculum built around one idea: making you independent.</p>
+    <div class="curriculum-grid">
+      <div class="week-card"><div class="week-num">WK 1</div><div><h5>Foundation & Audit</h5><p>We open your trading journal together. Honest accounting of wins, losses, and the patterns hiding in both.</p></div></div>
+      <div class="week-card"><div class="week-num">WK 2</div><div><h5>Market Structure</h5><p>How price actually moves — highs, lows, breaks of structure, change of character. The vocabulary pros speak.</p></div></div>
+      <div class="week-card"><div class="week-num">WK 3</div><div><h5>Smart Money Concepts</h5><p>Liquidity, order blocks, fair value gaps. Where institutions place orders — and how to position yourself.</p></div></div>
+      <div class="week-card"><div class="week-num">WK 4</div><div><h5>Risk Engineering</h5><p>Position sizing as a function of conviction. Stop placement that respects structure, not fear.</p></div></div>
+      <div class="week-card"><div class="week-num">WK 5</div><div><h5>Live Sessions</h5><p>We trade together. London open. New York open. You watch me think. I watch you think.</p></div></div>
+      <div class="week-card"><div class="week-num">WK 6</div><div><h5>Independence Protocol</h5><p>You graduate with your own playbook, rules, and journal practice. The point was always you, ready.</p></div></div>
     </div>
-  </section>
+  </div>
 </div>
 
-<!-- BOOKING -->
+<!-- ─── BOOKING ───────────────────────────────────────────── -->
 <div class="panel" id="panel-booking">
-  <section>
-    <div class="section-eyebrow" data-num="01">The Booking</div>
+  <div class="section">
+    <div class="section-label">Mentorship Booking</div>
     <h2 class="section-title">Choose your <em>path.</em></h2>
     <p class="booking-intro">
       Both tiers cover the same six-week curriculum. The difference is intimacy, intensity, and the energy of being in the same room.
-      All payments are processed in Ghanaian Cedis (GH₵) via Paystack — the standard for Ghana-based businesses.
-      International cards are converted automatically by your bank at the live exchange rate.
+      All payments are processed in Ghanaian Cedis (GH₵) via Paystack.
     </p>
 
     <div class="tier-grid">
-      <div class="tier" data-tier="online" data-ghs="1" data-usd="100" onclick="App.selectTier(this)">
-        <div class="tier-num">/ TIER 01</div>
+      <div class="tier-card" data-tier="online" data-ghs="1" data-usd="100" onclick="App.selectTier(this)">
+        <div class="tier-tag">/ Tier 01 · Remote</div>
         <h3>Online <em>Mentorship</em></h3>
-        <div class="tier-tag">Remote · Anywhere on Earth</div>
-        <div class="tier-price"><span class="currency">GH₵</span>1<span class="period">/ six weeks</span></div>
+        <div class="tier-sub">Zoom · Anywhere on Earth</div>
+        <div class="tier-price-row">
+          <span class="tier-currency">GH₵</span>
+          <span class="tier-amount">1</span>
+          <span class="tier-period">/ six weeks</span>
+        </div>
         <div class="tier-usd">≈ $100 USD</div>
         <ul class="tier-features">
           <li>Six weekly 1-on-1 sessions via Zoom</li>
@@ -1717,15 +1555,19 @@ footer{
           <li>Curriculum PDF & playbook</li>
           <li>30-day post-mentorship check-in</li>
         </ul>
-        <div class="select-indicator"></div>
+        <div class="tier-select-indicator">Click to select →</div>
       </div>
 
-      <div class="tier" data-tier="onsite" data-ghs="7500" data-usd="500" onclick="App.selectTier(this)">
-        <div class="badge">Premium</div>
-        <div class="tier-num">/ TIER 02</div>
+      <div class="tier-card" data-tier="onsite" data-ghs="7500" data-usd="500" onclick="App.selectTier(this)">
+        <div class="tier-badge">Premium</div>
+        <div class="tier-tag">/ Tier 02 · In-Person</div>
         <h3>Face-to-Face <em>Mentorship</em></h3>
-        <div class="tier-tag">In-Person · Accra, Ghana</div>
-        <div class="tier-price"><span class="currency">GH₵</span>7,500<span class="period">/ six weeks</span></div>
+        <div class="tier-sub">Accra Studio · Ghana</div>
+        <div class="tier-price-row">
+          <span class="tier-currency">GH₵</span>
+          <span class="tier-amount">7,500</span>
+          <span class="tier-period">/ six weeks</span>
+        </div>
         <div class="tier-usd">≈ $500 USD</div>
         <ul class="tier-features">
           <li>Six in-studio sessions, Accra</li>
@@ -1734,343 +1576,356 @@ footer{
           <li>Lifetime access to recorded sessions</li>
           <li>Custom journal & strategy printouts</li>
           <li>90-day post-mentorship support</li>
-          <li>Coffee & lunch included on session days</li>
+          <li>Coffee & lunch on session days</li>
         </ul>
-        <div class="select-indicator"></div>
+        <div class="tier-select-indicator">Click to select →</div>
       </div>
     </div>
 
-    <div class="booking-form">
-      <div class="form-eyebrow">/ 02 — APPLICANT DETAILS</div>
-      <h3 class="form-title">Tell me <em>about you.</em></h3>
-
-      <div class="form-grid">
-        <div class="field">
-          <label>Full Name <span class="req">*</span></label>
-          <input type="text" id="f-name" autocomplete="name" placeholder="As on your government ID" required>
-          <div class="field-hint" id="h-name"></div>
-        </div>
-        <div class="field">
-          <label>Email Address <span class="req">*</span></label>
-          <input type="email" id="f-email" autocomplete="email" placeholder="you@domain.com" required>
-          <div class="field-hint" id="h-email"></div>
-        </div>
-        <div class="field">
-          <label>Phone (with country code) <span class="req">*</span></label>
-          <input type="tel" id="f-phone" autocomplete="tel" placeholder="+233 503 000 000" required>
-          <div class="field-hint" id="h-phone"></div>
-        </div>
-        <div class="field">
-          <label>WhatsApp Number</label>
-          <input type="tel" id="f-whatsapp" placeholder="Same as phone? Leave blank">
-          <div class="field-hint"></div>
-        </div>
-        <div class="field">
-          <label>Country of Residence <span class="req">*</span></label>
-          <input type="text" id="f-country" autocomplete="country-name" placeholder="Ghana, Kenya, UK, USA…" required>
-          <div class="field-hint" id="h-country"></div>
-        </div>
-        <div class="field">
-          <label>Trading Experience</label>
-          <select id="f-exp">
-            <option value="">Select level…</option>
-            <option>Complete beginner — no live account yet</option>
-            <option>Beginner — under 6 months trading</option>
-            <option>Intermediate — 6 months to 2 years</option>
-            <option>Advanced — 2+ years, seeking refinement</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Preferred Start Date</label>
-          <input type="date" id="f-date">
-        </div>
-        <div class="field">
-          <label>How did you hear about Sophie?</label>
-          <select id="f-source">
-            <option value="">Select source…</option>
-            <option>Instagram</option>
-            <option>X / Twitter</option>
-            <option>YouTube</option>
-            <option>Referral from a mentee</option>
-            <option>Search engine</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="field full">
-          <label>Why do you want this mentorship?</label>
-          <textarea id="f-message" maxlength="2000" placeholder="Tell me what you've tried, what's not working, and what you hope to walk away with."></textarea>
-        </div>
+    <div class="booking-form-wrap">
+      <div class="form-header">
+        <h3>Tell me about you.</h3>
+        <p>Fill in your details below — this becomes your mentorship application.</p>
       </div>
-
-      <div class="form-footer">
-        <div class="form-summary">
-          SELECTED: <strong id="summary-tier">— none yet —</strong> · TOTAL: <strong id="summary-amount">GH₵ 0</strong>
+      <div class="form-body">
+        <div class="form-grid">
+          <div class="form-field">
+            <label>Full Name <span class="req">*</span></label>
+            <input type="text" id="f-name" autocomplete="name" placeholder="As on your government ID">
+            <div class="field-hint" id="h-name"></div>
+          </div>
+          <div class="form-field">
+            <label>Email Address <span class="req">*</span></label>
+            <input type="email" id="f-email" autocomplete="email" placeholder="you@domain.com">
+            <div class="field-hint" id="h-email"></div>
+          </div>
+          <div class="form-field">
+            <label>Phone (with country code) <span class="req">*</span></label>
+            <input type="tel" id="f-phone" autocomplete="tel" placeholder="+233 503 000 000">
+            <div class="field-hint" id="h-phone"></div>
+          </div>
+          <div class="form-field">
+            <label>WhatsApp Number</label>
+            <input type="tel" id="f-whatsapp" placeholder="Leave blank if same as phone">
+          </div>
+          <div class="form-field">
+            <label>Country of Residence <span class="req">*</span></label>
+            <input type="text" id="f-country" autocomplete="country-name" placeholder="Ghana, Kenya, UK, USA…">
+            <div class="field-hint" id="h-country"></div>
+          </div>
+          <div class="form-field">
+            <label>Trading Experience</label>
+            <select id="f-exp">
+              <option value="">Select level…</option>
+              <option>Complete beginner — no live account yet</option>
+              <option>Beginner — under 6 months trading</option>
+              <option>Intermediate — 6 months to 2 years</option>
+              <option>Advanced — 2+ years, seeking refinement</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Preferred Start Date</label>
+            <input type="date" id="f-date">
+          </div>
+          <div class="form-field">
+            <label>How did you hear about Sophie?</label>
+            <select id="f-source">
+              <option value="">Select source…</option>
+              <option>Instagram</option>
+              <option>X / Twitter</option>
+              <option>YouTube</option>
+              <option>Referral from a mentee</option>
+              <option>Search engine</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-field full">
+            <label>Why do you want this mentorship?</label>
+            <textarea id="f-message" maxlength="2000" placeholder="Tell me what you've tried, what's not working, and what you hope to walk away with."></textarea>
+          </div>
         </div>
-        <button class="btn btn-primary" onclick="App.proceedToPayment()">
-          Proceed to Payment <span class="arrow">→</span>
-        </button>
+        <div class="form-footer">
+          <div class="form-summary">
+            Selected: <strong id="summary-tier">— none yet —</strong> · Total: <strong id="summary-amount">GH₵ 0</strong>
+          </div>
+          <button class="btn btn-primary" onclick="App.proceedToPayment()">
+            Proceed to Payment <span class="arrow">→</span>
+          </button>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 </div>
 
-<!-- PAYMENT -->
+<!-- ─── PAYMENT ──────────────────────────────────────────── -->
 <div class="panel" id="panel-payment">
-  <section>
-    <div class="section-eyebrow" data-num="03">Settlement</div>
-    <h2 class="section-title">Complete your <em>booking.</em></h2>
-    <p class="booking-intro">
-      Choose how you would like to pay. Card payments process instantly via Paystack.
-      Mobile money supports all three Ghana networks — MTN, Vodafone (Telecel), and AirtelTigo.
-      Bank transfers settle within minutes from any Ghanaian bank.
-    </p>
+  <div class="section">
+    <div class="section-label">Complete Your Booking</div>
+    <h2 class="section-title">Secure <em>payment.</em></h2>
+    <p class="booking-intro">Card, mobile money, bank transfer, or USSD — all processed securely through Paystack.</p>
 
-    <div class="payment-wrap">
-      <div class="order-summary">
-        <div class="summary-eyebrow">/ ORDER SUMMARY</div>
-        <div class="summary-row"><span class="lab">Booking Ref.</span><span class="val" id="ord-ref">—</span></div>
-        <div class="summary-row"><span class="lab">Mentee</span><span class="val" id="ord-name">—</span></div>
-        <div class="summary-row"><span class="lab">Email</span><span class="val" id="ord-email">—</span></div>
-        <div class="summary-row"><span class="lab">Tier</span><span class="val" id="ord-tier">—</span></div>
-        <div class="summary-row"><span class="lab">Format</span><span class="val" id="ord-format">—</span></div>
-        <div class="summary-row"><span class="lab">Duration</span><span class="val">6 Weeks</span></div>
-        <div class="summary-row"><span class="lab">Subtotal</span><span class="val" id="ord-sub">—</span></div>
-        <div class="summary-row"><span class="lab">Processing</span><span class="val">Included</span></div>
-        <div class="summary-total">
-          <span class="lab">Total Due</span>
-          <span class="val"><span class="currency">GH₵</span><span id="ord-total">0</span></span>
+    <div class="payment-layout">
+      <div class="order-summary-card">
+        <div class="os-header">
+          <h4>Order Summary</h4>
         </div>
-        <div class="summary-fineprint" id="ord-usd-note">≈ $0 USD at today's rate · billed in GH₵</div>
+        <div class="os-body">
+          <div class="os-row"><span class="lab">Ref</span><span class="val" id="ord-ref">—</span></div>
+          <div class="os-row"><span class="lab">Mentee</span><span class="val" id="ord-name">—</span></div>
+          <div class="os-row"><span class="lab">Email</span><span class="val" id="ord-email" style="font-size:12px;">—</span></div>
+          <div class="os-row"><span class="lab">Tier</span><span class="val" id="ord-tier">—</span></div>
+          <div class="os-row"><span class="lab">Format</span><span class="val" id="ord-format">—</span></div>
+          <div class="os-row"><span class="lab">Duration</span><span class="val">6 Weeks</span></div>
+          <div class="os-total">
+            <span class="lab">Total</span>
+            <span class="val">GH₵<span id="ord-total">0</span></span>
+          </div>
+          <div class="os-usd" id="ord-usd-note">≈ $0 USD</div>
+        </div>
+        <div class="os-footer">
+          <div style="font-size:12px;color:rgba(255,255,255,0.35);line-height:1.6;">
+            Payments processed by Paystack. Billed in GH₵. International cards converted automatically.
+          </div>
+        </div>
       </div>
 
-      <div>
-        <h4 style="font-family:var(--serif);font-size:1.4rem;margin-bottom:1.5rem;font-weight:500;">
-          Payment <em style="color:var(--gold);font-style:italic;">Method</em>
-        </h4>
-
-        <div class="payment-methods">
-          <div class="payment-method selected" data-method="card" onclick="App.selectMethod(this)">
+      <div class="payment-section">
+        <h4>Select Payment Method</h4>
+        <div class="pm-list">
+          <div class="pm-item selected" data-method="card" onclick="App.selectMethod(this)">
             <div class="pm-radio"></div>
-            <div class="pm-info">
-              <h4>Card Payment <span style="font-size:0.8rem;color:var(--ink-dim);font-style:italic;">— International & Local</span></h4>
-              <p>Visa, Mastercard, Verve. Powered by Paystack. PCI-DSS compliant.</p>
+            <div class="pm-text">
+              <h5>Card Payment</h5>
+              <p>Visa, Mastercard, Verve · International & local</p>
             </div>
-            <div class="pm-tags">
-              <span class="pm-tag recommended">RECOMMENDED</span>
-              <span class="pm-tag">INSTANT</span>
+            <div class="pm-badges">
+              <span class="pm-badge best">Best</span>
+              <span class="pm-badge">Instant</span>
             </div>
           </div>
 
-          <div class="payment-method" data-method="mobile_money" onclick="App.selectMethod(this)">
+          <div class="pm-item" data-method="mobile_money" onclick="App.selectMethod(this)">
             <div class="pm-radio"></div>
-            <div class="pm-info">
-              <h4>Mobile Money <span style="font-size:0.8rem;color:var(--ink-dim);font-style:italic;">— Ghana</span></h4>
-              <p>MTN MoMo, Telecel Cash, AirtelTigo Money. Pay from your phone wallet.</p>
+            <div class="pm-text">
+              <h5>Mobile Money</h5>
+              <p>MTN MoMo, Telecel Cash, AirtelTigo · Ghana only</p>
             </div>
-            <div class="pm-tags"><span class="pm-tag">GH ONLY</span><span class="pm-tag">INSTANT</span></div>
+            <div class="pm-badges"><span class="pm-badge">GH</span><span class="pm-badge">Instant</span></div>
           </div>
 
           <div class="momo-picker" id="momo-picker">
-            <div class="momo-picker-head">SELECT YOUR NETWORK</div>
+            <div class="momo-picker-label">Select your network</div>
             <div class="momo-grid">
-
               <div class="momo-option" data-provider="mtn" onclick="App.selectMomo(this)">
                 <div class="momo-logo">
                   <svg viewBox="0 0 70 36" xmlns="http://www.w3.org/2000/svg">
                     <rect x="1" y="1" width="68" height="34" rx="6" fill="#ffcb05" stroke="#caa200" stroke-width="1"/>
-                    <text x="35" y="24" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="16" fill="#003a82">MTN</text>
+                    <text x="35" y="24" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="16" fill="#003a82">MTN</text>
                   </svg>
                 </div>
                 <div class="momo-name">MTN MoMo</div>
-                <div class="momo-tag">024 · 054 · 055 · 059</div>
+                <div class="momo-codes">024 · 054 · 055</div>
               </div>
-
               <div class="momo-option" data-provider="vod" onclick="App.selectMomo(this)">
                 <div class="momo-logo">
                   <svg viewBox="0 0 70 36" xmlns="http://www.w3.org/2000/svg">
                     <rect x="1" y="1" width="68" height="34" rx="6" fill="#e60000" stroke="#a00000" stroke-width="1"/>
-                    <text x="35" y="25" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="14" fill="#ffffff" letter-spacing="0.5">TELECEL</text>
+                    <text x="35" y="25" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="13" fill="#fff" letter-spacing="0.5">TELECEL</text>
                   </svg>
                 </div>
                 <div class="momo-name">Telecel Cash</div>
-                <div class="momo-tag">020 · 050</div>
+                <div class="momo-codes">020 · 050</div>
               </div>
-
               <div class="momo-option" data-provider="atl" onclick="App.selectMomo(this)">
                 <div class="momo-logo">
                   <svg viewBox="0 0 70 36" xmlns="http://www.w3.org/2000/svg">
                     <rect x="1" y="1" width="34" height="34" rx="6" fill="#ed1c24" stroke="#a01015" stroke-width="1"/>
                     <rect x="35" y="1" width="34" height="34" rx="6" fill="#0072ce" stroke="#004a8a" stroke-width="1"/>
-                    <text x="18" y="24" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="13" fill="#ffffff">AT</text>
-                    <text x="52" y="24" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="13" fill="#ffffff">T</text>
+                    <text x="18" y="24" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="13" fill="#fff">AT</text>
+                    <text x="52" y="24" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-size="13" fill="#fff">T</text>
                   </svg>
                 </div>
                 <div class="momo-name">AirtelTigo</div>
-                <div class="momo-tag">026 · 027 · 056 · 057</div>
+                <div class="momo-codes">026 · 027 · 056</div>
               </div>
-
             </div>
-
-            <div class="momo-phone-field">
+            <div class="momo-phone-wrap">
               <label>Mobile Money Number</label>
               <input type="tel" id="momo-phone" placeholder="0244 000 000" maxlength="15" inputmode="numeric">
-              <div class="momo-phone-hint" id="momo-phone-hint">Enter the number registered with your selected network</div>
+              <div class="momo-hint" id="momo-phone-hint">Enter your registered network number</div>
             </div>
           </div>
 
-          <div class="payment-method" data-method="bank" onclick="App.selectMethod(this)">
+          <div class="pm-item" data-method="bank" onclick="App.selectMethod(this)">
             <div class="pm-radio"></div>
-            <div class="pm-info">
-              <h4>Bank Transfer <span style="font-size:0.8rem;color:var(--ink-dim);font-style:italic;">— Ghana Banks</span></h4>
-              <p>Direct from any Ghanaian bank app. GTBank, Stanbic, Absa, Fidelity, GCB & more.</p>
+            <div class="pm-text">
+              <h5>Bank Transfer</h5>
+              <p>GTBank, Stanbic, Absa, Fidelity, GCB & more</p>
             </div>
-            <div class="pm-tags"><span class="pm-tag">GH ONLY</span></div>
+            <div class="pm-badges"><span class="pm-badge">GH</span></div>
           </div>
 
-          <div class="payment-method" data-method="ussd" onclick="App.selectMethod(this)">
+          <div class="pm-item" data-method="ussd" onclick="App.selectMethod(this)">
             <div class="pm-radio"></div>
-            <div class="pm-info">
-              <h4>USSD <span style="font-size:0.8rem;color:var(--ink-dim);font-style:italic;">— No Internet Needed</span></h4>
-              <p>Pay from any feature phone using your bank's USSD shortcode.</p>
+            <div class="pm-text">
+              <h5>USSD</h5>
+              <p>No internet needed · Any feature phone</p>
             </div>
-            <div class="pm-tags"><span class="pm-tag">GH</span></div>
+            <div class="pm-badges"><span class="pm-badge">GH</span></div>
           </div>
 
-          <div class="payment-method" data-method="manual" onclick="App.selectMethod(this)">
+          <div class="pm-item" data-method="manual" onclick="App.selectMethod(this)">
             <div class="pm-radio"></div>
-            <div class="pm-info">
-              <h4>Manual Wire <span style="font-size:0.8rem;color:var(--ink-dim);font-style:italic;">— USD Domiciliary</span></h4>
-              <p>For USD wires from outside Africa. Account details below.</p>
+            <div class="pm-text">
+              <h5>Manual Wire</h5>
+              <p>USD domiciliary account · International transfers</p>
             </div>
-            <div class="pm-tags"><span class="pm-tag">USD</span></div>
+            <div class="pm-badges"><span class="pm-badge">USD</span></div>
           </div>
         </div>
 
         <div class="bank-details" id="bank-details">
-          <h4>Wire to the following accounts:</h4>
-          <div style="margin-top:1rem;">
-            <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:0.2em;margin:1rem 0 0.5rem;font-weight:600;">↳ GHANA CEDIS (GH₵)</div>
-            <div class="bank-row"><span class="lab">Bank</span><span class="val">Stanbic Bank Ghana</span><span></span></div>
-            <div class="bank-row"><span class="lab">Account №</span><span class="val" id="ghs-acct">9040012345678</span><button class="copy-btn" onclick="App.copy('9040012345678', this)">COPY</button></div>
-            <div class="bank-row"><span class="lab">Account Name</span><span class="val">SOPHIE</span><span></span></div>
-            <div style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:0.2em;margin:1.5rem 0 0.5rem;font-weight:600;">↳ US DOLLAR (USD) — DOMICILIARY</div>
-            <div class="bank-row"><span class="lab">Bank</span><span class="val">Stanbic Bank · Domiciliary</span><span></span></div>
-            <div class="bank-row"><span class="lab">Account №</span><span class="val" id="usd-acct">9050098765432</span><button class="copy-btn" onclick="App.copy('9050098765432', this)">COPY</button></div>
-            <div class="bank-row"><span class="lab">SWIFT</span><span class="val">SBICGHAC</span><span></span></div>
+          <h5>Wire to the following accounts</h5>
+          <div class="bank-section-head">↳ Ghana Cedis (GH₵)</div>
+          <div class="bank-row"><span class="lab">Bank</span><span class="val">Stanbic Bank Ghana</span></div>
+          <div class="bank-row"><span class="lab">Account №</span><span class="val">9040012345678</span><button class="copy-btn" onclick="App.copy('9040012345678',this)">Copy</button></div>
+          <div class="bank-row"><span class="lab">Name</span><span class="val">SOPHIE</span></div>
+          <div class="bank-section-head">↳ US Dollar (USD) — Domiciliary</div>
+          <div class="bank-row"><span class="lab">Bank</span><span class="val">Stanbic Bank · Dom.</span></div>
+          <div class="bank-row"><span class="lab">Account №</span><span class="val">9050098765432</span><button class="copy-btn" onclick="App.copy('9050098765432',this)">Copy</button></div>
+          <div class="bank-row"><span class="lab">SWIFT</span><span class="val">SBICGHAC</span></div>
+          <div style="margin-top:1rem;font-size:13px;color:var(--grey-600);line-height:1.6;">
+            Use <strong id="manual-ref" style="color:var(--teal);">—</strong> as your transfer narration.
+            Click <em>Confirm Booking</em> after paying — Sophie verifies within 24 hours.
           </div>
-          <p style="font-size:0.88rem;color:var(--ink-dim);margin-top:1.5rem;line-height:1.7;">
-            Use your booking reference <strong id="manual-ref" style="color:var(--gold)">—</strong> as the transfer narration.
-            After paying, click <em>Confirm Booking</em> below — Sophie will verify within 24 hours.
-          </p>
         </div>
 
-        <button class="btn btn-primary pay-cta" id="pay-button" onclick="App.executePayment()">
-          <span id="pay-label">Pay GH₵ 0 Securely</span>
-          <span class="arrow">→</span>
-        </button>
-
-        <button class="btn btn-secondary" style="margin-top:1rem;width:100%;justify-content:center;" onclick="App.go('booking')">
-          ← Back to Form
-        </button>
+        <div class="pay-btn-wrap">
+          <button class="btn btn-primary btn-lg" id="pay-button" onclick="App.executePayment()">
+            <span id="pay-label">Pay GH₵ 0 Securely</span>
+            <span class="arrow">→</span>
+          </button>
+        </div>
+        <div class="back-btn-wrap">
+          <button class="btn btn-outline" onclick="App.go('booking')">← Back to Form</button>
+        </div>
 
         <div class="status-banner" id="status-banner">
           <span class="status-title" id="status-title"><span class="spinner"></span>Processing…</span>
-          <span id="status-detail">Your payment is being processed.</span>
+          <span id="status-detail"></span>
         </div>
 
-        <div class="security-strip">
-          <span class="sec-item"><span class="sec-icon">🔒</span> 256-bit TLS</span>
-          <span class="sec-item"><span class="sec-icon">🛡</span> PCI-DSS via Paystack</span>
-          <span class="sec-item"><span class="sec-icon">✓</span> Card details never touch this server</span>
+        <div class="security-note">
+          <span class="sec-item"><span class="icon">🔒</span> 256-bit TLS</span>
+          <span class="sec-item"><span class="icon">🛡</span> PCI-DSS via Paystack</span>
+          <span class="sec-item"><span class="icon">✓</span> Card data never touches this server</span>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </div>
 
-<!-- CONTACT -->
+<!-- ─── CONTACT ──────────────────────────────────────────── -->
 <div class="panel" id="panel-contact">
-  <section>
-    <div class="section-eyebrow" data-num="01">Get in Touch</div>
+  <div class="section">
+    <div class="section-label">Get in Touch</div>
     <h2 class="section-title">Questions <em>before booking?</em></h2>
-
-    <div class="contact-grid">
+    <div class="contact-layout">
       <div class="contact-info">
-        <h3>Reach me <em>directly.</em></h3>
-        <p>The fastest way to me is WhatsApp — I read every message myself, usually within a few hours during West Africa daytime. For longer conversations, email is best. The studio number is for current mentees and serious enquiries.</p>
+        <h3>Reach me directly.</h3>
+        <p>The fastest way is WhatsApp — I read every message myself, usually within a few hours during West Africa daytime. For longer conversations, email is best.</p>
         <div class="contact-list">
-          <div class="contact-item"><span class="lab">Email</span><span class="val"><a href="mailto:thetradingdesk02@gmail.com">thetradingdesk02@gmail.com</a></span></div>
-          <div class="contact-item"><span class="lab">WhatsApp</span><span class="val"><a href="https://wa.me/233242154944" target="_blank" rel="noopener">+233 503 254 226</a></span></div>
-          <div class="contact-item"><span class="lab">Studio</span><span class="val">Accra, Ghana<br><span style="font-size:0.85rem;color:var(--ink-dim);">By appointment only</span></span></div>
-          <div class="contact-item"><span class="lab">Hours</span><span class="val">Mon–Fri · 09:00–18:00 GMT</span></div>
+          <div class="contact-item">
+            <span class="contact-label">Email</span>
+            <span class="contact-value"><a href="mailto:thetradingdesk02@gmail.com">thetradingdesk02@gmail.com</a></span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">WhatsApp</span>
+            <span class="contact-value"><a href="https://wa.me/233242154944" target="_blank">+233 503 254 226</a></span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Studio</span>
+            <span class="contact-value">Accra, Ghana<small>By appointment only</small></span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Hours</span>
+            <span class="contact-value">Mon–Fri · 09:00–18:00 GMT</span>
+          </div>
         </div>
       </div>
 
-      <div class="contact-form">
-        <div class="form-eyebrow">/ DROP A LINE</div>
-        <h3 class="form-title">Send a <em>message.</em></h3>
-        <div class="form-grid">
-          <div class="field full"><label>Your Name</label><input type="text" id="c-name"></div>
-          <div class="field full"><label>Your Email</label><input type="email" id="c-email"></div>
-          <div class="field full">
-            <label>Subject</label>
-            <select id="c-subject">
-              <option>General enquiry</option>
-              <option>Mentorship question</option>
-              <option>Payment / billing</option>
-              <option>Press / collaboration</option>
-            </select>
-          </div>
-          <div class="field full"><label>Message</label><textarea id="c-message" rows="5" maxlength="2000"></textarea></div>
+      <div class="contact-form-wrap">
+        <div class="form-header">
+          <h3>Send a message.</h3>
+          <p>I'll reply within 24 hours.</p>
         </div>
-        <button class="btn btn-primary" id="contact-send-btn" style="margin-top:2rem;width:100%;justify-content:center;" onclick="App.sendContact()">
-          Send Message <span class="arrow">→</span>
-        </button>
+        <div class="form-body">
+          <div class="form-grid" style="grid-template-columns:1fr;">
+            <div class="form-field"><label>Your Name</label><input type="text" id="c-name"></div>
+            <div class="form-field"><label>Your Email</label><input type="email" id="c-email"></div>
+            <div class="form-field">
+              <label>Subject</label>
+              <select id="c-subject">
+                <option>General enquiry</option>
+                <option>Mentorship question</option>
+                <option>Payment / billing</option>
+                <option>Press / collaboration</option>
+              </select>
+            </div>
+            <div class="form-field"><label>Message</label><textarea id="c-message" rows="5" maxlength="2000"></textarea></div>
+          </div>
+          <button class="btn btn-primary" id="contact-send-btn" style="margin-top:1.5rem;width:100%;justify-content:center;" onclick="App.sendContact()">
+            Send Message <span class="arrow">→</span>
+          </button>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
 </div>
 
-<!-- SUCCESS MODAL -->
+<!-- ─── SUCCESS MODAL ────────────────────────────────────── -->
 <div class="modal-overlay" id="success-modal">
   <div class="modal">
-    <div class="modal-seal">S</div>
-    <div class="modal-eyebrow" id="modal-eyebrow">BOOKING CONFIRMED</div>
-    <h2>Welcome aboard, <em id="modal-name">trader.</em></h2>
-    <p class="modal-text" id="modal-text">
-      Your payment has been received and your seat in the next cohort is reserved.
-      Sophie has been notified directly. You'll hear from her within 24 hours to schedule your first session.
-    </p>
-
-    <div class="modal-receipt">
-      <div class="modal-receipt-row"><span class="lab">Reference</span><span class="val gold" id="modal-ref">SA-XXXX-XXXX</span></div>
-      <div class="modal-receipt-row"><span class="lab">Tier</span><span class="val" id="modal-tier">—</span></div>
-      <div class="modal-receipt-row"><span class="lab">Amount</span><span class="val gold" id="modal-amount">GH₵ 0</span></div>
-      <div class="modal-receipt-row"><span class="lab">Method</span><span class="val" id="modal-method">—</span></div>
-      <div class="modal-receipt-row"><span class="lab">Status</span><span class="val" id="modal-status">—</span></div>
+    <div class="modal-top">
+      <div class="modal-seal">S</div>
+      <div class="modal-eyebrow" id="modal-eyebrow">BOOKING CONFIRMED</div>
+      <h2>Welcome aboard, <em id="modal-name">trader.</em></h2>
     </div>
-
-    <div class="notif-status">
-      <div class="notif-row" id="notif-email"><span class="icon pending">·</span><span>Sending confirmation email to <strong id="modal-email">you</strong></span></div>
-      <div class="notif-row" id="notif-sophie"><span class="icon pending">·</span><span>Notifying Sophie</span></div>
-      <div class="notif-row" id="notif-wa"><span class="icon">✓</span><span>WhatsApp message ready for Sophie</span></div>
-    </div>
-
-    <div class="modal-actions">
-      <a href="#" class="btn btn-primary" id="whatsapp-link" target="_blank" rel="noopener">
-        Message Sophie on WhatsApp <span class="arrow">→</span>
-      </a>
-      <button class="btn btn-secondary" onclick="App.closeModal()">Close</button>
+    <div class="modal-body">
+      <p class="modal-text" id="modal-text">
+        Your payment has been received and your seat is reserved. Sophie has been notified and will reach out within 24 hours.
+      </p>
+      <div class="receipt">
+        <div class="receipt-row"><span class="lab">Reference</span><span class="val gold" id="modal-ref">SA-XXXX</span></div>
+        <div class="receipt-row"><span class="lab">Tier</span><span class="val" id="modal-tier">—</span></div>
+        <div class="receipt-row"><span class="lab">Amount</span><span class="val gold" id="modal-amount">GH₵ 0</span></div>
+        <div class="receipt-row"><span class="lab">Method</span><span class="val" id="modal-method">—</span></div>
+        <div class="receipt-row"><span class="lab">Status</span><span class="val" id="modal-status">—</span></div>
+      </div>
+      <div class="notif-list">
+        <div class="notif-item" id="notif-email"><span class="notif-icon">·</span>Sending confirmation to <strong id="modal-email" style="margin-left:4px;">you</strong></div>
+        <div class="notif-item" id="notif-sophie"><span class="notif-icon">·</span>Notifying Sophie</div>
+        <div class="notif-item" id="notif-wa"><span class="notif-icon ok">✓</span>WhatsApp message ready for Sophie</div>
+      </div>
+      <div class="modal-actions">
+        <a href="#" class="btn btn-primary" id="whatsapp-link" target="_blank" rel="noopener">
+          Message Sophie on WhatsApp <span class="arrow">→</span>
+        </a>
+        <button class="btn btn-outline" onclick="App.closeModal()">Close</button>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="toast" id="toast">Saved</div>
 
+<!-- ─── FOOTER ───────────────────────────────────────────── -->
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <div class="brand"><span>Sophie</span><span class="mark">FX</span></div>
+      <a href="#" class="footer-brand-name" onclick="App.go('home');return false;">
+        <span>Sophie<em>FX</em></span>
+      </a>
       <p>A deliberate apprenticeship in disciplined forex trading. Six weeks, one mentor, no shortcuts.</p>
     </div>
     <div class="footer-col">
@@ -2093,25 +1948,18 @@ footer{
     <div class="footer-col">
       <h5>Connect</h5>
       <ul>
-        <li><a href="https://wa.me/233242154944" target="_blank" rel="noopener">WhatsApp</a></li>
+        <li><a href="https://wa.me/233242154944" target="_blank">WhatsApp</a></li>
         <li><a href="mailto:thetradingdesk02@gmail.com">Email</a></li>
       </ul>
     </div>
   </div>
- <div class="footer-bottom">
-    <small>© 2026 SOPHIE · ALL RIGHTS RESERVED</small>
-    <small>ACCRA · GHANA · GLOBAL</small>
-  </div>
-  <div style="max-width:1400px;margin:1.5rem auto 0;padding-top:1.2rem;border-top:1px solid var(--rule);display:flex;align-items:center;justify-content:center;gap:0.6rem;">
-    <small style="font-family:var(--mono);font-size:10px;color:var(--ink-faded);letter-spacing:0.15em;text-transform:uppercase;font-weight:500;">
-      Designed &amp; built by
-      <a href="mailto:smssproject390@gmail.com" style="color:var(--gold);text-decoration:none;transition:opacity 0.2s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">BloomDesk</a>
-    </small>
+  <div class="footer-bottom">
+    <small>© 2026 SophieFX · All Rights Reserved · Accra, Ghana</small>
+    <small class="footer-credit">Designed by <a href="mailto:smssproject390@gmail.com">BloomDesk</a></small>
   </div>
   <p class="disclaimer">
     Trading foreign exchange carries a high level of risk and may not be suitable for all investors.
-    Past performance is not indicative of future results. This site does not constitute financial advice.
-    Payments are processed by Paystack Payments Limited, a licensed payment service provider.
+    Past performance is not indicative of future results. Payments processed by Paystack Payments Limited.
   </p>
 </footer>
 
@@ -2119,1106 +1967,345 @@ footer{
 'use strict';
 
 const CONFIG = Object.freeze({
-  //test key
   PAYSTACK_PUBLIC_KEY: 'pk_test_c0df76a21c20b1d33ad7361b626a52cd2b64078a',
   CURRENCY: 'GHS',
   VERIFY_ENDPOINT: '/.netlify/functions/verify-payment',
-
-  // One-time WhatsApp channel gate — appends ?ref=BK-XXXXXX at send time
   JOIN_CHANNEL_ENDPOINT: '/.netlify/functions/join-channel',
-
-  EMAILJS_PUBLIC_KEY:   'kaAcwVVVxd-gVw1vU',
-  EMAILJS_SERVICE_ID:   'service_a9lza8t',
-  EMAILJS_TEMPLATE_ID:  'template_c6vxg9o',
-
+  EMAILJS_PUBLIC_KEY:  'kaAcwVVVxd-gVw1vU',
+  EMAILJS_SERVICE_ID:  'service_a9lza8t',
+  EMAILJS_TEMPLATE_ID: 'template_c6vxg9o',
   SOPHIE_EMAIL:    'thetradingdesk02@gmail.com',
   SOPHIE_WHATSAPP: '233242154944',
   USD_GHS_RATE:    15.0,
 });
 
 (function initEmailJS(){
-  const configured = CONFIG.EMAILJS_PUBLIC_KEY &&
-                     !CONFIG.EMAILJS_PUBLIC_KEY.includes('REPLACE');
-  if(!configured){
-    console.warn('%c[EmailJS] NOT CONFIGURED — emails will not send.',
-      'color:#e07060;font-weight:bold;font-size:12px;');
-    return;
-  }
-  if(typeof emailjs === 'undefined'){
-    console.error('[EmailJS] SDK failed to load');
-    return;
-  }
-  try {
-    emailjs.init({ publicKey: CONFIG.EMAILJS_PUBLIC_KEY });
-    console.log('%c[EmailJS] Initialised ✓','color:#7fbc6a;font-weight:bold;font-size:12px;');
-  } catch (err) {
-    console.error('[EmailJS] Init failed:', err);
-  }
+  const configured = CONFIG.EMAILJS_PUBLIC_KEY && !CONFIG.EMAILJS_PUBLIC_KEY.includes('REPLACE');
+  if(!configured){ console.warn('[EmailJS] NOT CONFIGURED'); return; }
+  if(typeof emailjs === 'undefined'){ console.error('[EmailJS] SDK failed to load'); return; }
+  try { emailjs.init({ publicKey: CONFIG.EMAILJS_PUBLIC_KEY }); } catch(err) { console.error('[EmailJS] Init failed:', err); }
 })();
 
 const MOMO_PROVIDERS = {
-  mtn: { name: 'MTN MoMo',         paystackProvider: 'mtn', prefixes: ['024','054','055','059','025','053'], color: '#ffcb05' },
-  vod: { name: 'Telecel Cash',     paystackProvider: 'vod', prefixes: ['020','050'],                          color: '#e60000' },
-  atl: { name: 'AirtelTigo Money', paystackProvider: 'atl', prefixes: ['026','027','056','057'],              color: '#0072ce' },
+  mtn: { name:'MTN MoMo',         paystackProvider:'mtn', prefixes:['024','054','055','059','025','053'] },
+  vod: { name:'Telecel Cash',     paystackProvider:'vod', prefixes:['020','050'] },
+  atl: { name:'AirtelTigo Money', paystackProvider:'atl', prefixes:['026','027','056','057'] },
 };
 
 const App = (() => {
-
-  const state = {
-    tier: null, ghs: 0, usd: 0,
-    method: 'card',
-    momoProvider: null, momoPhone: '',
-    bookingRef: null, applicant: {},
-    paystack: null, isPaying: false,
-  };
-
-  const $ = (id) => document.getElementById(id);
-  const fmt = (n) => Number(n).toLocaleString('en-US');
+  const state = { tier:null, ghs:0, usd:0, method:'card', momoProvider:null, momoPhone:'', bookingRef:null, applicant:{}, paystack:null, isPaying:false };
+  const $ = id => document.getElementById(id);
+  const fmt = n => Number(n).toLocaleString('en-US');
 
   function go(tab){
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    const panel = $('panel-' + tab);
-    if(panel) panel.classList.add('active');
-    document.querySelectorAll(`[data-tab="${tab}"]`).forEach(b => b.classList.add('active'));
-    document.querySelector('.tabs').classList.remove('open');
-    window.scrollTo({top: 0, behavior: 'smooth'});
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    const panel=$('panel-'+tab); if(panel) panel.classList.add('active');
+    document.querySelectorAll(`[data-tab="${tab}"]`).forEach(b=>b.classList.add('active'));
+    document.querySelector('.nav-links').classList.remove('open');
+    window.scrollTo({top:0,behavior:'smooth'});
   }
 
   function selectTier(el){
-    document.querySelectorAll('.tier').forEach(t => t.classList.remove('selected'));
+    document.querySelectorAll('.tier-card').forEach(t=>t.classList.remove('selected'));
     el.classList.add('selected');
-    state.tier = el.dataset.tier;
-    state.ghs = parseInt(el.dataset.ghs, 10);
-    state.usd = parseInt(el.dataset.usd, 10);
-    const tierName = state.tier === 'onsite' ? 'Face-to-Face Mentorship' : 'Online Mentorship';
-    $('summary-tier').textContent = tierName;
-    $('summary-amount').textContent = 'GH₵ ' + fmt(state.ghs);
+    state.tier=el.dataset.tier; state.ghs=parseInt(el.dataset.ghs,10); state.usd=parseInt(el.dataset.usd,10);
+    const tierName=state.tier==='onsite'?'Face-to-Face Mentorship':'Online Mentorship';
+    $('summary-tier').textContent=tierName;
+    $('summary-amount').textContent='GH₵ '+fmt(state.ghs);
   }
 
   function validateForm(){
-    const fields = [
-      {id:'f-name',     hint:'h-name',    test: v => v.length >= 2,                msg:'Please enter your full name'},
-      {id:'f-email',    hint:'h-email',   test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), msg:'Enter a valid email address'},
-      {id:'f-phone',    hint:'h-phone',   test: v => /^\+?[\d\s\-()]{7,}$/.test(v), msg:'Enter a valid phone with country code'},
-      {id:'f-country',  hint:'h-country', test: v => v.length >= 2,                msg:'Country is required'},
+    const fields=[
+      {id:'f-name',hint:'h-name',test:v=>v.length>=2,msg:'Please enter your full name'},
+      {id:'f-email',hint:'h-email',test:v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),msg:'Enter a valid email address'},
+      {id:'f-phone',hint:'h-phone',test:v=>/^\+?[\d\s\-()]{7,}$/.test(v),msg:'Enter a valid phone with country code'},
+      {id:'f-country',hint:'h-country',test:v=>v.length>=2,msg:'Country is required'},
     ];
-    let firstError = null;
-    fields.forEach(f => {
-      const el = $(f.id);
-      const hint = $(f.hint);
-      const v = el.value.trim();
-      if(!f.test(v)){
-        el.classList.add('error');
-        hint.textContent = f.msg;
-        if(!firstError) firstError = el;
-      } else {
-        el.classList.remove('error');
-        hint.textContent = '';
-      }
+    let firstError=null;
+    fields.forEach(f=>{
+      const el=$(f.id),hint=$(f.hint),v=el.value.trim();
+      if(!f.test(v)){ el.classList.add('error'); hint.textContent=f.msg; if(!firstError)firstError=el; }
+      else{ el.classList.remove('error'); hint.textContent=''; }
     });
-    if(firstError){
-      firstError.focus();
-      firstError.scrollIntoView({behavior:'smooth', block:'center'});
-      return false;
-    }
+    if(firstError){ firstError.focus(); firstError.scrollIntoView({behavior:'smooth',block:'center'}); return false; }
     return true;
   }
 
   function generateRef(){
-    const ts = Date.now().toString(36).toUpperCase();
-    const rand = Math.random().toString(36).toUpperCase().slice(2, 6);
-    return `SA-${ts}-${rand}`;
+    return `SA-${Date.now().toString(36).toUpperCase()}-${Math.random().toString(36).toUpperCase().slice(2,6)}`;
   }
 
   function updatePayButton(){
-    const label = $('pay-label');
-    const amount = state.ghs ? 'GH₵ ' + fmt(state.ghs) : 'GH₵ 0';
-    if(state.method === 'manual'){
-      label.textContent = "I've Made the Transfer — Confirm Booking";
-    } else {
-      label.textContent = `Pay ${amount} Securely`;
-    }
+    const label=$('pay-label');
+    const amount=state.ghs?'GH₵ '+fmt(state.ghs):'GH₵ 0';
+    label.textContent=state.method==='manual'?"I've Made the Transfer — Confirm Booking":`Pay ${amount} Securely`;
   }
 
   function proceedToPayment(){
-    if(!state.tier){
-      toast('Please select a mentorship tier first.', 'error');
-      document.querySelector('.tier-grid').scrollIntoView({behavior:'smooth', block:'center'});
-      return;
-    }
+    if(!state.tier){ toast('Please select a mentorship tier first.','error'); document.querySelector('.tier-grid').scrollIntoView({behavior:'smooth',block:'center'}); return; }
     if(!validateForm()) return;
-
-    let whatsapp = $('f-whatsapp').value.trim();
-    if(!whatsapp) whatsapp = $('f-phone').value.trim();
-
-    state.applicant = {
-      name:       $('f-name').value.trim(),
-      email:      $('f-email').value.trim().toLowerCase(),
-      phone:      $('f-phone').value.trim(),
-      whatsapp,
-      country:    $('f-country').value.trim(),
-      experience: $('f-exp').value,
-      startDate:  $('f-date').value,
-      source:     $('f-source').value,
-      message:    $('f-message').value.trim()
-    };
-
-    state.bookingRef = generateRef();
-
-    $('ord-ref').textContent = state.bookingRef;
-    $('ord-name').textContent = state.applicant.name;
-    $('ord-email').textContent = state.applicant.email;
-    $('ord-tier').textContent = state.tier === 'onsite' ? 'Face-to-Face' : 'Online';
-    $('ord-format').textContent = state.tier === 'onsite' ? 'Accra Studio' : 'Zoom — Remote';
-    $('ord-sub').textContent = 'GH₵ ' + fmt(state.ghs);
-    $('ord-total').textContent = fmt(state.ghs);
-    $('ord-usd-note').textContent = `≈ $${state.usd} USD at today's rate · billed in GH₵`;
-    $('manual-ref').textContent = state.bookingRef;
-
-    updatePayButton();
-    go('payment');
+    let wa=$('f-whatsapp').value.trim(); if(!wa) wa=$('f-phone').value.trim();
+    state.applicant={ name:$('f-name').value.trim(), email:$('f-email').value.trim().toLowerCase(), phone:$('f-phone').value.trim(), whatsapp:wa, country:$('f-country').value.trim(), experience:$('f-exp').value, startDate:$('f-date').value, source:$('f-source').value, message:$('f-message').value.trim() };
+    state.bookingRef=generateRef();
+    $('ord-ref').textContent=state.bookingRef;
+    $('ord-name').textContent=state.applicant.name;
+    $('ord-email').textContent=state.applicant.email;
+    $('ord-tier').textContent=state.tier==='onsite'?'Face-to-Face':'Online';
+    $('ord-format').textContent=state.tier==='onsite'?'Accra Studio':'Zoom — Remote';
+    $('ord-total').textContent=fmt(state.ghs);
+    $('ord-usd-note').textContent=`≈ $${state.usd} USD · billed in GH₵`;
+    $('manual-ref').textContent=state.bookingRef;
+    updatePayButton(); go('payment');
   }
 
   function selectMethod(el){
-    document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
-    el.classList.add('selected');
-    state.method = el.dataset.method;
-
-    const momoPicker = $('momo-picker');
-    if(state.method === 'mobile_money'){
-      momoPicker.classList.add('show');
-      if(!state.momoProvider){
-        const mtnEl = momoPicker.querySelector('[data-provider="mtn"]');
-        if(mtnEl) selectMomo(mtnEl);
-      }
-    } else {
-      momoPicker.classList.remove('show');
-    }
-
-    const bankDetails = $('bank-details');
-    if(state.method === 'manual'){
-      bankDetails.classList.add('show');
-    } else {
-      bankDetails.classList.remove('show');
-    }
-
+    document.querySelectorAll('.pm-item').forEach(m=>m.classList.remove('selected'));
+    el.classList.add('selected'); state.method=el.dataset.method;
+    const mp=$('momo-picker');
+    if(state.method==='mobile_money'){ mp.classList.add('show'); if(!state.momoProvider){ const mtn=mp.querySelector('[data-provider="mtn"]'); if(mtn) selectMomo(mtn); } } else { mp.classList.remove('show'); }
+    const bd=$('bank-details');
+    if(state.method==='manual'){ bd.classList.add('show'); } else { bd.classList.remove('show'); }
     updatePayButton();
   }
 
   function selectMomo(el){
-    document.querySelectorAll('.momo-option').forEach(o => o.classList.remove('selected'));
-    el.classList.add('selected');
-    state.momoProvider = el.dataset.provider;
-
-    const provider = MOMO_PROVIDERS[state.momoProvider];
-    const hint = $('momo-phone-hint');
-    if(provider){
-      hint.textContent = `Use a ${provider.name} number — accepted prefixes: ${provider.prefixes.join(' · ')}`;
-      hint.style.color = 'var(--ink-dim)';
-    }
+    document.querySelectorAll('.momo-option').forEach(o=>o.classList.remove('selected'));
+    el.classList.add('selected'); state.momoProvider=el.dataset.provider;
+    const p=MOMO_PROVIDERS[state.momoProvider];
+    const hint=$('momo-phone-hint');
+    if(p){ hint.textContent=`${p.name} · prefixes: ${p.prefixes.join(' · ')}`; hint.style.color=''; }
     validateMomoPhone();
   }
 
   function validateMomoPhone(){
-    const input = $('momo-phone');
-    const hint = $('momo-phone-hint');
-    const raw = (input.value || '').replace(/\D/g, '');
-    state.momoPhone = raw;
-
+    const input=$('momo-phone'),hint=$('momo-phone-hint');
+    const raw=(input.value||'').replace(/\D/g,''); state.momoPhone=raw;
     if(!state.momoProvider) return false;
-    if(!raw) {
-      input.classList.remove('error');
-      return false;
-    }
-
-    const provider = MOMO_PROVIDERS[state.momoProvider];
-
-    let normalised = raw;
-    if(normalised.startsWith('233')) normalised = '0' + normalised.slice(3);
-    if(normalised.length < 10) {
-      input.classList.add('error');
-      hint.textContent = `Enter your full 10-digit ${provider.name} number (e.g. 024XXXXXXX)`;
-      hint.style.color = 'var(--red)';
-      return false;
-    }
-
-    const prefix = normalised.slice(0, 3);
-    if(!provider.prefixes.includes(prefix)){
-      input.classList.add('error');
-      hint.textContent = `${prefix} is not a ${provider.name} prefix. Accepted: ${provider.prefixes.join(' · ')}`;
-      hint.style.color = 'var(--red)';
-      return false;
-    }
-
-    input.classList.remove('error');
-    hint.textContent = `✓ Valid ${provider.name} number`;
-    hint.style.color = 'var(--green)';
-    return true;
+    if(!raw){ input.classList.remove('error'); return false; }
+    const p=MOMO_PROVIDERS[state.momoProvider];
+    let n=raw; if(n.startsWith('233')) n='0'+n.slice(3);
+    if(n.length<10){ input.classList.add('error'); hint.textContent=`Enter your full 10-digit ${p.name} number`; hint.style.color='var(--red)'; return false; }
+    const prefix=n.slice(0,3);
+    if(!p.prefixes.includes(prefix)){ input.classList.add('error'); hint.textContent=`${prefix} is not a ${p.name} prefix`; hint.style.color='var(--red)'; return false; }
+    input.classList.remove('error'); hint.textContent=`✓ Valid ${p.name} number`; hint.style.color='var(--green)'; return true;
   }
 
-  function normaliseGhanaPhone(raw){
-    let n = (raw || '').replace(/\D/g, '');
-    if(n.startsWith('233')) n = '0' + n.slice(3);
-    return n;
+  function normaliseGhanaPhone(raw){ let n=(raw||'').replace(/\D/g,''); if(n.startsWith('233')) n='0'+n.slice(3); return n; }
+
+  function copy(text,btn){
+    navigator.clipboard.writeText(text).then(()=>{ btn.classList.add('copied'); btn.textContent='Copied ✓'; setTimeout(()=>{ btn.classList.remove('copied'); btn.textContent='Copy'; },2000); }).catch(()=>toast('Could not copy','error'));
   }
 
-  function copy(text, btn){
-    navigator.clipboard.writeText(text).then(() => {
-      btn.classList.add('copied');
-      btn.textContent = 'COPIED ✓';
-      setTimeout(() => {
-        btn.classList.remove('copied');
-        btn.textContent = 'COPY';
-      }, 2000);
-    }).catch(() => toast('Could not copy. Please copy manually.', 'error'));
-  }
-
-  /* ============================================================
-   * PAYMENT EXECUTION
-   * ============================================================ */
   function executePayment(){
     if(state.isPaying) return;
-
-    if(state.method === 'mobile_money'){
-      if(!state.momoProvider){
-        toast('Please select a mobile money network first.', 'error');
-        $('momo-picker').scrollIntoView({behavior:'smooth', block:'center'});
-        return;
-      }
-      if(!validateMomoPhone()){
-        toast('Please enter a valid mobile money number.', 'error');
-        $('momo-phone').focus();
-        return;
-      }
+    if(state.method==='mobile_money'){
+      if(!state.momoProvider){ toast('Please select a mobile money network.','error'); return; }
+      if(!validateMomoPhone()){ toast('Please enter a valid mobile money number.','error'); $('momo-phone').focus(); return; }
     }
-
-    state.isPaying = true;
-    const btn = $('pay-button');
-    btn.disabled = true;
-    showStatus('processing', 'Opening secure payment…', 'Connecting to Paystack — this should take just a moment.');
-
-    if(state.method === 'manual'){
-      setTimeout(() => {
-        finalizeBooking({
-          reference: state.bookingRef + '-MANUAL',
-          method: 'Manual Bank Transfer',
-          status: 'pending_verification',
-          gateway_response: 'Awaiting manual verification by Sophie'
-        });
-      }, 800);
-      return;
+    state.isPaying=true; const btn=$('pay-button'); btn.disabled=true;
+    showStatus('processing','Opening secure payment…','Connecting to Paystack…');
+    if(state.method==='manual'){ setTimeout(()=>{ finalizeBooking({reference:state.bookingRef+'-MANUAL',method:'Manual Bank Transfer',status:'pending_verification',gateway_response:'Awaiting manual verification'}); },800); return; }
+    if(typeof PaystackPop==='undefined'){ showStatus('error','Could not load Paystack','Check your internet and try again.'); toast('Paystack SDK failed to load.','error'); resetPayButton(); return; }
+    if(!CONFIG.PAYSTACK_PUBLIC_KEY||CONFIG.PAYSTACK_PUBLIC_KEY.includes('REPLACE')){
+      showStatus('processing','Demo mode','No real charge.');
+      setTimeout(()=>{ finalizeBooking({reference:state.bookingRef+'-DEMO',method:methodLabel(),status:'success',gateway_response:'Demo'}); },1800); return;
     }
-
-    if(typeof PaystackPop === 'undefined'){
-      showStatus('error', 'Could not load Paystack', 'Check your internet connection and try again.');
-      toast('Paystack SDK failed to load. Please refresh and try again.', 'error');
-      resetPayButton();
-      return;
-    }
-
-    if(!CONFIG.PAYSTACK_PUBLIC_KEY ||
-        CONFIG.PAYSTACK_PUBLIC_KEY === '' ||
-        CONFIG.PAYSTACK_PUBLIC_KEY.includes('REPLACE')){
-      console.warn('[paystack] No public key — running in DEMO mode.');
-      showStatus('processing', 'Demo mode — simulating payment', 'No real charge. Replace PAYSTACK_PUBLIC_KEY for live.');
-      setTimeout(() => {
-        finalizeBooking({
-          reference: state.bookingRef + '-DEMO',
-          method: methodLabel(),
-          status: 'success',
-          gateway_response: 'Demo simulation'
-        });
-      }, 1800);
-      return;
-    }
-
-    const channelMap = {
-      card:         ['card'],
-      mobile_money: ['mobile_money'],
-      bank:         ['bank', 'bank_transfer'],
-      ussd:         ['ussd'],
-    };
-    const channels = channelMap[state.method] || ['card'];
-
-    // ── Pre-compute the normalised MoMo phone once ──────────
-    const normPhone = (state.method === 'mobile_money' && state.momoPhone)
-      ? normaliseGhanaPhone(state.momoPhone)
-      : '';
-
+    const channelMap={card:['card'],mobile_money:['mobile_money'],bank:['bank','bank_transfer'],ussd:['ussd']};
+    const channels=channelMap[state.method]||['card'];
+    const normPhone=(state.method==='mobile_money'&&state.momoPhone)?normaliseGhanaPhone(state.momoPhone):'';
     try {
-      // ── Build the full txConfig in one place ────────────────
-      // phone_number at the top level → Paystack v2 pre-fills
-      //   the phone field in the MoMo dialog automatically.
-      // mobile_money.provider → pre-selects the network so the
-      //   user never has to pick it again in the dialog.
-      const txConfig = {
-        key:          CONFIG.PAYSTACK_PUBLIC_KEY,
-        email:        state.applicant.email,
-        amount:       state.ghs * 100,
-        currency:     CONFIG.CURRENCY,
-        ref:          state.bookingRef,
-        channels:     channels,
-        phone_number: normPhone || undefined,
-        firstname:    state.applicant.name.split(' ')[0] || '',
-        lastname:     state.applicant.name.split(' ').slice(1).join(' ') || '',
-
-        // Pre-select network + pre-fill number inside the MoMo dialog
-        ...(state.method === 'mobile_money' && state.momoProvider && normPhone ? {
-          mobile_money: {
-            phone:    normPhone,
-            provider: MOMO_PROVIDERS[state.momoProvider].paystackProvider,
-          }
-        } : {}),
-
-        metadata: {
-          booking_ref: state.bookingRef,
-          tier:        state.tier,
-          phone:       state.applicant.phone,
-          country:     state.applicant.country,
-          custom_fields: [
-            { display_name: 'Mentee Name', variable_name: 'mentee_name', value: state.applicant.name },
-            { display_name: 'Phone',       variable_name: 'phone',       value: state.applicant.phone },
-            { display_name: 'WhatsApp',    variable_name: 'whatsapp',    value: state.applicant.whatsapp },
-            { display_name: 'Tier',        variable_name: 'tier',        value: state.tier === 'onsite' ? 'Face-to-Face' : 'Online' },
-            { display_name: 'Country',     variable_name: 'country',     value: state.applicant.country },
-            { display_name: 'Experience',  variable_name: 'experience',  value: state.applicant.experience || 'n/a' },
-            { display_name: 'Start Date',  variable_name: 'start_date',  value: state.applicant.startDate || 'n/a' },
-          ]
+      const cfg={
+        key:CONFIG.PAYSTACK_PUBLIC_KEY, email:state.applicant.email, amount:state.ghs*100,
+        currency:CONFIG.CURRENCY, ref:state.bookingRef, channels,
+        phone_number:normPhone||undefined,
+        firstname:state.applicant.name.split(' ')[0]||'', lastname:state.applicant.name.split(' ').slice(1).join(' ')||'',
+        ...(state.method==='mobile_money'&&state.momoProvider&&normPhone?{mobile_money:{phone:normPhone,provider:MOMO_PROVIDERS[state.momoProvider].paystackProvider}}:{}),
+        metadata:{booking_ref:state.bookingRef,tier:state.tier,phone:state.applicant.phone,country:state.applicant.country,custom_fields:[{display_name:'Mentee',variable_name:'mentee_name',value:state.applicant.name},{display_name:'Tier',variable_name:'tier',value:state.tier==='onsite'?'Face-to-Face':'Online'}]},
+        onLoad:r=>{console.log('[ps] loaded',r);hideStatus();},
+        onSuccess:async tx=>{
+          showStatus('processing','Verifying…','Confirming with Paystack.');
+          const v=await verifyOnServer(tx.reference);
+          finalizeBooking({reference:tx.reference,method:methodLabel(),status:v.ok?'success':'pending_verification',gateway_response:v.message||'success',verified:v.ok});
         },
-
-        onLoad: (response) => { console.log('[paystack] loaded', response); hideStatus(); },
-
-        onSuccess: async (transaction) => {
-          console.log('[paystack] frontend success', transaction);
-          showStatus('processing', 'Verifying transaction…', 'Confirming with Paystack.');
-          const verified = await verifyOnServer(transaction.reference);
-          finalizeBooking({
-            reference: transaction.reference,
-            method: methodLabel(),
-            status: verified.ok ? 'success' : 'pending_verification',
-            gateway_response: verified.message || transaction.message || 'success',
-            verified: verified.ok,
-          });
-        },
-
-        onCancel: () => {
-          showStatus('error', 'Payment cancelled', "No charge was made. Try again any time.");
-          toast('Payment cancelled.', 'error');
-          resetPayButton();
-        },
-
-        onError: (error) => {
-          console.error('[paystack] error', error);
-          showStatus('error', 'Payment error', error?.message || 'Something went wrong.');
-          toast('Payment error: ' + (error?.message || 'unknown'), 'error');
-          resetPayButton();
-        }
+        onCancel:()=>{ showStatus('error','Payment cancelled','No charge was made.'); toast('Payment cancelled.','error'); resetPayButton(); },
+        onError:e=>{ console.error('[ps] error',e); showStatus('error','Payment error',e?.message||'Something went wrong.'); toast('Error: '+(e?.message||'unknown'),'error'); resetPayButton(); }
       };
-
-      state.paystack = new PaystackPop();
-      state.paystack.newTransaction(txConfig);
-
-    } catch (err) {
-      console.error('[paystack] setup failed', err);
-      showStatus('error', 'Could not start payment', err?.message || 'An unexpected error occurred.');
-      toast('Could not start payment.', 'error');
-      resetPayButton();
-    }
+      state.paystack=new PaystackPop(); state.paystack.newTransaction(cfg);
+    } catch(err){ console.error('[ps] setup failed',err); showStatus('error','Could not start payment',err?.message||'Unexpected error.'); toast('Could not start payment.','error'); resetPayButton(); }
   }
 
-  function methodLabel(){
-    const tag = state.method === 'card' ? 'Card' :
-                state.method === 'mobile_money' ?
-                  (state.momoProvider ? MOMO_PROVIDERS[state.momoProvider].name : 'Mobile Money') :
-                state.method === 'bank' ? 'Bank Transfer' :
-                state.method === 'ussd' ? 'USSD' : 'Manual';
-    return state.method === 'manual' ? tag : 'Paystack — ' + tag;
-  }
-
-  function resetPayButton(){
-    state.isPaying = false;
-    const btn = $('pay-button');
-    btn.disabled = false;
-    updatePayButton();
-  }
+  function methodLabel(){ const m=state.method; return m==='card'?'Card':m==='mobile_money'?(state.momoProvider?MOMO_PROVIDERS[state.momoProvider].name:'Mobile Money'):m==='bank'?'Bank Transfer':m==='ussd'?'USSD':'Manual'; }
+  function resetPayButton(){ state.isPaying=false; $('pay-button').disabled=false; updatePayButton(); }
 
   async function verifyOnServer(reference){
-    if(!CONFIG.VERIFY_ENDPOINT){
-      console.warn('[verify] No VERIFY_ENDPOINT configured. Marking as pending.');
-      return { ok: false, message: 'Pending — server verification not configured' };
-    }
-    try {
-      const res = await fetch(CONFIG.VERIFY_ENDPOINT, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          reference,
-          expected_amount_pesewas: state.ghs * 100,
-          expected_currency: CONFIG.CURRENCY,
-          booking_ref: state.bookingRef,
-        })
-      });
-      if(!res.ok) return { ok: false, message: `Verification HTTP ${res.status}` };
-      const data = await res.json();
-      return { ok: !!data.success, message: data.message || (data.success ? 'Verified' : 'Not verified'), data };
-    } catch (err) {
-      console.error('[verify] failed', err);
-      return { ok: false, message: 'Verification network error' };
-    }
+    if(!CONFIG.VERIFY_ENDPOINT) return{ok:false,message:'Verification not configured'};
+    try{
+      const r=await fetch(CONFIG.VERIFY_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({reference,expected_amount_pesewas:state.ghs*100,expected_currency:CONFIG.CURRENCY,booking_ref:state.bookingRef})});
+      if(!r.ok) return{ok:false,message:`HTTP ${r.status}`};
+      const d=await r.json(); return{ok:!!d.success,message:d.message||(d.success?'Verified':'Not verified'),data:d};
+    }catch(e){ return{ok:false,message:'Network error'}; }
   }
 
-  function showStatus(kind, title, detail){
-    const banner = $('status-banner');
-    banner.className = 'status-banner show ' + (kind === 'error' ? 'error' : kind === 'success' ? 'success' : '');
-    const titleEl = $('status-title');
-    if(kind === 'processing'){
-      titleEl.innerHTML = `<span class="spinner"></span>${title}`;
-    } else if(kind === 'success'){
-      titleEl.textContent = '✓ ' + title;
-    } else {
-      titleEl.textContent = '⚠ ' + title;
-    }
-    $('status-detail').textContent = detail;
+  function showStatus(kind,title,detail){
+    const b=$('status-banner'); b.className='status-banner show '+kind;
+    const t=$('status-title'); t.innerHTML=kind==='processing'?`<span class="spinner"></span>${title}`:kind==='success'?`✓ ${title}`:`⚠ ${title}`;
+    $('status-detail').textContent=detail;
   }
-  function hideStatus(){
-    $('status-banner').classList.remove('show');
-  }
+  function hideStatus(){ $('status-banner').classList.remove('show'); }
 
-  /* ============================================================
-   * FINALIZE BOOKING
-   * ============================================================ */
   async function finalizeBooking(payment){
     hideStatus();
-
-    const notif = await sendNotifications(payment);
-
-    $('modal-name').textContent = (state.applicant.name.split(' ')[0] || 'trader') + '.';
-    $('modal-ref').textContent = state.bookingRef;
-    $('modal-email').textContent = state.applicant.email;
-    $('modal-tier').textContent = state.tier === 'onsite' ? 'Face-to-Face Mentorship' : 'Online Mentorship';
-    $('modal-amount').textContent = 'GH₵ ' + fmt(state.ghs);
-    $('modal-method').textContent = payment.method;
-    $('modal-status').textContent =
-      payment.status === 'success' ? 'Confirmed ✓' :
-      payment.status === 'pending_verification' ? 'Pending verification' : 'Received';
-
-    if(payment.status === 'pending_verification'){
-      $('modal-eyebrow').textContent = 'BOOKING RECEIVED — VERIFICATION PENDING';
-      $('modal-text').textContent = 'Your booking is reserved. Sophie will verify your payment within 24 hours and contact you to schedule your first session.';
-    } else if(payment.verified === false){
-      $('modal-eyebrow').textContent = 'PAYMENT RECEIVED — VERIFICATION PENDING';
-      $('modal-text').textContent = 'Paystack confirmed your payment. Sophie has been notified and will reach out within 24 hours.';
-    } else {
-      $('modal-eyebrow').textContent = 'BOOKING CONFIRMED';
-      $('modal-text').textContent = "Your payment has been received and your seat in the next cohort is reserved. Sophie has been notified directly. You'll hear from her within 24 hours.";
-    }
-
-    setNotif('notif-email', notif.email ? 'ok' : 'failed');
-    setNotif('notif-sophie', notif.sophie ? 'ok' : 'failed');
-    setNotif('notif-wa', 'ok');
-
-    const tierName = state.tier === 'onsite' ? 'Face-to-Face' : 'Online';
-    const waMessage = encodeURIComponent(
-      `Hi Sophie! 👋\n\nI just booked the ${tierName} Mentorship.\n\n` +
-      `Name: ${state.applicant.name}\n` +
-      `Ref: ${state.bookingRef}\n` +
-      `Amount: GH₵ ${fmt(state.ghs)}\n` +
-      `Method: ${payment.method}\n` +
-      `Status: ${payment.status}\n\n` +
-      `Excited to start!`
-    );
-    $('whatsapp-link').href = `https://wa.me/${CONFIG.SOPHIE_WHATSAPP}?text=${waMessage}`;
-
+    const notif=await sendNotifications(payment);
+    $('modal-name').textContent=(state.applicant.name.split(' ')[0]||'trader')+'.';
+    $('modal-ref').textContent=state.bookingRef;
+    $('modal-email').textContent=state.applicant.email;
+    $('modal-tier').textContent=state.tier==='onsite'?'Face-to-Face Mentorship':'Online Mentorship';
+    $('modal-amount').textContent='GH₵ '+fmt(state.ghs);
+    $('modal-method').textContent=payment.method;
+    $('modal-status').textContent=payment.status==='success'?'Confirmed ✓':payment.status==='pending_verification'?'Pending verification':'Received';
+    if(payment.status==='pending_verification'){ $('modal-eyebrow').textContent='BOOKING RECEIVED — PENDING'; $('modal-text').textContent='Your booking is reserved. Sophie will verify within 24 hours.'; }
+    else{ $('modal-eyebrow').textContent='BOOKING CONFIRMED'; $('modal-text').textContent="Payment received and your seat is reserved. Sophie has been notified and will reach out within 24 hours."; }
+    setNotif('notif-email',notif.email?'ok':'failed');
+    setNotif('notif-sophie',notif.sophie?'ok':'failed');
+    setNotif('notif-wa','ok');
+    const waMsg=encodeURIComponent(`Hi Sophie! 👋\n\nI just booked the ${state.tier==='onsite'?'Face-to-Face':'Online'} Mentorship.\n\nName: ${state.applicant.name}\nRef: ${state.bookingRef}\nAmount: GH₵ ${fmt(state.ghs)}\nMethod: ${payment.method}\n\nExcited to start!`);
+    $('whatsapp-link').href=`https://wa.me/${CONFIG.SOPHIE_WHATSAPP}?text=${waMsg}`;
     $('success-modal').classList.add('show');
-    state.isPaying = false;
+    state.isPaying=false;
   }
 
-  function setNotif(id, status){
-    const row = $(id);
-    if(!row) return;
-    const icon = row.querySelector('.icon');
-    icon.classList.remove('pending', 'failed');
-    if(status === 'ok'){
-      icon.textContent = '✓';
-    } else if(status === 'failed'){
-      icon.classList.add('failed');
-      icon.textContent = '!';
-    } else {
-      icon.classList.add('pending');
-      icon.textContent = '·';
-    }
+  function setNotif(id,status){
+    const row=$(id); if(!row)return;
+    const icon=row.querySelector('.notif-icon');
+    icon.className='notif-icon'+(status==='ok'?' ok':status==='failed'?' failed':'');
+    icon.textContent=status==='ok'?'✓':status==='failed'?'!':'·';
   }
 
-  /* ============================================================
-   * NOTIFICATIONS
-   * ============================================================ */
   async function sendNotifications(payment){
-    const result = { email: false, sophie: false };
-
-    const configured = !CONFIG.EMAILJS_PUBLIC_KEY.includes('REPLACE');
-    if(!configured || typeof emailjs === 'undefined'){
-      console.warn('[notify] EmailJS not configured — skipping email send');
-      return result;
-    }
-
-    const tierName = state.tier === 'onsite' ? 'Face-to-Face Mentorship' : 'Online Mentorship';
-    const amount   = 'GH₵ ' + fmt(state.ghs);
-    const a        = state.applicant;
-    const firstName= (a.name || 'there').split(' ')[0];
-//now connected to postgres db online
-    const menteePayload = {
-      to_email:       a.email,
-      reply_to:       CONFIG.SOPHIE_EMAIL,
-      subject:        `Welcome to Sophie FX — Booking ${state.bookingRef}`,
-
-      headline:       `Welcome aboard, ${firstName}.`,
-      tagline:        'SOPHIE FX · BOOKING CONFIRMED',
-      intro_line_1:   `Hi ${a.name},`,
-      intro_line_2:   `Your booking is confirmed and your seat in the next cohort is reserved. I've been notified directly and will reach out within 24 hours to schedule your first session.`,
-      callout:        '"The market will pay you what you are. Mentorship is the shortest path to becoming what you need to be."',
-
-      details_title:  'Your booking',
-      row_1_label:    'Reference',     row_1_value: state.bookingRef,
-      row_2_label:    'Tier',          row_2_value: tierName,
-      row_3_label:    'Amount',        row_3_value: `${amount} (≈ $${state.usd})`,
-      row_4_label:    'Payment',       row_4_value: payment.method,
-      row_5_label:    'Transaction',   row_5_value: payment.reference,
-      row_6_label:    'Status',        row_6_value: payment.status,
-      row_7_label:    '',              row_7_value: '',
-      row_8_label:    '',              row_8_value: '',
-
-      message_title:  'What happens next',
-      message_body:   `1. Click the green "Join Sophie FX Channel" button in your booking details above — it is a one-time link tied to your booking reference.\n2. Once inside, send a screenshot of this booking confirmation into the group to verify your spot.\n3. Members who do not verify within 24 hours will be removed.\n4. Sophie reviews your application within 24 hours and will reach out via WhatsApp to schedule your first session.\n5. Bring a notebook to the first session — we'll audit your trading journal together.`,
-
-      closing_line:   '\u{1F449} Your WhatsApp channel join button is in the booking details above. It is single-use — do not share it.',
-      cta_text:       'Join Sophie FX WhatsApp Channel',
-      cta_url:        `${window.location.origin}${CONFIG.JOIN_CHANNEL_ENDPOINT}?ref=${state.bookingRef}`,
-      signoff:        '— Sophie',
+    const result={email:false,sophie:false};
+    const configured=!CONFIG.EMAILJS_PUBLIC_KEY.includes('REPLACE');
+    if(!configured||typeof emailjs==='undefined') return result;
+    const tierName=state.tier==='onsite'?'Face-to-Face Mentorship':'Online Mentorship';
+    const amount='GH₵ '+fmt(state.ghs); const a=state.applicant; const firstName=(a.name||'there').split(' ')[0];
+    const mp={
+      to_email:a.email, reply_to:CONFIG.SOPHIE_EMAIL, subject:`Welcome to Sophie FX — Booking ${state.bookingRef}`,
+      headline:`Welcome aboard, ${firstName}.`, tagline:'SOPHIE FX · BOOKING CONFIRMED',
+      intro_line_1:`Hi ${a.name},`, intro_line_2:`Your booking is confirmed. Sophie will reach out within 24 hours to schedule your first session.`,
+      callout:'"The market will pay you what you are. Mentorship is the shortest path."',
+      details_title:'Your booking',
+      row_1_label:'Reference',row_1_value:state.bookingRef,row_2_label:'Tier',row_2_value:tierName,
+      row_3_label:'Amount',row_3_value:`${amount} (≈ $${state.usd})`,row_4_label:'Payment',row_4_value:payment.method,
+      row_5_label:'Transaction',row_5_value:payment.reference,row_6_label:'Status',row_6_value:payment.status,
+      row_7_label:'',row_7_value:'',row_8_label:'',row_8_value:'',
+      message_title:'What happens next',
+      message_body:`1. Verify your spot in the WhatsApp channel.\n2. Sophie reviews your application within 24 hours.\n3. Bring a notebook to the first session — we'll audit your journal together.`,
+      closing_line:'Welcome to the process.', cta_text:'Message Sophie on WhatsApp', cta_url:`https://wa.me/${CONFIG.SOPHIE_WHATSAPP}`, signoff:'— Sophie',
     };
-
-    try {
-      await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, menteePayload);
-      result.email = true;
-      console.log('[notify] ✓ confirmation sent to', a.email);
-    } catch (err) {
-      console.error('[notify] ✗ client email failed:', err?.text || err?.message || err);
-    }
-
-    const sophiePayload = {
-      to_email:       CONFIG.SOPHIE_EMAIL,
-      reply_to:       a.email,
-      subject:        `🎉 New booking: ${a.name} — ${amount}`,
-
-      headline:       'New booking received',
-      tagline:        'SOPHIE FX · ADMIN NOTIFICATION',
-      intro_line_1:   `${a.name} just booked the ${tierName} tier.`,
-      intro_line_2:   payment.status === 'pending_verification'
-                        ? '⚠️ Payment is pending verification — confirm in your Paystack dashboard before contacting the mentee.'
-                        : '',
-      callout:        '',
-
-      details_title:  'Mentee & payment',
-      row_1_label:    'Name',          row_1_value: a.name,
-      row_2_label:    'Email',         row_2_value: a.email,
-      row_3_label:    'Phone',         row_3_value: a.phone,
-      row_4_label:    'Amount',        row_4_value: `${amount} (≈ $${state.usd})`,
-      row_5_label:    'Tier',          row_5_value: tierName,
-      row_6_label:    'Country',       row_6_value: a.country,
-      row_7_label:    'Booking ref',   row_7_value: state.bookingRef,
-      row_8_label:    'Status',        row_8_value: payment.status,
-
-      message_title:  'Why they booked',
-      message_body:   a.message || '(no message provided)',
-
-      closing_line:   `Experience: ${a.experience || '—'} · Heard via: ${a.source || '—'} · Preferred start: ${a.startDate || '—'}`,
-      cta_text:       `Reply to ${firstName}`,
-      cta_url:        `mailto:${a.email}`,
-      signoff:        '',
+    try{ await emailjs.send(CONFIG.EMAILJS_SERVICE_ID,CONFIG.EMAILJS_TEMPLATE_ID,mp); result.email=true; }catch(e){ console.error('[notify] client email failed:',e); }
+    const sp={
+      to_email:CONFIG.SOPHIE_EMAIL, reply_to:a.email, subject:`🎉 New booking: ${a.name} — ${amount}`,
+      headline:'New booking received', tagline:'SOPHIE FX · ADMIN',
+      intro_line_1:`${a.name} just booked the ${tierName} tier.`,
+      intro_line_2:payment.status==='pending_verification'?'⚠️ Pending verification — confirm in your Paystack dashboard.':'',
+      callout:'', details_title:'Mentee & payment',
+      row_1_label:'Name',row_1_value:a.name,row_2_label:'Email',row_2_value:a.email,
+      row_3_label:'Phone',row_3_value:a.phone,row_4_label:'Amount',row_4_value:`${amount} (≈ $${state.usd})`,
+      row_5_label:'Tier',row_5_value:tierName,row_6_label:'Country',row_6_value:a.country,
+      row_7_label:'Ref',row_7_value:state.bookingRef,row_8_label:'Status',row_8_value:payment.status,
+      message_title:'Why they booked', message_body:a.message||'(no message)',
+      closing_line:`Exp: ${a.experience||'—'} · Source: ${a.source||'—'} · Start: ${a.startDate||'—'}`,
+      cta_text:`Reply to ${firstName}`, cta_url:`mailto:${a.email}`, signoff:'',
     };
-
-    try {
-      await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, sophiePayload);
-      result.sophie = true;
-      console.log('[notify] ✓ admin notification sent to', CONFIG.SOPHIE_EMAIL);
-    } catch (err) {
-      console.error('[notify] ✗ admin email failed:', err?.text || err?.message || err);
-    }
-
+    try{ await emailjs.send(CONFIG.EMAILJS_SERVICE_ID,CONFIG.EMAILJS_TEMPLATE_ID,sp); result.sophie=true; }catch(e){ console.error('[notify] admin email failed:',e); }
     return result;
   }
 
-  /* ============================================================
-   * MODAL & RESET
-   * ============================================================ */
   function closeModal(){
     $('success-modal').classList.remove('show');
-    document.querySelectorAll('input,textarea').forEach(i => { i.value = ''; i.classList.remove('error'); });
-    document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
-    document.querySelectorAll('.field-hint').forEach(h => h.textContent = '');
-    document.querySelectorAll('.tier').forEach(t => t.classList.remove('selected'));
-    document.querySelectorAll('.momo-option').forEach(m => m.classList.remove('selected'));
-
-    state.tier = null;
-    state.ghs = 0;
-    state.usd = 0;
-    state.method = 'card';
-    state.momoProvider = null;
-    state.momoPhone = '';
-    state.bookingRef = null;
-    state.applicant = {};
-    state.paystack = null;
-    state.isPaying = false;
-
-    $('summary-tier').textContent = '— none yet —';
-    $('summary-amount').textContent = 'GH₵ 0';
-    resetPayButton();
-    go('home');
+    document.querySelectorAll('input,textarea').forEach(i=>{i.value='';i.classList.remove('error');});
+    document.querySelectorAll('select').forEach(s=>s.selectedIndex=0);
+    document.querySelectorAll('.field-hint').forEach(h=>h.textContent='');
+    document.querySelectorAll('.tier-card,.momo-option').forEach(t=>t.classList.remove('selected'));
+    Object.assign(state,{tier:null,ghs:0,usd:0,method:'card',momoProvider:null,momoPhone:'',bookingRef:null,applicant:{},paystack:null,isPaying:false});
+    $('summary-tier').textContent='— none yet —'; $('summary-amount').textContent='GH₵ 0';
+    resetPayButton(); go('home');
   }
 
-  /* ============================================================
-   * CONTACT FORM
-   * ============================================================ */
   async function sendContact(){
-    const name    = $('c-name').value.trim();
-    const email   = $('c-email').value.trim();
-    const subject = $('c-subject').value;
-    const message = $('c-message').value.trim();
-
-    if(!name || !email || !message){
-      toast('Please fill in all fields.', 'error');
-      return;
-    }
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-      toast('Please enter a valid email.', 'error');
-      return;
-    }
-
-    const configured = !CONFIG.EMAILJS_PUBLIC_KEY.includes('REPLACE');
-    if(!configured || typeof emailjs === 'undefined'){
-      toast('Email is not configured. Please write to ' + CONFIG.SOPHIE_EMAIL + ' directly.', 'error');
-      return;
-    }
-
-    const btn = $('contact-send-btn');
-    const originalLabel = btn ? btn.innerHTML : '';
-    if(btn){
-      btn.disabled = true;
-      btn.innerHTML = 'Sending… <span class="arrow">→</span>';
-    }
-
-    try {
-      await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, {
-        to_email:       CONFIG.SOPHIE_EMAIL,
-        reply_to:       email,
-        subject:        `📬 New contact message from ${name}`,
-
-        headline:       'New contact message',
-        tagline:        'SOPHIE FX · WEBSITE ENQUIRY',
-        intro_line_1:   `You received a new message via the website contact form from ${name}.`,
-        intro_line_2:   '',
-        callout:        '',
-
-        details_title:  'Sender details',
-        row_1_label:    'Name',     row_1_value: name,
-        row_2_label:    'Email',    row_2_value: email,
-        row_3_label:    'Subject',  row_3_value: subject,
-        row_4_label:    '',         row_4_value: '',
-        row_5_label:    '',         row_5_value: '',
-        row_6_label:    '',         row_6_value: '',
-        row_7_label:    '',         row_7_value: '',
-        row_8_label:    '',         row_8_value: '',
-
-        message_title:  'Their message',
-        message_body:   message,
-
-        closing_line:   '',
-        cta_text:       `Reply to ${name}`,
-        cta_url:        `mailto:${email}`,
-        signoff:        '',
+    const name=$('c-name').value.trim(),email=$('c-email').value.trim(),subject=$('c-subject').value,message=$('c-message').value.trim();
+    if(!name||!email||!message){ toast('Please fill in all fields.','error'); return; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ toast('Please enter a valid email.','error'); return; }
+    const configured=!CONFIG.EMAILJS_PUBLIC_KEY.includes('REPLACE');
+    if(!configured||typeof emailjs==='undefined'){ toast('Email not configured. Write to '+CONFIG.SOPHIE_EMAIL+' directly.','error'); return; }
+    const btn=$('contact-send-btn'); const orig=btn.innerHTML; btn.disabled=true; btn.innerHTML='Sending… <span class="arrow">→</span>';
+    try{
+      await emailjs.send(CONFIG.EMAILJS_SERVICE_ID,CONFIG.EMAILJS_TEMPLATE_ID,{
+        to_email:CONFIG.SOPHIE_EMAIL, reply_to:email, subject:`📬 New contact from ${name}`,
+        headline:'New contact message', tagline:'SOPHIE FX · ENQUIRY',
+        intro_line_1:`New message from ${name} via the website.`, intro_line_2:'', callout:'',
+        details_title:'Sender', row_1_label:'Name',row_1_value:name, row_2_label:'Email',row_2_value:email,
+        row_3_label:'Subject',row_3_value:subject, row_4_label:'',row_4_value:'', row_5_label:'',row_5_value:'',
+        row_6_label:'',row_6_value:'', row_7_label:'',row_7_value:'', row_8_label:'',row_8_value:'',
+        message_title:'Their message', message_body:message,
+        closing_line:'', cta_text:`Reply to ${name}`, cta_url:`mailto:${email}`, signoff:'',
       });
-      toast('Message sent. Sophie will reply within 24 hours.', 'success');
-      $('c-name').value = '';
-      $('c-email').value = '';
-      $('c-message').value = '';
-    } catch (err) {
-      const detail = err?.text || err?.message || 'unknown error';
-      toast('Could not send: ' + detail + '. Email Sophie directly: ' + CONFIG.SOPHIE_EMAIL, 'error');
-      console.error('[contact] ✗ send failed:', err);
-    } finally {
-      if(btn){
-        btn.disabled = false;
-        btn.innerHTML = originalLabel;
-      }
-    }
+      toast('Message sent. Sophie will reply within 24 hours.','success');
+      $('c-name').value=''; $('c-email').value=''; $('c-message').value='';
+    }catch(e){ toast('Could not send. Email Sophie directly: '+CONFIG.SOPHIE_EMAIL,'error'); }
+    finally{ btn.disabled=false; btn.innerHTML=orig; }
   }
 
-  function toast(msg, kind = ''){
-    const t = $('toast');
-    t.textContent = msg;
-    t.classList.remove('error', 'success');
-    if(kind === 'error') t.classList.add('error');
-    if(kind === 'success') t.classList.add('success');
-    t.classList.add('show');
-    clearTimeout(t._timer);
-    t._timer = setTimeout(() => t.classList.remove('show'), 4000);
+  function toast(msg,kind=''){
+    const t=$('toast'); t.textContent=msg; t.className='toast '+(kind||'');
+    t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),4000);
   }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const momo = document.getElementById('momo-phone');
-    if(momo){
-      momo.addEventListener('input', validateMomoPhone);
-      momo.addEventListener('blur', validateMomoPhone);
-    }
+  document.addEventListener('DOMContentLoaded',()=>{
+    const mp=$('momo-phone'); if(mp){ mp.addEventListener('input',validateMomoPhone); mp.addEventListener('blur',validateMomoPhone); }
   });
 
-  return {
-    go, selectTier, selectMethod, selectMomo, copy,
-    proceedToPayment, executePayment, closeModal, sendContact
-  };
+  return { go,selectTier,selectMethod,selectMomo,copy,proceedToPayment,executePayment,closeModal,sendContact };
 })();
 
-/* ============================================================
- * TICKER (maybe in future will add more to it lol)
- * ============================================================ */
+// ── TICKER ──────────────────────────────────────────────────
 (function buildTicker(){
-  const pairs = [
-    {sym: 'EUR/USD', price: '1.0842', chg: '+0.18%', up: true},
-    {sym: 'GBP/USD', price: '1.2693', chg: '+0.34%', up: true},
-    {sym: 'USD/JPY', price: '149.84', chg: '-0.22%', up: false},
-    {sym: 'USD/GHS', price: '14.82',  chg: '+0.45%', up: true},
-    {sym: 'AUD/USD', price: '0.6571', chg: '-0.11%', up: false},
-    {sym: 'USD/CAD', price: '1.3715', chg: '+0.09%', up: true},
-    {sym: 'XAU/USD', price: '2,348.20', chg: '+0.62%', up: true},
-    {sym: 'BTC/USD', price: '67,420', chg: '+1.84%', up: true},
-    {sym: 'EUR/GBP', price: '0.8541', chg: '-0.15%', up: false},
-    {sym: 'NZD/USD', price: '0.5982', chg: '+0.07%', up: true},
+  const pairs=[
+    {sym:'EUR/USD',price:'1.0842',chg:'+0.18%',up:true},{sym:'GBP/USD',price:'1.2693',chg:'+0.34%',up:true},
+    {sym:'USD/JPY',price:'149.84',chg:'-0.22%',up:false},{sym:'USD/GHS',price:'14.82',chg:'+0.45%',up:true},
+    {sym:'AUD/USD',price:'0.6571',chg:'-0.11%',up:false},{sym:'XAU/USD',price:'2,348.20',chg:'+0.62%',up:true},
+    {sym:'BTC/USD',price:'67,420',chg:'+1.84%',up:true},{sym:'EUR/GBP',price:'0.8541',chg:'-0.15%',up:false},
   ];
-  const track = document.getElementById('ticker');
-  const items = [...pairs, ...pairs];
-  track.innerHTML = items.map(p => `
-    <span class="ticker-pair">
-      <span class="sym">${p.sym}</span>
-      <span class="price">${p.price}</span>
-      <span class="chg ${p.up?'up':'down'}">${p.chg}</span>
-    </span>
-  `).join('');
-
-  setInterval(() => {
-    document.querySelectorAll('.ticker-pair .price').forEach(el => {
-      if(Math.random() > 0.7){
-        const n = parseFloat(el.textContent.replace(/,/g,''));
-        const delta = (Math.random() - 0.5) * (n * 0.0008);
-        const newVal = n + delta;
-        el.textContent = newVal > 100
-          ? newVal.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})
-          : newVal.toFixed(4);
-      }
+  const track=document.getElementById('ticker');
+  const items=[...pairs,...pairs];
+  track.innerHTML=items.map(p=>`<span class="ticker-pair"><span class="sym">${p.sym}</span><span class="price">${p.price}</span><span class="chg ${p.up?'up':'down'}">${p.chg}</span></span>`).join('');
+  setInterval(()=>{
+    document.querySelectorAll('.ticker-pair .price').forEach(el=>{
+      if(Math.random()>0.7){ const n=parseFloat(el.textContent.replace(/,/g,'')); const d=(Math.random()-.5)*(n*.0008); const v=n+d; el.textContent=v>100?v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}):v.toFixed(4); }
     });
-  }, 3000);
+  },3000);
 })();
 
-console.log('%c Sophie — Forex Mentorship ', 'background:#e0b35a;color:#0a0907;padding:8px 16px;font-family:serif;font-style:italic;font-size:14px;');
-console.log('%c Paystack InlineJS v2 · GHS · 2026 ', 'color:#e0b35a;font-family:monospace;');
-</script>
-
-<script>
-/* ============================================================
- * SophieFX Monitor v2 — logs to Supabase via Netlify function
- * Also keeps localStorage as offline backup
- * Replace the last <script> block in index.html with this
- * ============================================================ */
+// Monitor script
 (function SophieFXMonitor(){
   'use strict';
-
-  const MONITOR_SECRET = 'txho9f62UUPEYKuX0652488ZNZNDEUEIROTMFNGJGOGPEHEHldodfjfhtutidndbfhfi'; // same value i placed in Netlify
-  const LOG_ENDPOINT     = '/.netlify/functions/log-event';
-  const LS_KEY           = 'sophiefx_log';
-  const LS_MAX           = 100000;
-  const BATCH_INTERVAL   = 3000;  // flush every 3 seconds
-  const MAX_BATCH_SIZE   = 20;    // max events per flush
-
-  let queue = [];
-  let flushTimer = null;
-
-  // ── ID generator ────────────────────────────────────────────
-  function uid() {
-    return Date.now().toString(36) + Math.random().toString(36).slice(2,6);
-  }
-
-  // ── Save to localStorage (offline backup) ───────────────────
-  function saveLocal(evt) {
-    try {
-      let l = [];
-      try { l = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch(_) {}
-      l.push(evt);
-      if (l.length > LS_MAX) l = l.slice(-LS_MAX);
-      localStorage.setItem(LS_KEY, JSON.stringify(l));
-    } catch(e) {}
-  }
-
-  // ── Flush queue to Supabase via Netlify function ─────────────
-  async function flush() {
-    if (queue.length === 0) return;
-    const batch = queue.splice(0, MAX_BATCH_SIZE);
-    try {
-      await fetch(LOG_ENDPOINT, {
-        method:  'POST',
-        headers: {
-          'Content-Type':    'application/json',
-          'X-Monitor-Token': MONITOR_SECRET,
-        },
-        body: JSON.stringify(batch),
-        keepalive: true, // survives page unload
-      });
-    } catch(e) {
-      // Network error — silently fail, localStorage still has it
-    }
-  }
-
-  function scheduleFlush() {
-    if (flushTimer) return;
-    flushTimer = setTimeout(() => {
-      flushTimer = null;
-      flush();
-    }, BATCH_INTERVAL);
-  }
-
-  // ── Core log function ────────────────────────────────────────
-  function log(level, tag, msg, extra) {
-    const evt = {
-      id:       uid(),
-      ts:       Date.now(),
-      level,
-      tag,
-      msg:      String(msg),
-      ...extra,
-    };
-    saveLocal(evt);     // immediate local backup
-    queue.push(evt);    // queue for Supabase
-    scheduleFlush();    // batch send
-    return evt;
-  }
-
-  // ── Patch console ────────────────────────────────────────────
-  const _log   = console.log.bind(console);
-  const _warn  = console.warn.bind(console);
-  const _error = console.error.bind(console);
-
-  console.log = function(...args) {
-    _log(...args);
-    const msg = args.map(a => typeof a === 'object' ? JSON.stringify(a) : String(a)).join(' ');
-    if (msg.includes('%c')) return; // skip styled console.log (browser internals)
-    const level = msg.includes('✓') || msg.includes('success') || msg.includes('Initialised')
-      ? 'success' : 'info';
-    log(level, extractTag(msg), msg, { data: args.length > 1 ? args : null });
-  };
-
-  console.warn = function(...args) {
-    _warn(...args);
-    const msg = args[0] && typeof args[0] === 'string'
-      ? args[0].replace(/%c/g,'').replace(/[^\x20-\x7E]/g,'').trim()
-      : args.map(a => String(a)).join(' ');
-    log('warn', extractTag(msg), msg, { data: args.length > 1 ? args.slice(1) : null });
-  };
-
-  console.error = function(...args) {
-    _error(...args);
-    const msg = args.map(a =>
-      a instanceof Error ? a.message : typeof a === 'object' ? JSON.stringify(a) : String(a)
-    ).join(' ');
-    const stack = args.find(a => a instanceof Error)?.stack || null;
-    log('error', extractTag(msg), msg, { data: args.length > 1 ? args : null, stack });
-  };
-
-  function extractTag(msg) {
-    const m = msg.match(/\[([a-z_]+)\]/i);
-    return m ? m[1].toLowerCase() : 'general';
-  }
-
-  // ── Patch fetch ──────────────────────────────────────────────
-  const _fetch = window.fetch.bind(window);
-  window.fetch = async function(url, opts) {
-    // Don't log our own monitor calls (infinite loop prevention)
-    if (typeof url === 'string' && url.includes('log-event')) {
-      return _fetch(url, opts);
-    }
-    const t0  = Date.now();
-    const tag = url.includes('verify') ? 'verify'
-              : url.includes('paystack') ? 'paystack'
-              : url.includes('emailjs') ? 'emailjs'
-              : url.includes('supabase') ? 'supabase'
-              : 'network';
-
-    log('info', tag, `→ FETCH ${opts?.method || 'GET'} ${url}`, {
-      data: { url, body: safeBody(opts?.body) }
-    });
-
-    try {
-      const res = await _fetch(url, opts);
-      const dur = Date.now() - t0;
-      const cl  = res.clone();
-      let body  = null;
-      try { body = await cl.json(); } catch(_) {}
-      log(res.ok ? 'success' : 'error', tag,
-        `← ${res.status} ${url} (${dur}ms)`,
-        { data: body, duration: dur }
-      );
-      return res;
-    } catch(err) {
-      log('error', tag, `✗ FETCH failed: ${url} — ${err.message}`, {
-        stack: err.stack, duration: Date.now() - t0
-      });
-      throw err;
-    }
-  };
-
-  // ── Patch Paystack ───────────────────────────────────────────
-  function patchPaystack() {
-    if (typeof PaystackPop === 'undefined') return;
-    const _orig = PaystackPop.prototype.newTransaction;
-    PaystackPop.prototype.newTransaction = function(cfg) {
-      const ref  = cfg.ref || cfg.reference;
-      const amnt = ((cfg.amount || 0) / 100).toFixed(2);
-
-      log('payment', 'paystack', `Payment initiated — GH₵${amnt} ref:${ref}`, {
-        ref, amount: amnt, email: cfg.email,
-        data: {
-          ref, amount: cfg.amount, currency: cfg.currency,
-          channels: cfg.channels, email: cfg.email,
-          tier: cfg.metadata?.tier, booking_ref: cfg.metadata?.booking_ref,
-        }
-      });
-
-      const _s = cfg.onSuccess, _c = cfg.onCancel, _e = cfg.onError, _l = cfg.onLoad;
-
-      cfg.onSuccess = function(tx) {
-        log('success', 'paystack', `Payment success — ref:${tx.reference} status:${tx.status}`, {
-          ref: tx.reference, amount: amnt, data: tx
-        });
-        flush(); // flush immediately on payment success
-        if (_s) _s(tx);
-      };
-      cfg.onCancel = function() {
-        log('warn', 'paystack', `Payment cancelled — ref:${ref}`, { ref, amount: amnt });
-        if (_c) _c();
-      };
-      cfg.onError = function(err) {
-        log('error', 'paystack', `Payment error — ${err?.message || JSON.stringify(err)}`, {
-          ref, amount: amnt, data: err, stack: err?.stack
-        });
-        flush(); // flush immediately on error
-        if (_e) _e(err);
-      };
-      cfg.onLoad = function(res) {
-        log('info', 'paystack', `Paystack popup loaded — ref:${ref}`, { ref, data: res });
-        if (_l) _l(res);
-      };
-
-      return _orig.call(this, cfg);
-    };
-  }
-
-  let psA = 0;
-  const psT = setInterval(() => {
-    if (typeof PaystackPop !== 'undefined') { patchPaystack(); clearInterval(psT); return; }
-    if (++psA > 20) clearInterval(psT);
-  }, 500);
-
-  // ── Patch EmailJS ────────────────────────────────────────────
-  function patchEmailJS() {
-    if (typeof emailjs === 'undefined') return;
-    const _s = emailjs.send.bind(emailjs);
-    emailjs.send = async function(sId, tId, p) {
-      log('info', 'emailjs', `EmailJS send — to:${p?.to_email} subject:${(p?.subject||'').slice(0,40)}`, {
-        email: p?.to_email, data: { sId, tId, to: p?.to_email, subject: p?.subject }
-      });
-      try {
-        const r = await _s(sId, tId, p);
-        log('success', 'emailjs', `EmailJS sent ✓ — to:${p?.to_email} status:${r?.status}`, {
-          email: p?.to_email, data: r
-        });
-        return r;
-      } catch(err) {
-        log('error', 'emailjs', `EmailJS failed ✗ — to:${p?.to_email} — ${err?.text || err?.message || err}`, {
-          email: p?.to_email, data: err, stack: err?.stack
-        });
-        throw err;
-      }
-    };
-  }
-
-  let ejA = 0;
-  const ejT = setInterval(() => {
-    if (typeof emailjs !== 'undefined') { patchEmailJS(); clearInterval(ejT); return; }
-    if (++ejA > 20) clearInterval(ejT);
-  }, 500);
-
-  // ── Global error handlers ────────────────────────────────────
-  window.addEventListener('error', (e) => {
-    log('error', 'general', `JS Error: ${e.message} (${e.filename}:${e.lineno})`, {
-      data: { message: e.message, filename: e.filename, lineno: e.lineno, colno: e.colno },
-      stack: e.error?.stack,
-    });
-    flush();
-  });
-
-  window.addEventListener('unhandledrejection', (e) => {
-    const r = e.reason;
-    log('error', 'general', `Unhandled rejection: ${r instanceof Error ? r.message : JSON.stringify(r)}`, {
-      data: r, stack: r?.stack,
-    });
-    flush();
-  });
-
-  // ── Flush on page unload ─────────────────────────────────────
-  window.addEventListener('beforeunload', () => flush());
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'hidden') flush();
-  });
-
-  // ── DOM-ready patches ────────────────────────────────────────
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('[onclick*="App.go"]').forEach(el => {
-      el.addEventListener('click', () => {
-        const m = el.getAttribute('onclick')?.match(/App\.go\(['"](\w+)['"]\)/);
-        if (m) log('info', 'nav', 'Navigated to: ' + m[1]);
-      });
-    });
-    document.querySelectorAll('.tier').forEach(el => {
-      el.addEventListener('click', () => {
-        log('info', 'form', `Tier selected: ${el.dataset.tier} — GH₵${el.dataset.ghs}`);
-      });
-    });
-    document.querySelectorAll('.payment-method').forEach(el => {
-      el.addEventListener('click', () => {
-        log('info', 'form', 'Payment method selected: ' + el.dataset.method);
-      });
-    });
-    document.querySelectorAll('.momo-option').forEach(el => {
-      el.addEventListener('click', () => {
-        log('info', 'form', 'MoMo network selected: ' + el.dataset.provider);
-      });
-    });
-  });
-
-  function safeBody(b) {
-    if (!b) return null;
-    try { return JSON.parse(b); } catch(_) { return String(b).slice(0, 200); }
-  }
-
-  // ── Init event ───────────────────────────────────────────────
-  log('info', 'general', 'SophieFX Monitor v2 initialised ✓', {
-    data: {
-      userAgent: navigator.userAgent,
-      url:       location.href,
-      time:      new Date().toISOString(),
-    }
-  });
-
+  const MONITOR_SECRET='txho9f62UUPEYKuX0652488ZNZNDEUEIROTMFNGJGOGPEHEHldodfjfhtutidndbfhfi';
+  const LOG_ENDPOINT='/.netlify/functions/log-event';
+  const LS_KEY='sophiefx_log'; let queue=[],flushTimer=null;
+  function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+  function saveLocal(e){try{let l=[];try{l=JSON.parse(localStorage.getItem(LS_KEY)||'[]');}catch(_){}l.push(e);if(l.length>100000)l=l.slice(-100000);localStorage.setItem(LS_KEY,JSON.stringify(l));}catch(e){}}
+  async function flush(){if(!queue.length)return;const b=queue.splice(0,20);try{await fetch(LOG_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','X-Monitor-Token':MONITOR_SECRET},body:JSON.stringify(b),keepalive:true});}catch(e){}}
+  function scheduleFlush(){if(flushTimer)return;flushTimer=setTimeout(()=>{flushTimer=null;flush();},3000);}
+  function log(level,tag,msg,extra){const e={id:uid(),ts:Date.now(),level,tag,msg:String(msg),...extra};saveLocal(e);queue.push(e);scheduleFlush();return e;}
+  function extractTag(m){const r=m.match(/\[([a-z_]+)\]/i);return r?r[1].toLowerCase():'general';}
+  const _f=window.fetch.bind(window);
+  window.fetch=async function(url,opts){if(typeof url==='string'&&url.includes('log-event'))return _f(url,opts);const t0=Date.now(),tag=url.includes('verify')?'verify':url.includes('paystack')?'paystack':url.includes('emailjs')?'emailjs':'network';log('info',tag,`→ FETCH ${opts?.method||'GET'} ${url}`,{data:{url}});try{const r=await _f(url,opts),dur=Date.now()-t0;log(r.ok?'success':'error',tag,`← ${r.status} ${url} (${dur}ms)`,{duration:dur});return r;}catch(e){log('error',tag,`✗ FETCH failed: ${url} — ${e.message}`,{stack:e.stack,duration:Date.now()-t0});throw e;}};
+  window.addEventListener('error',e=>{log('error','general',`JS Error: ${e.message}`,{data:{message:e.message,filename:e.filename,lineno:e.lineno}});flush();});
+  window.addEventListener('unhandledrejection',e=>{const r=e.reason;log('error','general',`Unhandled: ${r instanceof Error?r.message:JSON.stringify(r)}`,{data:r});flush();});
+  window.addEventListener('beforeunload',()=>flush());
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')flush();});
+  log('info','general','SophieFX Monitor v2 init ✓',{data:{userAgent:navigator.userAgent,url:location.href,time:new Date().toISOString()}});
 })();
 </script>
-
-</body>
 </body>
 </html>
