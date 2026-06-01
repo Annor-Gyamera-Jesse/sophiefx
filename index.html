@@ -2327,7 +2327,7 @@ const App = (() => {
       row_7_label:'',row_7_value:'',row_8_label:'',row_8_value:'',
       message_title:'What happens next',
       message_body:`1. Verify your spot in the WhatsApp channel.\n2. the Team reviews your application within 24 hours.\n3. Bring a notebook to the first session — we'll audit your journal together.`,
-      closing_line:'Welcome to the process.', cta_text:'Message Sophie on WhatsApp', cta_url:`https://wa.me/${CONFIG.SOPHIE_WHATSAPP}`, signoff:'— Sophie',
+      closing_line:'Welcome to the process.', cta_text:'Message The Team on WhatsApp', cta_url:`https://wa.me/${CONFIG.SOPHIE_WHATSAPP}`, signoff:'— PipsBuiltForexAcademy',
     };
     try{ await emailjs.send(CONFIG.EMAILJS_SERVICE_ID,CONFIG.EMAILJS_TEMPLATE_ID,mp); result.email=true; }catch(e){ console.error('[notify] client email failed:',e); }
     const sp={
