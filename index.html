@@ -1334,10 +1334,10 @@ img, video { max-width: 100%; height: auto; }
 
 /* Nav: logo left, CTA + menu grouped right, no crowding */
 @media (max-width: 960px) {
-  .nav-inner   { padding: 0 clamp(1rem, 4vw, 2rem); gap: 0.6rem; }
-  .brand       { margin-right: auto; }
-  .nav-cta     { order: 2; }
-  .menu-toggle { order: 3; }
+ .nav-inner   { padding: 0 clamp(1rem, 4vw, 2rem); gap: 0.6rem; }
+  .menu-toggle { order: 1; }
+  .brand       { order: 2; flex: 1; }
+  .nav-cta     { order: 3; }
 }
 
 /* Small phones: trim oversized padding so content breathes */
@@ -1391,9 +1391,13 @@ img, video { max-width: 100%; height: auto; }
       <li><button class="tab-btn" data-tab="contact" onclick="App.go('contact')">Contact</button></li>
     </ul>
     <div class="nav-cta">
-      <button class="btn btn-primary btn-sm" onclick="App.go('booking')">
-        Get Started <span class="arrow">→</span>
-      </button>
+    <a href="https://t.me/PipsBuiltAcademy" target="_blank" rel="noopener" class="btn btn-outline btn-sm" style="border-color:var(--teal);color:var(--teal);">
+      ✈ Telegram
+    </a>
+    <button class="btn btn-primary btn-sm" onclick="App.go('booking')">
+      Get Started <span class="arrow">→</span>
+    </button>
+  </div>
     </div>
   </div>
 </nav>
@@ -1505,7 +1509,7 @@ img, video { max-width: 100%; height: auto; }
     <h2 class="section-title">Two paths. <em>One commitment.</em></h2>
     <p class="section-sub center" style="margin:0 auto 2.5rem;">
       Whether you join face-to-face in Accra or online from anywhere on earth,
-      the work is the same: a one-month immersion in disciplined trading.
+      the work is the same: a Six-Weeks immersion in disciplined trading.
     </p>
     <button class="btn btn-primary btn-lg" onclick="App.go('booking')">
       View Mentorship Tiers <span class="arrow">→</span>
@@ -1587,7 +1591,7 @@ img, video { max-width: 100%; height: auto; }
 
   <div class="section">
     <div class="section-label">The Curriculum</div>
-    <h2 class="section-title">one month. <em>One discipline.</em></h2>
+    <h2 class="section-title">Six Weeks. <em>One discipline.</em></h2>
     <p class="section-sub" style="margin-bottom:0;">A structured, progressive curriculum built around one idea: making you independent.</p>
     <div class="curriculum-grid">
       <div class="week-card"><div class="week-num">WK 1</div><div><h5>Foundation & Audit</h5><p>We open your trading journal together. Honest accounting of wins, losses, and the patterns hiding in both.</p></div></div>
@@ -1606,7 +1610,7 @@ img, video { max-width: 100%; height: auto; }
     <div class="section-label">Mentorship Booking</div>
     <h2 class="section-title">Choose your <em>path.</em></h2>
     <p class="booking-intro">
-      Every tier covers the same one-month curriculum. What changes is intimacy, intensity, and the energy of being in the same room.
+      Every tier covers the same Six-Weeks curriculum. What changes is intimacy, intensity, and the energy of being in the same room.
       Prices are shown in US dollars (USD) — at checkout the amount is converted to Ghanaian Cedis (GH₵) and charged securely.
     </p>
 
@@ -1702,7 +1706,7 @@ img, video { max-width: 100%; height: auto; }
         <div class="tier-usd">≈ GH₵ <span class="ghs-equiv">—</span> · charged in cedis</div>
         <ul class="tier-features">
           <li>Everything in Face-to-Face, plus:</li>
-          <li>Unlimited 1-on-1 sessions for one month</li>
+          <li>Unlimited 1-on-1 sessions for Six Weeks</li>
           <li>Daily live trading alongside PipsBuiltAcademy</li>
           <li>24/7 priority WhatsApp & phone line</li>
           <li>Personalised strategy built around you</li>
@@ -1975,6 +1979,10 @@ img, video { max-width: 100%; height: auto; }
             <span class="contact-value"><a href="https://wa.me/233207050769" target="_blank">+233 207 050 769</a></span>
           </div>
           <div class="contact-item">
+          <span class="contact-label">Telegram</span>
+          <span class="contact-value"><a href="https://t.me/PipsBuiltAcademy" target="_blank" rel="noopener">t.me/PipsBuiltAcademy</a></span>
+        </div>
+          <div class="contact-item">
             <span class="contact-label">Studio</span>
             <span class="contact-value">Accra, Ghana<small>By appointment only</small></span>
           </div>
@@ -2057,7 +2065,7 @@ img, video { max-width: 100%; height: auto; }
       <a href="#" class="footer-brand-name" onclick="App.go('home');return false;">
         <span>PipsBuiltForex<em>Academy</em></span>
       </a>
-      <p>A deliberate apprenticeship in disciplined forex trading. one month, one mentor, no shortcuts.</p>
+      <p>A deliberate apprenticeship in disciplined forex trading. Six-week, one mentor, no shortcuts.</p>
     </div>
     <div class="footer-col">
       <h5>Navigate</h5>
@@ -2079,13 +2087,14 @@ img, video { max-width: 100%; height: auto; }
         <li><a href="#" onclick="App.go('about');return false;">Curriculum</a></li>
       </ul>
     </div>
-    <div class="footer-col">
-      <h5>Connect</h5>
-      <ul>
-        <li><a href="https://wa.me/233207050769" target="_blank">WhatsApp</a></li>
-        <li><a href="mailto:pipsbuiltacademy@gmail.com">Email</a></li>
-      </ul>
-    </div>
+   <div class="footer-col">
+    <h5>Connect</h5>
+    <ul>
+      <li><a href="https://wa.me/233207050769" target="_blank">WhatsApp</a></li>
+      <li><a href="mailto:pipsbuiltacademy@gmail.com">Email</a></li>
+      <li><a href="https://t.me/PipsBuiltAcademy" target="_blank" rel="noopener">Telegram</a></li>
+    </ul>
+  </div>
   </div>
   <div class="footer-bottom">
     <small>© 2026 PipsBuiltAcademy · All Rights Reserved · Accra, Ghana</small>
