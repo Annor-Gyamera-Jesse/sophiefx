@@ -663,6 +663,14 @@ nav {
   transition: all 0.3s ease;
   position: relative;
 }
+@keyframes tierNudge {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(26,127,168,0); }
+  50%      { box-shadow: 0 0 0 4px rgba(26,127,168,0.35); }
+}
+.tier-card.nudge {
+  animation: tierNudge 0.6s ease 2;
+  border-color: var(--teal);
+}
 .tier-card:hover { border-color: var(--teal); box-shadow: var(--shadow-md); transform: translateY(-2px); }
 .tier-card.selected { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(26,127,168,0.15), var(--shadow-md); }
 .tier-badge {
@@ -2133,14 +2141,21 @@ const App = (() => {
   }
 
   function selectTier(el){
-    document.querySelectorAll('.tier-card').forEach(t=>t.classList.remove('selected'));
-    el.classList.add('selected');
-    state.tier=el.dataset.tier;
-    state.usd=parseFloat(String(el.dataset.usd).replace(/,/g,''))||0;
-    state.ghs=Math.round(state.usd*CONFIG.USD_GHS_RATE); // converted to cedis for Paystack
-    $('summary-tier').textContent=tierName(state.tier);
-    $('summary-amount').textContent=`$${fmt(state.usd)} (≈ GH₵ ${fmt(state.ghs)})`;
-  }
+      document.querySelectorAll('.tier-card').forEach(t=>t.classList.remove('selected'));
+      el.classList.add('selected');
+      state.tier=el.dataset.tier;
+      state.usd=parseFloat(String(el.dataset.usd).replace(/,/g,''))||0;
+      state.ghs=Math.round(state.usd*CONFIG.USD_GHS_RATE); // converted to cedis for Paystack
+      $('summary-tier').textContent=tierName(state.tier);
+      $('summary-amount').textContent=`$${fmt(state.usd)} (≈ GH₵ ${fmt(state.ghs)})`;
+      // NEW: walk the user straight to the application form
+      const form=document.querySelector('.booking-form-wrap');
+      if(form){
+        form.scrollIntoView({behavior:'smooth',block:'start'});
+        setTimeout(()=>{ const n=$('f-name'); if(n) n.focus({preventScroll:true}); }, 450);
+        toast(`${tierName(state.tier)} selected — fill in your details to continue.`,'success');
+      }
+    }
 
   function validateForm(){
     const fields=[
@@ -2169,8 +2184,19 @@ const App = (() => {
     label.textContent=state.method==='manual'?"I've Made the Transfer — Confirm Booking":`Pay ${amount} Securely`;
   }
 
-  function proceedToPayment(){
-    if(!state.tier){ toast('Please select a mentorship tier first.','error'); document.querySelector('.tier-grid').scrollIntoView({behavior:'smooth',block:'center'}); return; }
+ function proceedToPayment(){
+    if(!state.tier){
+      toast('Please pick a mentorship tier first 👆','error');
+      const grid=document.querySelector('.tier-grid');
+      grid.scrollIntoView({behavior:'smooth',block:'center'});
+      // flash the cards so it's obvious what to tap
+      grid.querySelectorAll('.tier-card').forEach(c=>{
+        c.classList.remove('nudge'); void c.offsetWidth; // restart animation
+        c.classList.add('nudge');
+        setTimeout(()=>c.classList.remove('nudge'), 1300);
+      });
+      return;
+    }
     if(!validateForm()) return;
     let wa=$('f-whatsapp').value.trim(); if(!wa) wa=$('f-phone').value.trim();
     state.applicant={ name:$('f-name').value.trim(), email:$('f-email').value.trim().toLowerCase(), phone:$('f-phone').value.trim(), whatsapp:wa, country:$('f-country').value.trim(), experience:$('f-exp').value, startDate:$('f-date').value, source:$('f-source').value, message:$('f-message').value.trim() };
