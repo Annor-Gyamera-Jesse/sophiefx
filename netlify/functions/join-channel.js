@@ -1,5 +1,5 @@
-/**in future maybe i will do the manual thing lol
- *  ============================================================
+/**
+ * ============================================================
  * SOPHIE FX — join-channel.js
  * Netlify Function: GET /.netlify/functions/join-channel
  *
