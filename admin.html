@@ -495,6 +495,8 @@ body {
       <div class="nav-item active" onclick="Bookings.setTier('all',this)">All Tiers <span class="count" id="bcnt-all">0</span></div>
       <div class="nav-item" onclick="Bookings.setTier('online',this)">Online <span class="count badge-blue" id="bcnt-online">0</span></div>
       <div class="nav-item" onclick="Bookings.setTier('onsite',this)">Face-to-Face <span class="count badge-gold" id="bcnt-onsite">0</span></div>
+      <div class="nav-item" onclick="Bookings.setTier('course',this)">Course <span class="count badge-blue" id="bcnt-course">0</span></div>
+      <div class="nav-item" onclick="Bookings.setTier('elite',this)">Elite <span class="count badge-gold" id="bcnt-elite">0</span></div>
       <div class="sidebar-divider"></div>
       <div class="sidebar-label">Filter Channel</div>
       <div class="nav-item active" onclick="Bookings.setChannel('all',this)">All Channels</div>
@@ -917,6 +919,8 @@ const Bookings = (() => {
     $('bs-revenue').textContent = 'GH₵ '+fmt((s.totalRevenue||0)/100);
     $('bs-online').textContent  = s.onlineCount||0;
     $('bs-onsite').textContent  = s.onsiteCount||0;
+    $('bcnt-course').textContent = (all.filter(b=>b.tier==='course').length);
+    $('bcnt-elite').textContent  = (all.filter(b=>b.tier==='elite').length);
     $('stat-bookings').textContent = s.total||0;
     $('bcnt-all').textContent    = s.total||0;
     $('bcnt-online').textContent = s.onlineCount||0;
