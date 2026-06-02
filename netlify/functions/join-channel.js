@@ -1,6 +1,6 @@
 /**
  * ============================================================
- * SOPHIE FX — join-channel.js
+ * the team FX — join-channel.js
  * Netlify Function: GET /.netlify/functions/join-channel
  *
  * One-time gate for the WhatsApp channel join link.
@@ -132,7 +132,7 @@ function alreadyUsedPage(bookingRef, usedAt) {
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Link Already Used — Sophie FX</title>
+  <title>Link Already Used — the team FX</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{
@@ -196,7 +196,7 @@ function alreadyUsedPage(bookingRef, usedAt) {
     <p>The WhatsApp channel join link for booking</p>
     <div class="ref">${bookingRef}</div>
     <p>was already activated on <strong style="color:#d2c7af">${usedDate}</strong>.</p>
-    <p style="margin-top:14px;">Each booking confirmation contains a single-use link. If you believe this is an error, please contact Sophie directly.</p>
+    <p style="margin-top:14px;">Each booking confirmation contains a single-use link. If you believe this is an error, please contact the team directly.</p>
     <div class="contact">
       Need help? &nbsp;<a href="mailto:Pipsbuiltacademy@gmail.com">Pipsbuiltacademy@gmail.com</a>
     </div>
@@ -211,7 +211,7 @@ function notVerifiedPage(bookingRef) {
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Payment Not Verified — Sophie FX</title>
+  <title>Payment Not Verified — the team FX</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{
@@ -242,7 +242,7 @@ function notVerifiedPage(bookingRef) {
     <p>We don't have a verified payment on record for booking</p>
     <div class="ref">${bookingRef}</div>
     <p>If you paid by <strong style="color:#d2c7af">card or mobile money</strong>, this should clear within a minute — please open the link again shortly.</p>
-    <p style="margin-top:10px;">If you paid by <strong style="color:#d2c7af">manual bank transfer</strong>, your spot is reserved. This link unlocks as soon as Sophie confirms your payment.</p>
+    <p style="margin-top:10px;">If you paid by <strong style="color:#d2c7af">manual bank transfer</strong>, your spot is reserved. This link unlocks as soon as the team confirms your payment.</p>
     <div class="contact">
       Need help? &nbsp;<a href="mailto:Pipsbuiltacademy@gmail.com">Pipsbuiltacademy@gmail.com</a>
     </div>
@@ -257,7 +257,7 @@ function errorPage(message) {
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Invalid Link — Sophie FX</title>
+  <title>Invalid Link — the team FX</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{
@@ -301,7 +301,7 @@ export const handler = async (event) => {
     return {
       statusCode: 500,
       headers: { 'Content-Type': 'text/html' },
-      body: errorPage('Server configuration error. Please contact Sophie.'),
+      body: errorPage('Server configuration error. Please contact the team.'),
     };
   }
 
@@ -336,7 +336,7 @@ export const handler = async (event) => {
     return {
       statusCode: 503,
       headers: { 'Content-Type': 'text/html' },
-      body: errorPage('We could not verify your booking right now. Please open the link again in a moment, or contact Sophie if it keeps happening.'),
+      body: errorPage('We could not verify your booking right now. Please open the link again in a moment, or contact the team if it keeps happening.'),
     };
   }
 
