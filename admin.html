@@ -345,6 +345,93 @@ body {
 }
 .paused-banner.show { display:block; }
 
+/* ── CONTROL PANEL ──────────────────────────────────────── */
+.cp-wrap { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem; }
+.cp-section {
+  background: var(--bg-2); border: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+}
+.cp-section-head {
+  padding: 0.75rem 1.2rem; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--bg-3);
+}
+.cp-section-title {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--gold);
+}
+.cp-section-body { padding: 1.2rem; }
+.cp-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.7rem 0; border-bottom: 1px solid var(--border);
+  gap: 1rem;
+}
+.cp-row:last-child { border-bottom: none; }
+.cp-label { font-size: 12px; color: var(--ink); font-weight: 500; }
+.cp-sub { font-size: 11px; color: var(--ink-faint); margin-top: 2px; }
+/* Toggle switch */
+.toggle-wrap { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
+.toggle-wrap input { opacity: 0; width: 0; height: 0; position: absolute; }
+.toggle-slider {
+  position: absolute; inset: 0; cursor: pointer;
+  background: var(--bg-4); border: 1px solid var(--border-2);
+  border-radius: 12px; transition: all 0.2s;
+}
+.toggle-slider::before {
+  content: ''; position: absolute;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--ink-faint); top: 3px; left: 3px;
+  transition: all 0.2s;
+}
+.toggle-wrap input:checked + .toggle-slider { background: rgba(63,185,80,0.2); border-color: var(--green); }
+.toggle-wrap input:checked + .toggle-slider::before { background: var(--green); transform: translateX(20px); }
+.toggle-wrap input:disabled + .toggle-slider { opacity: 0.4; cursor: not-allowed; }
+/* Number input */
+.cp-number {
+  background: var(--bg-3); border: 1px solid var(--border-2); color: var(--ink);
+  padding: 5px 10px; font-family: var(--mono); font-size: 13px; font-weight: 600;
+  width: 80px; text-align: center; outline: none;
+}
+.cp-number:focus { border-color: var(--gold-dim); }
+/* Tier toggle row */
+.tier-toggle-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.7rem; }
+.tier-toggle-card {
+  background: var(--bg-3); border: 1px solid var(--border-2);
+  padding: 0.8rem 1rem; display: flex; align-items: center;
+  justify-content: space-between; gap: 0.5rem;
+}
+.tier-toggle-card .tname { font-size: 11px; font-weight: 600; color: var(--ink); }
+.tier-toggle-card .tprice { font-size: 10px; color: var(--ink-faint); margin-top: 1px; }
+.tier-toggle-card.disabled-tier { opacity: 0.5; }
+/* Discount preview badge */
+.discount-preview {
+  background: rgba(63,185,80,0.08); border: 1px solid rgba(63,185,80,0.25);
+  padding: 0.6rem 1rem; font-size: 12px; color: var(--green);
+  display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem;
+}
+.discount-preview.off {
+  background: var(--red-bg); border-color: rgba(248,81,73,0.25); color: var(--red);
+}
+.cp-save-btn {
+  background: var(--gold); color: #0a0907; border: none;
+  padding: 8px 20px; font-family: var(--mono); font-size: 11px;
+  font-weight: 700; letter-spacing: 0.1em; cursor: pointer; text-transform: uppercase;
+}
+.cp-save-btn:hover { background: #f0c977; }
+.cp-save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.cp-danger-btn {
+  background: transparent; color: var(--red); border: 1px solid rgba(248,81,73,0.4);
+  padding: 8px 16px; font-family: var(--mono); font-size: 11px;
+  font-weight: 600; letter-spacing: 0.08em; cursor: pointer;
+}
+.cp-danger-btn:hover { background: var(--red-bg); }
+.progress-bar-wrap {
+  flex: 1; height: 6px; background: var(--bg-4);
+  border-radius: 3px; overflow: hidden;
+}
+.progress-bar-fill { height: 100%; background: var(--gold); border-radius: 3px; transition: width 0.4s; }
+.progress-bar-fill.full { background: var(--red); }
+
 /* SCROLL */
 ::-webkit-scrollbar { width:6px; height:6px; }
 ::-webkit-scrollbar-track { background:var(--bg); }
@@ -412,7 +499,8 @@ body {
 <div class="view-tabs">
   <button class="view-tab active" onclick="Admin.switchView('monitor')">📡 Monitor</button>
   <button class="view-tab"        onclick="Admin.switchView('bookings')">💳 Bookings</button>
-</div>
+
+  <button class="view-tab"        onclick="Admin.switchView('controls')">⚙ Controls</button></div>
 
 <!-- ═══ MONITOR VIEW ═══ -->
 <div class="view-panel active" id="view-monitor">
@@ -544,6 +632,92 @@ body {
   </div>
 </div>
 
+
+<!-- ═══ CONTROLS VIEW ═══ -->
+<div class="view-panel" id="view-controls">
+  <div class="cp-wrap">
+
+    <!-- DISCOUNT SECTION -->
+    <div class="cp-section">
+      <div class="cp-section-head">
+        <div class="cp-section-title">🏷 Early-Bird Discount</div>
+        <div id="discount-preview-badge" class="discount-preview off">● Discount is OFF</div>
+      </div>
+      <div class="cp-section-body">
+        <div class="cp-row">
+          <div>
+            <div class="cp-label">Enable Discount</div>
+            <div class="cp-sub">Applies to ALL tiers. Auto-disables when max uses is hit.</div>
+          </div>
+          <label class="toggle-wrap">
+            <input type="checkbox" id="cp-discount-enabled" onchange="Controls.previewDiscount()">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+        <div class="cp-row">
+          <div>
+            <div class="cp-label">Discount %</div>
+            <div class="cp-sub">How much off the original price (e.g. 50 = 50% off)</div>
+          </div>
+          <input type="number" class="cp-number" id="cp-discount-pct" min="1" max="99" value="50" oninput="Controls.previewDiscount()">
+        </div>
+        <div class="cp-row">
+          <div>
+            <div class="cp-label">Max Discounted Spots</div>
+            <div class="cp-sub">Discount auto-deactivates once this many people have paid at the discount price</div>
+          </div>
+          <input type="number" class="cp-number" id="cp-discount-max" min="1" max="9999" value="50" oninput="Controls.previewDiscount()">
+        </div>
+        <div class="cp-row">
+          <div>
+            <div class="cp-label">Spots Used</div>
+            <div class="cp-sub">Number of people who have paid using this discount so far</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:0.8rem;flex:1;max-width:240px;">
+            <div class="progress-bar-wrap">
+              <div class="progress-bar-fill" id="cp-progress-fill" style="width:0%"></div>
+            </div>
+            <input type="number" class="cp-number" id="cp-discount-used" min="0" max="9999" value="0" oninput="Controls.previewDiscount()" style="width:60px;">
+          </div>
+        </div>
+        <div style="display:flex;gap:0.8rem;justify-content:flex-end;margin-top:0.5rem;">
+          <button class="cp-danger-btn" onclick="Controls.resetUsed()">Reset used count</button>
+          <button class="cp-save-btn" id="cp-discount-save" onclick="Controls.saveDiscount()">Save Discount Settings</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIERS SECTION -->
+    <div class="cp-section">
+      <div class="cp-section-head">
+        <div class="cp-section-title">💳 Tier Availability</div>
+        <div style="display:flex;gap:0.6rem;">
+          <button class="cp-danger-btn" onclick="Controls.disableAll()">Disable All</button>
+          <button class="cp-save-btn" style="background:var(--green);color:#0d1117;" onclick="Controls.enableAll()">Enable All</button>
+        </div>
+      </div>
+      <div class="cp-section-body">
+        <div style="font-size:11px;color:var(--ink-faint);margin-bottom:1rem;">
+          Toggle each tier ON or OFF. When disabled, the card on the booking page shows “Sold Out” and the pay button is hidden.
+        </div>
+        <div class="tier-toggle-grid" id="tier-toggle-grid">
+          <!-- rendered by JS -->
+        </div>
+        <div style="display:flex;justify-content:flex-end;margin-top:1rem;">
+          <button class="cp-save-btn" id="cp-tiers-save" onclick="Controls.saveTiers()">Save Tier Settings</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATUS LOG -->
+    <div class="cp-section">
+      <div class="cp-section-head"><div class="cp-section-title">📋 Activity Log</div></div>
+      <div id="cp-log" style="padding:0.8rem 1.2rem;font-size:11px;color:var(--ink-faint);min-height:60px;font-family:var(--mono);line-height:1.8;"></div>
+    </div>
+
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -619,10 +793,12 @@ const Admin = (() => {
     document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
     $('view-'+view).classList.add('active');
+    const viewWords = { monitor:'monitor', bookings:'booking', controls:'control' };
+    const word = viewWords[view] || view;
     document.querySelectorAll('.view-tab').forEach(t => {
-      if (t.textContent.toLowerCase().includes(view === 'monitor' ? 'monitor' : 'booking'))
-        t.classList.add('active');
+      if (t.textContent.toLowerCase().includes(word)) t.classList.add('active');
     });
+    if (view === 'controls') Controls.load();
   }
 
   function exportCurrent() {
@@ -1044,6 +1220,165 @@ const Bookings = (() => {
   }
 
   return{start,forceRefresh,showDetail,setTier,setChannel,search,exportCSV};
+})();
+
+
+
+/* ── CONTROLS ── */
+const Controls = (() => {
+  const UPDATE_ENDPOINT  = '/.netlify/functions/update-settings';
+  const GET_ENDPOINT     = '/.netlify/functions/get-settings';
+
+  const TIER_META = {
+    course: { label: 'VIP Signal',            price: '$50'  },
+    group:  { label: 'Group Online',           price: '$100' },
+    online: { label: 'Online 1-on-1',          price: '$350' },
+    onsite: { label: 'In-Person Group',        price: '$250' },
+    elite:  { label: '1-on-1 In-Person',       price: '$500' },
+  };
+
+  let tierState = { course:true, group:true, online:true, onsite:true, elite:true };
+  let loaded = false;
+
+  function log(msg, isErr) {
+    const el = document.getElementById('cp-log');
+    const time = new Date().toLocaleTimeString('en-GB');
+    const color = isErr ? 'var(--red)' : 'var(--green)';
+    el.innerHTML += `<span style="color:var(--ink-faint)">[${time}]</span> <span style="color:${color}">${msg}</span>\n`;
+    el.scrollTop = el.scrollHeight;
+  }
+
+  async function load() {
+    if (loaded) return;
+    log('Loading settings from Supabase…');
+    try {
+      const res = await fetch(GET_ENDPOINT, { headers: { 'X-Monitor-Token': monitorSecret } });
+      const data = await res.json();
+      if (!data.success) { log('Failed to load settings: ' + data.message, true); return; }
+      // populate discount
+      const d = data.discount || {};
+      document.getElementById('cp-discount-enabled').checked = !!d.enabled;
+      document.getElementById('cp-discount-pct').value  = d.percent  || 50;
+      document.getElementById('cp-discount-max').value  = d.max_uses || 50;
+      document.getElementById('cp-discount-used').value = d.used     || 0;
+      // populate tiers
+      tierState = data.tiers || tierState;
+      renderTierGrid();
+      previewDiscount();
+      loaded = true;
+      log('Settings loaded ✓');
+    } catch(err) { log('Load error: ' + err.message, true); }
+  }
+
+  function renderTierGrid() {
+    const grid = document.getElementById('tier-toggle-grid');
+    grid.innerHTML = Object.entries(TIER_META).map(([key, meta]) => {
+      const on = tierState[key] !== false;
+      return `<div class="tier-toggle-card ${on ? '' : 'disabled-tier'}" id="tier-card-${key}">
+        <div>
+          <div class="tname">${meta.label}</div>
+          <div class="tprice">${meta.price} &middot; ${on ? '<span style="color:var(--green)">ACTIVE</span>' : '<span style="color:var(--red)">SOLD OUT</span>'}</div>
+        </div>
+        <label class="toggle-wrap">
+          <input type="checkbox" id="tier-toggle-${key}" ${on ? 'checked' : ''} onchange="Controls.onTierToggle('${key}', this.checked)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>`;
+    }).join('');
+  }
+
+  function onTierToggle(key, checked) {
+    tierState[key] = checked;
+    const card = document.getElementById('tier-card-' + key);
+    if (card) {
+      card.classList.toggle('disabled-tier', !checked);
+      card.querySelector('.tprice').innerHTML = `${TIER_META[key].price} &middot; ${checked ? '<span style="color:var(--green)">ACTIVE</span>' : '<span style="color:var(--red)">SOLD OUT</span>'}`;
+    }
+  }
+
+  function previewDiscount() {
+    const enabled = document.getElementById('cp-discount-enabled').checked;
+    const pct     = parseInt(document.getElementById('cp-discount-pct').value) || 0;
+    const maxUses = parseInt(document.getElementById('cp-discount-max').value) || 0;
+    const used    = parseInt(document.getElementById('cp-discount-used').value) || 0;
+    const badge   = document.getElementById('discount-preview-badge');
+    const fill    = document.getElementById('cp-progress-fill');
+    const pct2    = maxUses > 0 ? Math.min(100, Math.round((used / maxUses) * 100)) : 0;
+    fill.style.width = pct2 + '%';
+    fill.classList.toggle('full', pct2 >= 100);
+    const active = enabled && used < maxUses;
+    if (active) {
+      badge.className = 'discount-preview';
+      badge.textContent = `● ${pct}% OFF active • ${maxUses - used} of ${maxUses} spots remaining`;
+    } else if (enabled && used >= maxUses) {
+      badge.className = 'discount-preview off';
+      badge.textContent = `● Discount FULL — all ${maxUses} spots used`;
+    } else {
+      badge.className = 'discount-preview off';
+      badge.textContent = '● Discount is OFF';
+    }
+  }
+
+  async function saveDiscount() {
+    const btn = document.getElementById('cp-discount-save');
+    btn.disabled = true; btn.textContent = 'Saving…';
+    const value = {
+      enabled:  document.getElementById('cp-discount-enabled').checked,
+      percent:  parseInt(document.getElementById('cp-discount-pct').value) || 50,
+      max_uses: parseInt(document.getElementById('cp-discount-max').value) || 50,
+      used:     parseInt(document.getElementById('cp-discount-used').value) || 0,
+    };
+    try {
+      const res = await fetch(UPDATE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Monitor-Token': monitorSecret },
+        body: JSON.stringify({ key: 'discount', value }),
+      });
+      const data = await res.json();
+      if (data.success) { log(`Discount saved ✓ — ${value.enabled ? value.percent+'% ON' : 'OFF'}, ${value.used}/${value.max_uses} used`); toast('Discount settings saved ✓'); }
+      else { log('Save failed: ' + data.message, true); toast(data.message, true); }
+    } catch(err) { log('Save error: ' + err.message, true); toast(err.message, true); }
+    btn.disabled = false; btn.textContent = 'Save Discount Settings';
+  }
+
+  async function saveTiers() {
+    const btn = document.getElementById('cp-tiers-save');
+    btn.disabled = true; btn.textContent = 'Saving…';
+    try {
+      const res = await fetch(UPDATE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Monitor-Token': monitorSecret },
+        body: JSON.stringify({ key: 'tiers', value: tierState }),
+      });
+      const data = await res.json();
+      const active = Object.entries(tierState).filter(([,v])=>v).map(([k])=>k).join(', ');
+      if (data.success) { log(`Tiers saved ✓ — active: ${active||'none'}`); toast('Tier settings saved ✓'); }
+      else { log('Tier save failed: ' + data.message, true); }
+    } catch(err) { log('Tier save error: ' + err.message, true); }
+    btn.disabled = false; btn.textContent = 'Save Tier Settings';
+  }
+
+  function disableAll() {
+    if (!confirm('Disable ALL tiers? The booking page will show Sold Out on every card.')) return;
+    Object.keys(tierState).forEach(k => { tierState[k] = false; });
+    renderTierGrid();
+    log('All tiers disabled (not saved yet — click Save Tier Settings)');
+  }
+
+  function enableAll() {
+    Object.keys(tierState).forEach(k => { tierState[k] = true; });
+    renderTierGrid();
+    log('All tiers enabled (not saved yet — click Save Tier Settings)');
+  }
+
+  function resetUsed() {
+    if (!confirm('Reset the "used" count to 0? This will restore discount spots.')) return;
+    document.getElementById('cp-discount-used').value = 0;
+    previewDiscount();
+    log('Used count reset to 0 (not saved yet — click Save Discount Settings)');
+  }
+
+  return { load, previewDiscount, saveDiscount, saveTiers, onTierToggle, disableAll, enableAll, resetUsed };
 })();
 
 document.addEventListener('DOMContentLoaded',()=>{ const i=$('auth-input'); if(i) i.focus(); });

@@ -1364,6 +1364,42 @@ img, video { max-width: 100%; height: auto; }
   .modal-actions { flex-direction: column; }
  }
 }
+
+/* -- DISCOUNT BADGE & SOLD OUT -- */
+.discount-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  color: #fff; font-size: 11px; font-weight: 700;
+  padding: 4px 10px; border-radius: 999px;
+  letter-spacing: 0.05em; margin-bottom: 0.5rem;
+  animation: pulseBadge 2s ease-in-out infinite;
+}
+@keyframes pulseBadge {
+  0%,100% { box-shadow: 0 0 0 0 rgba(22,163,74,0.4); }
+  50%      { box-shadow: 0 0 0 6px rgba(22,163,74,0); }
+}
+.price-original {
+  text-decoration: line-through; color: var(--grey-400);
+  font-size: 1rem; font-weight: 400; margin-right: 0.3rem;
+}
+.price-discounted { color: #16a34a; }
+.spots-left {
+  font-size: 11px; color: #16a34a; font-weight: 600;
+  margin-top: -0.3rem; margin-bottom: 0.5rem;
+}
+.tier-card.sold-out {
+  opacity: 0.55; pointer-events: none; filter: grayscale(0.4);
+  position: relative;
+}
+.tier-card.sold-out::after {
+  content: 'SOLD OUT';
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) rotate(-12deg);
+  background: rgba(239,68,68,0.12); color: #ef4444;
+  border: 2px solid rgba(239,68,68,0.4);
+  font-size: 1.1rem; font-weight: 800; letter-spacing: 0.2em;
+  padding: 0.5rem 1.5rem; pointer-events: none;
+  font-family: var(--sans);
+}
 </style>
 </head>
 <body>
@@ -1648,6 +1684,7 @@ img, video { max-width: 100%; height: auto; }
           <li>You will join our VIP signal group</li>
           <li>We trade, you trade</li>
           <li>If we break even, you do the same</li>
+          <li>3 to 5 trades in a week </li>
         </ul>
         <div class="tier-select-indicator">Click to select →</div>
       </div>
@@ -2142,6 +2179,95 @@ const CONFIG = Object.freeze({
 });
 // old 233242154944
 
+
+// -- SETTINGS (discount + tier availability) --
+const Settings = (() => {
+  let discount = { enabled: false, percent: 50, active: false, spots_left: null };
+  let tiers    = { course: true, group: true, online: true, onsite: true, elite: true };
+
+  async function load() {
+    try {
+      const res  = await fetch('/.netlify/functions/get-settings');
+      const data = await res.json();
+      if (!data.success) return;
+      discount = data.discount || discount;
+      tiers    = data.tiers    || tiers;
+      applyTiers();
+      applyDiscount();
+    } catch(e) {
+      console.warn('[settings] Could not load settings', e);
+    }
+  }
+
+  function applyTiers() {
+    document.querySelectorAll('.tier-card').forEach(card => {
+      const key = card.dataset.tier;
+      const enabled = tiers[key] !== false;
+      card.classList.toggle('sold-out', !enabled);
+      if (!enabled) {
+        card.onclick = null;
+        const ind = card.querySelector('.tier-select-indicator');
+        if (ind) ind.textContent = 'Sold Out';
+      }
+    });
+  }
+
+  function applyDiscount() {
+    if (!discount.active) return;
+    const pct = discount.percent || 50;
+    const rate = (typeof CONFIG !== 'undefined') ? CONFIG.USD_GHS_RATE : 12;
+    document.querySelectorAll('.tier-card:not(.sold-out)').forEach(card => {
+      const origUsd = parseFloat(card.dataset.usd) || 0;
+      if (card.dataset.usdOriginal) return; // already patched
+      const discUsd = Math.round(origUsd * (1 - pct / 100) * 100) / 100;
+      card.dataset.usdOriginal = origUsd;
+      card.dataset.usd = discUsd;
+      // Badge
+      const badgeEl = document.createElement('div');
+      badgeEl.className = 'discount-badge';
+      badgeEl.textContent = pct + '% OFF - Early Bird';
+      card.insertBefore(badgeEl, card.firstChild);
+      // Price display
+      const amtEl = card.querySelector('.tier-amount');
+      if (amtEl) {
+        amtEl.innerHTML = '<span class="price-original">' + origUsd + '</span><span class="price-discounted">' + discUsd + '</span>';
+        amtEl.dataset.patched = '1';
+      }
+      // Spots left
+      if (discount.spots_left !== null) {
+        const spotsEl = document.createElement('div');
+        spotsEl.className = 'spots-left';
+        spotsEl.textContent = discount.spots_left + ' discount spot' + (discount.spots_left !== 1 ? 's' : '') + ' left';
+        const priceRow = card.querySelector('.tier-price-row');
+        if (priceRow) priceRow.insertAdjacentElement('afterend', spotsEl);
+      }
+      // GHS equiv
+      const ghsEl = card.querySelector('.ghs-equiv');
+      if (ghsEl) ghsEl.textContent = Number(Math.round(discUsd * rate)).toLocaleString('en-US');
+    });
+  }
+
+  async function incrementUsed() {
+    if (!discount.active) return;
+    // Read current used, increment, save
+    try {
+      const res = await fetch('/.netlify/functions/get-settings');
+      const data = await res.json();
+      if (!data.success) return;
+      const cur = data.discount || {};
+      const newUsed = (cur.used || 0) + 1;
+      await fetch('/.netlify/functions/update-settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key: 'discount', value: { ...cur, used: newUsed, enabled: cur.enabled, percent: cur.percent, max_uses: cur.max_uses } }),
+      });
+    } catch(e) { console.warn('[settings] incrementUsed failed', e); }
+  }
+
+  function getDiscount() { return discount; }
+  return { load, incrementUsed, getDiscount };
+})();
+
 (function initEmailJS(){
   const configured = CONFIG.EMAILJS_PUBLIC_KEY && !CONFIG.EMAILJS_PUBLIC_KEY.includes('REPLACE');
   if(!configured){ console.warn('[EmailJS] NOT CONFIGURED'); return; }
@@ -2320,7 +2446,7 @@ const App = (() => {
         onSuccess:async tx=>{
           showStatus('processing','Verifying…','Confirming with Paystack.');
           const v=await verifyOnServer(tx.reference);
-          finalizeBooking({reference:tx.reference,method:methodLabel(),status:v.ok?'success':'pending_verification',gateway_response:v.message||'success',verified:v.ok});
+          if(v.ok) Settings.incrementUsed(); finalizeBooking({reference:tx.reference,method:methodLabel(),status:v.ok?'success':'pending_verification',gateway_response:v.message||'success',verified:v.ok});
         },
         onCancel:()=>{ showStatus('error','Payment cancelled','No charge was made.'); toast('Payment cancelled.','error'); resetPayButton(); },
         onError:e=>{ console.error('[ps] error',e); showStatus('error','Payment error',e?.message||'Something went wrong.'); toast('Error: '+(e?.message||'unknown'),'error'); resetPayButton(); }
@@ -2465,6 +2591,7 @@ const App = (() => {
   }
 
   document.addEventListener('DOMContentLoaded',()=>{
+  Settings.load();
     const mp=$('momo-phone'); if(mp){ mp.addEventListener('input',validateMomoPhone); mp.addEventListener('blur',validateMomoPhone); }
     refreshGhsEquivalents();
   });
