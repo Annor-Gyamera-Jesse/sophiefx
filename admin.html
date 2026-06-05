@@ -160,6 +160,53 @@ body {
 }
 .nav-item:hover { background:var(--bg-3); color:var(--ink); }
 .nav-item.active { background:var(--bg-3); color:var(--ink); border-left-color:var(--gold); }
+.nav-item.nav-danger { color:var(--red); border-left-color:transparent; margin-top:4px; }
+.nav-item.nav-danger:hover { background:var(--red-bg); color:var(--red); border-left-color:rgba(248,81,73,0.5); }
+
+/* CLEAR DB MODAL */
+.db-modal-overlay {
+  display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75);
+  z-index:500; align-items:center; justify-content:center;
+}
+.db-modal-overlay.open { display:flex; }
+.db-modal {
+  background:var(--bg-2); border:1px solid var(--border-2);
+  border-top:3px solid var(--red); padding:2rem 2.4rem;
+  min-width:340px; max-width:420px; width:100%;
+}
+.db-modal-title {
+  font-size:12px; color:var(--red); letter-spacing:0.2em;
+  text-transform:uppercase; font-weight:700; margin-bottom:1rem;
+}
+.db-modal-body { color:var(--ink-dim); font-size:12px; line-height:1.7; margin-bottom:1.5rem; }
+.db-modal-body strong { color:var(--ink); }
+.db-modal-confirm-label {
+  font-size:11px; color:var(--ink-dim); margin-bottom:6px; display:block;
+  letter-spacing:0.05em;
+}
+.db-modal-input {
+  width:100%; background:var(--bg-3); border:1px solid var(--border-2);
+  color:var(--ink); padding:8px 12px; font-family:var(--mono);
+  font-size:12px; outline:none; margin-bottom:1.2rem; letter-spacing:0.1em;
+}
+.db-modal-input:focus { border-color:rgba(248,81,73,0.5); }
+.db-modal-actions { display:flex; gap:0.8rem; justify-content:flex-end; }
+.db-cancel-btn {
+  background:transparent; border:1px solid var(--border-2); color:var(--ink-dim);
+  padding:7px 16px; font-family:var(--mono); font-size:11px; cursor:pointer;
+  letter-spacing:0.1em; text-transform:uppercase;
+}
+.db-cancel-btn:hover { border-color:var(--border-2); color:var(--ink); }
+.db-confirm-btn {
+  background:var(--red-bg); border:1px solid rgba(248,81,73,0.4); color:var(--red);
+  padding:7px 16px; font-family:var(--mono); font-size:11px; cursor:pointer;
+  letter-spacing:0.1em; text-transform:uppercase; font-weight:700;
+  opacity:0.4; pointer-events:none; transition:opacity 0.15s;
+}
+.db-confirm-btn.ready { opacity:1; pointer-events:auto; }
+.db-confirm-btn.ready:hover { background:rgba(248,81,73,0.2); }
+.db-confirm-btn.loading { opacity:0.6; pointer-events:none; }
+.db-modal-status { font-size:11px; margin-top:0.8rem; min-height:16px; text-align:center; }
 .nav-item .count {
   font-size:10px; padding:1px 5px; border-radius:8px;
   font-weight:700; min-width:18px; text-align:center;
@@ -537,6 +584,7 @@ body {
       <div class="nav-item" onclick="Monitor.exportJSON()">↓ Export JSON</div>
       <div class="nav-item" onclick="Monitor.exportCSV()">↓ Export CSV</div>
       <div class="nav-item" onclick="Monitor.clearLocal()">✕ Clear view</div>
+      <div class="nav-item nav-danger" onclick="DB.clearEvents()">🗑 Clear Events DB</div>
       <div class="sidebar-divider"></div>
       <div style="padding:0.8rem 1rem;font-size:10px;color:var(--ink-faint);line-height:1.7;">
         Live from <code style="color:var(--gold)">Supabase</code>.<br>
@@ -595,6 +643,7 @@ body {
       <div class="sidebar-label">Actions</div>
       <div class="nav-item" onclick="Bookings.forceRefresh()">↻ Refresh now</div>
       <div class="nav-item" onclick="Bookings.exportCSV()">↓ Export CSV</div>
+      <div class="nav-item nav-danger" onclick="DB.clearBookings()">🗑 Clear Bookings DB</div>
     </div>
     <div class="main">
       <div class="bookings-toolbar">
@@ -1277,7 +1326,7 @@ const Controls = (() => {
       return `<div class="tier-toggle-card ${on ? '' : 'disabled-tier'}" id="tier-card-${key}">
         <div>
           <div class="tname">${meta.label}</div>
-          <div class="tprice">${meta.price} &middot; ${on ? '<span style="color:var(--green)">ACTIVE</span>' : '<span style="color:var(--red)">SOLD OUT</span>'}</div>
+          <div class="tprice">${meta.price} &middot; ${on ? '<span style="color:var(--green)">ACTIVE</span>' : '<span style="color:var(--red)">MENTORSHIP CLOSED</span>'}</div>
         </div>
         <label class="toggle-wrap">
           <input type="checkbox" id="tier-toggle-${key}" ${on ? 'checked' : ''} onchange="Controls.onTierToggle('${key}', this.checked)">
@@ -1382,6 +1431,137 @@ const Controls = (() => {
 })();
 
 document.addEventListener('DOMContentLoaded',()=>{ const i=$('auth-input'); if(i) i.focus(); });
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CLEAR DB MODAL
+══════════════════════════════════════════════════════════════ -->
+<div class="db-modal-overlay" id="db-modal-overlay" onclick="DB.closeOnOverlay(event)">
+  <div class="db-modal">
+    <div class="db-modal-title" id="db-modal-title">⚠ Clear Database</div>
+    <div class="db-modal-body" id="db-modal-body">
+      This will <strong>permanently delete all rows</strong> from the table.<br>
+      This action cannot be undone. Export first if needed.
+    </div>
+    <label class="db-modal-confirm-label" for="db-modal-input">
+      Type <strong style="color:var(--red)">DELETE</strong> to confirm
+    </label>
+    <input class="db-modal-input" id="db-modal-input" type="text"
+           placeholder="DELETE" autocomplete="off" spellcheck="false"
+           oninput="DB.onConfirmInput(this.value)">
+    <div class="db-modal-actions">
+      <button class="db-cancel-btn" onclick="DB.close()">Cancel</button>
+      <button class="db-confirm-btn" id="db-confirm-btn" onclick="DB.execute()">
+        Delete All
+      </button>
+    </div>
+    <div class="db-modal-status" id="db-modal-status"></div>
+  </div>
+</div>
+
+<script>
+const DB = (() => {
+  let _table = null;
+
+  function open(table) {
+    _table = table;
+    const label = table === 'bookings' ? 'Bookings' : 'Events';
+    $('db-modal-title').textContent = `⚠ Clear ${label} Table`;
+    $('db-modal-body').innerHTML =
+      `This will <strong>permanently delete ALL rows</strong> from the <code style="color:var(--gold)">${table}</code> table.<br>
+       <span style="margin-top:6px;display:inline-block;">Export first if you need a backup — this cannot be undone.</span>`;
+    $('db-modal-input').value = '';
+    $('db-modal-status').textContent = '';
+    $('db-confirm-btn').classList.remove('ready','loading');
+    $('db-modal-overlay').classList.add('open');
+    setTimeout(() => $('db-modal-input').focus(), 60);
+  }
+
+  function close() {
+    $('db-modal-overlay').classList.remove('open');
+    _table = null;
+  }
+
+  function closeOnOverlay(e) {
+    if (e.target === $('db-modal-overlay')) close();
+  }
+
+  function onConfirmInput(val) {
+    const btn = $('db-confirm-btn');
+    if (val.trim().toUpperCase() === 'DELETE') {
+      btn.classList.add('ready');
+    } else {
+      btn.classList.remove('ready');
+    }
+  }
+
+  async function execute() {
+    if (!_table) return;
+    const input = $('db-modal-input').value.trim().toUpperCase();
+    if (input !== 'DELETE') return;
+
+    const btn    = $('db-confirm-btn');
+    const status = $('db-modal-status');
+
+    btn.classList.remove('ready');
+    btn.classList.add('loading');
+    btn.textContent = 'Deleting…';
+    status.style.color = 'var(--ink-dim)';
+    status.textContent = 'Sending request…';
+
+    try {
+      const res = await fetch('/.netlify/functions/clear-db', {
+        method:  'POST',
+        headers: {
+          'Content-Type':    'application/json',
+          'X-Monitor-Token': monitorSecret,
+        },
+        body: JSON.stringify({ table: _table }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        status.style.color = 'var(--green)';
+        status.textContent = `✓ ${data.message}`;
+        btn.textContent = '✓ Done';
+        setTimeout(() => {
+          close();
+          // Refresh the relevant view
+          if (_table === 'bookings') Bookings.forceRefresh();
+          if (_table === 'events')   Monitor.clearLocal();
+        }, 1200);
+      } else {
+        status.style.color = 'var(--red)';
+        status.textContent = `✗ ${data.message}`;
+        btn.textContent = 'Delete All';
+        btn.classList.remove('loading');
+        btn.classList.add('ready');
+      }
+    } catch (err) {
+      status.style.color = 'var(--red)';
+      status.textContent = `✗ Network error: ${err.message}`;
+      btn.textContent = 'Delete All';
+      btn.classList.remove('loading');
+      btn.classList.add('ready');
+    }
+  }
+
+  // Keyboard close
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') close();
+  });
+
+  return {
+    open,
+    close,
+    closeOnOverlay,
+    onConfirmInput,
+    execute,
+    clearBookings: () => open('bookings'),
+    clearEvents:   () => open('events'),
+  };
+})();
 </script>
 </body>
 </html>
