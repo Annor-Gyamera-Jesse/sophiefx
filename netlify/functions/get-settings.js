@@ -17,7 +17,7 @@
  *
  *   -- seed defaults
  *   INSERT INTO settings (key, value) VALUES
- *     ('discount', '{"enabled":false,"percent":50,"max_uses":50,"used":0}'::jsonb),
+ *     ('discount', '{"enabled":false,"flat_amount":50,"max_uses":50,"used":0}'::jsonb),
  *     ('tiers',    '{"course":true,"group":true,"online":true,"onsite":true,"elite":true}'::jsonb)
  *   ON CONFLICT (key) DO NOTHING;
  *
@@ -62,7 +62,7 @@ export const handler = async (event) => {
     const settings = await fetchSettings();
 
     // Defaults if table rows don't exist yet
-    const discount = settings.discount || { enabled: false, percent: 50, max_uses: 50, used: 0 };
+    const discount = settings.discount || { enabled: false, flat_amount: 50, max_uses: 50, used: 0 };
     const tiers    = settings.tiers    || { course: true, group: true, online: true, onsite: true, elite: true };
 
     // For the public-facing index.html we strip used count if no auth token
@@ -72,7 +72,7 @@ export const handler = async (event) => {
 
     const publicDiscount = {
       enabled:   discount.enabled,
-      percent:   discount.percent,
+      flat_amount: discount.flat_amount || discount.percent || 50,  // flat_amount preferred; percent kept for backwards compat
       max_uses:  discount.max_uses,
       used:      isAdmin ? discount.used : undefined,
       // remaining spots shown to the public

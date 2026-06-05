@@ -1365,7 +1365,7 @@ img, video { max-width: 100%; height: auto; }
  }
 }
 
-/* -- DISCOUNT BADGE & ENDED -- */
+/* -- DISCOUNT BADGE & SOLD OUT -- */
 .discount-badge {
   display: inline-flex; align-items: center; gap: 0.4rem;
   background: linear-gradient(135deg, #16a34a, #15803d);
@@ -1392,7 +1392,7 @@ img, video { max-width: 100%; height: auto; }
   position: relative;
 }
 .tier-card.sold-out::after {
-  content: 'ENDED';
+  content: 'SOLD OUT';
   position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) rotate(-12deg);
   background: rgba(239,68,68,0.12); color: #ef4444;
   border: 2px solid rgba(239,68,68,0.4);
@@ -1670,13 +1670,13 @@ img, video { max-width: 100%; height: auto; }
     </p>
 
     <div class="tier-grid">
-      <div class="tier-card" data-tier="course" data-usd="100" onclick="App.selectTier(this)">
+      <div class="tier-card" data-tier="course" data-usd="50" onclick="App.selectTier(this)">
         <div class="tier-tag">/ Tier 01 · Copy Trading</div>
         <h3>Vip <em>signal</em></h3>
         <div class="tier-sub">Just follow our lead</div>
         <div class="tier-price-row">
           <span class="tier-currency">$</span>
-          <span class="tier-amount">100</span>
+          <span class="tier-amount">50</span>
           <span class="tier-period">/ 6 weeks</span>
         </div>
         <div class="tier-usd">≈ GH₵ <span class="ghs-equiv">—</span> · charged in cedis</div>
@@ -1689,13 +1689,13 @@ img, video { max-width: 100%; height: auto; }
         <div class="tier-select-indicator">Click to select →</div>
       </div>
 
-      <div class="tier-card" data-tier="group" data-usd="150" onclick="App.selectTier(this)">
+      <div class="tier-card" data-tier="group" data-usd="100" onclick="App.selectTier(this)">
         <div class="tier-tag">/ Tier 02 · Group · Remote</div>
         <h3>Group Online <em>Mentorship</em></h3>
         <div class="tier-sub">Zoom . small cohort</div>
         <div class="tier-price-row">
           <span class="tier-currency">$</span>
-          <span class="tier-amount">150</span>
+          <span class="tier-amount">100</span>
           <span class="tier-period">/ 6 week</span>
         </div>
         <div class="tier-usd">≈ GH₵ <span class="ghs-equiv">—</span> · charged in cedis</div>
@@ -1709,13 +1709,13 @@ img, video { max-width: 100%; height: auto; }
         <div class="tier-select-indicator">Click to select →</div>
       </div>
 
-      <div class="tier-card" data-tier="online" data-usd="400" onclick="App.selectTier(this)">
+      <div class="tier-card" data-tier="online" data-usd="350" onclick="App.selectTier(this)">
         <div class="tier-tag">/ Tier 03 · 1-on-1 · Remote</div>
         <h3>Online 1-on-1 <em>Mentorship</em></h3>
         <div class="tier-sub">Zoom · Anywhere on Earth</div>
         <div class="tier-price-row">
           <span class="tier-currency">$</span>
-          <span class="tier-amount">400</span>
+          <span class="tier-amount">350</span>
           <span class="tier-period">/ 6 week</span>
         </div>
         <div class="tier-usd">≈ GH₵ <span class="ghs-equiv">—</span> · charged in cedis</div>
@@ -1730,13 +1730,13 @@ img, video { max-width: 100%; height: auto; }
         <div class="tier-select-indicator">Click to select →</div>
       </div>
 
-      <div class="tier-card" data-tier="onsite" data-usd="300" onclick="App.selectTier(this)">
+      <div class="tier-card" data-tier="onsite" data-usd="250" onclick="App.selectTier(this)">
         <div class="tier-tag">/ Tier 04 · In-Person</div>
         <h3>One-one-In-Person <em>Group Mentorship</em></h3>
         <div class="tier-sub">Accra Studio · Ghana</div>
         <div class="tier-price-row">
           <span class="tier-currency">$</span>
-          <span class="tier-amount">300</span>
+          <span class="tier-amount">250</span>
           <span class="tier-period">/ 6 week</span>
         </div>
         <div class="tier-usd">≈ GH₵ <span class="ghs-equiv">—</span> · charged in cedis</div>
@@ -1750,13 +1750,13 @@ img, video { max-width: 100%; height: auto; }
         <div class="tier-select-indicator">Click to select →</div>
       </div>
 
-      <div class="tier-card" data-tier="elite" data-usd="550" onclick="App.selectTier(this)">
+      <div class="tier-card" data-tier="elite" data-usd="500" onclick="App.selectTier(this)">
         <div class="tier-tag">/ Tier 05 · VIP · Hybrid</div>
         <h3>one-on-one <em> Mentorship</em></h3>
         <div class="tier-sub">Studio + Remote · Priority Access</div>
         <div class="tier-price-row">
           <span class="tier-currency">$</span>
-          <span class="tier-amount">550</span>
+          <span class="tier-amount">500</span>
           <span class="tier-period">/ 6 week</span>
         </div>
         <div class="tier-usd">≈ GH₵ <span class="ghs-equiv">—</span> · charged in cedis</div>
@@ -2135,11 +2135,11 @@ img, video { max-width: 100%; height: auto; }
     <div class="footer-col">
       <h5>Mentorship</h5>
       <ul>
-        <li><a href="#" onclick="App.go('booking');return false;">Vip Signal — $100</a></li>
-        <li><a href="#" onclick="App.go('booking');return false;">Group Online— $150</a></li>
-        <li><a href="#" onclick="App.go('booking');return false;">Online 1-on-1 — $400</a></li>
-        <li><a href="#" onclick="App.go('booking');return false;">Group-In-Person — $300</a></li>
-        <li><a href="#" onclick="App.go('booking');return false;">In Person one on one — $550</a></li>
+        <li><a href="#" onclick="App.go('booking');return false;">Vip Signal — $50</a></li>
+        <li><a href="#" onclick="App.go('booking');return false;">Group Online— $100</a></li>
+        <li><a href="#" onclick="App.go('booking');return false;">Online 1-on-1 — $350</a></li>
+        <li><a href="#" onclick="App.go('booking');return false;">Group-In-Person — $250</a></li>
+        <li><a href="#" onclick="App.go('booking');return false;">In Person one on one — $500</a></li>
         <li><a href="#" onclick="App.go('about');return false;">Curriculum</a></li>
       </ul>
     </div>
@@ -2182,7 +2182,7 @@ const CONFIG = Object.freeze({
 
 // -- SETTINGS (discount + tier availability) --
 const Settings = (() => {
-  let discount = { enabled: false, percent: 50, active: false, spots_left: null };
+  let discount = { enabled: false, flat_amount: 50, active: false, spots_left: null };
   let tiers    = { course: true, group: true, online: true, onsite: true, elite: true };
 
   async function load() {
@@ -2207,25 +2207,26 @@ const Settings = (() => {
       if (!enabled) {
         card.onclick = null;
         const ind = card.querySelector('.tier-select-indicator');
-        if (ind) ind.textContent = 'ENDED';
+        if (ind) ind.textContent = 'Sold Out';
       }
     });
   }
 
   function applyDiscount() {
     if (!discount.active) return;
-    const pct = discount.percent || 50;
+    // Flat dollar amount off every tier (e.g. $50 off = $100->$50, $150->$100, etc.)
+    const flat = discount.flat_amount || 50;
     const rate = (typeof CONFIG !== 'undefined') ? CONFIG.USD_GHS_RATE : 12;
     document.querySelectorAll('.tier-card:not(.sold-out)').forEach(card => {
       const origUsd = parseFloat(card.dataset.usd) || 0;
       if (card.dataset.usdOriginal) return; // already patched
-      const discUsd = Math.round(origUsd * (1 - pct / 100) * 100) / 100;
+      const discUsd = Math.max(0, Math.round((origUsd - flat) * 100) / 100);
       card.dataset.usdOriginal = origUsd;
       card.dataset.usd = discUsd;
       // Badge
       const badgeEl = document.createElement('div');
       badgeEl.className = 'discount-badge';
-      badgeEl.textContent = pct + '% OFF - Early Bird';
+      badgeEl.textContent = '$' + flat + ' OFF - Early Bird';
       card.insertBefore(badgeEl, card.firstChild);
       // Price display
       const amtEl = card.querySelector('.tier-amount');
@@ -2259,7 +2260,7 @@ const Settings = (() => {
       await fetch('/.netlify/functions/update-settings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ key: 'discount', value: { ...cur, used: newUsed, enabled: cur.enabled, percent: cur.percent, max_uses: cur.max_uses } }),
+        body: JSON.stringify({ key: 'discount', value: { ...cur, used: newUsed, enabled: cur.enabled, flat_amount: cur.flat_amount, max_uses: cur.max_uses } }),
       });
     } catch(e) { console.warn('[settings] incrementUsed failed', e); }
   }
