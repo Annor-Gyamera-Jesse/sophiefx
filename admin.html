@@ -162,6 +162,8 @@ body {
 .nav-item.active { background:var(--bg-3); color:var(--ink); border-left-color:var(--gold); }
 .nav-item.nav-danger { color:var(--red); border-left-color:transparent; margin-top:4px; }
 .nav-item.nav-danger:hover { background:var(--red-bg); color:var(--red); border-left-color:rgba(248,81,73,0.5); }
+.nav-item.nav-import { color:var(--blue); border-left-color:transparent; }
+.nav-item.nav-import:hover { background:var(--blue-bg); color:var(--blue); border-left-color:rgba(88,166,255,0.4); }
 
 /* CLEAR DB MODAL */
 .db-modal-overlay {
@@ -581,8 +583,8 @@ body {
       <div class="sidebar-divider"></div>
       <div class="sidebar-label">Actions</div>
       <div class="nav-item" onclick="Monitor.forceRefresh()">↻ Refresh now</div>
-      <div class="nav-item" onclick="Monitor.exportJSON()">↓ Export JSON</div>
-      <div class="nav-item" onclick="Monitor.exportCSV()">↓ Export CSV</div>
+      <div class="nav-item" onclick="Monitor.exportJSON()">↓ Export JSON (all)</div>
+      <div class="nav-item" onclick="Monitor.exportCSV()">↓ Export CSV (all)</div>
       <div class="nav-item" onclick="Monitor.clearLocal()">✕ Clear view</div>
       <div class="nav-item nav-danger" onclick="DB.clearEvents()">🗑 Clear Events DB</div>
       <div class="sidebar-divider"></div>
@@ -642,7 +644,9 @@ body {
       <div class="sidebar-divider"></div>
       <div class="sidebar-label">Actions</div>
       <div class="nav-item" onclick="Bookings.forceRefresh()">↻ Refresh now</div>
-      <div class="nav-item" onclick="Bookings.exportCSV()">↓ Export CSV</div>
+      <div class="nav-item" onclick="Bookings.exportCSV()">↓ Export CSV (all)</div>
+      <div class="nav-item" onclick="Bookings.exportJSON()">↓ Export JSON (all)</div>
+      <div class="nav-item nav-import" onclick="Import.open()">↑ Import Bookings</div>
       <div class="nav-item nav-danger" onclick="DB.clearBookings()">🗑 Clear Bookings DB</div>
     </div>
     <div class="main">
@@ -787,6 +791,14 @@ const fmtDate = str => {
   const d = new Date(str);
   return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})+' '+
          d.toLocaleTimeString('en-GB',{hour12:false});
+};
+// Safe CSV cell — wraps in quotes if value contains comma/quote/newline
+const csvCell = v => {
+  const s = String(v||'');
+  if(!s) return '';
+  return (s.includes(',') || s.includes('"') || s.includes('\n') || s.includes('\r'))
+    ? '"' + s.replace(/"/g,'""') + '"'
+    : s;
 };
 
 function toast(msg, isError) {
@@ -1097,19 +1109,54 @@ const Monitor = (() => {
     toast('View cleared');
   }
 
-  function exportJSON(){
-    const blob=new Blob([JSON.stringify(events,null,2)],{type:'application/json'});
-    const a=document.createElement('a');a.href=URL.createObjectURL(blob);
-    a.download='sophiefx-events-'+new Date().toISOString().slice(0,10)+'.json';a.click();
+  async function fetchAllEvents(){
+    // Fetch up to 500 events fresh from Supabase — not limited to in-memory
+    try {
+      const res = await fetch(`${GET_EVENTS_ENDPOINT}?limit=500`, {headers:{'X-Monitor-Token':monitorSecret}});
+      if(!res.ok) return events; // fallback to in-memory
+      const data = await res.json();
+      return data.success ? (data.events||[]) : events;
+    } catch { return events; }
   }
 
-  function exportCSV(){
-    const h=['id','ts','datetime','level','tag','msg','ref','email','amount','duration','ip'];
-    const rows=events.map(e=>[e.id,e.ts,new Date(e.ts).toISOString(),e.level,e.tag,
-      '"'+(e.msg||'').replace(/"/g,'""')+'"',e.ref||'',e.email||'',e.amount||'',e.duration||'',e.ip||''].join(','));
-    const blob=new Blob([[h.join(','),...rows].join('\n')],{type:'text/csv'});
+  async function exportJSON(){
+    toast('Fetching all events…');
+    const all = await fetchAllEvents();
+    const out = {
+      exported_at: new Date().toISOString(),
+      exported_by: 'Sophie FX Admin',
+      total: all.length,
+      events: all,
+    };
+    const blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+    a.download='sophiefx-events-'+new Date().toISOString().slice(0,10)+'.json';a.click();
+    toast(`Exported ${all.length} events`);
+  }
+
+  async function exportCSV(){
+    toast('Fetching all events…');
+    const all = await fetchAllEvents();
+    const h=['ID','Timestamp (ms)','Date & Time (UTC)','Level','Tag','Message','Reference','Email','Amount','Duration (ms)','IP','Stack'];
+    const rows=all.map(e=>[
+      csvCell(e.id),
+      e.ts||'',
+      e.ts ? new Date(e.ts).toISOString().replace('T',' ').slice(0,19) : '',
+      (e.level||'').toUpperCase(),
+      e.tag||'',
+      csvCell(e.msg),
+      e.ref||'',
+      e.email||'',
+      e.amount||'',
+      e.duration||'',
+      e.ip||'',
+      csvCell(e.stack),
+    ].join(','));
+    const bom = '\uFEFF'; // UTF-8 BOM so Excel opens it correctly
+    const blob=new Blob([bom+[h.join(','),...rows].join('\r\n')],{type:'text/csv;charset=utf-8'});
     const a=document.createElement('a');a.href=URL.createObjectURL(blob);
     a.download='sophiefx-events-'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+    toast(`Exported ${all.length} events`);
   }
 
   return{start,forceRefresh,setFilter,levelFilter,search,togglePause,clearLocal,exportJSON,exportCSV};
@@ -1252,23 +1299,55 @@ const Bookings = (() => {
 
   function search(q){searchQuery=q;renderTable();}
 
-  function exportCSV(){
-    const h=['booking_ref','reference','customer_name','customer_email','tier','amount_ghs','currency','channel','gateway_response','paid_at','created_at'];
-    const rows=filtered.map(b=>[
-      b.booking_ref||'',b.reference||'',
-      '"'+(b.customer_name||'').replace(/"/g,'""')+'"',
-      b.customer_email||'',b.tier||'',
-      b.amount?(b.amount/100).toFixed(2):'0',
-      b.currency||'',b.channel||'',
-      '"'+(b.gateway_response||'').replace(/"/g,'""')+'"',
-      b.paid_at||'',b.created_at||''
-    ].join(','));
-    const blob=new Blob([[h.join(','),...rows].join('\n')],{type:'text/csv'});
-    const a=document.createElement('a');a.href=URL.createObjectURL(blob);
-    a.download='sophiefx-bookings-'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+  async function fetchAllBookings(){
+    try {
+      const res=await fetch(`${GET_BOOKINGS_ENDPOINT}?limit=500`,{headers:{'X-Monitor-Token':monitorSecret}});
+      if(!res.ok) return all;
+      const data=await res.json();
+      return data.success ? (data.bookings||[]) : all;
+    } catch { return all; }
   }
 
-  return{start,forceRefresh,showDetail,setTier,setChannel,search,exportCSV};
+  async function exportCSV(){
+    toast('Fetching all bookings…');
+    const rows = await fetchAllBookings();
+    const h=['Booking Ref','Paystack Reference','Customer Name','Customer Email','Tier','Amount (GHS)','Currency','Channel','Gateway Response','Paid At','Created At'];
+    const data=rows.map(b=>[
+      csvCell(b.booking_ref),
+      csvCell(b.reference),
+      csvCell(b.customer_name),
+      csvCell(b.customer_email),
+      b.tier||'',
+      b.amount ? (b.amount/100).toFixed(2) : '0.00',
+      b.currency||'',
+      (b.channel||'').replace(/_/g,' '),
+      csvCell(b.gateway_response),
+      b.paid_at   ? new Date(b.paid_at).toISOString().replace('T',' ').slice(0,19)   : '',
+      b.created_at? new Date(b.created_at).toISOString().replace('T',' ').slice(0,19): '',
+    ].join(','));
+    const bom = '\uFEFF';
+    const blob=new Blob([bom+[h.join(','),...data].join('\r\n')],{type:'text/csv;charset=utf-8'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+    a.download='sophiefx-bookings-'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+    toast(`Exported ${rows.length} bookings`);
+  }
+
+  async function exportJSON(){
+    toast('Fetching all bookings…');
+    const rows = await fetchAllBookings();
+    const out = {
+      exported_at: new Date().toISOString(),
+      exported_by: 'Sophie FX Admin',
+      total: rows.length,
+      bookings: rows,
+    };
+    const blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+    a.download='sophiefx-bookings-'+new Date().toISOString().slice(0,10)+'.json';a.click();
+    toast(`Exported ${rows.length} bookings`);
+  }
+
+  return{start,forceRefresh,showDetail,setTier,setChannel,search,exportCSV,exportJSON};
 })();
 
 
@@ -1561,6 +1640,276 @@ const DB = (() => {
     clearBookings: () => open('bookings'),
     clearEvents:   () => open('events'),
   };
+})();
+</script>
+<!-- ═══════════════════════════════════════════════════════════
+     IMPORT MODAL
+══════════════════════════════════════════════════════════════ -->
+<div class="db-modal-overlay" id="import-modal-overlay" onclick="Import.closeOnOverlay(event)">
+  <div class="db-modal" style="border-top-color:var(--blue); min-width:400px;">
+    <div class="db-modal-title" style="color:var(--blue)">↑ Import Bookings</div>
+    <div class="db-modal-body">
+      Upload a <strong>.json</strong> or <strong>.csv</strong> file previously exported from this dashboard.
+      Existing bookings with the same reference will be updated (safe to re-import).
+    </div>
+
+    <!-- Drop zone -->
+    <div id="import-dropzone"
+         style="border:2px dashed var(--border-2);padding:1.5rem;text-align:center;
+                cursor:pointer;transition:border-color 0.15s;margin-bottom:1rem;position:relative;"
+         onclick="document.getElementById('import-file-input').click()"
+         ondragover="Import.onDragOver(event)"
+         ondragleave="Import.onDragLeave(event)"
+         ondrop="Import.onDrop(event)">
+      <div id="import-dropzone-text" style="color:var(--ink-dim);font-size:12px;letter-spacing:0.05em;">
+        Click to choose file or drag &amp; drop here<br>
+        <span style="font-size:10px;color:var(--ink-faint);">Accepts .json or .csv from Sophie FX exports</span>
+      </div>
+      <input type="file" id="import-file-input" accept=".json,.csv"
+             style="display:none" onchange="Import.onFileSelect(this)">
+    </div>
+
+    <!-- Preview -->
+    <div id="import-preview" style="display:none;margin-bottom:1rem;">
+      <div style="font-size:10px;color:var(--ink-faint);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;">Preview</div>
+      <div id="import-preview-text"
+           style="background:var(--bg-3);border:1px solid var(--border);padding:10px 12px;
+                  font-size:11px;color:var(--gold);font-family:var(--mono);line-height:1.8;">
+      </div>
+    </div>
+
+    <div class="db-modal-actions">
+      <button class="db-cancel-btn" onclick="Import.close()">Cancel</button>
+      <button class="db-confirm-btn" id="import-confirm-btn"
+              style="background:var(--blue-bg);border-color:rgba(88,166,255,0.4);color:var(--blue);"
+              onclick="Import.execute()">
+        Import
+      </button>
+    </div>
+    <div class="db-modal-status" id="import-modal-status"></div>
+  </div>
+</div>
+
+<script>
+const Import = (() => {
+  let _parsedBookings = null;
+
+  function open() {
+    reset();
+    document.getElementById('import-modal-overlay').classList.add('open');
+  }
+
+  function close() {
+    document.getElementById('import-modal-overlay').classList.remove('open');
+    reset();
+  }
+
+  function closeOnOverlay(e) {
+    if (e.target === document.getElementById('import-modal-overlay')) close();
+  }
+
+  function reset() {
+    _parsedBookings = null;
+    document.getElementById('import-file-input').value = '';
+    document.getElementById('import-dropzone-text').innerHTML =
+      'Click to choose file or drag &amp; drop here<br><span style="font-size:10px;color:var(--ink-faint);">Accepts .json or .csv from Sophie FX exports</span>';
+    document.getElementById('import-preview').style.display = 'none';
+    document.getElementById('import-preview-text').textContent = '';
+    document.getElementById('import-modal-status').textContent = '';
+    const btn = document.getElementById('import-confirm-btn');
+    btn.classList.remove('ready','loading');
+    btn.textContent = 'Import';
+  }
+
+  function onDragOver(e) {
+    e.preventDefault();
+    document.getElementById('import-dropzone').style.borderColor = 'var(--blue)';
+  }
+  function onDragLeave(e) {
+    document.getElementById('import-dropzone').style.borderColor = 'var(--border-2)';
+  }
+  function onDrop(e) {
+    e.preventDefault();
+    document.getElementById('import-dropzone').style.borderColor = 'var(--border-2)';
+    const file = e.dataTransfer?.files?.[0];
+    if (file) processFile(file);
+  }
+  function onFileSelect(input) {
+    const file = input.files?.[0];
+    if (file) processFile(file);
+  }
+
+  function processFile(file) {
+    const status = document.getElementById('import-modal-status');
+    status.textContent = '';
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const text = e.target.result;
+      try {
+        const ext = file.name.split('.').pop().toLowerCase();
+        let bookings;
+        if (ext === 'json') {
+          bookings = parseJSON(text);
+        } else if (ext === 'csv') {
+          bookings = parseCSV(text);
+        } else {
+          throw new Error('Unsupported file type. Use .json or .csv');
+        }
+        if (!bookings.length) throw new Error('No valid rows found in file');
+        _parsedBookings = bookings;
+        showPreview(file.name, bookings);
+      } catch (err) {
+        status.style.color = 'var(--red)';
+        status.textContent = '✗ ' + err.message;
+        _parsedBookings = null;
+        document.getElementById('import-confirm-btn').classList.remove('ready');
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function parseJSON(text) {
+    const raw = JSON.parse(text);
+    // Support both {bookings:[...]} wrapper and bare array
+    const arr = Array.isArray(raw) ? raw : (raw.bookings || raw.events || []);
+    if (!arr.length) throw new Error('JSON file contains no rows');
+    return arr;
+  }
+
+  function parseCSV(text) {
+    // Normalise line endings, strip BOM
+    const clean = text.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+    const lines = clean.split('\n').filter(l => l.trim());
+    if (lines.length < 2) throw new Error('CSV must have a header row + at least one data row');
+
+    const headers = parseCSVRow(lines[0]).map(h => h.trim().toLowerCase()
+      .replace(/ \(ghs\)/g,'').replace(/ /g,'_').replace(/[^a-z0-9_]/g,''));
+
+    // Map friendly header names back to DB column names
+    const colMap = {
+      'booking_ref': 'booking_ref',
+      'paystack_reference': 'reference',
+      'reference': 'reference',
+      'customer_name': 'customer_name',
+      'customer_email': 'customer_email',
+      'tier': 'tier',
+      'amount': 'amount_ghs',
+      'amount_ghs': 'amount_ghs',
+      'currency': 'currency',
+      'channel': 'channel',
+      'gateway_response': 'gateway_response',
+      'paid_at': 'paid_at',
+      'created_at': 'created_at',
+    };
+
+    return lines.slice(1).map(line => {
+      const cells = parseCSVRow(line);
+      const row = {};
+      headers.forEach((h, i) => {
+        const col = colMap[h];
+        if (col) row[col] = (cells[i]||'').trim();
+      });
+      // Convert amount_ghs → amount (integer pesewas)
+      if (row.amount_ghs) {
+        row.amount = Math.round(parseFloat(row.amount_ghs) * 100) || undefined;
+        delete row.amount_ghs;
+      }
+      return row;
+    }).filter(r => r.reference && r.amount && r.currency);
+  }
+
+  function parseCSVRow(line) {
+    const cells = [];
+    let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (c === '"') {
+        if (inQ && line[i+1] === '"') { cur += '"'; i++; }
+        else inQ = !inQ;
+      } else if (c === ',' && !inQ) {
+        cells.push(cur); cur = '';
+      } else {
+        cur += c;
+      }
+    }
+    cells.push(cur);
+    return cells;
+  }
+
+  function showPreview(filename, bookings) {
+    const preview = document.getElementById('import-preview');
+    const text = document.getElementById('import-preview-text');
+    const sample = bookings.slice(0,3);
+    let html = `📄 <strong>${filename}</strong> — ${bookings.length} row${bookings.length!==1?'s':''} detected\n`;
+    html += `\nFirst ${Math.min(3,bookings.length)} rows:\n`;
+    sample.forEach((b,i) => {
+      const amt = b.amount ? 'GH₵ '+(b.amount/100).toFixed(2) : '';
+      html += `  ${i+1}. ${b.customer_name||b.reference||'—'}  ${b.customer_email||''}  ${b.tier||''}  ${amt}\n`;
+    });
+    text.textContent = html;
+    preview.style.display = 'block';
+
+    document.getElementById('import-dropzone-text').innerHTML =
+      `<span style="color:var(--green)">✓ ${filename}</span><br>
+       <span style="font-size:10px;color:var(--ink-faint)">${bookings.length} bookings ready to import</span>`;
+
+    const btn = document.getElementById('import-confirm-btn');
+    btn.classList.add('ready');
+    btn.style.background = 'var(--blue-bg)';
+    btn.style.borderColor = 'rgba(88,166,255,0.4)';
+    btn.style.color = 'var(--blue)';
+  }
+
+  async function execute() {
+    if (!_parsedBookings?.length) return;
+    const btn    = document.getElementById('import-confirm-btn');
+    const status = document.getElementById('import-modal-status');
+    btn.classList.remove('ready');
+    btn.classList.add('loading');
+    btn.textContent = 'Importing…';
+    status.style.color = 'var(--ink-dim)';
+    status.textContent = `Sending ${_parsedBookings.length} rows…`;
+
+    try {
+      const res = await fetch('/.netlify/functions/import-bookings', {
+        method: 'POST',
+        headers: {
+          'Content-Type':    'application/json',
+          'X-Monitor-Token': monitorSecret,
+        },
+        body: JSON.stringify({ bookings: _parsedBookings }),
+      });
+      const data = await res.json();
+
+      if (data.success || data.imported > 0) {
+        status.style.color = 'var(--green)';
+        status.textContent = `✓ ${data.message}${data.skipped?' · '+data.skipped+' skipped':''}`;
+        btn.textContent = '✓ Done';
+        setTimeout(() => {
+          close();
+          Bookings.forceRefresh();
+        }, 1500);
+      } else {
+        status.style.color = 'var(--red)';
+        status.textContent = `✗ ${data.message}`;
+        btn.textContent = 'Import';
+        btn.classList.remove('loading');
+        btn.classList.add('ready');
+      }
+    } catch (err) {
+      status.style.color = 'var(--red)';
+      status.textContent = `✗ Network error: ${err.message}`;
+      btn.textContent = 'Import';
+      btn.classList.remove('loading');
+      btn.classList.add('ready');
+    }
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') close();
+  });
+
+  return { open, close, closeOnOverlay, onDragOver, onDragLeave, onDrop, onFileSelect, execute };
 })();
 </script>
 </body>
