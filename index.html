@@ -1670,13 +1670,13 @@ img, video { max-width: 100%; height: auto; }
     </p>
 
     <div class="tier-grid">
-      <div class="tier-card" data-tier="course" data-usd="100" onclick="App.selectTier(this)">
+      <div class="tier-card" data-tier="course" data-usd="60" onclick="App.selectTier(this)">
         <div class="tier-tag">/ Tier 01 · Copy Trading</div>
         <h3>Vip <em>signal</em></h3>
         <div class="tier-sub">Just follow our lead</div>
         <div class="tier-price-row">
           <span class="tier-currency">$</span>
-          <span class="tier-amount">100</span>
+          <span class="tier-amount">60</span>
           <span class="tier-period">/ 6 weeks</span>
         </div>
         <div class="tier-usd">≈ GH₵ <span class="ghs-equiv">—</span> · charged in cedis</div>
@@ -2135,7 +2135,7 @@ img, video { max-width: 100%; height: auto; }
     <div class="footer-col">
       <h5>Mentorship</h5>
       <ul>
-        <li><a href="#" onclick="App.go('booking');return false;">Vip Signal — $100</a></li>
+        <li><a href="#" onclick="App.go('booking');return false;">Vip Signal — $60</a></li>
         <li><a href="#" onclick="App.go('booking');return false;">Group Online— $150</a></li>
         <li><a href="#" onclick="App.go('booking');return false;">Online 1-on-1 — $400</a></li>
         <li><a href="#" onclick="App.go('booking');return false;">Group-In-Person — $300</a></li>
@@ -2161,12 +2161,13 @@ img, video { max-width: 100%; height: auto; }
     Past performance is not indicative of future results. Payments processed by Paystack Payments Limited.
   </p>
 </footer>
-
+<!-- 'pk_test_c0df76a21c20b1d33ad7361b626a52cd2b64078a', -->
 <script>
 'use strict';
 
 const CONFIG = Object.freeze({
-  PAYSTACK_PUBLIC_KEY: 'pk_test_c0df76a21c20b1d33ad7361b626a52cd2b64078a',
+  PAYSTACK_PUBLIC_KEY: 
+  'pk_live_2f1640fbe9f3e67bf60aa009e1ee7ba0e9696249',
   CURRENCY: 'GHS',
   VERIFY_ENDPOINT: '/.netlify/functions/verify-payment',
   JOIN_CHANNEL_ENDPOINT: '/.netlify/functions/join-channel',
