@@ -1,199 +1,179 @@
 /**
  * ============================================================
- * SOPHIE FX — Netlify Serverless Function
- * File location in your repo: netlify/functions/verify-payment.js
+ * SOPHIE FX -- paystack-webhook.js
+ * Netlify Function: POST /.netlify/functions/paystack-webhook
  *
- * Environment variables to set in Netlify dashboard:
- *   PAYSTACK_SECRET_KEY  =  sk_live_xxxxxxxxxxxxxxxxxxxxxxxx
- *   ALLOWED_ORIGIN       =  https://your-site.netlify.app
- *   SUPABASE_URL         =  https://xxxx.supabase.co
- *   SUPABASE_SERVICE_KEY =  your service_role key
+ * Paystack POSTs a charge.success event here every time a
+ * payment completes -- even if the user closed the browser
+ * before onSuccess fired on the frontend.
+ *
+ * This is the safety net. verify-payment.js is the happy path.
+ * Both persist the booking + increment discount used, BUT the
+ * webhook checks if verify-payment.js already saved the booking
+ * first -- if so, it skips the discount increment to prevent
+ * double-counting the same payment.
+ *
+ * Register this URL in Paystack Dashboard:
+ *   Settings -> API Keys & Webhooks -> Webhook URL
+ *   https://your-site.netlify.app/.netlify/functions/paystack-webhook
+ *
+ * ENV VARS (already in your Netlify dashboard):
+ *   PAYSTACK_SECRET_KEY  -- to verify the signature
+ *   SUPABASE_URL         -- to persist bookings + increment discount
+ *   SUPABASE_SERVICE_KEY -- service role key
  * ============================================================
  */
 
-import { Pool } from 'pg';
 import crypto from 'crypto';
 
-const DATABASE_URL         = process.env.DATABASE_URL;
 const SUPABASE_URL         = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
 
-const pgPool = DATABASE_URL ? new Pool({ connectionString: DATABASE_URL }) : null;
-if (!DATABASE_URL) {
-  console.warn('[db] DATABASE_URL is not set; booking persistence disabled');
-} else {
-  initPostgres().catch(err => console.error('[db] init failed', err));
-}
-
-// ── Netlify Functions entry point ──────────────────────────
-export const handler = async (event, context) => {
-
-  const PAYSTACK_SECRET = process.env.PAYSTACK_SECRET_KEY;
-  const ALLOWED_ORIGIN  = process.env.ALLOWED_ORIGIN || '*';
-
-  const corsHeaders = {
-    'Access-Control-Allow-Origin':  ALLOWED_ORIGIN,
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-  };
-
-  if (event.httpMethod === 'OPTIONS') {
-    return { statusCode: 204, headers: corsHeaders, body: '' };
-  }
+export const handler = async (event) => {
 
   if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 405,
-      headers: corsHeaders,
-      body: JSON.stringify({ success: false, message: 'Method not allowed' }),
-    };
+    return { statusCode: 405, body: 'Method not allowed' };
   }
+
+  const PAYSTACK_SECRET = process.env.PAYSTACK_SECRET_KEY;
 
   if (!PAYSTACK_SECRET) {
-    console.error('[verify] PAYSTACK_SECRET_KEY env var is not set');
-    return {
-      statusCode: 500,
-      headers: corsHeaders,
-      body: JSON.stringify({ success: false, message: 'Server misconfiguration' }),
-    };
+    console.error('[webhook] PAYSTACK_SECRET_KEY not set');
+    return { statusCode: 500, body: 'Server misconfiguration' };
   }
 
-  let body;
+  // Verify Paystack signature -- reject anything that doesn't match
+  const signature = event.headers['x-paystack-signature'];
+  if (!signature) {
+    console.warn('[webhook] No signature header');
+    return { statusCode: 400, body: 'No signature' };
+  }
+
+  const expected = crypto
+    .createHmac('sha512', PAYSTACK_SECRET)
+    .update(event.body)
+    .digest('hex');
+
+  if (signature !== expected) {
+    console.warn('[webhook] Signature mismatch -- possible spoofed request');
+    return { statusCode: 401, body: 'Invalid signature' };
+  }
+
+  // Parse event
+  let evt;
   try {
-    body = JSON.parse(event.body || '{}');
+    evt = JSON.parse(event.body);
   } catch {
-    return {
-      statusCode: 400,
-      headers: corsHeaders,
-      body: JSON.stringify({ success: false, message: 'Invalid JSON body' }),
-    };
+    return { statusCode: 400, body: 'Invalid JSON' };
   }
 
-  const { reference, expected_amount_pesewas, expected_currency, booking_ref } = body;
+  // ALWAYS return 200 immediately -- Paystack retries on non-2xx
+  if (evt.event === 'charge.success') {
+    const tx = evt.data;
+    console.log('[webhook] charge.success --', tx.reference, tx.amount, tx.currency);
 
-  if (!reference || typeof reference !== 'string') {
-    return {
-      statusCode: 400,
-      headers: corsHeaders,
-      body: JSON.stringify({ success: false, message: 'reference is required' }),
-    };
-  }
+    // Run side effects async -- don't block the 200 response
+    (async () => {
+      try {
+        // KEY GUARD: check if verify-payment.js already handled this payment.
+        // If the booking already exists in Supabase, verify-payment.js got there
+        // first and already incremented the discount count -- so we only upsert
+        // the booking (safe, idempotent) and skip the increment to avoid double-counting.
+        const alreadySaved = await bookingExists(tx.reference);
 
-  let psRes;
-  try {
-    psRes = await fetch(
-      `https://api.paystack.co/transaction/verify/${encodeURIComponent(reference)}`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${PAYSTACK_SECRET}`,
-          'Content-Type': 'application/json',
-        },
+        await persistBooking(tx);
+
+        if (alreadySaved) {
+          console.log('[webhook] booking already saved by verify-payment -- skipping discount increment for', tx.reference);
+        } else {
+          // verify-payment.js never ran (user closed browser, network drop, etc.)
+          // This is the webhook's job -- save the booking AND increment the count
+          console.log('[webhook] new booking via webhook -- incrementing discount for', tx.reference);
+          await incrementDiscountUsed();
+        }
+
+        console.log('[webhook] done for', tx.reference);
+      } catch (err) {
+        console.error('[webhook] side-effect error:', err.message);
       }
-    );
-  } catch (err) {
-    console.error('[verify] Network error reaching Paystack:', err.message);
-    return {
-      statusCode: 502,
-      headers: corsHeaders,
-      body: JSON.stringify({ success: false, message: 'Could not reach Paystack' }),
-    };
+    })();
+
+  } else {
+    console.log('[webhook] unhandled event type:', evt.event);
   }
 
-  if (!psRes.ok) {
-    console.error('[verify] Paystack returned HTTP', psRes.status);
-    return {
-      statusCode: 502,
-      headers: corsHeaders,
-      body: JSON.stringify({ success: false, message: `Paystack returned HTTP ${psRes.status}` }),
-    };
-  }
-
-  const psBody = await psRes.json();
-  const tx = psBody?.data;
-
-  if (!tx) {
-    return {
-      statusCode: 502,
-      headers: corsHeaders,
-      body: JSON.stringify({ success: false, message: 'Empty response from Paystack' }),
-    };
-  }
-
-  // ── The three checks that matter ──────────────────────────
-  const statusOk   = tx.status === 'success';
-  const amountOk   = !expected_amount_pesewas || Number(tx.amount) === Number(expected_amount_pesewas);
-  const currencyOk = !expected_currency || tx.currency === expected_currency;
-
-  if (!statusOk) {
-    return {
-      statusCode: 200,
-      headers: corsHeaders,
-      body: JSON.stringify({
-        success: false,
-        message: `Transaction status: ${tx.status} — ${tx.gateway_response || 'not successful'}`,
-        data: { status: tx.status, gateway_response: tx.gateway_response },
-      }),
-    };
-  }
-
-  if (!amountOk) {
-    console.error(`[SECURITY] Amount mismatch for ref ${reference}: expected ${expected_amount_pesewas} pesewas, got ${tx.amount}`);
-    return {
-      statusCode: 200,
-      headers: corsHeaders,
-      body: JSON.stringify({ success: false, message: `Amount mismatch — expected ${expected_amount_pesewas}, got ${tx.amount}` }),
-    };
-  }
-
-  if (!currencyOk) {
-    console.error(`[SECURITY] Currency mismatch for ref ${reference}: expected ${expected_currency}, got ${tx.currency}`);
-    return {
-      statusCode: 200,
-      headers: corsHeaders,
-      body: JSON.stringify({ success: false, message: `Currency mismatch — expected ${expected_currency}, got ${tx.currency}` }),
-    };
-  }
-
-  // ── All checks passed ─────────────────────────────────────
-  const payload = {
-    reference:        tx.reference,
-    amount:           tx.amount,
-    currency:         tx.currency,
-    paid_at:          tx.paid_at,
-    channel:          tx.channel,
-    customer_email:   tx.customer?.email,
-    customer_name:    `${tx.customer?.first_name || ''} ${tx.customer?.last_name || ''}`.trim(),
-    gateway_response: tx.gateway_response,
-    booking_ref:      tx.metadata?.booking_ref || booking_ref,
-    tier:             tx.metadata?.tier,
-  };
-
-  // ── Side effects — run in parallel, never block the response ──
-  await Promise.allSettled([
-    persistBooking(payload).catch(err => console.error('[verify] booking persistence failed', err)),
-    incrementDiscountUsed().catch(err => console.error('[verify] discount increment failed', err)),
-  ]);
-
-  console.log('[verify] ✓ Verified:', reference, '— GH₵', (tx.amount / 100).toFixed(2));
-
-  return {
-    statusCode: 200,
-    headers: corsHeaders,
-    body: JSON.stringify({ success: true, message: 'Verified', data: payload }),
-  };
+  return { statusCode: 200, body: 'OK' };
 };
 
-// ── Atomically increment discount.used in Supabase ────────────
-// Only increments when discount is currently enabled — so
-// payments made outside a discount window don't affect the count.
-async function incrementDiscountUsed() {
+// Check if this reference already exists in the bookings table.
+// Used to detect whether verify-payment.js already handled this payment.
+async function bookingExists(reference) {
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) return false;
+
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/bookings?reference=eq.${encodeURIComponent(reference)}&select=reference&limit=1`,
+    {
+      headers: {
+        'apikey':        SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+        'Accept':        'application/json',
+      },
+    }
+  );
+
+  if (!res.ok) return false;
+  const rows = await res.json();
+  return rows.length > 0;
+}
+
+// Upsert booking into Supabase.
+// ON CONFLICT (same reference) just updates the row -- always safe to call.
+async function persistBooking(tx) {
   if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
-    console.warn('[discount] Supabase env vars not set — skipping increment');
+    console.warn('[webhook] Supabase env vars not set -- skipping persist');
     return;
   }
 
-  // First read the current discount settings
+  const payload = {
+    reference:        tx.reference,
+    booking_ref:      tx.metadata?.booking_ref || null,
+    tier:             tx.metadata?.tier || null,
+    amount:           tx.amount,
+    currency:         tx.currency,
+    paid_at:          tx.paid_at || null,
+    channel:          tx.channel || null,
+    customer_email:   tx.customer?.email || null,
+    customer_name:    `${tx.customer?.first_name || ''} ${tx.customer?.last_name || ''}`.trim() || null,
+    gateway_response: tx.gateway_response || null,
+  };
+
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/bookings`, {
+    method: 'POST',
+    headers: {
+      'apikey':        SUPABASE_SERVICE_KEY,
+      'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+      'Content-Type':  'application/json',
+      'Prefer':        'resolution=merge-duplicates,return=minimal',
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Supabase upsert failed: ${res.status} ${text}`);
+  }
+
+  console.log('[webhook] booking persisted:', tx.reference);
+}
+
+// Atomically increment discount.used by 1.
+// Only runs when discount is currently enabled.
+async function incrementDiscountUsed() {
+  if (!SUPABASE_URL || !SUPABASE_SERVICE_KEY) {
+    console.warn('[webhook] Supabase env vars not set -- skipping discount increment');
+    return;
+  }
+
   const getRes = await fetch(`${SUPABASE_URL}/rest/v1/settings?key=eq.discount&select=value`, {
     headers: {
       'apikey':        SUPABASE_SERVICE_KEY,
@@ -203,26 +183,20 @@ async function incrementDiscountUsed() {
   });
 
   if (!getRes.ok) {
-    console.warn('[discount] could not read settings:', getRes.status);
+    console.warn('[webhook] could not read discount settings:', getRes.status);
     return;
   }
 
-  const rows = await getRes.json();
+  const rows     = await getRes.json();
   const discount = rows?.[0]?.value;
 
-  // Only increment if discount is actually enabled
   if (!discount || !discount.enabled) {
-    console.log('[discount] discount not enabled — skipping increment');
+    console.log('[webhook] discount not enabled -- skipping increment');
     return;
   }
 
   const currentUsed = Number(discount.used) || 0;
   const newUsed     = currentUsed + 1;
-
-  const updated = {
-    ...discount,
-    used: newUsed,
-  };
 
   const patchRes = await fetch(`${SUPABASE_URL}/rest/v1/settings?key=eq.discount`, {
     method: 'PATCH',
@@ -232,7 +206,10 @@ async function incrementDiscountUsed() {
       'Content-Type':  'application/json',
       'Prefer':        'return=minimal',
     },
-    body: JSON.stringify({ value: updated, updated_at: new Date().toISOString() }),
+    body: JSON.stringify({
+      value:      { ...discount, used: newUsed },
+      updated_at: new Date().toISOString(),
+    }),
   });
 
   if (!patchRes.ok) {
@@ -240,62 +217,9 @@ async function incrementDiscountUsed() {
     throw new Error(`Supabase PATCH failed: ${patchRes.status} ${text}`);
   }
 
-  console.log(`[discount] ✓ used incremented: ${currentUsed} → ${newUsed} / ${discount.max_uses}`);
+  console.log(`[webhook] discount used: ${currentUsed} -> ${newUsed} / ${discount.max_uses}`);
 
-  // Warn if discount just hit its limit
   if (newUsed >= discount.max_uses) {
-    console.warn(`[discount] ⚠ Discount limit reached (${newUsed}/${discount.max_uses}) — consider disabling it in admin`);
+    console.warn(`[webhook] Discount limit reached (${newUsed}/${discount.max_uses})`);
   }
-}
-
-// ── Persist booking to Postgres ────────────────────────────────
-async function persistBooking(payload) {
-  if (!pgPool) {
-    console.warn('[persist] skipping Postgres persistence because DATABASE_URL is not set');
-    return;
-  }
-
-  const sql = `
-    INSERT INTO bookings (
-      reference, booking_ref, tier, amount, currency,
-      paid_at, channel, customer_email, customer_name, gateway_response
-    ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
-    ON CONFLICT (reference) DO UPDATE SET
-      booking_ref      = EXCLUDED.booking_ref,
-      tier             = EXCLUDED.tier,
-      amount           = EXCLUDED.amount,
-      currency         = EXCLUDED.currency,
-      paid_at          = EXCLUDED.paid_at,
-      channel          = EXCLUDED.channel,
-      customer_email   = EXCLUDED.customer_email,
-      customer_name    = EXCLUDED.customer_name,
-      gateway_response = EXCLUDED.gateway_response;
-  `;
-
-  await pgPool.query(sql, [
-    payload.reference, payload.booking_ref, payload.tier,
-    payload.amount, payload.currency, payload.paid_at || null,
-    payload.channel, payload.customer_email,
-    payload.customer_name, payload.gateway_response,
-  ]);
-  console.log('[persist] saved booking', payload.reference);
-}
-
-async function initPostgres() {
-  if (!pgPool) return;
-  await pgPool.query(`
-    CREATE TABLE IF NOT EXISTS bookings (
-      reference        TEXT PRIMARY KEY,
-      booking_ref      TEXT,
-      tier             TEXT,
-      amount           BIGINT NOT NULL,
-      currency         TEXT NOT NULL,
-      paid_at          TIMESTAMPTZ,
-      channel          TEXT,
-      customer_email   TEXT,
-      customer_name    TEXT,
-      gateway_response TEXT,
-      created_at       TIMESTAMPTZ NOT NULL DEFAULT NOW()
-    );
-  `);
 }
