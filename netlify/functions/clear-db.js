@@ -22,20 +22,11 @@ const MONITOR_SECRET       = process.env.MONITOR_SECRET;
 const ALLOWED_TABLES = ['bookings', 'events'];
 
 async function clearTable(table) {
-  // Supabase REST: DELETE with a filter that matches everything (id not null, or neq empty)
-  // Using ?id=not.is.null won't work for all tables — use the Supabase "delete all" pattern:
-  // DELETE /rest/v1/table?id=gte.0 won't catch text PKs.
-  // Best approach: DELETE with a condition that is always true using created_at column.
-  // For "bookings": reference is TEXT PK — use created_at >= epoch
-  // For "events":   id is TEXT PK — use ts > 0 (bigint)
-
-  let filter;
-  if (table === 'bookings') {
-    // created_at exists on both tables
-    filter = 'created_at=gte.1970-01-01T00:00:00Z';
-  } else if (table === 'events') {
-    filter = 'ts=gte.0';
-  }
+  // Supabase REST requires at least one filter to allow DELETE.
+  // Both tables have a `created_at` TIMESTAMPTZ column — match everything
+  // from before the Unix epoch onward (i.e. every row that has ever existed).
+  // Using `not.is.null` on created_at is the most universally reliable filter.
+  const filter = 'created_at=not.is.null';
 
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${filter}`, {
     method: 'DELETE',
