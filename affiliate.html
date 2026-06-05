@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Affiliate Programme — Pips Built Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:      #0d2137;
+  --navy-deep: #091929;
+  --navy-mid:  #163250;
+  --teal:      #1a7fa8;
+  --teal-bright:#22a8df;
+  --teal-light:#e8f6fc;
+  --gold:      #f0a500;
+  --gold-pale: #fff8e6;
+  --white:     #ffffff;
+  --off:       #f8fafc;
+  --g100:      #f1f5f9;
+  --g200:      #e2e8f0;
+  --g300:      #cbd5e1;
+  --g400:      #94a3b8;
+  --g600:      #475569;
+  --g800:      #1e293b;
+  --ink:       #0f172a;
+  --red:       #ef4444;
+  --green:     #22c55e;
+  --serif:     'DM Serif Display', Georgia, serif;
+  --sans:      'Plus Jakarta Sans', sans-serif;
+  --radius:    12px;
+  --radius-lg: 20px;
+  --sh-sm:     0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04);
+  --sh-md:     0 4px 16px rgba(0,0,0,.10),0 2px 6px rgba(0,0,0,.06);
+  --sh-teal:   0 8px 30px rgba(26,127,168,.35);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--white);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* NAV */
+nav{background:var(--white);border-bottom:1px solid var(--g200);position:sticky;top:0;z-index:100;box-shadow:var(--sh-sm)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 2rem;height:66px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+.brand-icon{width:34px;height:34px;background:var(--navy);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:17px;color:var(--gold);font-style:italic}
+.brand-name{font-weight:700;font-size:14px;color:var(--navy);letter-spacing:-.01em}
+.brand-sub{font-size:11px;color:var(--teal);font-weight:500}
+.nav-pill{background:var(--navy);color:#fff;border:none;padding:.45rem 1.1rem;border-radius:999px;font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;transition:.2s}
+.nav-pill:hover{background:var(--teal)}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,#1a4a6e 100%);padding:5rem 2rem 4rem;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;top:-120px;right:-120px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(26,127,168,.22) 0%,transparent 65%);pointer-events:none}
+.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 420px;gap:4rem;align-items:center;position:relative;z-index:2}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(240,165,0,.15);border:1px solid rgba(240,165,0,.3);padding:.35rem 1rem;border-radius:999px;font-size:11px;font-weight:700;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.5rem}
+.hero-title{font-family:var(--serif);font-size:clamp(2.2rem,4.5vw,3.6rem);line-height:1.1;color:#fff;margin-bottom:1.2rem}
+.hero-title em{color:var(--gold);font-style:italic}
+.hero-sub{font-size:1rem;color:rgba(255,255,255,.72);line-height:1.75;margin-bottom:2rem;max-width:460px}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.6rem;font-family:var(--sans);font-size:14px;font-weight:600;border:none;border-radius:var(--radius);cursor:pointer;text-decoration:none;transition:.25s;letter-spacing:.01em}
+.btn-primary{background:linear-gradient(135deg,var(--teal),#1590be);color:#fff;box-shadow:var(--sh-teal)}
+.btn-primary:hover{background:linear-gradient(135deg,var(--teal-bright),var(--teal));transform:translateY(-1px)}
+.btn-primary:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.btn-gold{background:linear-gradient(135deg,#f0a500,#d4920a);color:#fff;box-shadow:0 6px 20px rgba(240,165,0,.35)}
+.btn-gold:hover{transform:translateY(-1px)}
+.btn-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.3)}
+.btn-outline:hover{border-color:#fff;background:rgba(255,255,255,.08)}
+.btn .arr{transition:.2s}
+.btn:hover .arr{transform:translateX(3px)}
+
+/* STEPS CARDS in hero */
+.steps-grid{display:flex;flex-direction:column;gap:1rem}
+.step-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius);padding:1.2rem 1.4rem;display:flex;align-items:center;gap:1rem;backdrop-filter:blur(10px)}
+.step-num{width:36px;height:36px;border-radius:50%;background:var(--gold);color:var(--navy);font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-text h5{font-size:13px;font-weight:700;color:#fff;margin-bottom:2px}
+.step-text p{font-size:12px;color:rgba(255,255,255,.6)}
+
+/* COMMISSION STRIP */
+.comm-strip{background:var(--g100);border-top:1px solid var(--g200);border-bottom:1px solid var(--g200);padding:2.5rem 2rem}
+.comm-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:3rem;flex-wrap:wrap;text-align:center}
+.comm-stat .num{font-family:var(--serif);font-size:2.4rem;color:var(--navy)}
+.comm-stat .num em{color:var(--teal);font-style:italic}
+.comm-stat .lab{font-size:12px;font-weight:600;color:var(--g400);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+.comm-div{width:1px;height:48px;background:var(--g200)}
+
+/* SECTION */
+.section{padding:5rem 2rem;max-width:1100px;margin:0 auto}
+.section-label{display:inline-flex;align-items:center;gap:.5rem;font-size:12px;font-weight:700;color:var(--teal);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1rem}
+.section-label::before{content:"";width:20px;height:2px;background:var(--teal);border-radius:2px}
+.section-title{font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,2.6rem);line-height:1.15;color:var(--navy);margin-bottom:1rem}
+.section-title em{font-style:italic;color:var(--teal)}
+.section-sub{font-size:1rem;color:var(--g600);line-height:1.75;max-width:560px}
+
+/* HOW IT WORKS */
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3rem}
+.how-card{background:var(--white);border:1px solid var(--g200);border-radius:var(--radius-lg);padding:2rem 1.5rem;text-align:center;transition:.3s}
+.how-card:hover{border-color:var(--teal);box-shadow:var(--sh-md);transform:translateY(-3px)}
+.how-icon{font-size:2rem;margin-bottom:1rem}
+.how-num{font-family:var(--serif);font-size:1.2rem;color:var(--teal);margin-bottom:.4rem}
+.how-card h4{font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:.5rem}
+.how-card p{font-size:13px;color:var(--g600);line-height:1.6}
+
+/* TABS: Register / Dashboard */
+.tabs-wrap{background:var(--off);border-top:1px solid var(--g200);border-bottom:1px solid var(--g200);padding:0 2rem}
+.tabs-inner{max-width:1100px;margin:0 auto;display:flex;gap:0}
+.tab-btn{padding:1.1rem 1.8rem;font-family:var(--sans);font-size:14px;font-weight:600;color:var(--g600);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:.2s}
+.tab-btn.active{color:var(--navy);border-bottom-color:var(--teal)}
+
+.tab-panel{display:none;padding:3rem 2rem;max-width:1100px;margin:0 auto}
+.tab-panel.active{display:block}
+
+/* FORM */
+.form-card{background:var(--white);border:1px solid var(--g200);border-radius:var(--radius-lg);padding:2.5rem;box-shadow:var(--sh-sm);max-width:680px}
+.form-card h3{font-family:var(--serif);font-size:1.5rem;color:var(--navy);margin-bottom:.4rem}
+.form-card .sub{font-size:13px;color:var(--g600);margin-bottom:2rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.form-grid.full{grid-template-columns:1fr}
+.form-field{display:flex;flex-direction:column;gap:.4rem}
+.form-field label{font-size:13px;font-weight:600;color:var(--g800)}
+.form-field input,.form-field select,.form-field textarea{padding:.65rem .9rem;border:1.5px solid var(--g200);border-radius:var(--radius);font-family:var(--sans);font-size:14px;color:var(--ink);background:var(--white);transition:.2s;outline:none}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,127,168,.1)}
+.form-field .hint{font-size:12px;color:var(--g400)}
+.form-field .hint.error{color:var(--red)}
+.form-submit{margin-top:1.5rem}
+
+/* DASHBOARD */
+.dash-layout{display:grid;grid-template-columns:260px 1fr;gap:2rem;align-items:start}
+.dash-sidebar{background:var(--white);border:1px solid var(--g200);border-radius:var(--radius-lg);padding:1.5rem;box-shadow:var(--sh-sm)}
+.dash-login{display:flex;flex-direction:column;gap:1rem}
+.dash-login h4{font-family:var(--serif);font-size:1.2rem;color:var(--navy)}
+.dash-login p{font-size:13px;color:var(--g600)}
+.dash-login input{padding:.65rem .9rem;border:1.5px solid var(--g200);border-radius:var(--radius);font-family:var(--sans);font-size:14px;outline:none;transition:.2s}
+.dash-login input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(26,127,168,.1)}
+.dash-profile{display:none;flex-direction:column;gap:.8rem}
+.dash-profile .avatar{width:52px;height:52px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.4rem;color:var(--gold);font-style:italic}
+.dash-profile h4{font-weight:700;font-size:15px;color:var(--navy)}
+.dash-profile .handle{font-size:12px;color:var(--teal);font-weight:600}
+.ref-box{background:var(--g100);border:1px solid var(--g200);border-radius:var(--radius);padding:.8rem 1rem;margin-top:.4rem}
+.ref-label{font-size:11px;font-weight:700;color:var(--g400);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem}
+.ref-link{font-family:'Courier New',monospace;font-size:12px;color:var(--teal);word-break:break-all}
+.ref-copy{margin-top:.6rem;width:100%;padding:.5rem;font-size:12px;font-weight:600;background:var(--navy);color:#fff;border:none;border-radius:8px;cursor:pointer;transition:.2s}
+.ref-copy:hover{background:var(--teal)}
+.ref-copy.copied{background:var(--green)}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+.stat-box{background:var(--white);border:1px solid var(--g200);border-radius:var(--radius);padding:1.2rem 1rem;text-align:center}
+.stat-box .num{font-family:var(--serif);font-size:1.8rem;color:var(--navy)}
+.stat-box .num em{font-style:italic;color:var(--teal)}
+.stat-box .lab{font-size:11px;font-weight:600;color:var(--g400);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+.stat-box.gold-box .num em{color:var(--gold)}
+
+.dash-table-wrap{background:var(--white);border:1px solid var(--g200);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--sh-sm)}
+.dash-table-head{padding:1.2rem 1.5rem;border-bottom:1px solid var(--g200);display:flex;align-items:center;justify-content:space-between}
+.dash-table-head h4{font-size:14px;font-weight:700;color:var(--navy)}
+.dash-table-head span{font-size:12px;color:var(--g400)}
+.dash-table{width:100%;border-collapse:collapse}
+.dash-table th{padding:.8rem 1.2rem;font-size:11px;font-weight:700;color:var(--g400);letter-spacing:.06em;text-transform:uppercase;text-align:left;background:var(--g100);border-bottom:1px solid var(--g200)}
+.dash-table td{padding:.9rem 1.2rem;font-size:13px;color:var(--g800);border-bottom:1px solid var(--g100)}
+.dash-table tr:last-child td{border-bottom:none}
+.badge{display:inline-flex;align-items:center;padding:.2rem .6rem;border-radius:999px;font-size:11px;font-weight:700}
+.badge.green{background:#dcfce7;color:#15803d}
+.badge.yellow{background:#fef9c3;color:#854d0e}
+.badge.blue{background:var(--teal-light);color:var(--teal)}
+.empty-state{text-align:center;padding:3rem;color:var(--g400);font-size:13px}
+.empty-state .icon{font-size:2rem;margin-bottom:.5rem}
+
+/* ADMIN PANEL */
+.admin-wrap{display:none}
+.admin-wrap.show{display:block}
+.admin-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
+.admin-header h3{font-family:var(--serif);font-size:1.4rem;color:var(--navy)}
+.admin-table-wrap{background:var(--white);border:1px solid var(--g200);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--sh-sm);margin-bottom:1.5rem}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;right:2rem;padding:.8rem 1.4rem;border-radius:var(--radius);font-size:14px;font-weight:600;color:#fff;box-shadow:0 8px 30px rgba(0,0,0,.2);transform:translateY(80px);opacity:0;transition:.35s;z-index:9999;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.success{background:var(--green)}
+.toast.error{background:var(--red)}
+.toast.info{background:var(--teal)}
+
+/* FOOTER */
+footer{background:var(--navy-deep);padding:2.5rem 2rem;text-align:center;margin-top:4rem}
+footer p{font-size:13px;color:rgba(255,255,255,.4)}
+footer a{color:var(--teal);text-decoration:none}
+
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr}
+  .steps-grid{display:none}
+  .how-grid{grid-template-columns:repeat(2,1fr)}
+  .form-grid{grid-template-columns:1fr}
+  .dash-layout{grid-template-columns:1fr}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .comm-inner{gap:1.5rem}
+  .comm-div{display:none}
+  .how-grid{grid-template-columns:1fr}
+  .stats-row{grid-template-columns:1fr}
+}
+</style>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="brand">
+      <div class="brand-icon">P</div>
+      <div>
+        <div class="brand-name">PIPS BUILT ACADEMY</div>
+        <div class="brand-sub">Affiliate Programme</div>
+      </div>
+    </a>
+    <button class="nav-pill" onclick="scrollToRegister()">Become an Affiliate <span>→</span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">💰 Affiliate Programme · Open Now</div>
+      <h1 class="hero-title">Earn while you <em>grow the community</em></h1>
+      <p class="hero-sub">Are you a trader, coach, or influencer with an audience? Refer students to Pips Built Academy and earn a commission on every booking that comes through your link.</p>
+      <div class="hero-actions">
+        <button class="btn btn-gold" onclick="scrollToRegister()">Register as Affiliate <span class="arr">→</span></button>
+        <button class="btn btn-outline" onclick="switchTab('dashboard')">I already have an account</button>
+      </div>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-text"><h5>Register</h5><p>Fill out the affiliate form — takes 2 minutes</p></div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-text"><h5>Get Your Link</h5><p>Receive a unique referral link instantly</p></div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-text"><h5>Share It</h5><p>Post on WhatsApp, Instagram, YouTube, anywhere</p></div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-text"><h5>Get Paid</h5><p>Earn commission every time someone books</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMMISSION STRIP -->
+<div class="comm-strip">
+  <div class="comm-inner">
+    <div class="comm-stat"><div class="num"><em id="comm-pct">20</em>%</div><div class="lab">Your Commission</div></div>
+    <div class="comm-div"></div>
+    <div class="comm-stat"><div class="num"><em>Monthly</em></div><div class="lab">Payout Schedule</div></div>
+    <div class="comm-div"></div>
+    <div class="comm-stat"><div class="num"><em>∞</em></div><div class="lab">No Referral Limit</div></div>
+    <div class="comm-div"></div>
+    <div class="comm-stat"><div class="num"><em>Real-Time</em></div><div class="lab">Dashboard Tracking</div></div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section">
+  <div class="section-label">How It Works</div>
+  <h2 class="section-title">Simple, transparent, <em>no limits</em></h2>
+  <p class="section-sub">You share your link, we track every booking that comes from it, and you get paid every month. No hidden rules.</p>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-icon">📝</div>
+      <div class="how-num">Step 1</div>
+      <h4>Register</h4>
+      <p>Sign up below with your details and social handle. We approve within 24 hours.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-icon">🔗</div>
+      <div class="how-num">Step 2</div>
+      <h4>Get Your Link</h4>
+      <p>You get a unique link like <code style="font-size:11px;color:var(--teal)">?ref=YOURNAME</code> tied to your account.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-icon">📣</div>
+      <div class="how-num">Step 3</div>
+      <h4>Share Anywhere</h4>
+      <p>Post on WhatsApp status, Instagram, TikTok, Telegram, YouTube — wherever your audience is.</p>
+    </div>
+    <div class="how-card">
+      <div class="how-icon">💸</div>
+      <div class="how-num">Step 4</div>
+      <h4>Earn Commission</h4>
+      <p>When someone books through your link, you earn <strong id="how-pct">20%</strong> of the booking value. Paid monthly to your MoMo or bank.</p>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-wrap" id="tabs-anchor">
+  <div class="tabs-inner">
+    <button class="tab-btn active" id="tab-register" onclick="switchTab('register')">📝 Affiliate Registration</button>
+    <button class="tab-btn" id="tab-dashboard" onclick="switchTab('dashboard')">📊 My Dashboard</button>
+    <button class="tab-btn" id="tab-admin" onclick="switchTab('admin')" style="margin-left:auto">🔐 Admin</button>
+  </div>
+</div>
+
+<!-- REGISTER TAB -->
+<div class="tab-panel active" id="panel-register">
+  <div class="form-card" id="reg-form-wrap">
+    <h3>Join the Affiliate Programme</h3>
+    <p class="sub">Fill in your details. We'll review and send your unique referral link within 24 hours.</p>
+    <div class="form-grid">
+      <div class="form-field">
+        <label>Full Name *</label>
+        <input type="text" id="r-name" placeholder="e.g. Kwame Asante">
+        <span class="hint" id="h-name"></span>
+      </div>
+      <div class="form-field">
+        <label>Email Address *</label>
+        <input type="email" id="r-email" placeholder="you@example.com">
+        <span class="hint" id="h-email"></span>
+      </div>
+      <div class="form-field">
+        <label>WhatsApp Number *</label>
+        <input type="tel" id="r-phone" placeholder="+233 24 000 0000">
+        <span class="hint" id="h-phone"></span>
+      </div>
+      <div class="form-field">
+        <label>Preferred Referral Code *</label>
+        <input type="text" id="r-code" placeholder="e.g. KWAME or PIPSBUILT" maxlength="20" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'')">
+        <span class="hint" id="h-code">Letters and numbers only. This becomes your link.</span>
+      </div>
+      <div class="form-field">
+        <label>Instagram / TikTok Handle</label>
+        <input type="text" id="r-social" placeholder="@yourusername">
+      </div>
+      <div class="form-field">
+        <label>Platform / Audience</label>
+        <select id="r-platform">
+          <option value="">Select your main platform</option>
+          <option>Instagram</option>
+          <option>TikTok</option>
+          <option>YouTube</option>
+          <option>WhatsApp Groups</option>
+          <option>Telegram Channel</option>
+          <option>Twitter / X</option>
+          <option>Facebook</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-grid full" style="margin-top:1.2rem">
+      <div class="form-field">
+        <label>Why do you want to be an affiliate? (optional)</label>
+        <textarea id="r-reason" rows="3" placeholder="Tell us a bit about yourself and your audience…" maxlength="500"></textarea>
+      </div>
+      <div class="form-field">
+        <label>MoMo / Bank for payouts *</label>
+        <input type="text" id="r-payout" placeholder="e.g. MTN MoMo 0244 000 000 / Stanbic Bank 9040012345">
+        <span class="hint" id="h-payout">This is where we send your monthly commission</span>
+      </div>
+    </div>
+    <div class="form-submit">
+      <button class="btn btn-gold" id="reg-btn" onclick="submitRegistration()" style="width:100%;justify-content:center">
+        <span id="reg-btn-label">Submit Application <span class="arr">→</span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Success state -->
+  <div id="reg-success" style="display:none;max-width:520px">
+    <div style="background:var(--white);border:1px solid var(--g200);border-top:3px solid var(--green);border-radius:var(--radius-lg);padding:2.5rem;box-shadow:var(--sh-sm);text-align:center">
+      <div style="font-size:3rem;margin-bottom:1rem">🎉</div>
+      <h3 style="font-family:var(--serif);font-size:1.5rem;color:var(--navy);margin-bottom:.5rem">Application Submitted!</h3>
+      <p style="font-size:14px;color:var(--g600);line-height:1.7;margin-bottom:1.5rem">We've received your application. Your referral link will be sent to your email and WhatsApp within 24 hours once approved.</p>
+      <div style="background:var(--g100);border-radius:var(--radius);padding:1rem;margin-bottom:1.5rem">
+        <div style="font-size:11px;font-weight:700;color:var(--g400);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem">Your Referral Link (pending approval)</div>
+        <div style="font-family:'Courier New',monospace;font-size:13px;color:var(--teal)" id="success-link">—</div>
+      </div>
+      <button class="btn btn-primary" onclick="switchTab('dashboard')" style="width:100%;justify-content:center">Go to My Dashboard →</button>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD TAB -->
+<div class="tab-panel" id="panel-dashboard">
+  <div class="dash-layout">
+    <!-- Sidebar: login -->
+    <div class="dash-sidebar">
+      <div class="dash-login" id="dash-login-form">
+        <h4>Affiliate Login</h4>
+        <p style="font-size:13px;color:var(--g600)">Enter your email and referral code to view your dashboard.</p>
+        <input type="email" id="d-email" placeholder="Your email address">
+        <input type="text" id="d-code" placeholder="Your referral code (e.g. KWAME)" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'')">
+        <button class="btn btn-primary" onclick="loadDashboard()" style="width:100%;justify-content:center">View My Dashboard →</button>
+        <p style="font-size:12px;color:var(--g400);text-align:center">Don't have a code yet? <a href="#tabs-anchor" onclick="switchTab('register')" style="color:var(--teal)">Register first</a></p>
+      </div>
+      <div class="dash-profile" id="dash-profile">
+        <div class="avatar" id="dash-avatar">A</div>
+        <div>
+          <h4 id="dash-name">Affiliate Name</h4>
+          <div class="handle" id="dash-handle">@handle</div>
+        </div>
+        <div style="font-size:12px;color:var(--g600)">Status: <span id="dash-status" style="font-weight:700"></span></div>
+        <div class="ref-box">
+          <div class="ref-label">Your Referral Link</div>
+          <div class="ref-link" id="dash-ref-link">—</div>
+          <button class="ref-copy" id="ref-copy-btn" onclick="copyRefLink()">Copy Link</button>
+        </div>
+        <button style="margin-top:.5rem;background:none;border:1px solid var(--g200);color:var(--g600);border-radius:8px;padding:.4rem .8rem;font-size:12px;cursor:pointer" onclick="logoutDash()">Log out</button>
+      </div>
+    </div>
+
+    <!-- Main area -->
+    <div id="dash-main">
+      <!-- Locked state -->
+      <div id="dash-locked" style="background:var(--white);border:1px solid var(--g200);border-radius:var(--radius-lg);padding:3rem;text-align:center;box-shadow:var(--sh-sm)">
+        <div style="font-size:3rem;margin-bottom:1rem">🔒</div>
+        <h3 style="font-family:var(--serif);font-size:1.3rem;color:var(--navy);margin-bottom:.5rem">Log in to see your stats</h3>
+        <p style="font-size:14px;color:var(--g600)">Enter your email and referral code on the left to access your dashboard.</p>
+      </div>
+
+      <!-- Loaded state -->
+      <div id="dash-loaded" style="display:none">
+        <div class="stats-row">
+          <div class="stat-box"><div class="num"><em id="s-clicks">0</em></div><div class="lab">Total Clicks</div></div>
+          <div class="stat-box"><div class="num"><em id="s-bookings">0</em></div><div class="lab">Bookings</div></div>
+          <div class="stat-box gold-box"><div class="num">GH₵ <em id="s-earned">0</em></div><div class="lab">Total Earned</div></div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-box"><div class="num"><em id="s-pending">0</em></div><div class="lab">Pending Payout</div></div>
+          <div class="stat-box gold-box"><div class="num">GH₵ <em id="s-paid">0</em></div><div class="lab">Total Paid Out</div></div>
+          <div class="stat-box"><div class="num"><em id="s-rate">0</em>%</div><div class="lab">Commission Rate</div></div>
+        </div>
+
+        <div class="dash-table-wrap">
+          <div class="dash-table-head">
+            <h4>Your Referral Bookings</h4>
+            <span id="ref-count">0 bookings</span>
+          </div>
+          <div id="ref-bookings-wrap">
+            <div class="empty-state"><div class="icon">📭</div>No bookings yet. Share your link and start earning!</div>
+          </div>
+        </div>
+
+        <div class="dash-table-wrap" style="margin-top:1.5rem">
+          <div class="dash-table-head">
+            <h4>Payout History</h4>
+            <span id="payout-count">0 payouts</span>
+          </div>
+          <div id="payout-wrap">
+            <div class="empty-state"><div class="icon">💳</div>No payouts yet. Payouts happen monthly.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN TAB -->
+<div class="tab-panel" id="panel-admin">
+  <!-- Admin login -->
+  <div id="admin-login-wrap" style="max-width:400px">
+    <div style="background:var(--white);border:1px solid var(--g200);border-radius:var(--radius-lg);padding:2rem;box-shadow:var(--sh-sm)">
+      <h3 style="font-family:var(--serif);font-size:1.3rem;color:var(--navy);margin-bottom:.4rem">Admin Login</h3>
+      <p style="font-size:13px;color:var(--g600);margin-bottom:1.2rem">Enter your admin token to manage affiliates.</p>
+      <div style="display:flex;flex-direction:column;gap:.8rem">
+        <input type="password" id="admin-token-input" placeholder="Admin token" style="padding:.65rem .9rem;border:1.5px solid var(--g200);border-radius:var(--radius);font-family:var(--sans);font-size:14px;outline:none">
+        <button class="btn btn-primary" onclick="adminLogin()" style="justify-content:center">Enter Admin Panel →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin panel -->
+  <div class="admin-wrap" id="admin-panel">
+    <div class="admin-header">
+      <h3>Affiliate Management</h3>
+      <div style="display:flex;gap:.8rem;flex-wrap:wrap">
+        <span style="font-size:13px;color:var(--g600);align-self:center">Commission rate:</span>
+        <select id="admin-comm-rate" style="padding:.4rem .8rem;border:1.5px solid var(--g200);border-radius:8px;font-family:var(--sans);font-size:13px;font-weight:600" onchange="updateCommission()">
+          <option value="10">10%</option>
+          <option value="15">15%</option>
+          <option value="20" selected>20%</option>
+          <option value="25">25%</option>
+          <option value="30">30%</option>
+        </select>
+        <button class="btn btn-primary btn-sm" onclick="loadAdmin()">↻ Refresh</button>
+        <button style="background:none;border:1px solid var(--g200);color:var(--g600);border-radius:8px;padding:.4rem .8rem;font-size:12px;cursor:pointer" onclick="adminLogout()">Log out</button>
+      </div>
+    </div>
+
+    <!-- Admin Stats -->
+    <div class="stats-row" style="margin-bottom:1.5rem">
+      <div class="stat-box"><div class="num"><em id="a-total">0</em></div><div class="lab">Total Affiliates</div></div>
+      <div class="stat-box"><div class="num"><em id="a-active">0</em></div><div class="lab">Active (with bookings)</div></div>
+      <div class="stat-box gold-box"><div class="num">GH₵ <em id="a-owed">0</em></div><div class="lab">Total Owed</div></div>
+    </div>
+
+    <!-- Affiliates table -->
+    <div class="admin-table-wrap">
+      <div class="dash-table-head">
+        <h4>All Affiliates</h4>
+        <span id="aff-count">0 affiliates</span>
+      </div>
+      <div id="admin-affiliates-wrap">
+        <div class="empty-state"><div class="icon">👤</div>No affiliates yet.</div>
+      </div>
+    </div>
+
+    <!-- Pending payouts -->
+    <div class="admin-table-wrap" style="margin-top:1.5rem">
+      <div class="dash-table-head">
+        <h4>Pending Payouts</h4>
+        <span id="pending-count">0 pending</span>
+      </div>
+      <div id="admin-payouts-wrap">
+        <div class="empty-state"><div class="icon">✅</div>No pending payouts.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Pips Built Academy · <a href="mailto:pipsbuiltacademy@gmail.com">pipsbuiltacademy@gmail.com</a> · Accra, Ghana</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+
+// ── CONFIG ──────────────────────────────────────────────────
+const SITE_URL        = 'https://pipsbuiltacademy.netlify.app'; // update to your real URL
+const SUPABASE_URL    = 'https://jkwzknvialkjkykpgjko.supabase.co'; // update
+const SUPABASE_KEY    = 'YOUR_SUPABASE_ANON_KEY'; // update with your anon key
+const MONITOR_SECRET  = 'txho9f62UUPEYKuX0652488ZNZNDEUEIROTMFNGJGOGPEHEHldodfjfhtutidndbfhfi';
+const COMM_RATE_DEFAULT = 20; // percent — admin can change this live
+
+// ── EMAILJS ──────────────────────────────────────────────────
+const EJS = {
+  PUBLIC_KEY:  'kaAcwVVVxd-gVw1vU',
+  SERVICE_ID:  'service_a9lza8t',
+  TEMPLATE_ID: 'template_c6vxg9o',
+  ADMIN_EMAIL: 'pipsbuiltacademy@gmail.com',
+};
+(function initEJS(){
+  if(typeof emailjs==='undefined'){ console.warn('[EmailJS] SDK not loaded'); return; }
+  try{ emailjs.init({ publicKey: EJS.PUBLIC_KEY }); } catch(e){ console.error('[EmailJS] init failed',e); }
+})();
+
+// Generic send using the same template as the main site
+async function ejsSend(params) {
+  if(typeof emailjs==='undefined') return false;
+  try{ await emailjs.send(EJS.SERVICE_ID, EJS.TEMPLATE_ID, params); return true; }
+  catch(e){ console.error('[EmailJS] send failed', e); return false; }
+}
+
+// 1. Email to affiliate when they submit (application received)
+async function emailApplicationReceived(aff) {
+  await ejsSend({
+    to_email:     aff.email,
+    reply_to:     EJS.ADMIN_EMAIL,
+    subject:      `Your Affiliate Application — Pips Built Academy`,
+    headline:     `Application received, ${aff.name.split(' ')[0]}.`,
+    tagline:      'PIPS BUILT ACADEMY · AFFILIATE PROGRAMME',
+    intro_line_1: `Hi ${aff.name},`,
+    intro_line_2: `We've received your affiliate application and we're reviewing it now. You'll hear back within 24 hours.`,
+    callout:      '"Refer traders. Earn while they learn."',
+    details_title:'Your application details',
+    row_1_label:'Name',        row_1_value: aff.name,
+    row_2_label:'Email',       row_2_value: aff.email,
+    row_3_label:'Referral Code',row_3_value: aff.code,
+    row_4_label:'Platform',    row_4_value: aff.platform || '—',
+    row_5_label:'Payout Info', row_5_value: aff.payout_info,
+    row_6_label:'Status',      row_6_value: '⏳ Pending Review',
+    row_7_label:'', row_7_value:'', row_8_label:'', row_8_value:'',
+    message_title:'What happens next',
+    message_body: `1. We review your application (within 24 hours).\n2. If approved, you'll get your unique referral link by email.\n3. Share your link — earn ${COMM_RATE_DEFAULT}% on every booking.\n4. Get paid monthly to your ${aff.payout_info}.`,
+    closing_line: 'Welcome to the team.',
+    cta_text:     'WhatsApp Us',
+    cta_url:      `https://wa.me/233207050769`,
+    signoff:      '— Pips Built Academy',
+  });
+}
+
+// 2. Email to admin when new affiliate applies
+async function emailAdminNewAffiliate(aff) {
+  await ejsSend({
+    to_email:     EJS.ADMIN_EMAIL,
+    reply_to:     aff.email,
+    subject:      `🤝 New affiliate application: ${aff.name} (${aff.code})`,
+    headline:     'New affiliate application',
+    tagline:      'PIPS BUILT ACADEMY · ADMIN',
+    intro_line_1: `${aff.name} just applied to be an affiliate.`,
+    intro_line_2: `Go to the Admin tab on the affiliate page to approve or reject.`,
+    callout:      '',
+    details_title:'Applicant details',
+    row_1_label:'Name',        row_1_value: aff.name,
+    row_2_label:'Email',       row_2_value: aff.email,
+    row_3_label:'WhatsApp',    row_3_value: aff.phone,
+    row_4_label:'Code',        row_4_value: aff.code,
+    row_5_label:'Platform',    row_5_value: aff.platform || '—',
+    row_6_label:'Social',      row_6_value: aff.social || '—',
+    row_7_label:'Payout Info', row_7_value: aff.payout_info,
+    row_8_label:'',            row_8_value:'',
+    message_title:'Their reason for applying',
+    message_body: aff.reason || '(no message)',
+    closing_line: '',
+    cta_text:     `Reply to ${aff.name.split(' ')[0]}`,
+    cta_url:      `mailto:${aff.email}`,
+    signoff:      '',
+  });
+}
+
+// 3. Email to affiliate when approved — with their link
+async function emailApproved(aff) {
+  const refLink = `${SITE_URL}/?ref=${aff.code}`;
+  await ejsSend({
+    to_email:     aff.email,
+    reply_to:     EJS.ADMIN_EMAIL,
+    subject:      `✅ You're approved! Your Pips Built Academy affiliate link is ready`,
+    headline:     `You're in, ${aff.name.split(' ')[0]}! 🎉`,
+    tagline:      'PIPS BUILT ACADEMY · AFFILIATE PROGRAMME',
+    intro_line_1: `Hi ${aff.name},`,
+    intro_line_2: `Your affiliate application has been approved. Your unique referral link is below — start sharing it and earn ${aff.comm_rate || COMM_RATE_DEFAULT}% on every booking that comes through you.`,
+    callout:      `Your link: ${refLink}`,
+    details_title:'Your affiliate details',
+    row_1_label:'Referral Code',  row_1_value: aff.code,
+    row_2_label:'Commission Rate',row_2_value: `${aff.comm_rate || COMM_RATE_DEFAULT}%`,
+    row_3_label:'Payout Schedule',row_3_value: 'Monthly',
+    row_4_label:'Payout To',      row_4_value: aff.payout_info,
+    row_5_label:'Dashboard',      row_5_value: `${SITE_URL}/affiliate.html`,
+    row_6_label:'Status',         row_6_value: '✅ Approved',
+    row_7_label:'', row_7_value:'', row_8_label:'', row_8_value:'',
+    message_title:'How to use your link',
+    message_body: `1. Copy your link: ${refLink}\n2. Share on WhatsApp, Instagram, TikTok, Telegram — anywhere.\n3. When someone books through your link, it's automatically tracked.\n4. Log into your dashboard anytime to check your clicks, bookings, and earnings.\n5. You get paid at the end of every month.`,
+    closing_line: 'Lets get it. 💰',
+    cta_text:     'View My Dashboard',
+    cta_url:      `${SITE_URL}/affiliate.html`,
+    signoff:      '— Pips Built Academy',
+  });
+}
+
+// 4. Email to affiliate when they get paid
+async function emailPaymentSent(aff, amountGhs) {
+  await ejsSend({
+    to_email:     aff.email,
+    reply_to:     EJS.ADMIN_EMAIL,
+    subject:      `💸 Your affiliate commission of GH₵${fmt(amountGhs)} has been sent!`,
+    headline:     `GH₵${fmt(amountGhs)} is on its way! 🎉`,
+    tagline:      'PIPS BUILT ACADEMY · AFFILIATE PROGRAMME',
+    intro_line_1: `Hi ${aff.name.split(' ')[0]},`,
+    intro_line_2: `Your affiliate commission for this month has been sent to your payout account. Keep sharing your link to earn more next month!`,
+    callout:      `GH₵${fmt(amountGhs)} sent to ${aff.payout_info}`,
+    details_title:'Payment summary',
+    row_1_label:'Amount Sent',    row_1_value: `GH₵${fmt(amountGhs)}`,
+    row_2_label:'Sent To',        row_2_value: aff.payout_info,
+    row_3_label:'Your Code',      row_3_value: aff.code,
+    row_4_label:'Total Earned',   row_4_value: `GH₵${fmt(aff.earned_ghs)}`,
+    row_5_label:'Total Paid Out', row_5_value: `GH₵${fmt((aff.paid_ghs||0) + amountGhs)}`,
+    row_6_label:'',               row_6_value:'',
+    row_7_label:'', row_7_value:'', row_8_label:'', row_8_value:'',
+    message_title:'Keep earning',
+    message_body: `Your referral link: ${SITE_URL}/?ref=${aff.code}\n\nShare it everywhere — every booking earns you ${aff.comm_rate || COMM_RATE_DEFAULT}%. No limit on how much you can earn.`,
+    closing_line: 'Thank you for being part of the team. 🙏',
+    cta_text:     'View My Dashboard',
+    cta_url:      `${SITE_URL}/affiliate.html`,
+    signoff:      '— Pips Built Academy',
+  });
+}
+
+// ── HELPERS ─────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+function toast(msg, kind = 'info') {
+  const t = $('toast'); t.textContent = msg; t.className = 'toast show ' + kind;
+  clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('show'), 4000);
+}
+function fmt(n) { return Number(n || 0).toLocaleString('en-US', {minimumFractionDigits:0, maximumFractionDigits:0}); }
+
+async function sb(path, opts = {}) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+    ...opts,
+    headers: {
+      'apikey':        SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type':  'application/json',
+      'Prefer':        opts.prefer || 'return=representation',
+      ...(opts.headers || {}),
+    },
+  });
+  if (!res.ok) {
+    const txt = await res.text();
+    throw new Error(`Supabase error ${res.status}: ${txt}`);
+  }
+  if (res.status === 204 || opts.method === 'DELETE') return null;
+  const ct = res.headers.get('content-type') || '';
+  return ct.includes('json') ? res.json() : null;
+}
+
+// ── TABS ────────────────────────────────────────────────────
+function switchTab(tab) {
+  ['register','dashboard','admin'].forEach(t => {
+    $('tab-'+t).classList.toggle('active', t === tab);
+    $('panel-'+t).classList.toggle('active', t === tab);
+  });
+  $('tabs-anchor').scrollIntoView({behavior:'smooth', block:'start'});
+}
+function scrollToRegister() {
+  switchTab('register');
+  setTimeout(() => $('tabs-anchor').scrollIntoView({behavior:'smooth'}), 100);
+}
+
+// ── REGISTRATION ─────────────────────────────────────────────
+function validateReg() {
+  let ok = true;
+  const checks = [
+    {id:'r-name',   hint:'h-name',   test:v=>v.length>=2, msg:'Enter your full name'},
+    {id:'r-email',  hint:'h-email',  test:v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v), msg:'Enter a valid email'},
+    {id:'r-phone',  hint:'h-phone',  test:v=>v.replace(/\D/g,'').length>=9, msg:'Enter a valid WhatsApp number'},
+    {id:'r-code',   hint:'h-code',   test:v=>/^[A-Z0-9]{2,20}$/.test(v), msg:'2–20 letters/numbers, no spaces'},
+    {id:'r-payout', hint:'h-payout', test:v=>v.length>=6, msg:'Enter your MoMo or bank details for payouts'},
+  ];
+  checks.forEach(c => {
+    const el=$(c.id), hint=$(c.hint), v=el.value.trim();
+    if(!c.test(v)){ el.style.borderColor='var(--red)'; hint.textContent=c.msg; hint.className='hint error'; ok=false; }
+    else{ el.style.borderColor=''; hint.className='hint'; }
+  });
+  return ok;
+}
+
+async function submitRegistration() {
+  if(!validateReg()) return;
+  const btn=$('reg-btn'); btn.disabled=true; $('reg-btn-label').textContent='Submitting…';
+
+  const code  = $('r-code').value.trim().toUpperCase();
+  const email = $('r-email').value.trim().toLowerCase();
+
+  try {
+    // Check code not already taken
+    const existing = await sb(`affiliates?code=eq.${code}&select=code`);
+    if(existing && existing.length > 0) {
+      $('h-code').textContent='This code is already taken. Try another.';
+      $('h-code').className='hint error';
+      $('r-code').style.borderColor='var(--red)';
+      btn.disabled=false; $('reg-btn-label').innerHTML='Submit Application <span class="arr">→</span>';
+      return;
+    }
+
+    await sb('affiliates', {
+      method:'POST',
+      prefer:'return=minimal',
+      body: JSON.stringify({
+        name:        $('r-name').value.trim(),
+        email,
+        phone:       $('r-phone').value.trim(),
+        code,
+        social:      $('r-social').value.trim(),
+        platform:    $('r-platform').value,
+        reason:      $('r-reason').value.trim(),
+        payout_info: $('r-payout').value.trim(),
+        status:      'pending',
+        comm_rate:   COMM_RATE_DEFAULT,
+        clicks:      0,
+        bookings:    0,
+        earned_ghs:  0,
+        paid_ghs:    0,
+      }),
+    });
+
+    // Emails — fire both in parallel, don't block UI
+    const affData = { name:$('r-name').value.trim(), email, phone:$('r-phone').value.trim(), code, social:$('r-social').value.trim(), platform:$('r-platform').value, reason:$('r-reason').value.trim(), payout_info:$('r-payout').value.trim() };
+    Promise.all([ emailApplicationReceived(affData), emailAdminNewAffiliate(affData) ])
+      .catch(e => console.warn('[email] affiliate registration emails failed', e));
+
+    // Show success
+    $('reg-form-wrap').style.display = 'none';
+    $('reg-success').style.display   = 'block';
+    $('success-link').textContent     = `${SITE_URL}/?ref=${code}`;
+    toast('Application submitted! Check your email for confirmation.', 'success');
+
+  } catch(err) {
+    console.error(err);
+    toast('Could not submit. Please try again or WhatsApp us directly.', 'error');
+    btn.disabled=false; $('reg-btn-label').innerHTML='Submit Application <span class="arr">→</span>';
+  }
+}
+
+// ── AFFILIATE DASHBOARD ──────────────────────────────────────
+let currentAffiliate = null;
+
+async function loadDashboard() {
+  const email = $('d-email').value.trim().toLowerCase();
+  const code  = $('d-code').value.trim().toUpperCase();
+  if(!email || !code){ toast('Enter your email and referral code.','error'); return; }
+
+  try {
+    const rows = await sb(`affiliates?email=eq.${encodeURIComponent(email)}&code=eq.${code}&select=*`);
+    if(!rows || rows.length===0){ toast('No affiliate found with those details.','error'); return; }
+
+    currentAffiliate = rows[0];
+    renderDashboard(currentAffiliate);
+
+    // Load bookings attributed to this affiliate
+    const bookings = await sb(`bookings?affiliate_code=eq.${code}&select=*&order=created_at.desc`);
+    renderBookings(bookings || []);
+
+    // Load payouts
+    const payouts = await sb(`affiliate_payouts?affiliate_code=eq.${code}&select=*&order=created_at.desc`);
+    renderPayouts(payouts || []);
+
+    $('dash-login-form').style.display  = 'none';
+    $('dash-profile').style.display     = 'flex';
+    $('dash-locked').style.display      = 'none';
+    $('dash-loaded').style.display      = 'block';
+
+  } catch(err) {
+    console.error(err);
+    toast('Could not load dashboard. Try again.','error');
+  }
+}
+
+function renderDashboard(aff) {
+  $('dash-avatar').textContent  = (aff.name||'A')[0].toUpperCase();
+  $('dash-name').textContent    = aff.name;
+  $('dash-handle').textContent  = aff.social ? '@'+aff.social.replace(/^@/,'') : aff.code;
+  $('dash-status').textContent  = aff.status === 'approved' ? '✅ Approved' : aff.status === 'pending' ? '⏳ Pending' : '❌ Suspended';
+  $('dash-status').style.color  = aff.status === 'approved' ? 'var(--green)' : aff.status === 'pending' ? 'var(--gold)' : 'var(--red)';
+  $('dash-ref-link').textContent= `${SITE_URL}/?ref=${aff.code}`;
+
+  const pending = (aff.earned_ghs||0) - (aff.paid_ghs||0);
+  $('s-clicks').textContent   = fmt(aff.clicks);
+  $('s-bookings').textContent = fmt(aff.bookings);
+  $('s-earned').textContent   = fmt(aff.earned_ghs);
+  $('s-pending').textContent  = `GH₵ ${fmt(pending)}`;
+  $('s-paid').textContent     = fmt(aff.paid_ghs);
+  $('s-rate').textContent     = aff.comm_rate || COMM_RATE_DEFAULT;
+}
+
+function renderBookings(bookings) {
+  $('ref-count').textContent = bookings.length + ' booking' + (bookings.length!==1?'s':'');
+  if(!bookings.length) return;
+  $('ref-bookings-wrap').innerHTML = `
+    <table class="dash-table">
+      <thead><tr><th>Date</th><th>Customer</th><th>Tier</th><th>Amount</th><th>Commission</th><th>Status</th></tr></thead>
+      <tbody>${bookings.map(b=>{
+        const commRate = (currentAffiliate?.comm_rate||COMM_RATE_DEFAULT)/100;
+        const comm = Math.round((b.amount||0)/100 * commRate);
+        return `<tr>
+          <td>${new Date(b.created_at).toLocaleDateString('en-GB')}</td>
+          <td>${b.customer_name||b.customer_email||'—'}</td>
+          <td>${b.tier||'—'}</td>
+          <td>GH₵ ${fmt((b.amount||0)/100)}</td>
+          <td style="color:var(--green);font-weight:600">GH₵ ${fmt(comm)}</td>
+          <td><span class="badge green">Confirmed</span></td>
+        </tr>`;
+      }).join('')}</tbody>
+    </table>`;
+}
+
+function renderPayouts(payouts) {
+  $('payout-count').textContent = payouts.length + ' payout' + (payouts.length!==1?'s':'');
+  if(!payouts.length) return;
+  $('payout-wrap').innerHTML = `
+    <table class="dash-table">
+      <thead><tr><th>Date</th><th>Amount</th><th>Method</th><th>Status</th></tr></thead>
+      <tbody>${payouts.map(p=>`<tr>
+        <td>${new Date(p.created_at).toLocaleDateString('en-GB')}</td>
+        <td style="font-weight:600">GH₵ ${fmt(p.amount_ghs)}</td>
+        <td>${p.method||'MoMo/Bank'}</td>
+        <td><span class="badge ${p.status==='paid'?'green':'yellow'}">${p.status}</span></td>
+      </tr>`).join('')}</tbody>
+    </table>`;
+}
+
+function copyRefLink() {
+  const link = `${SITE_URL}/?ref=${currentAffiliate?.code||''}`;
+  navigator.clipboard.writeText(link).then(()=>{
+    const btn=$('ref-copy-btn');
+    btn.textContent='Copied ✓'; btn.classList.add('copied');
+    toast('Referral link copied!','success');
+    setTimeout(()=>{ btn.textContent='Copy Link'; btn.classList.remove('copied'); },2000);
+  }).catch(()=>toast('Could not copy. Link: '+link,'error'));
+}
+
+function logoutDash() {
+  currentAffiliate=null;
+  $('dash-login-form').style.display='flex';
+  $('dash-profile').style.display='none';
+  $('dash-locked').style.display='block';
+  $('dash-loaded').style.display='none';
+  $('d-email').value=''; $('d-code').value='';
+}
+
+// ── ADMIN PANEL ──────────────────────────────────────────────
+let adminToken = null;
+
+function adminLogin() {
+  const t = $('admin-token-input').value.trim();
+  if(t !== MONITOR_SECRET){ toast('Invalid admin token.','error'); return; }
+  adminToken=t;
+  $('admin-login-wrap').style.display='none';
+  $('admin-panel').classList.add('show');
+  loadAdmin();
+}
+
+function adminLogout() {
+  adminToken=null;
+  $('admin-panel').classList.remove('show');
+  $('admin-login-wrap').style.display='block';
+  $('admin-token-input').value='';
+}
+
+async function loadAdmin() {
+  try {
+    const affiliates = await sb('affiliates?select=*&order=created_at.desc');
+    const payouts    = await sb('affiliate_payouts?status=eq.pending&select=*&order=created_at.desc');
+    renderAdminAffiliates(affiliates||[]);
+    renderAdminPayouts(payouts||[]);
+
+    const totalOwed = (affiliates||[]).reduce((s,a)=>s+((a.earned_ghs||0)-(a.paid_ghs||0)),0);
+    const active    = (affiliates||[]).filter(a=>a.bookings>0).length;
+    $('a-total').textContent  = affiliates?.length||0;
+    $('a-active').textContent = active;
+    $('a-owed').textContent   = fmt(totalOwed);
+    $('aff-count').textContent= (affiliates?.length||0)+' affiliates';
+  } catch(err){
+    console.error(err);
+    toast('Could not load admin data.','error');
+  }
+}
+
+function renderAdminAffiliates(affiliates) {
+  if(!affiliates.length){
+    $('admin-affiliates-wrap').innerHTML='<div class="empty-state"><div class="icon">👤</div>No affiliates yet.</div>';
+    return;
+  }
+  $('admin-affiliates-wrap').innerHTML=`
+    <table class="dash-table">
+      <thead><tr><th>Name</th><th>Code</th><th>Email</th><th>Platform</th><th>Clicks</th><th>Bookings</th><th>Earned GH₵</th><th>Paid GH₵</th><th>Status</th><th>Action</th></tr></thead>
+      <tbody>${affiliates.map(a=>{
+        const owed=(a.earned_ghs||0)-(a.paid_ghs||0);
+        return `<tr>
+          <td><strong>${a.name}</strong><br><small style="color:var(--g400)">${a.payout_info||''}</small></td>
+          <td><code style="font-size:12px;color:var(--teal)">${a.code}</code></td>
+          <td style="font-size:12px">${a.email}</td>
+          <td>${a.platform||'—'}</td>
+          <td>${a.clicks||0}</td>
+          <td>${a.bookings||0}</td>
+          <td style="color:var(--green);font-weight:600">${fmt(a.earned_ghs)}</td>
+          <td>${fmt(a.paid_ghs)}</td>
+          <td><span class="badge ${a.status==='approved'?'green':a.status==='pending'?'yellow':'blue'}">${a.status}</span></td>
+          <td style="display:flex;gap:.4rem;flex-wrap:wrap">
+            ${a.status==='pending'?`<button onclick="approveAffiliate('${a.id}')" style="background:var(--green);color:#fff;border:none;border-radius:6px;padding:.3rem .6rem;font-size:11px;cursor:pointer;font-weight:600">Approve</button>`:''}
+            ${owed>0?`<button onclick="markPaid('${a.id}','${a.name}',${owed},'${a.code}')" style="background:var(--gold);color:var(--navy);border:none;border-radius:6px;padding:.3rem .6rem;font-size:11px;cursor:pointer;font-weight:600">Pay GH₵${fmt(owed)}</button>`:''}
+            <button onclick="suspendAffiliate('${a.id}','${a.status}')" style="background:var(--g100);color:var(--g600);border:none;border-radius:6px;padding:.3rem .6rem;font-size:11px;cursor:pointer">${a.status==='suspended'?'Unsuspend':'Suspend'}</button>
+          </td>
+        </tr>`;
+      }).join('')}</tbody>
+    </table>`;
+}
+
+function renderAdminPayouts(payouts) {
+  $('pending-count').textContent=payouts.length+' pending';
+  if(!payouts.length){
+    $('admin-payouts-wrap').innerHTML='<div class="empty-state"><div class="icon">✅</div>No pending payouts.</div>';
+    return;
+  }
+  $('admin-payouts-wrap').innerHTML=`
+    <table class="dash-table">
+      <thead><tr><th>Affiliate</th><th>Amount GH₵</th><th>Method</th><th>Date</th><th>Action</th></tr></thead>
+      <tbody>${payouts.map(p=>`<tr>
+        <td>${p.affiliate_code}</td>
+        <td style="font-weight:700;color:var(--gold)">GH₵ ${fmt(p.amount_ghs)}</td>
+        <td>${p.method||'—'}</td>
+        <td>${new Date(p.created_at).toLocaleDateString('en-GB')}</td>
+        <td><button onclick="confirmPayout('${p.id}')" style="background:var(--green);color:#fff;border:none;border-radius:6px;padding:.3rem .7rem;font-size:11px;cursor:pointer;font-weight:600">Mark Paid</button></td>
+      </tr>`).join('')}</tbody>
+    </table>`;
+}
+
+async function approveAffiliate(id) {
+  try{
+    await sb(`affiliates?id=eq.${id}`,{method:'PATCH',prefer:'return=minimal',body:JSON.stringify({status:'approved'})});
+    // Fetch full affiliate record to send the email
+    const rows = await sb(`affiliates?id=eq.${id}&select=*`);
+    if(rows && rows.length) emailApproved(rows[0]).catch(e=>console.warn('[email] approval email failed',e));
+    toast('Affiliate approved! Email sent to them. ✅','success'); loadAdmin();
+  }catch(e){ toast('Could not approve.','error'); }
+}
+
+async function suspendAffiliate(id, currentStatus) {
+  const newStatus = currentStatus==='suspended' ? 'approved' : 'suspended';
+  try{
+    await sb(`affiliates?id=eq.${id}`,{method:'PATCH',prefer:'return=minimal',body:JSON.stringify({status:newStatus})});
+    toast(`Affiliate ${newStatus}.`,'info'); loadAdmin();
+  }catch(e){ toast('Could not update status.','error'); }
+}
+
+async function markPaid(affiliateId, name, amount, code) {
+  if(!confirm(`Mark GH₵${fmt(amount)} as paid to ${name}?\n\nThis will send them a payment confirmation email.`)) return;
+  try{
+    await sb('affiliate_payouts',{method:'POST',prefer:'return=minimal',body:JSON.stringify({
+      affiliate_id:   affiliateId,
+      affiliate_code: code,
+      amount_ghs:     amount,
+      status:         'paid',
+      method:         'Manual',
+    })});
+    const rows = await sb(`affiliates?id=eq.${affiliateId}&select=*`);
+    const prev  = rows?.[0]?.paid_ghs||0;
+    await sb(`affiliates?id=eq.${affiliateId}`,{method:'PATCH',prefer:'return=minimal',body:JSON.stringify({paid_ghs:prev+amount})});
+    // Send payment email to affiliate
+    if(rows && rows.length){
+      emailPaymentSent(rows[0], amount).catch(e=>console.warn('[email] payment email failed',e));
+    }
+    toast(`GH₵${fmt(amount)} marked as paid to ${name}. Email sent! 💸`, 'success');
+    loadAdmin();
+  }catch(e){ console.error(e); toast('Could not record payment.','error'); }
+}
+
+async function confirmPayout(id) {
+  try{
+    await sb(`affiliate_payouts?id=eq.${id}`,{method:'PATCH',prefer:'return=minimal',body:JSON.stringify({status:'paid'})});
+    toast('Payout confirmed.','success'); loadAdmin();
+  }catch(e){ toast('Could not confirm payout.','error'); }
+}
+
+function updateCommission() {
+  const rate = $('admin-comm-rate').value;
+  $('comm-pct').textContent = rate;
+  $('how-pct').textContent  = rate + '%';
+  toast(`Commission rate updated to ${rate}% (display only — update Supabase defaults separately).`,'info');
+}
+
+// ── REFERRAL TRACKING ────────────────────────────────────────
+// When a visitor arrives with ?ref=CODE, record the click.
+(async function trackReferral(){
+  const params = new URLSearchParams(location.search);
+  const ref    = params.get('ref');
+  if(!ref) return;
+  sessionStorage.setItem('affiliate_ref', ref.toUpperCase());
+  // Increment click counter in Supabase
+  try{
+    const rows = await sb(`affiliates?code=eq.${ref.toUpperCase()}&select=id,clicks`);
+    if(rows && rows.length){
+      const aff = rows[0];
+      await sb(`affiliates?id=eq.${aff.id}`,{method:'PATCH',prefer:'return=minimal',body:JSON.stringify({clicks:(aff.clicks||0)+1})});
+    }
+  }catch(e){ console.warn('[affiliate] click track failed',e); }
+})();
+
+// Call this from your verify-payment flow when a booking is confirmed
+// to attribute it to the affiliate and update their earnings.
+window.attributeBookingToAffiliate = async function(bookingRef, amountGhsPesewas, tier) {
+  const code = sessionStorage.getItem('affiliate_ref');
+  if(!code) return;
+  try{
+    const rows = await sb(`affiliates?code=eq.${code}&status=eq.approved&select=id,bookings,earned_ghs,comm_rate`);
+    if(!rows||!rows.length) return;
+    const aff       = rows[0];
+    const rate      = (aff.comm_rate||COMM_RATE_DEFAULT)/100;
+    const amountGhs = Math.round(amountGhsPesewas/100);
+    const commission = Math.round(amountGhs * rate);
+    await sb(`affiliates?id=eq.${aff.id}`,{method:'PATCH',prefer:'return=minimal',body:JSON.stringify({
+      bookings:   (aff.bookings||0)+1,
+      earned_ghs: (aff.earned_ghs||0)+commission,
+    })});
+    // Tag the booking with the affiliate code
+    await sb(`bookings?booking_ref=eq.${bookingRef}`,{method:'PATCH',prefer:'return=minimal',body:JSON.stringify({affiliate_code:code})});
+    sessionStorage.removeItem('affiliate_ref');
+    console.log(`[affiliate] ✓ ${code} gets GH₵${commission} for booking ${bookingRef}`);
+  }catch(e){ console.warn('[affiliate] attribution failed',e); }
+};
+</script>
+</body>
+</html>
