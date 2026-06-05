@@ -698,7 +698,7 @@ body {
       </div>
       <div class="cp-section-body">
         <div style="font-size:11px;color:var(--ink-faint);margin-bottom:1rem;">
-          Toggle each tier ON or OFF. When disabled, the card on the booking page shows “Sold Out” and the pay button is hidden.
+          Toggle each tier ON or OFF. When disabled, the card on the booking page shows “ENDED” and the pay button is hidden.
         </div>
         <div class="tier-toggle-grid" id="tier-toggle-grid">
           <!-- rendered by JS -->
@@ -1292,7 +1292,7 @@ const Controls = (() => {
     const card = document.getElementById('tier-card-' + key);
     if (card) {
       card.classList.toggle('disabled-tier', !checked);
-      card.querySelector('.tprice').innerHTML = `${TIER_META[key].price} &middot; ${checked ? '<span style="color:var(--green)">ACTIVE</span>' : '<span style="color:var(--red)">SOLD OUT</span>'}`;
+      card.querySelector('.tprice').innerHTML = `${TIER_META[key].price} &middot; ${checked ? '<span style="color:var(--green)">ACTIVE</span>' : '<span style="color:var(--red)">ENDED</span>'}`;
     }
   }
 
@@ -1359,7 +1359,7 @@ const Controls = (() => {
   }
 
   function disableAll() {
-    if (!confirm('Disable ALL tiers? The booking page will show Sold Out on every card.')) return;
+    if (!confirm('Disable ALL tiers? The booking page will show ENDED on every card.')) return;
     Object.keys(tierState).forEach(k => { tierState[k] = false; });
     renderTierGrid();
     log('All tiers disabled (not saved yet — click Save Tier Settings)');

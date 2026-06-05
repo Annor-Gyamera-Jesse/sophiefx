@@ -1365,7 +1365,7 @@ img, video { max-width: 100%; height: auto; }
  }
 }
 
-/* -- DISCOUNT BADGE & SOLD OUT -- */
+/* -- DISCOUNT BADGE & ENDED -- */
 .discount-badge {
   display: inline-flex; align-items: center; gap: 0.4rem;
   background: linear-gradient(135deg, #16a34a, #15803d);
@@ -1392,7 +1392,7 @@ img, video { max-width: 100%; height: auto; }
   position: relative;
 }
 .tier-card.sold-out::after {
-  content: 'SOLD OUT';
+  content: 'ENDED';
   position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) rotate(-12deg);
   background: rgba(239,68,68,0.12); color: #ef4444;
   border: 2px solid rgba(239,68,68,0.4);
@@ -2207,7 +2207,7 @@ const Settings = (() => {
       if (!enabled) {
         card.onclick = null;
         const ind = card.querySelector('.tier-select-indicator');
-        if (ind) ind.textContent = 'Sold Out';
+        if (ind) ind.textContent = 'ENDED';
       }
     });
   }
