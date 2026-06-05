@@ -1425,6 +1425,7 @@ img, video { max-width: 100%; height: auto; }
       <li><button class="tab-btn" data-tab="about" onclick="App.go('about')">About</button></li>
       <li><button class="tab-btn" data-tab="booking" onclick="App.go('booking')">Booking</button></li>
       <li><button class="tab-btn" data-tab="contact" onclick="App.go('contact')">Contact</button></li>
+      <li><a class="tab-btn" href="affiliate.html" style="text-decoration:none;color:var(--gold);font-weight:700;" title="Affiliate Programme">💰 Earn</a></li>
     </ul>
     <div class="nav-cta">
     <button class="btn btn-primary btn-sm" onclick="App.go('booking')">
@@ -2114,6 +2115,55 @@ img, video { max-width: 100%; height: auto; }
 
 <div class="toast" id="toast">Saved</div>
 
+<!-- ─── AFFILIATE CTA ─────────────────────────────────── -->
+<section style="background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 55%,#1a4a6e 100%);padding:5rem 2rem;position:relative;overflow:hidden;">
+  <div style="position:absolute;top:-80px;right:-80px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(240,165,0,0.12) 0%,transparent 65%);pointer-events:none;"></div>
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:2;">
+
+    <!-- Left: copy -->
+    <div>
+      <div style="display:inline-flex;align-items:center;gap:.5rem;background:rgba(240,165,0,.15);border:1px solid rgba(240,165,0,.3);padding:.35rem 1rem;border-radius:999px;font-size:11px;font-weight:700;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.5rem;">
+        💰 Affiliate Programme
+      </div>
+      <h2 style="font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);line-height:1.15;color:#fff;margin-bottom:1.1rem;">
+        Know a trader who'd<br>benefit? <em style="color:var(--gold);font-style:italic;">Earn for it.</em>
+      </h2>
+      <p style="font-size:1rem;color:rgba(255,255,255,.72);line-height:1.75;margin-bottom:2rem;max-width:440px;">
+        Every mentee you refer earns you a <strong style="color:#fff;">20% commission</strong> on their booking — paid directly to you in Ghana cedis. Share your unique link, track your earnings in real time, and get paid monthly.
+      </p>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+        <a href="affiliate.html" class="btn btn-gold btn-lg">
+          Join the Programme <span class="arrow">→</span>
+        </a>
+        <a href="affiliate.html#how" class="btn btn-outline btn-lg" style="color:#fff;border-color:rgba(255,255,255,.3);">
+          How it Works
+        </a>
+      </div>
+    </div>
+
+    <!-- Right: stats cards -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+      <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius-lg);padding:1.8rem 1.5rem;text-align:center;backdrop-filter:blur(10px);">
+        <div style="font-family:var(--serif);font-size:2.4rem;color:var(--gold);line-height:1;">20%</div>
+        <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,.55);letter-spacing:.08em;text-transform:uppercase;margin-top:.4rem;">Commission Rate</div>
+      </div>
+      <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius-lg);padding:1.8rem 1.5rem;text-align:center;backdrop-filter:blur(10px);">
+        <div style="font-family:var(--serif);font-size:2.4rem;color:#fff;line-height:1;">GH₵</div>
+        <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,.55);letter-spacing:.08em;text-transform:uppercase;margin-top:.4rem;">Paid in Cedis</div>
+      </div>
+      <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius-lg);padding:1.8rem 1.5rem;text-align:center;backdrop-filter:blur(10px);">
+        <div style="font-family:var(--serif);font-size:2.4rem;color:#fff;line-height:1;">∞</div>
+        <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,.55);letter-spacing:.08em;text-transform:uppercase;margin-top:.4rem;">No Earnings Cap</div>
+      </div>
+      <div style="background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:var(--radius-lg);padding:1.8rem 1.5rem;text-align:center;backdrop-filter:blur(10px);">
+        <div style="font-family:var(--serif);font-size:2.4rem;color:var(--gold);line-height:1;">24h</div>
+        <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,.55);letter-spacing:.08em;text-transform:uppercase;margin-top:.4rem;">Fast Approval</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- ─── FOOTER ───────────────────────────────────────────── -->
 <footer>
   <div class="footer-inner">
@@ -2130,6 +2180,7 @@ img, video { max-width: 100%; height: auto; }
         <li><a href="#" onclick="App.go('about');return false;">About</a></li>
         <li><a href="#" onclick="App.go('booking');return false;">Booking</a></li>
         <li><a href="#" onclick="App.go('contact');return false;">Contact</a></li>
+        <li><a href="affiliate.html" style="color:var(--gold);">💰 Affiliate Programme</a></li>
       </ul>
     </div>
     <div class="footer-col">
