@@ -895,10 +895,15 @@ function renderAdminPayouts(payouts){
 // ── ADMIN ACTIONS ────────────────────────────────────────────────
 async function approveAffiliate(id){
   try{
-    await sb(`affiliates?id=eq.${id}`,{method:'PATCH',prefer:'return=minimal',body:JSON.stringify({status:'approved'})});
-    const rows=await sb(`affiliates?id=eq.${id}&select=*`);
-    if(rows&&rows.length) emailApproved(rows[0]).catch(e=>console.warn('[email] approval',e));
-    toast('Affiliate approved! Email sent. ✅','success'); loadAdmin();
+    // PATCH with return=representation gets us the updated row back directly,
+    // avoiding a separate GET that can race the Supabase read replica cache.
+    const updated=await sb(`affiliates?id=eq.${id}`,{method:'PATCH',prefer:'return=representation',body:JSON.stringify({status:'approved'})});
+    const aff=Array.isArray(updated)&&updated.length?updated[0]:null;
+    if(aff) emailApproved(aff).catch(e=>console.warn('[email] approval',e));
+    toast('Affiliate approved! Email sent. ✅','success');
+    // 400 ms yield so the write fully propagates before we re-fetch the list
+    await new Promise(r=>setTimeout(r,400));
+    loadAdmin();
   }catch(e){ toast('Could not approve: '+e.message,'error'); }
 }
 
@@ -907,17 +912,18 @@ async function suspendAffiliate(id,currentStatus){
   const action=newStatus==='suspended'?'suspend':'unsuspend';
   if(!confirm(`Are you sure you want to ${action} this affiliate?\n\n${newStatus==='suspended'?'They will receive a suspension email and their link will be deactivated.':'Their account will be restored to approved status.'}`)) return;
   try{
-    await sb(`affiliates?id=eq.${id}`,{method:'PATCH',prefer:'return=minimal',body:JSON.stringify({status:newStatus})});
-    const rows=await sb(`affiliates?id=eq.${id}&select=*`);
-    if(rows&&rows.length){
+    // PATCH with return=representation gets updated row directly — no stale re-fetch
+    const updated=await sb(`affiliates?id=eq.${id}`,{method:'PATCH',prefer:'return=representation',body:JSON.stringify({status:newStatus})});
+    const aff=Array.isArray(updated)&&updated.length?updated[0]:null;
+    if(aff){
       if(newStatus==='suspended'){
-        emailSuspended(rows[0]).catch(e=>console.warn('[email] suspension',e));
+        emailSuspended(aff).catch(e=>console.warn('[email] suspension',e));
       } else {
-        // Re-send approval email when unsuspended so they have their link again
-        emailApproved(rows[0]).catch(e=>console.warn('[email] unsuspend',e));
+        emailApproved(aff).catch(e=>console.warn('[email] unsuspend',e));
       }
     }
     toast(newStatus==='suspended'?'Affiliate suspended. Email sent. ⛔':'Affiliate unsuspended. Welcome-back email sent. ✅','info');
+    await new Promise(r=>setTimeout(r,400));
     loadAdmin();
   }catch(e){ toast('Could not update status: '+e.message,'error'); }
 }
