@@ -567,7 +567,7 @@ footer a { color: var(--teal); text-decoration: none; }
 'use strict';
 
 // ── CONFIG ────────────────────────────────────────────────────────
-const SUPABASE_SERVICE_KEY = "[[SUPABASE_SERVICE_KEY]]";
+// Admin writes go through /.netlify/functions/affiliate-admin (server-side service key)
 const SITE_URL       = 'https://sophiefx.netlify.app';
 const SUPABASE_URL   = 'https://jkwzknvialkjkykpgjko.supabase.co';
 const SUPABASE_KEY   = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imprd3prbnZpYWxramt5a3BnamtvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzODk4MjksImV4cCI6MjA5Mzk2NTgyOX0.CbpAeQzz-M6m-mn5KilZV6Xhs4k1KjhPAXlnA7M8BKU';
@@ -605,9 +605,9 @@ function toast(msg, kind='info'){
 function fmt(n){ return Number(n||0).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0}); }
 
 async function sb(path, opts = {}) {
-  const { prefer, headers: extraHeaders, isAdmin = false, ...fetchOpts } = opts;
+  const { prefer, headers: extraHeaders, ...fetchOpts } = opts;
   
-  const key = isAdmin ? SUPABASE_SERVICE_KEY : SUPABASE_KEY;
+  const key = SUPABASE_KEY;
 
   const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
     ...fetchOpts,
@@ -627,6 +627,21 @@ async function sb(path, opts = {}) {
   if (res.status === 204 || opts.method === 'DELETE') return null;
   const ct = res.headers.get('content-type') || '';
   return ct.includes('json') ? res.json() : null;
+}
+
+// ── ADMIN ACTION (server-side, uses real service key) ────────────
+async function adminAction(action, params = {}) {
+  const res = await fetch('/.netlify/functions/affiliate-admin', {
+    method: 'POST',
+    headers: {
+      'Content-Type':    'application/json',
+      'X-Monitor-Token': MONITOR_SECRET,
+    },
+    body: JSON.stringify({ action, ...params }),
+  });
+  const data = await res.json();
+  if (!data.success) throw new Error(data.message || `Action "${action}" failed`);
+  return data.data;
 }
 
 async function logEvent(level,tag,msg,extra={}){
@@ -934,13 +949,7 @@ function renderAdminPayouts(payouts){
 async function approveAffiliate(id) {
   try {
     updateAffCardStatus(id, 'approved');
-    const updated = await sb(`affiliates?id=eq.${id}`, {
-      method: 'PATCH',
-      prefer: 'return=representation',
-      isAdmin: true,                    // ← ADD THIS
-      body: JSON.stringify({ status: 'approved' })
-    });
-    const aff = Array.isArray(updated) && updated.length ? updated[0] : null;
+    const aff = await adminAction('approve', { id });
     if (aff) emailApproved(aff).catch(e => console.warn('[email] approval', e));
     toast('Affiliate approved! Email sent. ✅', 'success');
     setTimeout(() => loadAdmin(), 1200);
@@ -957,13 +966,7 @@ async function suspendAffiliate(id, currentStatus) {
 
   try {
     updateAffCardStatus(id, newStatus);
-    const updated = await sb(`affiliates?id=eq.${id}`, {
-      method: 'PATCH',
-      prefer: 'return=representation',
-      isAdmin: true,                    // ← ADD THIS
-      body: JSON.stringify({ status: newStatus })
-    });
-    const aff = Array.isArray(updated) && updated.length ? updated[0] : null;
+    const aff = await adminAction('suspend', { id, newStatus });
     if (aff) {
       if (newStatus === 'suspended') {
         emailSuspended(aff).catch(e => console.warn('[email] suspension', e));
@@ -982,22 +985,17 @@ async function suspendAffiliate(id, currentStatus) {
 async function markPaid(affiliateId,name,amount,code){
   if(!confirm(`Mark GH₵${fmt(amount)} as paid to ${name}?\n\nThis will also send them a payment confirmation email.`)) return;
   try{
-    await sb('affiliate_payouts',{method:'POST',prefer:'return=minimal',body:JSON.stringify({
-      affiliate_id:affiliateId, affiliate_code:code, amount_ghs:amount, status:'paid', method:'Manual'
-    })});
-    const rows=await sb(`affiliates?id=eq.${affiliateId}&select=*`);
-    const prev=rows?.[0]?.paid_ghs||0;
-    await sb(`affiliates?id=eq.${affiliateId}`,{method:'PATCH',prefer:'return=minimal',body:JSON.stringify({paid_ghs:prev+amount})});
-    if(rows&&rows.length) emailPaymentSent(rows[0],amount).catch(e=>console.warn('[email] payment',e));
+    const aff = await adminAction('markPaid', { affiliateId, code, amount });
+    if(aff) emailPaymentSent(aff, amount).catch(e=>console.warn('[email] payment',e));
     toast(`GH₵${fmt(amount)} marked as paid to ${name}. 💸`,'success'); loadAdmin();
-  }catch(e){ console.error(e); toast('Could not record payment.','error'); }
+  }catch(e){ console.error(e); toast('Could not record payment: ' + e.message,'error'); }
 }
 
 async function confirmPayout(id){
   try{
-    await sb(`affiliate_payouts?id=eq.${id}`,{method:'PATCH',prefer:'return=minimal',body:JSON.stringify({status:'paid'})});
+    await adminAction('confirmPayout', { id });
     toast('Payout confirmed.','success'); loadAdmin();
-  }catch(e){ toast('Could not confirm payout.','error'); }
+  }catch(e){ toast('Could not confirm payout: ' + e.message,'error'); }
 }
 
 function updateCommission(){
