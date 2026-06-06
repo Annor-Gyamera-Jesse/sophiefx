@@ -2542,7 +2542,7 @@ const App = (() => {
     setNotif('notif-email',notif.email?'ok':'failed');
     setNotif('notif-sophie',notif.sophie?'ok':'failed');
     setNotif('notif-wa','ok');
-    const waMsg=encodeURIComponent(`Hi Sophie! 👋\n\nI just booked the ${tierName(state.tier)}.\n\nName: ${state.applicant.name}\nRef: ${state.bookingRef}\nAmount: $${fmt(state.usd)} (GH₵ ${fmt(state.ghs)})\nMethod: ${payment.method}\n\nExcited to start!`);
+    const waMsg=encodeURIComponent(`Hi Team! 👋\n\nI just booked the ${tierName(state.tier)}.\n\nName: ${state.applicant.name}\nRef: ${state.bookingRef}\nAmount: $${fmt(state.usd)} (GH₵ ${fmt(state.ghs)})\nMethod: ${payment.method}\n\nExcited to start!`);
     $('whatsapp-link').href=`https://wa.me/${CONFIG.SOPHIE_WHATSAPP}?text=${waMsg}`;
     $('success-modal').classList.add('show');
     state.isPaying=false;
