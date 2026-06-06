@@ -534,9 +534,9 @@ footer a{color:var(--teal);text-decoration:none}
 'use strict';
 
 // ── CONFIG ──────────────────────────────────────────────────
-const SITE_URL        = 'https://pipsbuiltacademy.netlify.app'; // update to your real URL
+const SITE_URL        = 'https://sophiefx.netlify.app'; // update to your real URL
 const SUPABASE_URL    = 'https://jkwzknvialkjkykpgjko.supabase.co'; // update
-const SUPABASE_KEY    = 'YOUR_SUPABASE_ANON_KEY'; // update with your anon key
+const SUPABASE_KEY    = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imprd3prbnZpYWxramt5a3BnamtvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzODk4MjksImV4cCI6MjA5Mzk2NTgyOX0.CbpAeQzz-M6m-mn5KilZV6Xhs4k1KjhPAXlnA7M8BKU'; // update with your anon key
 const MONITOR_SECRET  = 'txho9f62UUPEYKuX0652488ZNZNDEUEIROTMFNGJGOGPEHEHldodfjfhtutidndbfhfi';
 const COMM_RATE_DEFAULT = 20; // percent — admin can change this live
 
@@ -676,8 +676,11 @@ async function emailPaymentSent(aff, amountGhs) {
 // ── HELPERS ─────────────────────────────────────────────────
 const $ = id => document.getElementById(id);
 function toast(msg, kind = 'info') {
-  const t = $('toast'); t.textContent = msg; t.className = 'toast show ' + kind;
-  clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('show'), 4000);
+  const t = $('toast'); 
+  t.textContent = msg; 
+  t.className = 'toast show ' + kind;
+  clearTimeout(t._t); 
+  t._t = setTimeout(() => t.classList.remove('show'), 4000);
 }
 function fmt(n) { return Number(n || 0).toLocaleString('en-US', {minimumFractionDigits:0, maximumFractionDigits:0}); }
 
@@ -748,8 +751,15 @@ function validateReg() {
   ];
   checks.forEach(c => {
     const el=$(c.id), hint=$(c.hint), v=el.value.trim();
-    if(!c.test(v)){ el.style.borderColor='var(--red)'; hint.textContent=c.msg; hint.className='hint error'; ok=false; }
-    else{ el.style.borderColor=''; hint.className='hint'; }
+    if(!c.test(v)){ 
+      el.style.borderColor='var(--red)'; 
+      hint.textContent=c.msg; 
+      hint.className='hint error'; 
+      ok=false; 
+    } else {
+      el.style.borderColor=''; 
+      hint.className='hint'; 
+    }
   });
   return ok;
 }
@@ -765,10 +775,9 @@ async function submitRegistration() {
   const email = $('r-email').value.trim().toLowerCase();
 
   try {
-    // Check if code already exists
     const existing = await sb(`affiliates?code=eq.${code}&select=code`);
     if (existing && existing.length > 0) {
-      const errMsg = 'This referral code is already taken. Please choose another.';
+      const errMsg = 'This referral code is already taken.';
       logToMainAdmin('error', 'register', errMsg, { code, email });
       $('h-code').textContent = errMsg;
       $('h-code').className = 'hint error';
@@ -778,7 +787,6 @@ async function submitRegistration() {
       return;
     }
 
-    // Create affiliate
     await sb('affiliates', {
       method: 'POST',
       prefer: 'return=minimal',
@@ -800,54 +808,39 @@ async function submitRegistration() {
       }),
     });
 
-    // Success
     const affData = {
-      name:  $('r-name').value.trim(),
-      email: email,
+      name: $('r-name').value.trim(),
+      email,
       phone: $('r-phone').value.trim(),
-      code:  code,
+      code,
       social: $('r-social').value.trim(),
       platform: $('r-platform').value,
       reason: $('r-reason').value.trim(),
       payout_info: $('r-payout').value.trim()
     };
 
-    // Send emails (don't block UI)
-    Promise.all([ 
-      emailApplicationReceived(affData), 
-      emailAdminNewAffiliate(affData) 
-    ]).catch(e => {
-      logToMainAdmin('error', 'email', 'Failed to send affiliate emails', { error: e.message });
-    });
+    Promise.all([emailApplicationReceived(affData), emailAdminNewAffiliate(affData)])
+      .catch(e => logToMainAdmin('error', 'email', 'Email failed', {error: e.message}));
 
-    // Show success UI
     $('reg-form-wrap').style.display = 'none';
-    $('reg-success').style.display   = 'block';
-    $('success-link').textContent     = `${SITE_URL}/?ref=${code}`;
+    $('reg-success').style.display = 'block';
+    $('success-link').textContent = `${SITE_URL}/?ref=${code}`;
 
     toast('Application submitted successfully!', 'success');
-    logToMainAdmin('success', 'register', `New affiliate registered: ${code} (${email})`);
+    logToMainAdmin('success', 'register', `New affiliate: ${code} (${email})`);
 
   } catch(err) {
     console.error('[affiliate register]', err);
+    let userMsg = 'Could not submit. Please try again or contact us.';
 
-    let userMsg = 'Could not submit application. Please try again.';
-    
     if (err.message.includes('duplicate') || err.message.includes('23505')) {
-      userMsg = 'Email or referral code already exists.';
-    } else if (err.message.includes('network') || err.message.includes('fetch')) {
-      userMsg = 'Network error. Check your connection and try again.';
+      userMsg = 'Email or code already exists.';
     }
 
     toast(userMsg, 'error');
-
-    logToMainAdmin('error', 'register', `Affiliate registration failed`, {
-      email: email,
-      code: code,
-      error: err.message,
-      stack: err.stack ? err.stack.slice(0, 800) : null
+    logToMainAdmin('error', 'register', 'Registration failed', {
+      email, code, error: err.message
     });
-
   } finally {
     btn.disabled = false;
     $('reg-btn-label').innerHTML = 'Submit Application <span class="arr">→</span>';
