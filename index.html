@@ -2494,12 +2494,21 @@ const App = (() => {
         phone_number:normPhone||undefined,
         firstname:state.applicant.name.split(' ')[0]||'', lastname:state.applicant.name.split(' ').slice(1).join(' ')||'',
         ...(state.method==='mobile_money'&&state.momoProvider&&normPhone?{mobile_money:{phone:normPhone,provider:MOMO_PROVIDERS[state.momoProvider].paystackProvider}}:{}),
-        metadata:{booking_ref:state.bookingRef,tier:state.tier,phone:state.applicant.phone,country:state.applicant.country,usd_amount:state.usd,ghs_amount:state.ghs,custom_fields:[{display_name:'Mentee',variable_name:'mentee_name',value:state.applicant.name},{display_name:'Tier',variable_name:'tier',value:tierName(state.tier)},{display_name:'USD Price',variable_name:'usd_price',value:`$${fmt(state.usd)}`}]},
+        metadata:{booking_ref:state.bookingRef,tier:state.tier,phone:state.applicant.phone,country:state.applicant.country,usd_amount:state.usd,ghs_amount:state.ghs,affiliate_ref:sessionStorage.getItem('affiliate_ref')||undefined,custom_fields:[{display_name:'Mentee',variable_name:'mentee_name',value:state.applicant.name},{display_name:'Tier',variable_name:'tier',value:tierName(state.tier)},{display_name:'USD Price',variable_name:'usd_price',value:`$${fmt(state.usd)}`}]},
         onLoad:r=>{console.log('[ps] loaded',r);hideStatus();},
         onSuccess:async tx=>{
           showStatus('processing','Verifying…','Confirming with Paystack.');
           const v=await verifyOnServer(tx.reference);
-          if(v.ok) Settings.incrementUsed(); finalizeBooking({reference:tx.reference,method:methodLabel(),status:v.ok?'success':'pending_verification',gateway_response:v.message||'success',verified:v.ok});
+          if(v.ok){
+            Settings.incrementUsed();
+            try{
+              const affCode=sessionStorage.getItem('affiliate_ref');
+              if(affCode && window.attributeBookingToAffiliate){
+                await window.attributeBookingToAffiliate(state.bookingRef, state.ghs*100, state.tier);
+              }
+            }catch(affErr){ console.warn('[affiliate] attribution error:',affErr); }
+          }
+          finalizeBooking({reference:tx.reference,method:methodLabel(),status:v.ok?'success':'pending_verification',gateway_response:v.message||'success',verified:v.ok});
         },
         onCancel:()=>{ showStatus('error','Payment cancelled','No charge was made.'); toast('Payment cancelled.','error'); resetPayButton(); },
         onError:e=>{ console.error('[ps] error',e); showStatus('error','Payment error',e?.message||'Something went wrong.'); toast('Error: '+(e?.message||'unknown'),'error'); resetPayButton(); }
@@ -2542,7 +2551,7 @@ const App = (() => {
     setNotif('notif-email',notif.email?'ok':'failed');
     setNotif('notif-sophie',notif.sophie?'ok':'failed');
     setNotif('notif-wa','ok');
-    const waMsg=encodeURIComponent(`Hi Team! 👋\n\nI just booked the ${tierName(state.tier)}.\n\nName: ${state.applicant.name}\nRef: ${state.bookingRef}\nAmount: $${fmt(state.usd)} (GH₵ ${fmt(state.ghs)})\nMethod: ${payment.method}\n\nExcited to start!`);
+    const waMsg=encodeURIComponent(`Hi Sophie! 👋\n\nI just booked the ${tierName(state.tier)}.\n\nName: ${state.applicant.name}\nRef: ${state.bookingRef}\nAmount: $${fmt(state.usd)} (GH₵ ${fmt(state.ghs)})\nMethod: ${payment.method}\n\nExcited to start!`);
     $('whatsapp-link').href=`https://wa.me/${CONFIG.SOPHIE_WHATSAPP}?text=${waMsg}`;
     $('success-modal').classList.add('show');
     state.isPaying=false;
@@ -2689,6 +2698,58 @@ const App = (() => {
   window.addEventListener('beforeunload',()=>flush());
   document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')flush();});
   log('info','general','PipsBuiltForex Monitor v2 init ✓',{data:{userAgent:navigator.userAgent,url:location.href,time:new Date().toISOString()}});
+})();
+</script>
+<!-- ── AFFILIATE TRACKING ── -->
+<script>
+(function(){
+  const SUPABASE_URL = 'https://jkwzknvialkjkykpgjko.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imprd3prbnZpYWxramt5a3BnamtvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzODk4MjksImV4cCI6MjA5Mzk2NTgyOX0.CbpAeQzz-M6m-mn5KilZV6Xhs4k1KjhPAXlnA7M8BKU';
+  const COMM_RATE_DEFAULT = 30;
+
+  async function sbFetch(path, opts={}){
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
+      ...opts,
+      headers:{ 'apikey':SUPABASE_KEY, 'Authorization':`Bearer ${SUPABASE_KEY}`, 'Content-Type':'application/json', 'Prefer':'return=minimal', ...(opts.headers||{}) }
+    });
+    if(!res.ok) throw new Error(`Supabase ${res.status}`);
+    if(res.status===204) return null;
+    return res.json();
+  }
+
+  // Track click when someone lands via ?ref=CODE
+  (async function trackClick(){
+    const ref = new URLSearchParams(location.search).get('ref');
+    if(!ref) return;
+    const code = ref.toUpperCase();
+    sessionStorage.setItem('affiliate_ref', code);
+    try{
+      const rows = await sbFetch(`affiliates?code=eq.${code}&select=id,clicks`);
+      if(rows && rows.length){
+        const a = rows[0];
+        await sbFetch(`affiliates?id=eq.${a.id}`, { method:'PATCH', body:JSON.stringify({ clicks:(a.clicks||0)+1 }) });
+        console.log('[affiliate] ✓ click tracked for', code);
+      }
+    }catch(e){ console.warn('[affiliate] click track failed', e); }
+  })();
+
+  // Called by index.html after payment is verified
+  window.attributeBookingToAffiliate = async function(bookingRef, amountPesewas, tier){
+    const code = sessionStorage.getItem('affiliate_ref');
+    if(!code){ console.log('[affiliate] no ref in session'); return; }
+    try{
+      const rows = await sbFetch(`affiliates?code=eq.${code}&status=eq.approved&select=id,bookings,earned_ghs,comm_rate`);
+      if(!rows || !rows.length){ console.warn('[affiliate] code not found or not approved:', code); return; }
+      const a = rows[0];
+      const rate = (a.comm_rate || COMM_RATE_DEFAULT) / 100;
+      const amtGhs = Math.round(amountPesewas / 100);
+      const comm = Math.round(amtGhs * rate);
+      await sbFetch(`affiliates?id=eq.${a.id}`, { method:'PATCH', body:JSON.stringify({ bookings:(a.bookings||0)+1, earned_ghs:(a.earned_ghs||0)+comm }) });
+      await sbFetch(`bookings?booking_ref=eq.${encodeURIComponent(bookingRef)}`, { method:'PATCH', body:JSON.stringify({ affiliate_code:code }) });
+      sessionStorage.removeItem('affiliate_ref');
+      console.log(`[affiliate] ✓ ${code} earns GH₵${comm} for booking ${bookingRef}`);
+    }catch(e){ console.warn('[affiliate] attribution failed', e); }
+  };
 })();
 </script>
 </body>
