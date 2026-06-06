@@ -286,6 +286,7 @@ export const handler = async (event) => {
   try {
     await persistBooking(payload);
     await incrementDiscountUsed();
+     await attributeAffiliate(payload.booking_ref, payload.amount, payload.tier, tx.metadata);
   } catch (sideErr) {
     console.error('[verify] post-verify side-effect failed:', sideErr.message);
   }
