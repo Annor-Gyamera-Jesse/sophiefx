@@ -604,14 +604,15 @@ function toast(msg, kind='info'){
 function fmt(n){ return Number(n||0).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0}); }
 
 async function sb(path, opts={}){
+  const {prefer, headers:extraHeaders, ...fetchOpts} = opts;
   const res=await fetch(`${SUPABASE_URL}/rest/v1/${path}`,{
-    ...opts,
+    ...fetchOpts,
     headers:{
       'apikey':SUPABASE_KEY,
       'Authorization':`Bearer ${SUPABASE_KEY}`,
       'Content-Type':'application/json',
-      'Prefer':opts.prefer||'return=representation',
-      ...(opts.headers||{})
+      'Prefer': prefer || 'return=representation',
+      ...(extraHeaders||{})
     }
   });
   if(!res.ok){ const txt=await res.text(); throw new Error(`Supabase ${res.status}: ${txt}`); }
@@ -700,7 +701,7 @@ async function loadDashboard(){
   if(!email||!code){ toast('Enter your email and referral code.','error'); return; }
   try{
     // Always fetch fresh from DB so status reflects latest admin changes
-    const rows=await sb(`affiliates?email=eq.${encodeURIComponent(email)}&code=eq.${code}&select=*&ts=${Date.now()}`);
+    const rows=await sb(`affiliates?email=eq.${encodeURIComponent(email)}&code=eq.${code}&select=*`);
     if(!rows||rows.length===0){ toast('No affiliate found with those details.','error'); return; }
     currentAffiliate=rows[0]; renderDashboard(currentAffiliate);
     const bookings=await sb(`bookings?affiliate_code=eq.${code}&select=*&order=created_at.desc`);
@@ -828,6 +829,35 @@ async function loadAdmin(){
   }
 }
 
+// Optimistic UI: instantly update a single affiliate card's status badge + action buttons
+// so the admin sees the change immediately without waiting for a DB re-fetch
+function updateAffCardStatus(id, newStatus){
+  // Re-render just this card by finding it via data-id attribute
+  const card = document.querySelector(`.aff-card[data-id="${id}"]`);
+  if(!card) return;
+  // Update badge
+  const badge = card.querySelector('.badge');
+  if(badge){
+    badge.className = 'badge ' + (newStatus==='approved'?'green':newStatus==='pending'?'yellow':'red');
+    badge.textContent = newStatus;
+  }
+  // Update action buttons
+  const right = card.querySelector('.aff-card-right');
+  if(right){
+    // Remove approve button if now approved
+    const approveBtn = right.querySelector('.act-btn.approve');
+    if(approveBtn && newStatus==='approved') approveBtn.remove();
+    // Swap suspend <-> unsuspend
+    const suspendBtn  = right.querySelector('.act-btn.suspend');
+    const unsuspendBtn= right.querySelector('.act-btn.unsuspend');
+    if(newStatus==='suspended'){
+      if(suspendBtn){ suspendBtn.className='act-btn unsuspend'; suspendBtn.textContent='↩ Unsuspend'; suspendBtn.setAttribute('onclick',`suspendAffiliate('${id}','suspended')`); }
+    } else {
+      if(unsuspendBtn){ unsuspendBtn.className='act-btn suspend'; unsuspendBtn.textContent='⊘ Suspend'; unsuspendBtn.setAttribute('onclick',`suspendAffiliate('${id}','${newStatus}')`); }
+    }
+  }
+}
+
 // ── ADMIN AFFILIATES RENDER (card layout, fully responsive) ──────
 function renderAdminAffiliates(affiliates){
   $('aff-count').textContent=affiliates.length+' affiliate'+(affiliates.length!==1?'s':'');
@@ -845,7 +875,7 @@ function renderAdminAffiliates(affiliates){
     const suspendBtn=a.status==='suspended'
       ?`<button class="act-btn unsuspend" onclick="suspendAffiliate('${a.id}','${a.status}')">↩ Unsuspend</button>`
       :`<button class="act-btn suspend"   onclick="suspendAffiliate('${a.id}','${a.status}')">⊘ Suspend</button>`;
-    return `<div class="aff-card">
+    return `<div class="aff-card" data-id="${a.id}">
       <div class="aff-card-left">
         <div class="aff-card-name">
           ${escHtml(a.name)}
@@ -895,15 +925,15 @@ function renderAdminPayouts(payouts){
 // ── ADMIN ACTIONS ────────────────────────────────────────────────
 async function approveAffiliate(id){
   try{
-    // PATCH with return=representation gets us the updated row back directly,
-    // avoiding a separate GET that can race the Supabase read replica cache.
+    // Optimistically update the card in the DOM immediately
+    updateAffCardStatus(id, 'approved');
+    // Fire PATCH — use service-role style with return=representation
     const updated=await sb(`affiliates?id=eq.${id}`,{method:'PATCH',prefer:'return=representation',body:JSON.stringify({status:'approved'})});
     const aff=Array.isArray(updated)&&updated.length?updated[0]:null;
     if(aff) emailApproved(aff).catch(e=>console.warn('[email] approval',e));
     toast('Affiliate approved! Email sent. ✅','success');
-    // 400 ms yield so the write fully propagates before we re-fetch the list
-    await new Promise(r=>setTimeout(r,400));
-    loadAdmin();
+    // Reload after a short delay to get fresh server state
+    setTimeout(()=>loadAdmin(), 1200);
   }catch(e){ toast('Could not approve: '+e.message,'error'); }
 }
 
@@ -912,7 +942,8 @@ async function suspendAffiliate(id,currentStatus){
   const action=newStatus==='suspended'?'suspend':'unsuspend';
   if(!confirm(`Are you sure you want to ${action} this affiliate?\n\n${newStatus==='suspended'?'They will receive a suspension email and their link will be deactivated.':'Their account will be restored to approved status.'}`)) return;
   try{
-    // PATCH with return=representation gets updated row directly — no stale re-fetch
+    // Optimistically update the card immediately
+    updateAffCardStatus(id, newStatus);
     const updated=await sb(`affiliates?id=eq.${id}`,{method:'PATCH',prefer:'return=representation',body:JSON.stringify({status:newStatus})});
     const aff=Array.isArray(updated)&&updated.length?updated[0]:null;
     if(aff){
@@ -923,8 +954,7 @@ async function suspendAffiliate(id,currentStatus){
       }
     }
     toast(newStatus==='suspended'?'Affiliate suspended. Email sent. ⛔':'Affiliate unsuspended. Welcome-back email sent. ✅','info');
-    await new Promise(r=>setTimeout(r,400));
-    loadAdmin();
+    setTimeout(()=>loadAdmin(), 1200);
   }catch(e){ toast('Could not update status: '+e.message,'error'); }
 }
 
