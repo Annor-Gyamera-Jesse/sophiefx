@@ -2708,12 +2708,21 @@ const App = (() => {
   const COMM_RATE_DEFAULT = 30;
 
   async function sbFetch(path, opts={}){
+    const method = opts.method || 'GET';
+    const isGet = method === 'GET';
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
       ...opts,
-      headers:{ 'apikey':SUPABASE_KEY, 'Authorization':`Bearer ${SUPABASE_KEY}`, 'Content-Type':'application/json', 'Prefer':'return=minimal', ...(opts.headers||{}) }
+      headers:{ 
+        'apikey':SUPABASE_KEY, 
+        'Authorization':`Bearer ${SUPABASE_KEY}`, 
+        'Content-Type':'application/json', 
+        'Accept':'application/json',
+        ...(!isGet ? {'Prefer':'return=minimal'} : {}),
+        ...(opts.headers||{}) 
+      }
     });
-    if(!res.ok) throw new Error(`Supabase ${res.status}`);
-    if(res.status===204) return null;
+    if(!res.ok) throw new Error(`Supabase ${res.status}: ${await res.text()}`);
+    if(res.status===204 || !isGet) return null;
     return res.json();
   }
 
