@@ -310,9 +310,9 @@ footer a { color: var(--teal); text-decoration: none; }
 <!-- COMMISSION STRIP -->
 <div class="comm-strip">
   <div class="comm-inner">
-    <div class="comm-stat"><div class="num"><em id="comm-pct">30</em>%</div><div class="lab">Your Commission</div></div>
+    <div class="comm-stat"><div class="num"><em id="comm-pct">20</em>%</div><div class="lab">Your Commission</div></div>
     <div class="comm-div"></div>
-    <div class="comm-stat"><div class="num"><em>Daily</em></div><div class="lab">Payout Schedule</div></div>
+    <div class="comm-stat"><div class="num"><em>Monthly</em></div><div class="lab">Payout Schedule</div></div>
     <div class="comm-div"></div>
     <div class="comm-stat"><div class="num"><em>∞</em></div><div class="lab">No Referral Limit</div></div>
     <div class="comm-div"></div>
@@ -329,7 +329,7 @@ footer a { color: var(--teal); text-decoration: none; }
     <div class="how-card"><div class="how-icon">📝</div><div class="how-num">Step 1</div><h4>Register</h4><p>Sign up below with your details and social handle. We approve within 24 hours.</p></div>
     <div class="how-card"><div class="how-icon">🔗</div><div class="how-num">Step 2</div><h4>Get Your Link</h4><p>You get a unique link like <code style="font-size:10px;color:var(--teal)">?ref=YOURNAME</code> tied to your account.</p></div>
     <div class="how-card"><div class="how-icon">📣</div><div class="how-num">Step 3</div><h4>Share Anywhere</h4><p>Post on WhatsApp, Instagram, TikTok, Telegram, YouTube — wherever your audience is.</p></div>
-    <div class="how-card"><div class="how-icon">💸</div><div class="how-num">Step 4</div><h4>Earn Commission</h4><p>When someone books through your link, you earn <strong id="how-pct">30%</strong> of the booking value. Paid daily.</p></div>
+    <div class="how-card"><div class="how-icon">💸</div><div class="how-num">Step 4</div><h4>Earn Commission</h4><p>When someone books through your link, you earn <strong id="how-pct">20%</strong> of the booking value. Paid monthly.</p></div>
   </div>
 </div>
 
@@ -390,7 +390,7 @@ footer a { color: var(--teal); text-decoration: none; }
       <div class="form-field">
         <label>MoMo / Bank for payouts *</label>
         <input type="text" id="r-payout" placeholder="e.g. MTN MoMo 0244 000 000 / Stanbic 9040012345">
-        <span class="hint" id="h-payout">Where we send your daily commission</span>
+        <span class="hint" id="h-payout">Where we send your monthly commission</span>
       </div>
     </div>
     <div class="form-submit">
@@ -471,7 +471,7 @@ footer a { color: var(--teal); text-decoration: none; }
         <div class="dash-table-wrap" style="margin-top:1.25rem">
           <div class="dash-table-head"><h4>Payout History</h4><span id="payout-count">0 payouts</span></div>
           <div class="table-scroll" id="payout-wrap">
-            <div class="empty-state"><div class="icon">💳</div>No payouts yet. Payouts happen daily.</div>
+            <div class="empty-state"><div class="icon">💳</div>No payouts yet. Payouts happen monthly.</div>
           </div>
         </div>
       </div>
@@ -510,9 +510,9 @@ footer a { color: var(--teal); text-decoration: none; }
         <select class="admin-comm-select" id="admin-comm-rate" onchange="updateCommission()">
           <option value="10">10%</option>
           <option value="15">15%</option>
-          <option value="20">20%</option>
+          <option value="20" selected>20%</option>
           <option value="25">25%</option>
-          <option value="30" selected>30%</option>
+          <option value="30">30%</option>
         </select>
         <button class="btn btn-primary btn-sm" id="refresh-btn" onclick="refreshAdmin()">
           <span class="icon-refresh" id="refresh-icon">↻</span> Refresh
@@ -572,7 +572,7 @@ const SITE_URL       = 'https://pipsbuiltacademy.netlify.app';
 const SUPABASE_URL   = 'https://jkwzknvialkjkykpgjko.supabase.co';
 const SUPABASE_KEY   = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imprd3prbnZpYWxramt5a3BnamtvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzODk4MjksImV4cCI6MjA5Mzk2NTgyOX0.CbpAeQzz-M6m-mn5KilZV6Xhs4k1KjhPAXlnA7M8BKU';
 const MONITOR_SECRET = 'txho9f62UUPEYKuX0652488ZNZNDEUEIROTMFNGJGOGPEHEHldodfjfhtutidndbfhfi';
-let   COMM_RATE      = 30;
+let   COMM_RATE      = 20;
 
 // ── EMAILJS ───────────────────────────────────────────────────────
 const EJS = {
@@ -588,10 +588,10 @@ const EJS = {
 
 async function ejsSend(p){ if(typeof emailjs==='undefined') return false; try{ await emailjs.send(EJS.SERVICE_ID,EJS.TEMPLATE_ID,p); return true; }catch(e){ console.error('[EmailJS]',e); return false; } }
 
-async function emailApplicationReceived(a){ await ejsSend({ to_email:a.email, reply_to:EJS.ADMIN_EMAIL, subject:`Your Affiliate Application — Pips Built Academy`, headline:`Application received, ${a.name.split(' ')[0]}.`, tagline:'PIPS BUILT ACADEMY · AFFILIATE PROGRAMME', intro_line_1:`Hi ${a.name},`, intro_line_2:`We've received your application and will review it within 24 hours.`, callout:'"Refer traders. Earn while they learn."', details_title:'Your application details', row_1_label:'Name', row_1_value:a.name, row_2_label:'Email', row_2_value:a.email, row_3_label:'Referral Code', row_3_value:a.code, row_4_label:'Platform', row_4_value:a.platform||'—', row_5_label:'Payout Info', row_5_value:a.payout_info, row_6_label:'Status', row_6_value:'⏳ Pending Review', row_7_label:'', row_7_value:'', row_8_label:'', row_8_value:'', message_title:'What happens next', message_body:`1. We review your application (within 24 hours).\n2. If approved, you'll get your unique referral link by email.\n3. Share your link — earn ${COMM_RATE}% on every booking.\n4. Get paid daily to your ${a.payout_info}.`, closing_line:'Welcome to the team.', cta_text:'WhatsApp Us', cta_url:`https://wa.me/233207050769`, signoff:'— Pips Built Academy' }); }
+async function emailApplicationReceived(a){ await ejsSend({ to_email:a.email, reply_to:EJS.ADMIN_EMAIL, subject:`Your Affiliate Application — Pips Built Academy`, headline:`Application received, ${a.name.split(' ')[0]}.`, tagline:'PIPS BUILT ACADEMY · AFFILIATE PROGRAMME', intro_line_1:`Hi ${a.name},`, intro_line_2:`We've received your application and will review it within 24 hours.`, callout:'"Refer traders. Earn while they learn."', details_title:'Your application details', row_1_label:'Name', row_1_value:a.name, row_2_label:'Email', row_2_value:a.email, row_3_label:'Referral Code', row_3_value:a.code, row_4_label:'Platform', row_4_value:a.platform||'—', row_5_label:'Payout Info', row_5_value:a.payout_info, row_6_label:'Status', row_6_value:'⏳ Pending Review', row_7_label:'', row_7_value:'', row_8_label:'', row_8_value:'', message_title:'What happens next', message_body:`1. We review your application (within 24 hours).\n2. If approved, you'll get your unique referral link by email.\n3. Share your link — earn ${COMM_RATE}% on every booking.\n4. Get paid monthly to your ${a.payout_info}.`, closing_line:'Welcome to the team.', cta_text:'WhatsApp Us', cta_url:`https://wa.me/233207050769`, signoff:'— Pips Built Academy' }); }
 async function emailAdminNewAffiliate(a){ await ejsSend({ to_email:EJS.ADMIN_EMAIL, reply_to:a.email, subject:`🤝 New affiliate: ${a.name} (${a.code})`, headline:'New affiliate application', tagline:'PIPS BUILT ACADEMY · ADMIN', intro_line_1:`${a.name} just applied to be an affiliate.`, intro_line_2:'Go to the Admin tab to approve or reject.', callout:'', details_title:'Applicant details', row_1_label:'Name', row_1_value:a.name, row_2_label:'Email', row_2_value:a.email, row_3_label:'WhatsApp', row_3_value:a.phone, row_4_label:'Code', row_4_value:a.code, row_5_label:'Platform', row_5_value:a.platform||'—', row_6_label:'Social', row_6_value:a.social||'—', row_7_label:'Payout Info', row_7_value:a.payout_info, row_8_label:'', row_8_value:'', message_title:'Their reason', message_body:a.reason||'(no message)', closing_line:'', cta_text:`Reply to ${a.name.split(' ')[0]}`, cta_url:`mailto:${a.email}`, signoff:'' }); }
-async function emailApproved(a){ const l=`${SITE_URL}/?ref=${a.code}`; await ejsSend({ to_email:a.email, reply_to:EJS.ADMIN_EMAIL, subject:`✅ You're approved! Your affiliate link is ready`, headline:`You're in, ${a.name.split(' ')[0]}! 🎉`, tagline:'PIPS BUILT ACADEMY · AFFILIATE PROGRAMME', intro_line_1:`Hi ${a.name},`, intro_line_2:`Your application has been approved. Your unique referral link is below — start sharing and earn ${a.comm_rate||COMM_RATE}% on every booking.`, callout:`Your link: ${l}`, details_title:'Your affiliate details', row_1_label:'Referral Code', row_1_value:a.code, row_2_label:'Commission Rate', row_2_value:`${a.comm_rate||COMM_RATE}%`, row_3_label:'Payout Schedule', row_3_value:'Daily', row_4_label:'Payout To', row_4_value:a.payout_info, row_5_label:'Dashboard', row_5_value:`${SITE_URL}/affiliate.html`, row_6_label:'Status', row_6_value:'✅ Approved', row_7_label:'', row_7_value:'', row_8_label:'', row_8_value:'', message_title:'How to use your link', message_body:`1. Copy your link: ${l}\n2. Share on WhatsApp, Instagram, TikTok, Telegram — anywhere.\n3. Every booking through your link is automatically tracked.\n4. Log in to check clicks, bookings, and earnings.\n5. You get paid daily.`, closing_line:"Let's get it. 💰", cta_text:'View My Dashboard', cta_url:`${SITE_URL}/affiliate.html`, signoff:'— Pips Built Academy' }); }
-async function emailPaymentSent(a, amt){ await ejsSend({ to_email:a.email, reply_to:EJS.ADMIN_EMAIL, subject:`💸 Your commission of GH₵${fmt(amt)} has been sent!`, headline:`GH₵${fmt(amt)} is on its way! 🎉`, tagline:'PIPS BUILT ACADEMY · AFFILIATE PROGRAMME', intro_line_1:`Hi ${a.name.split(' ')[0]},`, intro_line_2:'Your affiliate commission has been sent. Keep sharing to earn more!', callout:`GH₵${fmt(amt)} sent to ${a.payout_info}`, details_title:'Payment summary', row_1_label:'Amount Sent', row_1_value:`GH₵${fmt(amt)}`, row_2_label:'Sent To', row_2_value:a.payout_info, row_3_label:'Your Code', row_3_value:a.code, row_4_label:'Total Earned', row_4_value:`GH₵${fmt(a.earned_ghs)}`, row_5_label:'Total Paid Out', row_5_value:`GH₵${fmt((a.paid_ghs||0)+amt)}`, row_6_label:'', row_6_value:'', row_7_label:'', row_7_value:'', row_8_label:'', row_8_value:'', message_title:'Keep earning', message_body:`Your referral link: ${SITE_URL}/?ref=${a.code}\n\nEvery booking earns you ${a.comm_rate||COMM_RATE}%. No limit.`, closing_line:'Thank you for being part of the team. 🙏', cta_text:'View My Dashboard', cta_url:`${SITE_URL}/affiliate.html`, signoff:'— Pips Built Academy' }); }
+async function emailApproved(a){ const l=`${SITE_URL}/?ref=${a.code}`; await ejsSend({ to_email:a.email, reply_to:EJS.ADMIN_EMAIL, subject:`✅ You're approved! Your affiliate link is ready`, headline:`You're in, ${a.name.split(' ')[0]}! 🎉`, tagline:'PIPS BUILT ACADEMY · AFFILIATE PROGRAMME', intro_line_1:`Hi ${a.name},`, intro_line_2:`Your application has been approved. Your unique referral link is below — start sharing and earn ${a.comm_rate||COMM_RATE}% on every booking.`, callout:`Your link: ${l}`, details_title:'Your affiliate details', row_1_label:'Referral Code', row_1_value:a.code, row_2_label:'Commission Rate', row_2_value:`${a.comm_rate||COMM_RATE}%`, row_3_label:'Payout Schedule', row_3_value:'Monthly', row_4_label:'Payout To', row_4_value:a.payout_info, row_5_label:'Dashboard', row_5_value:`${SITE_URL}/affiliate.html`, row_6_label:'Status', row_6_value:'✅ Approved', row_7_label:'', row_7_value:'', row_8_label:'', row_8_value:'', message_title:'How to use your link', message_body:`1. Copy your link: ${l}\n2. Share on WhatsApp, Instagram, TikTok, Telegram — anywhere.\n3. Every booking through your link is automatically tracked.\n4. Log in to check clicks, bookings, and earnings.\n5. You get paid at the end of every month.`, closing_line:"Let's get it. 💰", cta_text:'View My Dashboard', cta_url:`${SITE_URL}/affiliate.html`, signoff:'— Pips Built Academy' }); }
+async function emailPaymentSent(a, amt){ await ejsSend({ to_email:a.email, reply_to:EJS.ADMIN_EMAIL, subject:`💸 Your commission of GH₵${fmt(amt)} has been sent!`, headline:`GH₵${fmt(amt)} is on its way! 🎉`, tagline:'PIPS BUILT ACADEMY · AFFILIATE PROGRAMME', intro_line_1:`Hi ${a.name.split(' ')[0]},`, intro_line_2:'Your affiliate commission for this month has been sent. Keep sharing to earn more!', callout:`GH₵${fmt(amt)} sent to ${a.payout_info}`, details_title:'Payment summary', row_1_label:'Amount Sent', row_1_value:`GH₵${fmt(amt)}`, row_2_label:'Sent To', row_2_value:a.payout_info, row_3_label:'Your Code', row_3_value:a.code, row_4_label:'Total Earned', row_4_value:`GH₵${fmt(a.earned_ghs)}`, row_5_label:'Total Paid Out', row_5_value:`GH₵${fmt((a.paid_ghs||0)+amt)}`, row_6_label:'', row_6_value:'', row_7_label:'', row_7_value:'', row_8_label:'', row_8_value:'', message_title:'Keep earning', message_body:`Your referral link: ${SITE_URL}/?ref=${a.code}\n\nEvery booking earns you ${a.comm_rate||COMM_RATE}%. No limit.`, closing_line:'Thank you for being part of the team. 🙏', cta_text:'View My Dashboard', cta_url:`${SITE_URL}/affiliate.html`, signoff:'— Pips Built Academy' }); }
 
 async function emailSuspended(a){ await ejsSend({ to_email:a.email, reply_to:EJS.ADMIN_EMAIL, subject:`⚠️ Your Pips Built Academy affiliate account has been suspended`, headline:`Account suspended`, tagline:'PIPS BUILT ACADEMY · AFFILIATE PROGRAMME', intro_line_1:`Hi ${a.name.split(' ')[0]},`, intro_line_2:`Your affiliate account has been temporarily suspended. This means your referral link is currently inactive and no new commissions will be tracked until the suspension is lifted.`, callout:'If you believe this is a mistake, please contact us.', details_title:'Account details', row_1_label:'Name', row_1_value:a.name, row_2_label:'Referral Code', row_2_value:a.code, row_3_label:'Status', row_3_value:'⛔ Suspended', row_4_label:'Earnings So Far', row_4_value:`GH₵${fmt(a.earned_ghs)}`, row_5_label:'', row_5_value:'', row_6_label:'', row_6_value:'', row_7_label:'', row_7_value:'', row_8_label:'', row_8_value:'', message_title:'What this means', message_body:`1. Your referral link is inactive — clicks and bookings will not be tracked.\n2. Any earnings already recorded remain saved.\n3. Contact us directly to appeal or get more information.\n4. Once unsuspended, your link will be restored automatically.`, closing_line:'We apologise for any inconvenience.', cta_text:'Contact Us on WhatsApp', cta_url:`https://wa.me/233207050769`, signoff:'— Pips Built Academy' }); }
 
@@ -998,27 +998,10 @@ async function confirmPayout(id){
   }catch(e){ toast('Could not confirm payout: ' + e.message,'error'); }
 }
 
-async function updateCommission(){
-  const newRate = parseInt($('admin-comm-rate').value);
-  COMM_RATE = newRate;
-  $('comm-pct').textContent = COMM_RATE;
-  $('how-pct').textContent  = COMM_RATE + '%';
-
-  // Persist the new default rate to all affiliates in Supabase
-  try {
-    // Fetch all affiliate IDs
-    const rows = await sb(`affiliates?select=id`);
-    if (rows && rows.length) {
-      await Promise.all(rows.map(r =>
-        adminAction('patchAffiliate', { id: r.id, fields: { comm_rate: newRate } })
-      ));
-      toast(`Commission rate updated to ${COMM_RATE}% for all affiliates. Saved to database.`, 'success');
-    } else {
-      toast(`Commission display updated to ${COMM_RATE}%. No affiliates in database yet.`, 'info');
-    }
-  } catch(e) {
-    toast(`Display updated to ${COMM_RATE}%, but database save failed: ${e.message}`, 'error');
-  }
+function updateCommission(){
+  COMM_RATE=parseInt($('admin-comm-rate').value);
+  $('comm-pct').textContent=COMM_RATE; $('how-pct').textContent=COMM_RATE+'%';
+  toast(`Commission rate set to ${COMM_RATE}% (display only — update Supabase defaults separately).`,'info');
 }
 
 function escHtml(str){
