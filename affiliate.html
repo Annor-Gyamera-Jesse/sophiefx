@@ -210,7 +210,7 @@ nav { background: var(--white); border-bottom: 1px solid var(--g200); position: 
 .act-btn:hover { opacity: .85; transform: translateY(-1px); }
 .act-btn.approve  { background: #dcfce7; color: #15803d; }
 .act-btn.pay      { background: linear-gradient(135deg, #f0a500, #d4920a); color: var(--navy); }
-.act-btn.suspend  { background: var(--g100); color: var(--g600); }
+.act-btn.suspend  { background: #fee2e2; color: #b91c1c; }
 .act-btn.unsuspend { background: var(--teal-light); color: var(--teal); }
 .act-btn.view-ref { background: var(--teal-light); color: var(--teal); }
 
@@ -592,6 +592,8 @@ async function emailAdminNewAffiliate(a){ await ejsSend({ to_email:EJS.ADMIN_EMA
 async function emailApproved(a){ const l=`${SITE_URL}/?ref=${a.code}`; await ejsSend({ to_email:a.email, reply_to:EJS.ADMIN_EMAIL, subject:`✅ You're approved! Your affiliate link is ready`, headline:`You're in, ${a.name.split(' ')[0]}! 🎉`, tagline:'PIPS BUILT ACADEMY · AFFILIATE PROGRAMME', intro_line_1:`Hi ${a.name},`, intro_line_2:`Your application has been approved. Your unique referral link is below — start sharing and earn ${a.comm_rate||COMM_RATE}% on every booking.`, callout:`Your link: ${l}`, details_title:'Your affiliate details', row_1_label:'Referral Code', row_1_value:a.code, row_2_label:'Commission Rate', row_2_value:`${a.comm_rate||COMM_RATE}%`, row_3_label:'Payout Schedule', row_3_value:'Monthly', row_4_label:'Payout To', row_4_value:a.payout_info, row_5_label:'Dashboard', row_5_value:`${SITE_URL}/affiliate.html`, row_6_label:'Status', row_6_value:'✅ Approved', row_7_label:'', row_7_value:'', row_8_label:'', row_8_value:'', message_title:'How to use your link', message_body:`1. Copy your link: ${l}\n2. Share on WhatsApp, Instagram, TikTok, Telegram — anywhere.\n3. Every booking through your link is automatically tracked.\n4. Log in to check clicks, bookings, and earnings.\n5. You get paid at the end of every month.`, closing_line:"Let's get it. 💰", cta_text:'View My Dashboard', cta_url:`${SITE_URL}/affiliate.html`, signoff:'— Pips Built Academy' }); }
 async function emailPaymentSent(a, amt){ await ejsSend({ to_email:a.email, reply_to:EJS.ADMIN_EMAIL, subject:`💸 Your commission of GH₵${fmt(amt)} has been sent!`, headline:`GH₵${fmt(amt)} is on its way! 🎉`, tagline:'PIPS BUILT ACADEMY · AFFILIATE PROGRAMME', intro_line_1:`Hi ${a.name.split(' ')[0]},`, intro_line_2:'Your affiliate commission for this month has been sent. Keep sharing to earn more!', callout:`GH₵${fmt(amt)} sent to ${a.payout_info}`, details_title:'Payment summary', row_1_label:'Amount Sent', row_1_value:`GH₵${fmt(amt)}`, row_2_label:'Sent To', row_2_value:a.payout_info, row_3_label:'Your Code', row_3_value:a.code, row_4_label:'Total Earned', row_4_value:`GH₵${fmt(a.earned_ghs)}`, row_5_label:'Total Paid Out', row_5_value:`GH₵${fmt((a.paid_ghs||0)+amt)}`, row_6_label:'', row_6_value:'', row_7_label:'', row_7_value:'', row_8_label:'', row_8_value:'', message_title:'Keep earning', message_body:`Your referral link: ${SITE_URL}/?ref=${a.code}\n\nEvery booking earns you ${a.comm_rate||COMM_RATE}%. No limit.`, closing_line:'Thank you for being part of the team. 🙏', cta_text:'View My Dashboard', cta_url:`${SITE_URL}/affiliate.html`, signoff:'— Pips Built Academy' }); }
 
+async function emailSuspended(a){ await ejsSend({ to_email:a.email, reply_to:EJS.ADMIN_EMAIL, subject:`⚠️ Your Pips Built Academy affiliate account has been suspended`, headline:`Account suspended`, tagline:'PIPS BUILT ACADEMY · AFFILIATE PROGRAMME', intro_line_1:`Hi ${a.name.split(' ')[0]},`, intro_line_2:`Your affiliate account has been temporarily suspended. This means your referral link is currently inactive and no new commissions will be tracked until the suspension is lifted.`, callout:'If you believe this is a mistake, please contact us.', details_title:'Account details', row_1_label:'Name', row_1_value:a.name, row_2_label:'Referral Code', row_2_value:a.code, row_3_label:'Status', row_3_value:'⛔ Suspended', row_4_label:'Earnings So Far', row_4_value:`GH₵${fmt(a.earned_ghs)}`, row_5_label:'', row_5_value:'', row_6_label:'', row_6_value:'', row_7_label:'', row_7_value:'', row_8_label:'', row_8_value:'', message_title:'What this means', message_body:`1. Your referral link is inactive — clicks and bookings will not be tracked.\n2. Any earnings already recorded remain saved.\n3. Contact us directly to appeal or get more information.\n4. Once unsuspended, your link will be restored automatically.`, closing_line:'We apologise for any inconvenience.', cta_text:'Contact Us on WhatsApp', cta_url:`https://wa.me/233207050769`, signoff:'— Pips Built Academy' }); }
+
 // ── HELPERS ──────────────────────────────────────────────────────
 const $ = id => document.getElementById(id);
 function toast(msg, kind='info'){
@@ -697,7 +699,8 @@ async function loadDashboard(){
   const code=$('d-code').value.trim().toUpperCase();
   if(!email||!code){ toast('Enter your email and referral code.','error'); return; }
   try{
-    const rows=await sb(`affiliates?email=eq.${encodeURIComponent(email)}&code=eq.${code}&select=*`);
+    // Always fetch fresh from DB so status reflects latest admin changes
+    const rows=await sb(`affiliates?email=eq.${encodeURIComponent(email)}&code=eq.${code}&select=*&ts=${Date.now()}`);
     if(!rows||rows.length===0){ toast('No affiliate found with those details.','error'); return; }
     currentAffiliate=rows[0]; renderDashboard(currentAffiliate);
     const bookings=await sb(`bookings?affiliate_code=eq.${code}&select=*&order=created_at.desc`);
@@ -708,6 +711,23 @@ async function loadDashboard(){
     $('dash-locked').style.display='none';     $('dash-loaded').style.display='block';
   }catch(err){ console.error(err); toast('Could not load dashboard. Try again.','error'); }
 }
+
+// Silently refresh just the status for already-logged-in affiliates (polls every 30s)
+async function pollAffiliateStatus(){
+  if(!currentAffiliate) return;
+  try{
+    const rows=await sb(`affiliates?id=eq.${currentAffiliate.id}&select=status,comm_rate,clicks,bookings,earned_ghs,paid_ghs`);
+    if(!rows||!rows.length) return;
+    const fresh=rows[0];
+    if(fresh.status!==currentAffiliate.status){
+      currentAffiliate={...currentAffiliate,...fresh};
+      renderDashboard(currentAffiliate);
+      if(fresh.status==='approved') toast('Your account has been approved! ✅','success');
+      if(fresh.status==='suspended') toast('Your account has been suspended. Contact support.','error');
+    }
+  }catch(e){ /* silent */ }
+}
+setInterval(pollAffiliateStatus, 30000);
 
 function renderDashboard(a){
   $('dash-avatar').textContent=(a.name||'A')[0].toUpperCase();
@@ -884,10 +904,22 @@ async function approveAffiliate(id){
 
 async function suspendAffiliate(id,currentStatus){
   const newStatus=currentStatus==='suspended'?'approved':'suspended';
+  const action=newStatus==='suspended'?'suspend':'unsuspend';
+  if(!confirm(`Are you sure you want to ${action} this affiliate?\n\n${newStatus==='suspended'?'They will receive a suspension email and their link will be deactivated.':'Their account will be restored to approved status.'}`)) return;
   try{
     await sb(`affiliates?id=eq.${id}`,{method:'PATCH',prefer:'return=minimal',body:JSON.stringify({status:newStatus})});
-    toast(`Affiliate ${newStatus}.`,'info'); loadAdmin();
-  }catch(e){ toast('Could not update status.','error'); }
+    const rows=await sb(`affiliates?id=eq.${id}&select=*`);
+    if(rows&&rows.length){
+      if(newStatus==='suspended'){
+        emailSuspended(rows[0]).catch(e=>console.warn('[email] suspension',e));
+      } else {
+        // Re-send approval email when unsuspended so they have their link again
+        emailApproved(rows[0]).catch(e=>console.warn('[email] unsuspend',e));
+      }
+    }
+    toast(newStatus==='suspended'?'Affiliate suspended. Email sent. ⛔':'Affiliate unsuspended. Welcome-back email sent. ✅','info');
+    loadAdmin();
+  }catch(e){ toast('Could not update status: '+e.message,'error'); }
 }
 
 async function markPaid(affiliateId,name,amount,code){
