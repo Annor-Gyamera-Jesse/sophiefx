@@ -36,7 +36,7 @@
 const SUPABASE_URL         = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
 
-const WHATSAPP_CHANNEL_URL = 'https://chat.whatsapp.com/GX9hG1iC6Q99OjtnfoAzTt';
+const WHATSAPP_CHANNEL_URL = 'https://chat.whatsapp.com/DfSKkrvBf6Q87uc9gA30qI?s=cl&p=a&mlu=1&ilr=0';
 
 // ── Supabase helpers ─────────────────────────────────────────
 
