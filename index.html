@@ -1934,7 +1934,7 @@ img, video { max-width: 100%; height: auto; }
   <div class="section">
     <div class="section-label">Complete Your Booking</div>
     <h2 class="section-title">Secure <em>payment.</em></h2>
-    <p class="booking-intro">Card, mobile money, bank transfer, or USSD — all processed securely through Paystack.</p>
+    <p class="booking-intro">Mobile money or manual bank transfer — choose what works best for you.</p>
 
     <div class="payment-layout">
       <div class="order-summary-card">
@@ -1964,7 +1964,7 @@ img, video { max-width: 100%; height: auto; }
       <div class="payment-section">
         <h4>Select Payment Method</h4>
         <div class="pm-list">
-          <div class="pm-item selected" data-method="card" onclick="App.selectMethod(this)">
+          <div class="pm-item" data-method="card" onclick="App.selectMethod(this)" style="display:none;">
             <div class="pm-radio"></div>
             <div class="pm-text">
               <h5>Card Payment</h5>
@@ -1976,7 +1976,7 @@ img, video { max-width: 100%; height: auto; }
             </div>
           </div>
 
-          <div class="pm-item" data-method="mobile_money" onclick="App.selectMethod(this)">
+          <div class="pm-item selected" data-method="mobile_money" onclick="App.selectMethod(this)">
             <div class="pm-radio"></div>
             <div class="pm-text">
               <h5>Mobile Money</h5>
@@ -2028,7 +2028,7 @@ img, video { max-width: 100%; height: auto; }
             </div>
           </div>
 
-          <div class="pm-item" data-method="bank" onclick="App.selectMethod(this)">
+          <div class="pm-item" data-method="bank" onclick="App.selectMethod(this)" style="display:none;">
             <div class="pm-radio"></div>
             <div class="pm-text">
               <h5>Bank Transfer</h5>
@@ -2037,7 +2037,7 @@ img, video { max-width: 100%; height: auto; }
             <div class="pm-badges"><span class="pm-badge">GH</span></div>
           </div>
 
-          <div class="pm-item" data-method="ussd" onclick="App.selectMethod(this)">
+          <div class="pm-item" data-method="ussd" onclick="App.selectMethod(this)" style="display:none;">
             <div class="pm-radio"></div>
             <div class="pm-text">
               <h5>USSD</h5>
@@ -2459,7 +2459,7 @@ const tierName   = t => (TIERS[t] && TIERS[t].name)   || 'Mentorship';
 const tierFormat = t => (TIERS[t] && TIERS[t].format) || '—';
 
 const App = (() => {
-  const state = { tier:null, ghs:0, usd:0, method:'card', momoProvider:null, momoPhone:'', bookingRef:null, applicant:{}, paystack:null, isPaying:false };
+  const state = { tier:null, ghs:0, usd:0, method:'mobile_money', momoProvider:null, momoPhone:'', bookingRef:null, applicant:{}, paystack:null, isPaying:false };
   const $ = id => document.getElementById(id);
   const fmt = n => Number(n).toLocaleString('en-US');
 
@@ -2725,7 +2725,7 @@ const App = (() => {
     document.querySelectorAll('select').forEach(s=>s.selectedIndex=0);
     document.querySelectorAll('.field-hint').forEach(h=>h.textContent='');
     document.querySelectorAll('.tier-card,.momo-option').forEach(t=>t.classList.remove('selected'));
-    Object.assign(state,{tier:null,ghs:0,usd:0,method:'card',momoProvider:null,momoPhone:'',bookingRef:null,applicant:{},paystack:null,isPaying:false});
+    Object.assign(state,{tier:null,ghs:0,usd:0,method:'mobile_money',momoProvider:null,momoPhone:'',bookingRef:null,applicant:{},paystack:null,isPaying:false});
     $('summary-tier').textContent='— none yet —'; $('summary-amount').textContent='$0';
     resetPayButton(); go('home');
   }
