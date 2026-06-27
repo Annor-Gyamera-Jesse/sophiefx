@@ -167,7 +167,6 @@ nav {
 .panel { display: none; }
 .panel.active { display: block; animation: fadeUp 0.4s ease; }
 @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
-@keyframes spin    { to{transform:rotate(360deg)} }
 
 /* ── BUTTONS ─────────────────────────────────────────────── */
 .btn {
@@ -2057,36 +2056,17 @@ img, video { max-width: 100%; height: auto; }
         </div>
 
         <div class="bank-details" id="bank-details">
-          <!-- Bank details are loaded dynamically from the server — never hardcoded in HTML -->
-          <h5 style="display:flex;align-items:center;gap:0.5rem;">
-            <span>🏦</span> Wire to our Zenith Bank account
-          </h5>
-
-          <!-- Loading state -->
-          <div id="bank-loading" style="text-align:center;padding:1.5rem 0;color:var(--grey-400);font-size:13px;">
-            <span class="spinner" style="display:inline-block;width:16px;height:16px;border:2px solid var(--grey-300);border-top-color:var(--teal);border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:6px;"></span>
-            Loading bank details…
-          </div>
-
-          <!-- Bank details injected here by BankDetails.load() -->
-          <div id="bank-details-inner" style="display:none;"></div>
-
-          <!-- Receipt upload -->
-          <div id="receipt-upload-wrap" style="display:none;margin-top:1.2rem;padding:1rem;background:var(--grey-100);border-radius:var(--radius);border:1px dashed var(--grey-300);">
-            <label style="font-size:13px;font-weight:600;color:var(--navy);display:block;margin-bottom:0.5rem;">
-              📎 Upload payment receipt <span style="color:var(--grey-400);font-weight:400;">(optional but recommended)</span>
-            </label>
-            <p style="font-size:12px;color:var(--grey-600);margin-bottom:0.7rem;line-height:1.5;">
-              Uploading your bank screenshot speeds up verification. JPG, PNG, PDF — max 5 MB.
-            </p>
-            <input type="file" id="receipt-file" accept="image/jpeg,image/png,image/webp,application/pdf"
-                   style="font-size:13px;color:var(--grey-600);"
-                   onchange="BankDetails.onReceiptSelect(this)">
-            <div id="receipt-status" style="font-size:12px;margin-top:0.4rem;color:var(--grey-600);"></div>
-          </div>
-
+          <h5>Wire to the following accounts</h5>
+          <div class="bank-section-head">↳ Ghana Cedis (GH₵)</div>
+          <div class="bank-row"><span class="lab">Bank</span><span class="val">Stanbic Bank Ghana</span></div>
+          <div class="bank-row"><span class="lab">Account №</span><span class="val">9040012345678</span><button class="copy-btn" onclick="App.copy('9040012345678',this)">Copy</button></div>
+          <div class="bank-row"><span class="lab">Name</span><span class="val">PipsBuiltAcademy</span></div>
+          <div class="bank-section-head">↳ US Dollar (USD) — Domiciliary</div>
+          <div class="bank-row"><span class="lab">Bank</span><span class="val">Stanbic Bank · Dom.</span></div>
+          <div class="bank-row"><span class="lab">Account №</span><span class="val">9050098765432</span><button class="copy-btn" onclick="App.copy('9050098765432',this)">Copy</button></div>
+          <div class="bank-row"><span class="lab">SWIFT</span><span class="val">SBICGHAC</span></div>
           <div style="margin-top:1rem;font-size:13px;color:var(--grey-600);line-height:1.6;">
-            Use <strong id="manual-ref" style="color:var(--teal);">—</strong> as your transfer narration so the team can match it.
+            Use <strong id="manual-ref" style="color:var(--teal);">—</strong> as your transfer narration.
             Click <em>Confirm Booking</em> after paying — The team verifies within 24 hours.
           </div>
         </div>
@@ -2550,7 +2530,7 @@ const App = (() => {
     const mp=$('momo-picker');
     if(state.method==='mobile_money'){ mp.classList.add('show'); if(!state.momoProvider){ const mtn=mp.querySelector('[data-provider="mtn"]'); if(mtn) selectMomo(mtn); } } else { mp.classList.remove('show'); }
     const bd=$('bank-details');
-    if(state.method==='manual'){ bd.classList.add('show'); BankDetails.load(); } else { bd.classList.remove('show'); }
+    if(state.method==='manual'){ bd.classList.add('show'); } else { bd.classList.remove('show'); }
     updatePayButton();
   }
 
@@ -2582,7 +2562,7 @@ const App = (() => {
     navigator.clipboard.writeText(text).then(()=>{ btn.classList.add('copied'); btn.textContent='Copied ✓'; setTimeout(()=>{ btn.classList.remove('copied'); btn.textContent='Copy'; },2000); }).catch(()=>toast('Could not copy','error'));
   }
 
- async function executePayment(){
+  function executePayment(){
     if(state.isPaying) return;
     if(state.method==='mobile_money'){
       if(!state.momoProvider){ toast('Please select a mobile money network.','error'); return; }
@@ -2590,11 +2570,7 @@ const App = (() => {
     }
     state.isPaying=true; const btn=$('pay-button'); btn.disabled=true;
     showStatus('processing','Opening secure payment…','Connecting to Paystack…');
-    if(state.method==='manual'){
-      // Submit to backend which saves to pending_transfers table
-      await App.submitBankTransfer();
-      return;
-    }
+    if(state.method==='manual'){ setTimeout(()=>{ finalizeBooking({reference:state.bookingRef+'-MANUAL',method:'Manual Bank Transfer',status:'pending_verification',gateway_response:'Awaiting manual verification'}); },800); return; }
     if(typeof PaystackPop==='undefined'){ showStatus('error','Could not load Paystack','Check your internet and try again.'); toast('Paystack SDK failed to load.','error'); resetPayButton(); return; }
     if(!CONFIG.PAYSTACK_PUBLIC_KEY||CONFIG.PAYSTACK_PUBLIC_KEY.includes('REPLACE')){
       showStatus('processing','Demo mode','No real charge.');
@@ -2730,58 +2706,6 @@ const App = (() => {
     resetPayButton(); go('home');
   }
 
-  async function submitBankTransfer(){
-    // Called when user clicks "I've Made the Transfer" on the Manual Wire method.
-    // Submits booking data + optional receipt to the backend, which saves to
-    // pending_transfers. The admin then approves from admin.html.
-    const btn=$('pay-button');
-    btn.disabled=true;
-    showStatus('processing','Submitting your transfer…','Saving your booking — this takes a moment.');
-    try {
-      const a=state.applicant;
-      const payload={
-        booking_ref:       state.bookingRef,
-        tier:              state.tier,
-        amount_ghs:        state.ghs,
-        amount_usd:        state.usd,
-        customer_name:     a.name,
-        customer_email:    a.email,
-        customer_phone:    a.phone||null,
-        customer_country:  a.country||null,
-        customer_whatsapp: a.whatsapp||null,
-        experience:        a.experience||null,
-        start_date:        a.startDate||null,
-        source:            a.source||null,
-        message:           a.message||null,
-        affiliate_code:    sessionStorage.getItem('_aff')||null,
-      };
-      // Attach receipt if the user uploaded one
-      const receiptData=BankDetails.getReceiptPayload();
-      if(receiptData) payload.receipt=receiptData;
-
-      const res=await fetch('/.netlify/functions/submit-bank-transfer',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify(payload),
-      });
-      const data=await res.json();
-      if(!data.success) throw new Error(data.message||'Submission failed');
-
-      // Show the same success modal as Paystack, but with pending status
-      hideStatus();
-      finalizeBooking({
-        reference:    state.bookingRef+'-BANK',
-        method:       'Manual Bank Transfer',
-        status:       'pending_verification',
-        gateway_response: 'Submitted — awaiting admin verification',
-      });
-    } catch(err) {
-      console.error('[submitBankTransfer]',err);
-      showStatus('error','Submission failed',err.message||'Please try again or contact the team directly.');
-      btn.disabled=false;
-    }
-  }
-
   async function sendContact(){
     const name=$('c-name').value.trim(),email=$('c-email').value.trim(),subject=$('c-subject').value,message=$('c-message').value.trim();
     if(!name||!email||!message){ toast('Please fill in all fields.','error'); return; }
@@ -2820,86 +2744,6 @@ const App = (() => {
     });
   }
 
-
-// ── BANK DETAILS MODULE ─────────────────────────────────────
-// Fetches Zenith Bank account numbers from the server.
-// They never live in this HTML file — always server-side.
-const BankDetails = (() => {
-  let loaded   = false;
-  let loading  = false;
-  let _receipt = null; // { data: base64, mimeType: 'image/jpeg' }
-
-  async function load() {
-    if (loaded || loading) return;
-    loading = true;
-    const inner   = document.getElementById('bank-details-inner');
-    const spinner = document.getElementById('bank-loading');
-    const receiptWrap = document.getElementById('receipt-upload-wrap');
-    if (!inner) return;
-    try {
-      const res  = await fetch('/.netlify/functions/get-bank-details', { cache: 'no-store' });
-      const data = await res.json();
-      if (!data.success || !data.bank) throw new Error(data.message || 'Could not load bank details');
-
-      const b   = data.bank;
-      let html  = '';
-
-      // GH₵ account
-      html += `<div class="bank-section-head">↳ ${escH(b.ghs.label)}</div>`;
-      html += `<div class="bank-row"><span class="lab">Bank</span><span class="val">${escH(b.name)}</span></div>`;
-      html += `<div class="bank-row"><span class="lab">Account №</span><span class="val" id="bd-ghs-acc">${escH(b.ghs.account)}</span><button class="copy-btn" onclick="App.copy('${escH(b.ghs.account)}',this)">Copy</button></div>`;
-      html += `<div class="bank-row"><span class="lab">Name</span><span class="val">${escH(b.account_name)}</span></div>`;
-
-      // USD domiciliary (optional)
-      if (b.usd) {
-        html += `<div class="bank-section-head" style="margin-top:0.8rem;">↳ ${escH(b.usd.label)}</div>`;
-        html += `<div class="bank-row"><span class="lab">Bank</span><span class="val">${escH(b.name)} · Dom.</span></div>`;
-        html += `<div class="bank-row"><span class="lab">Account №</span><span class="val">${escH(b.usd.account)}</span><button class="copy-btn" onclick="App.copy('${escH(b.usd.account)}',this)">Copy</button></div>`;
-        html += `<div class="bank-row"><span class="lab">SWIFT</span><span class="val">${escH(b.usd.swift)}</span></div>`;
-      }
-
-      inner.innerHTML  = html;
-      inner.style.display = '';
-      if (spinner)     spinner.style.display = 'none';
-      if (receiptWrap) receiptWrap.style.display = '';
-      loaded = true;
-    } catch (err) {
-      if (spinner) {
-        spinner.innerHTML = `<span style="color:var(--red);">⚠ Could not load bank details. Please contact the team directly at ${CONFIG.SOPHIE_EMAIL}</span>`;
-      }
-    } finally {
-      loading = false;
-    }
-  }
-
-  function escH(s) {
-    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
-  function onReceiptSelect(input) {
-    const status = document.getElementById('receipt-status');
-    const file   = input.files?.[0];
-    if (!file) { _receipt = null; if (status) status.textContent = ''; return; }
-    if (file.size > 5 * 1024 * 1024) {
-      if (status) status.textContent = '⚠ File too large — max 5 MB.';
-      input.value = ''; _receipt = null; return;
-    }
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      // Strip the data: URI prefix, keep only the base64 part
-      const full = e.target.result;
-      const comma = full.indexOf(',');
-      _receipt = { data: full.slice(comma + 1), mimeType: file.type };
-      if (status) status.textContent = `✓ ${file.name} (${(file.size/1024).toFixed(0)} KB) ready`;
-    };
-    reader.readAsDataURL(file);
-  }
-
-  function getReceiptPayload() { return _receipt; }
-
-  return { load, onReceiptSelect, getReceiptPayload };
-})();
-
   document.addEventListener('DOMContentLoaded',()=>{
   Settings.load();
     const mp=$('momo-phone'); if(mp){ mp.addEventListener('input',validateMomoPhone); mp.addEventListener('blur',validateMomoPhone); }
@@ -2917,7 +2761,7 @@ const BankDetails = (() => {
     }
   });
 
-  return { go,selectTier,selectMethod,selectMomo,copy,proceedToPayment,executePayment,submitBankTransfer,closeModal,sendContact };
+  return { go,selectTier,selectMethod,selectMomo,copy,proceedToPayment,executePayment,closeModal,sendContact };
 })();
 
 // ── TICKER ──────────────────────────────────────────────────
