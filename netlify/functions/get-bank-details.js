@@ -67,10 +67,10 @@ export const handler = async (event) => {
   }
 
   // ── Validate the env vars are actually set ────────────────────
-  const accountName = process.env.ZENITH_ACCOUNT_NAME;
-  const accountGhs  = process.env.ZENITH_ACCOUNT_GHS;
-  const accountUsd  = process.env.ZENITH_ACCOUNT_USD;
-  const swift       = process.env.ZENITH_SWIFT;
+  const accountName      = process.env.ZENITH_ACCOUNT_NAME;
+  const accountGhs       = process.env.ZENITH_ACCOUNT_GHS;
+  const beneficiaryName  = process.env.ZENITH_BENEFICIARY_NAME;
+  const beneficiaryAcc   = process.env.ZENITH_BENEFICIARY_ACC;
 
   if (!accountName || !accountGhs) {
     console.error('[get-bank-details] Bank env vars not configured');
@@ -81,23 +81,44 @@ export const handler = async (event) => {
     };
   }
 
+  // USD wire instructions — intermediary details are fixed (Zenith Bank Ghana correspondent banks)
+  // Only show USD section if Sophie's beneficiary account is configured
+  const usd = (beneficiaryName && beneficiaryAcc) ? {
+    beneficiary_name: beneficiaryName,
+    beneficiary_acc:  beneficiaryAcc,
+    beneficiary_bank: 'Zenith Bank Ghana',
+    swift:            'ZEBLGHAC',
+    // Two corridors — customer picks whichever their bank supports
+    corridors: [
+      {
+        label:            'via JP Morgan Chase (recommended)',
+        intermediary:     'JP Morgan Chase',
+        intermediary_swift: 'CHASUS33',
+        intermediary_acc: '464650998',
+      },
+      {
+        label:            'via Citibank New York',
+        intermediary:     'Citibank New York',
+        intermediary_swift: 'CITIUS33',
+        aba:              '021000089',
+        intermediary_acc: '36250618',
+      },
+    ],
+  } : null;
+
   return {
     statusCode: 200,
     headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       success: true,
       bank: {
-        name:        'Zenith Bank Ghana',
+        name:         'Zenith Bank Ghana',
         account_name: accountName,
         ghs: {
           label:   'Ghana Cedis (GH₵)',
           account: accountGhs,
         },
-        usd: accountUsd ? {
-          label:   'US Dollar (USD) — Domiciliary',
-          account: accountUsd,
-          swift:   swift || 'ZEBLGHAC',
-        } : null,
+        usd,
       },
     }),
   };

@@ -2844,18 +2844,32 @@ const BankDetails = (() => {
       const b   = data.bank;
       let html  = '';
 
-      // GH₵ account
-      html += `<div class="bank-section-head">↳ ${escH(b.ghs.label)}</div>`;
+      // ── GH₵ account ──────────────────────────────────────────
+      html += `<div class="bank-section-head">↳ Ghana Cedis (GH₵) — Local Transfer</div>`;
       html += `<div class="bank-row"><span class="lab">Bank</span><span class="val">${escH(b.name)}</span></div>`;
-      html += `<div class="bank-row"><span class="lab">Account №</span><span class="val" id="bd-ghs-acc">${escH(b.ghs.account)}</span><button class="copy-btn" onclick="App.copy('${escH(b.ghs.account)}',this)">Copy</button></div>`;
-      html += `<div class="bank-row"><span class="lab">Name</span><span class="val">${escH(b.account_name)}</span></div>`;
+      html += `<div class="bank-row"><span class="lab">Account Name</span><span class="val">${escH(b.account_name)}</span></div>`;
+      html += `<div class="bank-row"><span class="lab">Account №</span><span class="val">${escH(b.ghs.account)}</span><button class="copy-btn" onclick="App.copy('${escH(b.ghs.account)}',this)">Copy</button></div>`;
 
-      // USD domiciliary (optional)
+      // ── USD wire instructions ─────────────────────────────────
       if (b.usd) {
-        html += `<div class="bank-section-head" style="margin-top:0.8rem;">↳ ${escH(b.usd.label)}</div>`;
-        html += `<div class="bank-row"><span class="lab">Bank</span><span class="val">${escH(b.name)} · Dom.</span></div>`;
-        html += `<div class="bank-row"><span class="lab">Account №</span><span class="val">${escH(b.usd.account)}</span><button class="copy-btn" onclick="App.copy('${escH(b.usd.account)}',this)">Copy</button></div>`;
-        html += `<div class="bank-row"><span class="lab">SWIFT</span><span class="val">${escH(b.usd.swift)}</span></div>`;
+        html += `<div class="bank-section-head" style="margin-top:1.2rem;">↳ US Dollar (USD) — International Wire Transfer</div>`;
+        html += `<div class="bank-row"><span class="lab">Beneficiary Name</span><span class="val">${escH(b.usd.beneficiary_name)}</span></div>`;
+        html += `<div class="bank-row"><span class="lab">Beneficiary A/C</span><span class="val">${escH(b.usd.beneficiary_acc)}</span><button class="copy-btn" onclick="App.copy('${escH(b.usd.beneficiary_acc)}',this)">Copy</button></div>`;
+        html += `<div class="bank-row"><span class="lab">Beneficiary Bank</span><span class="val">${escH(b.usd.beneficiary_bank)}</span></div>`;
+        html += `<div class="bank-row"><span class="lab">Beneficiary SWIFT</span><span class="val">${escH(b.usd.swift)}</span></div>`;
+
+        // Corridors
+        b.usd.corridors.forEach((c, i) => {
+          html += `<div class="bank-section-head" style="margin-top:0.8rem;font-size:11px;opacity:0.7;">Corridor ${i+1} — ${escH(c.label)}</div>`;
+          html += `<div class="bank-row"><span class="lab">Intermediary Bank</span><span class="val">${escH(c.intermediary)}</span></div>`;
+          html += `<div class="bank-row"><span class="lab">Intermediary SWIFT</span><span class="val">${escH(c.intermediary_swift)}</span></div>`;
+          if (c.aba) {
+            html += `<div class="bank-row"><span class="lab">ABA / Fedwire</span><span class="val">${escH(c.aba)}</span></div>`;
+          }
+          html += `<div class="bank-row"><span class="lab">Intermediary A/C</span><span class="val">${escH(c.intermediary_acc)}</span></div>`;
+        });
+
+        html += `<div class="bank-row" style="margin-top:0.6rem;"><span class="lab">Purpose</span><span class="val" style="color:var(--teal);">Use your booking ref as purpose/narration</span></div>`;
       }
 
       inner.innerHTML  = html;
