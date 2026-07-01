@@ -81,6 +81,12 @@ export const handler = async (event) => {
     };
   }
 
+  // ── Crypto wallet address ─────────────────────────────────────
+  // TODO: Replace dummy address with Sophie's real USDT TRC20 wallet address
+  // then add it as a Netlify env var: USDT_TRC20_ADDRESS
+
+  const usdt_trc20 = process.env.USDT_TRC20_ADDRESS || null; // e.g. TXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  ← SWAP THIS
+
   // USD wire instructions — intermediary details are fixed (Zenith Bank Ghana correspondent banks)
   // Only show USD section if Sophie's beneficiary account is configured
   const usd = (beneficiaryName && beneficiaryAcc) ? {
@@ -119,6 +125,8 @@ export const handler = async (event) => {
           account: accountGhs,
         },
         usd,
+        // Crypto — null if env var not set, frontend handles gracefully
+        usdt_trc20,
       },
     }),
   };

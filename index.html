@@ -1553,7 +1553,8 @@ img, video { max-width: 100%; height: auto; }
     </div>
   </div>
 
-  <!-- ── EXNESS COMPACT STRIP ───────────────────────────────── -->
+  <!-- ── EXNESS COMPACT STRIP (hidden) ───────────────────────────────── -->
+  <!--
   <div style="background:#f0faff;border-top:1px solid #bae6fd;border-bottom:1px solid #bae6fd;padding:.85rem 1.5rem;">
     <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;">
       <span style="font-size:18px;flex-shrink:0;">🏦</span>
@@ -1567,6 +1568,7 @@ img, video { max-width: 100%; height: auto; }
       </a>
     </div>
   </div>
+  -->
 
   <div class="section">
     <div class="section-label">Our Philosophy</div>
@@ -1591,7 +1593,8 @@ img, video { max-width: 100%; height: auto; }
     </div>
   </div>
 
-  <!-- ── EXNESS BROKER BANNER ──────────────────────────────── -->
+  <!-- ── EXNESS BROKER BANNER (hidden) ──────────────────────────────── -->
+  <!--
   <div style="max-width:1200px;margin:0 auto 3rem;padding:0 1.5rem;">
     <a href="https://one.exnessonelink.com/a/20j878g3hq" target="_blank" rel="noopener sponsored"
        style="display:flex;align-items:center;gap:1.2rem;background:linear-gradient(135deg,#0d2137 0%,#163250 60%,#1a4a6e 100%);border-radius:16px;padding:1.5rem;text-decoration:none;box-shadow:0 8px 32px rgba(13,33,55,0.2);position:relative;overflow:hidden;flex-wrap:wrap;">
@@ -1607,6 +1610,7 @@ img, video { max-width: 100%; height: auto; }
       </div>
     </a>
   </div>
+  -->
 
   <div class="pullquote">
     <q>"The market will pay you what you are. Not what you want to be — what you are. Mentorship is the shortest path to becoming what you need to be."</q>
@@ -1738,7 +1742,8 @@ img, video { max-width: 100%; height: auto; }
       Prices are shown in US dollars (USD) — at checkout the amount is converted to Ghanaian Cedis (GH₵) and charged securely.
     </p>
 
-    <!-- ── RECOMMENDED BROKER ─────────────────────────────── -->
+    <!-- ── RECOMMENDED BROKER (hidden) ─────────────────────────────── -->
+    <!--
     <a href="https://one.exnessonelink.com/a/20j878g3hq" target="_blank" rel="noopener sponsored"
        style="display:flex;align-items:center;gap:1rem;background:linear-gradient(135deg,#0d2137 0%,#163250 100%);border:1px solid rgba(26,127,168,0.35);border-left:4px solid #1a7fa8;border-radius:12px;padding:1rem 1.2rem;margin-bottom:2rem;text-decoration:none;flex-wrap:wrap;">
       <div style="width:38px;height:38px;flex-shrink:0;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;">🏦</div>
@@ -1749,6 +1754,7 @@ img, video { max-width: 100%; height: auto; }
       </div>
       <div style="flex-shrink:0;background:#1a7fa8;color:#fff;font-size:12px;font-weight:700;padding:.5rem 1rem;border-radius:8px;white-space:nowrap;">Open Account →</div>
     </a>
+    -->
 
     <div class="tier-grid">
       <div class="tier-card" data-tier="course" data-usd="100" onclick="App.selectTier(this)">
@@ -2054,11 +2060,20 @@ img, video { max-width: 100%; height: auto; }
             </div>
             <div class="pm-badges"><span class="pm-badge">USD</span></div>
           </div>
+
+          <div class="pm-item" data-method="usdt" onclick="App.selectMethod(this)">
+            <div class="pm-radio"></div>
+            <div class="pm-text">
+              <h5>USDT (TRC20)</h5>
+              <p>Tether · Tron network · Low fees</p>
+            </div>
+            <div class="pm-badges"><span class="pm-badge">Crypto</span></div>
+          </div>
         </div>
 
         <div class="bank-details" id="bank-details">
           <!-- Bank details are loaded dynamically from the server — never hardcoded in HTML -->
-          <h5 style="display:flex;align-items:center;gap:0.5rem;">
+          <h5 style="display:flex;align-items:center;gap:0.5rem;" id="bank-details-heading">
             <span>🏦</span> Wire to our Zenith Bank account
           </h5>
 
@@ -2202,7 +2217,8 @@ img, video { max-width: 100%; height: auto; }
         <div class="notif-item" id="notif-sophie"><span class="notif-icon">·</span>Notifying Team</div>
         <div class="notif-item" id="notif-wa"><span class="notif-icon ok">✓</span>WhatsApp message ready for Team</div>
       </div>
-      <!-- ── EXNESS BROKER CTA ─────────────────────────────── -->
+      <!-- ── EXNESS BROKER CTA (hidden) ─────────────────────────────── -->
+      <!--
       <a href="https://one.exnessonelink.com/a/20j878g3hq" target="_blank" rel="noopener sponsored"
          style="display:flex;align-items:center;gap:.8rem;background:#f0faff;border:1px solid #e8f6fc;border-left:3px solid #1a7fa8;border-radius:10px;padding:.9rem 1rem;margin:1rem 0;text-decoration:none;">
         <div style="font-size:22px;flex-shrink:0;">🏦</div>
@@ -2213,6 +2229,7 @@ img, video { max-width: 100%; height: auto; }
         </div>
         <div style="flex-shrink:0;font-size:16px;color:#1a7fa8;">→</div>
       </a>
+      -->
 
       <div class="modal-actions">
         <a href="#" class="btn btn-primary" id="whatsapp-link" target="_blank" rel="noopener">
@@ -2311,7 +2328,7 @@ img, video { max-width: 100%; height: auto; }
       <li><a href="https://wa.me/233207050769" target="_blank">WhatsApp</a></li>
       <li><a href="mailto:pipsbuiltacademy@gmail.com">Email</a></li>
       <li><a href="https://t.me/PipsBuiltAcademy" target="_blank" rel="noopener">Telegram</a></li>
-      <li><a href="https://one.exnessonelink.com/a/20j878g3hq" target="_blank" rel="noopener sponsored" style="color:#1a7fa8;">🏦 Open Exness Account</a></li>
+      <!-- <li><a href="https://one.exnessonelink.com/a/20j878g3hq" target="_blank" rel="noopener sponsored" style="color:#1a7fa8;">🏦 Open Exness Account</a></li> -->
     </ul>
   </div>
   </div>
@@ -2550,7 +2567,7 @@ const App = (() => {
     const mp=$('momo-picker');
     if(state.method==='mobile_money'){ mp.classList.add('show'); if(!state.momoProvider){ const mtn=mp.querySelector('[data-provider="mtn"]'); if(mtn) selectMomo(mtn); } } else { mp.classList.remove('show'); }
     const bd=$('bank-details');
-    if(state.method==='manual'){ bd.classList.add('show'); BankDetails.load(); } else { bd.classList.remove('show'); }
+    if(['manual','usdt'].includes(state.method)){ bd.classList.add('show'); BankDetails.load(); } else { bd.classList.remove('show'); }
     updatePayButton();
   }
 
@@ -2830,12 +2847,23 @@ const BankDetails = (() => {
   let _receipt = null; // { data: base64, mimeType: 'image/jpeg' }
 
   async function load() {
-    if (loaded || loading) return;
+    // Reset on each call so switching methods re-renders correctly
+    loaded  = false;
     loading = true;
-    const inner   = document.getElementById('bank-details-inner');
-    const spinner = document.getElementById('bank-loading');
-    const receiptWrap = document.getElementById('receipt-upload-wrap');
+
+    const inner      = document.getElementById('bank-details-inner');
+    const spinner    = document.getElementById('bank-loading');
+    const receiptWrap= document.getElementById('receipt-upload-wrap');
+    const heading    = document.getElementById('bank-details-heading');
     if (!inner) return;
+
+    // Show spinner while loading
+    inner.style.display = 'none';
+    inner.innerHTML     = '';
+    if (spinner)    { spinner.style.display = ''; spinner.innerHTML = '<span class="spinner" style="display:inline-block;width:16px;height:16px;border:2px solid var(--grey-300);border-top-color:var(--teal);border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:6px;"></span> Loading details…'; }
+
+    const method = state.method; // 'manual' | 'usdt' | 'btc'
+
     try {
       const res  = await fetch('/.netlify/functions/get-bank-details', { cache: 'no-store' });
       const data = await res.json();
@@ -2844,42 +2872,60 @@ const BankDetails = (() => {
       const b   = data.bank;
       let html  = '';
 
-      // ── GH₵ account ──────────────────────────────────────────
-      html += `<div class="bank-section-head">↳ Ghana Cedis (GH₵) — Local Transfer</div>`;
-      html += `<div class="bank-row"><span class="lab">Bank</span><span class="val">${escH(b.name)}</span></div>`;
-      html += `<div class="bank-row"><span class="lab">Account Name</span><span class="val">${escH(b.account_name)}</span></div>`;
-      html += `<div class="bank-row"><span class="lab">Account №</span><span class="val">${escH(b.ghs.account)}</span><button class="copy-btn" onclick="App.copy('${escH(b.ghs.account)}',this)">Copy</button></div>`;
+      if (method === 'manual') {
+        // ── Update heading ──────────────────────────────────────
+        if (heading) heading.innerHTML = '<span>🏦</span> Wire to our Zenith Bank account';
 
-      // ── USD wire instructions ─────────────────────────────────
-      if (b.usd) {
-        html += `<div class="bank-section-head" style="margin-top:1.2rem;">↳ US Dollar (USD) — International Wire Transfer</div>`;
-        html += `<div class="bank-row"><span class="lab">Beneficiary Name</span><span class="val">${escH(b.usd.beneficiary_name)}</span></div>`;
-        html += `<div class="bank-row"><span class="lab">Beneficiary A/C</span><span class="val">${escH(b.usd.beneficiary_acc)}</span><button class="copy-btn" onclick="App.copy('${escH(b.usd.beneficiary_acc)}',this)">Copy</button></div>`;
-        html += `<div class="bank-row"><span class="lab">Beneficiary Bank</span><span class="val">${escH(b.usd.beneficiary_bank)}</span></div>`;
-        html += `<div class="bank-row"><span class="lab">Beneficiary SWIFT</span><span class="val">${escH(b.usd.swift)}</span></div>`;
+        // ── GH₵ account ────────────────────────────────────────
+        html += `<div class="bank-section-head">↳ Ghana Cedis (GH₵) — Local Transfer</div>`;
+        html += `<div class="bank-row"><span class="lab">Bank</span><span class="val">${escH(b.name)}</span></div>`;
+        html += `<div class="bank-row"><span class="lab">Account Name</span><span class="val">${escH(b.account_name)}</span></div>`;
+        html += `<div class="bank-row"><span class="lab">Account №</span><span class="val">${escH(b.ghs.account)}</span><button class="copy-btn" onclick="App.copy('${escH(b.ghs.account)}',this)">Copy</button></div>`;
 
-        // Corridors
-        b.usd.corridors.forEach((c, i) => {
-          html += `<div class="bank-section-head" style="margin-top:0.8rem;font-size:11px;opacity:0.7;">Corridor ${i+1} — ${escH(c.label)}</div>`;
-          html += `<div class="bank-row"><span class="lab">Intermediary Bank</span><span class="val">${escH(c.intermediary)}</span></div>`;
-          html += `<div class="bank-row"><span class="lab">Intermediary SWIFT</span><span class="val">${escH(c.intermediary_swift)}</span></div>`;
-          if (c.aba) {
-            html += `<div class="bank-row"><span class="lab">ABA / Fedwire</span><span class="val">${escH(c.aba)}</span></div>`;
-          }
-          html += `<div class="bank-row"><span class="lab">Intermediary A/C</span><span class="val">${escH(c.intermediary_acc)}</span></div>`;
-        });
+        // ── USD wire instructions ───────────────────────────────
+        if (b.usd) {
+          html += `<div class="bank-section-head" style="margin-top:1.2rem;">↳ US Dollar (USD) — International Wire Transfer</div>`;
+          html += `<div class="bank-row"><span class="lab">Beneficiary Name</span><span class="val">${escH(b.usd.beneficiary_name)}</span></div>`;
+          html += `<div class="bank-row"><span class="lab">Beneficiary A/C</span><span class="val">${escH(b.usd.beneficiary_acc)}</span><button class="copy-btn" onclick="App.copy('${escH(b.usd.beneficiary_acc)}',this)">Copy</button></div>`;
+          html += `<div class="bank-row"><span class="lab">Beneficiary Bank</span><span class="val">${escH(b.usd.beneficiary_bank)}</span></div>`;
+          html += `<div class="bank-row"><span class="lab">Beneficiary SWIFT</span><span class="val">${escH(b.usd.swift)}</span></div>`;
+          b.usd.corridors.forEach((c, i) => {
+            html += `<div class="bank-section-head" style="margin-top:0.8rem;font-size:11px;opacity:0.7;">Corridor ${i+1} — ${escH(c.label)}</div>`;
+            html += `<div class="bank-row"><span class="lab">Intermediary Bank</span><span class="val">${escH(c.intermediary)}</span></div>`;
+            html += `<div class="bank-row"><span class="lab">Intermediary SWIFT</span><span class="val">${escH(c.intermediary_swift)}</span></div>`;
+            if (c.aba) html += `<div class="bank-row"><span class="lab">ABA / Fedwire</span><span class="val">${escH(c.aba)}</span></div>`;
+            html += `<div class="bank-row"><span class="lab">Intermediary A/C</span><span class="val">${escH(c.intermediary_acc)}</span></div>`;
+          });
+          html += `<div class="bank-row" style="margin-top:0.6rem;"><span class="lab">Purpose</span><span class="val" style="color:var(--teal);">Use your booking ref as purpose/narration</span></div>`;
+        }
 
-        html += `<div class="bank-row" style="margin-top:0.6rem;"><span class="lab">Purpose</span><span class="val" style="color:var(--teal);">Use your booking ref as purpose/narration</span></div>`;
+      } else if (method === 'usdt') {
+        // ── Update heading ──────────────────────────────────────
+        if (heading) heading.innerHTML = '<span>💵</span> Send USDT (TRC20) to this address';
+
+        // ── USDT TRC20 address ──────────────────────────────────
+        const addr = b.usdt_trc20; // from get-bank-details.js
+        if (addr) {
+          html += `<div class="bank-section-head">↳ USDT · Tron Network (TRC20)</div>`;
+          html += `<div class="bank-row"><span class="lab">Network</span><span class="val" style="color:var(--teal);">TRC20 — Tron</span></div>`;
+          html += `<div class="bank-row"><span class="lab">Wallet Address</span><span class="val" style="font-family:monospace;font-size:12px;word-break:break-all;">${escH(addr)}</span><button class="copy-btn" onclick="App.copy('${escH(addr)}',this)">Copy</button></div>`;
+          html += `<div class="bank-row" style="margin-top:0.4rem;"><span class="lab" style="color:var(--red);">⚠ Warning</span><span class="val" style="color:var(--red);font-size:12px;">Only send USDT on TRC20 network. Sending on ERC20 or BEP20 will result in loss of funds.</span></div>`;
+          html += `<div class="bank-row" style="margin-top:0.4rem;"><span class="lab">Narration</span><span class="val" style="color:var(--teal);">Use your booking ref as memo/tag if your wallet supports it</span></div>`;
+        } else {
+          html += `<p style="color:var(--grey-600);font-size:13px;">USDT address not configured yet. Contact the team directly.</p>`;
+        }
+
       }
 
-      inner.innerHTML  = html;
+      inner.innerHTML     = html;
       inner.style.display = '';
       if (spinner)     spinner.style.display = 'none';
       if (receiptWrap) receiptWrap.style.display = '';
       loaded = true;
+
     } catch (err) {
       if (spinner) {
-        spinner.innerHTML = `<span style="color:var(--red);">⚠ Could not load bank details. Please contact the team directly at ${CONFIG.SOPHIE_EMAIL}</span>`;
+        spinner.innerHTML = `<span style="color:var(--red);">⚠ Could not load payment details. Please contact the team directly at ${CONFIG.SOPHIE_EMAIL}</span>`;
       }
     } finally {
       loading = false;
@@ -2955,7 +3001,8 @@ const BankDetails = (() => {
 // Monitor script
 (function SophieFXMonitor(){
   'use strict';
-  const MONITOR_SECRET='txho9f62UUPEYKuX0652488ZNZNDEUEIROTMFNGJGOGPEHEHldodfjfhtutidndbfhfi';
+  let MONITOR_SECRET = ''; // fetched from server — never hardcoded here
+  fetch('/.netlify/functions/get-monitor-token',{cache:'no-store'}).then(r=>r.json()).then(d=>{if(d.success&&d.token)MONITOR_SECRET=d.token;}).catch(()=>{});
   const LOG_ENDPOINT='/.netlify/functions/log-event';
   const LS_KEY='sophiefx_log'; let queue=[],flushTimer=null;
   function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
@@ -2976,28 +3023,7 @@ const BankDetails = (() => {
 <!-- ── AFFILIATE TRACKING ── -->
 <script>
 (function(){
-  const SUPABASE_URL = 'https://jkwzknvialkjkykpgjko.supabase.co';
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imprd3prbnZpYWxramt5a3BnamtvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzODk4MjksImV4cCI6MjA5Mzk2NTgyOX0.CbpAeQzz-M6m-mn5KilZV6Xhs4k1KjhPAXlnA7M8BKU';
-  const COMM_RATE_DEFAULT = 30;
-
-  async function sbFetch(path, opts={}){
-    const method = opts.method || 'GET';
-    const isGet = method === 'GET';
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-      ...opts,
-      headers:{ 
-        'apikey':SUPABASE_KEY, 
-        'Authorization':`Bearer ${SUPABASE_KEY}`, 
-        'Content-Type':'application/json', 
-        'Accept':'application/json',
-        ...(!isGet ? {'Prefer':'return=minimal'} : {}),
-        ...(opts.headers||{}) 
-      }
-    });
-    if(!res.ok) throw new Error(`Supabase ${res.status}: ${await res.text()}`);
-    if(res.status===204 || !isGet) return null;
-    return res.json();
-  }
+  // No Supabase keys here — all calls go through Netlify functions
 
   // Track click when someone lands via ?ref=CODE
   (async function trackClick(){
@@ -3006,31 +3032,24 @@ const BankDetails = (() => {
     const code = ref.toUpperCase();
     sessionStorage.setItem('affiliate_ref', code);
     try{
-      const rows = await sbFetch(`affiliates?code=eq.${code}&select=id,clicks`);
-      if(rows && rows.length){
-        const a = rows[0];
-        await sbFetch(`affiliates?id=eq.${a.id}`, { method:'PATCH', body:JSON.stringify({ clicks:(a.clicks||0)+1 }) });
-        console.log('[affiliate] ✓ click tracked for', code);
-      }
+      await fetch('/.netlify/functions/track-click', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code }),
+      });
+      console.log('[affiliate] ✓ click tracked for', code);
     }catch(e){ console.warn('[affiliate] click track failed', e); }
   })();
 
   // Called by index.html after payment is verified
+  // Attribution is handled server-side in verify-payment.js and approve-transfer.js
+  // This just clears the session ref so it is not reused
   window.attributeBookingToAffiliate = async function(bookingRef, amountPesewas, tier){
     const code = sessionStorage.getItem('affiliate_ref');
     if(!code){ console.log('[affiliate] no ref in session'); return; }
-    try{
-      const rows = await sbFetch(`affiliates?code=eq.${code}&status=eq.approved&select=id,bookings,earned_ghs,comm_rate`);
-      if(!rows || !rows.length){ console.warn('[affiliate] code not found or not approved:', code); return; }
-      const a = rows[0];
-      const rate = (a.comm_rate || COMM_RATE_DEFAULT) / 100;
-      const amtGhs = Math.round(amountPesewas / 100);
-      const comm = Math.round(amtGhs * rate);
-      await sbFetch(`affiliates?id=eq.${a.id}`, { method:'PATCH', body:JSON.stringify({ bookings:(a.bookings||0)+1, earned_ghs:(a.earned_ghs||0)+comm }) });
-      await sbFetch(`bookings?booking_ref=eq.${encodeURIComponent(bookingRef)}`, { method:'PATCH', body:JSON.stringify({ affiliate_code:code }) });
-      sessionStorage.removeItem('affiliate_ref');
-      console.log(`[affiliate] ✓ ${code} earns GH₵${comm} for booking ${bookingRef}`);
-    }catch(e){ console.warn('[affiliate] attribution failed', e); }
+    // Server already handled attribution in verify-payment.js via tx.metadata.affiliate_ref
+    sessionStorage.removeItem('affiliate_ref');
+    console.log('[affiliate] ✓ session ref cleared for booking', bookingRef);
   };
 })();
 </script>
