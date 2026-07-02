@@ -2096,7 +2096,7 @@ img, video { max-width: 100%; height: auto; }
             </p>
             <input type="file" id="receipt-file" accept="image/jpeg,image/png,image/webp,application/pdf"
                    style="font-size:13px;color:var(--grey-600);"
-                   onchange="BankDetails.onReceiptSelect(this)">
+                   onchange="App.onReceiptSelect(this)">
             <div id="receipt-status" style="font-size:12px;margin-top:0.4rem;color:var(--grey-600);"></div>
           </div>
 
@@ -2986,7 +2986,7 @@ const BankDetails = (() => {
     }
   });
 
-  return { go,selectTier,selectMethod,selectMomo,copy,proceedToPayment,executePayment,submitBankTransfer,closeModal,sendContact };
+  return { go,selectTier,selectMethod,selectMomo,copy,proceedToPayment,executePayment,submitBankTransfer,closeModal,sendContact,onReceiptSelect:(el)=>BankDetails.onReceiptSelect(el) };
 })();
 
 // ── TICKER ──────────────────────────────────────────────────
