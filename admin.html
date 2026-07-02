@@ -1512,7 +1512,19 @@ const Transfers = (() => {
     const isPending   = t.status === 'pending';
 
     const receiptHTML = t.receipt_url
-      ? `<a href="${escH(t.receipt_url)}" target="_blank" style="color:var(--blue);font-size:11px;display:block;margin-bottom:0.3rem;">📎 View uploaded receipt ↗</a>`
+      ? `<div style="margin-bottom:0.5rem;">
+           <button onclick="Transfers.previewReceipt('${escH(t.receipt_url)}','${escH(t.id)}')"
+             style="background:var(--bg-3);border:1px solid var(--border-2);color:var(--teal);
+                    padding:0.5rem 1rem;font-family:var(--mono);font-size:11px;font-weight:700;
+                    letter-spacing:0.08em;cursor:pointer;text-transform:uppercase;display:inline-flex;align-items:center;gap:0.4rem;">
+             📎 PREVIEW RECEIPT
+           </button>
+           <a href="${escH(t.receipt_url)}" target="_blank"
+              style="margin-left:0.8rem;font-size:11px;color:var(--ink-faint);text-decoration:none;">
+             ↗ open in new tab
+           </a>
+         </div>
+         <div id="receipt-preview-${escH(t.id)}" style="display:none;margin-top:0.5rem;border:1px solid var(--border);background:var(--bg-3);padding:0.5rem;"></div>`
       : `<span style="color:var(--ink-faint);font-size:11px;">No receipt uploaded — check your banking app or Zenith Bank statement</span>`;
 
     const approveHTML = isPending ? `
