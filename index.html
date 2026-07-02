@@ -2679,7 +2679,16 @@ const App = (() => {
     $('modal-amount').textContent=`$${fmt(state.usd)} (GH₵ ${fmt(state.ghs)})`;
     $('modal-method').textContent=payment.method;
     $('modal-status').textContent=payment.status==='success'?'Confirmed ✓':payment.status==='pending_verification'?'Pending verification':'Received';
-    if(payment.status==='pending_verification'){ $('modal-eyebrow').textContent='BOOKING RECEIVED — PENDING'; $('modal-text').textContent='Your booking is reserved. The Team will verify within 24 hours.'; }
+    if(payment.status==='pending_verification'){
+      $('modal-eyebrow').textContent='BOOKING RECEIVED — PENDING';
+      $('modal-text').innerHTML=`Your booking is reserved. The team will verify within 24 hours.<br><br>
+        <small style="color:var(--grey-400);">
+          Also send your booking reference <strong style="color:var(--gold);">${state.bookingRef}</strong> to us via
+          <a href="https://wa.me/${CONFIG.SOPHIE_WHATSAPP}?text=${encodeURIComponent(`Hi! My booking reference is ${state.bookingRef}. Please confirm my payment.`)}" target="_blank" style="color:var(--teal);font-weight:700;">WhatsApp</a>
+          or <a href="mailto:pipsbuiltacademy@gmail.com?subject=Booking Ref — ${state.bookingRef}" style="color:var(--teal);font-weight:700;">Email</a>
+          so we can match your payment quickly.
+        </small>`;
+    }
     else{ $('modal-eyebrow').textContent='BOOKING CONFIRMED'; $('modal-text').textContent="Payment received and your seat is reserved. The team has been notified and will reach out within 24 hours."; }
     setNotif('notif-email',notif.email?'ok':'failed');
     setNotif('notif-sophie',notif.sophie?'ok':'failed');
@@ -2788,7 +2797,7 @@ const App = (() => {
       hideStatus();
       finalizeBooking({
         reference:    state.bookingRef+'-BANK',
-        method:       'Manual Bank Transfer',
+        method:       state.method === 'usdt' ? 'USDT TRC20' : 'Manual Bank Transfer',
         status:       'pending_verification',
         gateway_response: 'Submitted — awaiting admin verification',
       });
