@@ -2607,7 +2607,7 @@ const App = (() => {
     }
     state.isPaying=true; const btn=$('pay-button'); btn.disabled=true;
     showStatus('processing','Opening secure payment…','Connecting to Paystack…');
-    if(state.method==='manual'){
+    if(state.method==='manual' || state.method==='usdt'){
       // Submit to backend which saves to pending_transfers table
       await App.submitBankTransfer();
       return;
@@ -2650,7 +2650,7 @@ const App = (() => {
     } catch(err){ console.error('[ps] setup failed',err); showStatus('error','Could not start payment',err?.message||'Unexpected error.'); toast('Could not start payment.','error'); resetPayButton(); }
   }
 
-  function methodLabel(){ const m=state.method; return m==='card'?'Card':m==='mobile_money'?(state.momoProvider?MOMO_PROVIDERS[state.momoProvider].name:'Mobile Money'):m==='bank'?'Bank Transfer':m==='ussd'?'USSD':'Manual'; }
+  function methodLabel(){ const m=state.method; return m==='card'?'Card':m==='mobile_money'?(state.momoProvider?MOMO_PROVIDERS[state.momoProvider].name:'Mobile Money'):m==='bank'?'Bank Transfer':m==='ussd'?'USSD':m==='usdt'?'USDT TRC20':'Manual Wire'; }
   function resetPayButton(){ state.isPaying=false; $('pay-button').disabled=false; updatePayButton(); }
 
   async function verifyOnServer(reference){
