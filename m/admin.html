@@ -501,7 +501,7 @@ body {
 <div class="view-tabs">
   <button class="view-tab active" onclick="Admin.switchView('monitor')">📡 Monitor</button>
   <button class="view-tab"        onclick="Admin.switchView('bookings')">💳 Bookings</button>
-
+  <button class="view-tab"        onclick="Admin.switchView('transfers')">🏦 Bank Transfers <span id="tab-pending-badge" style="display:none;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:1px 5px;border-radius:8px;margin-left:4px;"></span></button>
   <button class="view-tab"        onclick="Admin.switchView('controls')">⚙ Controls</button></div>
 
 <!-- ═══ MONITOR VIEW ═══ -->
@@ -634,6 +634,60 @@ body {
   </div>
 </div>
 
+
+<!-- ═══ BANK TRANSFERS VIEW ═══ -->
+<div class="view-panel" id="view-transfers">
+  <!-- Stats bar -->
+  <div class="booking-stats">
+    <div class="booking-stat"><div class="num" id="bt-pending"  style="color:var(--yellow)">0</div><div class="lab">Pending Review</div></div>
+    <div class="booking-stat"><div class="num" id="bt-approved" style="color:var(--green)">0</div><div class="lab">Approved</div></div>
+    <div class="booking-stat"><div class="num" id="bt-rejected" style="color:var(--red)">0</div><div class="lab">Rejected</div></div>
+    <div class="booking-stat"><div class="num" id="bt-total"    style="color:var(--ink)">0</div><div class="lab">Total Submissions</div></div>
+  </div>
+
+  <!-- Filter toolbar -->
+  <div class="bookings-toolbar" style="gap:0.6rem;">
+    <button class="filter-btn active" data-btstatus="all"      onclick="Transfers.setStatus('all',this)">ALL</button>
+    <button class="filter-btn"        data-btstatus="pending"   onclick="Transfers.setStatus('pending',this)" style="color:var(--yellow);">⏳ PENDING</button>
+    <button class="filter-btn"        data-btstatus="approved"  onclick="Transfers.setStatus('approved',this)" style="color:var(--green);">✓ APPROVED</button>
+    <button class="filter-btn"        data-btstatus="rejected"  onclick="Transfers.setStatus('rejected',this)" style="color:var(--red);">✕ REJECTED</button>
+    <button class="btn-sm" style="margin-left:auto;" onclick="Transfers.forceRefresh()">↻ Refresh</button>
+  </div>
+
+  <!-- Two-column layout: list + detail -->
+  <div class="layout" style="flex:1;overflow:hidden;grid-template-columns:1fr 420px;">
+    <!-- Transfer list -->
+    <div class="main" style="overflow-y:auto;">
+      <table class="bookings-table" id="transfers-table">
+        <thead>
+          <tr>
+            <th>Booking Ref</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Tier</th>
+            <th>GH₵ Amount</th>
+            <th>Receipt</th>
+            <th>Status</th>
+            <th>Submitted</th>
+          </tr>
+        </thead>
+        <tbody id="transfers-body">
+          <tr><td colspan="8" style="text-align:center;padding:3rem;color:var(--ink-faint);">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Detail + action panel -->
+    <div class="detail" id="transfer-detail-panel">
+      <div class="detail-empty" id="transfer-detail-empty">
+        <div style="font-size:2rem;opacity:0.2;">🏦</div>
+        <div>Click a transfer to review</div>
+        <div style="font-size:11px;color:var(--ink-faint);margin-top:0.3rem;">Approve or reject from here</div>
+      </div>
+      <div id="transfer-detail-content" style="display:none;flex:1;flex-direction:column;overflow-y:auto;"></div>
+    </div>
+  </div>
+</div>
 
 <!-- ═══ CONTROLS VIEW ═══ -->
 <div class="view-panel" id="view-controls">
@@ -784,7 +838,7 @@ const Admin = (() => {
           monitorSecret = ''; return;
         }
         $('auth-screen').style.display = 'none';
-        Monitor.start(); Bookings.start();
+        Monitor.start(); Bookings.start(); Transfers.start();
         toast('Connected to Supabase ✓');
       })
       .catch(() => { $('auth-error').textContent = 'Connection error.'; monitorSecret = ''; });
@@ -795,7 +849,7 @@ const Admin = (() => {
     document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.view-tab').forEach(t => t.classList.remove('active'));
     $('view-'+view).classList.add('active');
-    const viewWords = { monitor:'monitor', bookings:'booking', controls:'control' };
+    const viewWords = { monitor:'monitor', bookings:'booking', transfers:'transfer', controls:'control' };
     const word = viewWords[view] || view;
     document.querySelectorAll('.view-tab').forEach(t => {
       if (t.textContent.toLowerCase().includes(word)) t.classList.add('active');
@@ -1381,6 +1435,274 @@ const Controls = (() => {
   }
 
   return { load, previewDiscount, saveDiscount, saveTiers, onTierToggle, disableAll, enableAll, resetUsed };
+})();
+
+/* ── TRANSFERS ── */
+const Transfers = (() => {
+  const EMAILJS_SERVICE_ID  = typeof CONFIG_EMAILJS_SERVICE  !== 'undefined' ? CONFIG_EMAILJS_SERVICE  : '';
+  const EMAILJS_TEMPLATE_ID = typeof CONFIG_EMAILJS_TEMPLATE !== 'undefined' ? CONFIG_EMAILJS_TEMPLATE : '';
+  let all = [], activeStatus = 'all', selectedId = null;
+
+  function start() {
+    fetchTransfers();
+    setInterval(fetchTransfers, 20000); // refresh every 20s
+  }
+
+  async function fetchTransfers() {
+    try {
+      const res  = await fetch('/.netlify/functions/get-pending-transfers', { headers: { 'X-Monitor-Token': monitorSecret } });
+      if (!res.ok) return;
+      const data = await res.json();
+      if (!data.success) return;
+      all = data.transfers || [];
+      updateStats(data.counts || {});
+      renderTable();
+      // Update tab badge
+      const pending = (data.counts || {}).pending || 0;
+      const badge   = $('tab-pending-badge');
+      if (badge) {
+        if (pending > 0) { badge.textContent = pending; badge.style.display = ''; }
+        else               badge.style.display = 'none';
+      }
+    } catch (err) { console.error('[transfers]', err); }
+  }
+
+  function forceRefresh() { fetchTransfers().then(() => toast('Transfers refreshed')); }
+
+  function updateStats(c) {
+    $('bt-pending').textContent  = c.pending  || 0;
+    $('bt-approved').textContent = c.approved || 0;
+    $('bt-rejected').textContent = c.rejected || 0;
+    $('bt-total').textContent    = all.length;
+  }
+
+  function renderTable() {
+    const filtered = activeStatus === 'all' ? all : all.filter(t => t.status === activeStatus);
+    const tbody    = $('transfers-body');
+    if (!tbody) return;
+    if (!filtered.length) {
+      tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;padding:3rem;color:var(--ink-faint);">${all.length === 0 ? 'No bank transfers submitted yet.' : 'No transfers match filter.'}</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = filtered.map(t => {
+      const statusColor = t.status==='approved' ? 'var(--green)' : t.status==='rejected' ? 'var(--red)' : 'var(--yellow)';
+      const statusIcon  = t.status==='approved' ? '✓' : t.status==='rejected' ? '✕' : '⏳';
+      const amt         = t.amount_ghs ? 'GH₵ '+Number(t.amount_ghs).toLocaleString('en-GH',{minimumFractionDigits:2}) : '—';
+      const hasReceipt  = t.receipt_url ? '<span style="color:var(--green);">📎 Yes</span>' : '<span style="color:var(--ink-faint);">—</span>';
+      return `<tr onclick="Transfers.showDetail('${escH(t.id)}')" style="cursor:pointer;" class="${t.id===selectedId?'selected':''}">
+        <td class="td-ref">${escH(t.booking_ref||'—')}</td>
+        <td class="td-name">${escH(t.customer_name||'—')}</td>
+        <td style="font-size:11px;">${escH(t.customer_email||'—')}</td>
+        <td><span class="tier-pill ${t.tier==='onsite'?'tier-onsite':'tier-online'}">${escH(t.tier||'—')}</span></td>
+        <td class="td-amount">${amt}</td>
+        <td>${hasReceipt}</td>
+        <td><span style="color:${statusColor};font-weight:700;font-size:11px;">${statusIcon} ${t.status.toUpperCase()}</span></td>
+        <td class="td-date">${fmtDate(t.created_at)}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  function showDetail(id) {
+    selectedId = id;
+    const t    = all.find(x => x.id === id);
+    if (!t) return;
+    document.querySelectorAll('#transfers-body tr').forEach(tr => tr.classList.toggle('selected', tr.onclick?.toString().includes(id)));
+    const amt      = t.amount_ghs ? 'GH₵ ' + Number(t.amount_ghs).toLocaleString('en-GH', { minimumFractionDigits: 2 }) : '—';
+    const statusColor = t.status === 'approved' ? 'var(--green)' : t.status === 'rejected' ? 'var(--red)' : 'var(--yellow)';
+    const isPending   = t.status === 'pending';
+
+    const receiptHTML = t.receipt_url
+      ? `<a href="${escH(t.receipt_url)}" target="_blank" style="color:var(--blue);font-size:11px;display:block;margin-bottom:0.3rem;">📎 View uploaded receipt ↗</a>`
+      : `<span style="color:var(--ink-faint);font-size:11px;">No receipt uploaded — check your banking app or Zenith Bank statement</span>`;
+
+    const approveHTML = isPending ? `
+      <div style="display:flex;flex-direction:column;gap:0.7rem;padding:1rem;background:var(--bg-3);border:1px solid var(--border);">
+        <div style="font-size:10px;color:var(--ink-faint);letter-spacing:0.1em;text-transform:uppercase;font-weight:700;">Admin Actions</div>
+
+        <button onclick="Transfers.approve('${escH(t.id)}')"
+          style="background:var(--green);color:#0d1117;border:none;padding:0.75rem;font-family:var(--mono);
+                 font-size:12px;font-weight:700;letter-spacing:0.12em;cursor:pointer;text-transform:uppercase;width:100%;">
+          ✓ APPROVE — Activate WhatsApp Join Link
+        </button>
+
+        <div style="font-size:11px;color:var(--ink-faint);">Rejection reason (optional):</div>
+        <textarea id="reject-reason-${escH(t.id)}" rows="2"
+          placeholder="e.g. Amount mismatch — we received GH₵ 380 but booking is GH₵ 400"
+          style="width:100%;background:var(--bg-4);border:1px solid var(--border-2);color:var(--ink);
+                 padding:0.6rem;font-family:var(--mono);font-size:11px;resize:vertical;outline:none;"></textarea>
+
+        <button onclick="Transfers.reject('${escH(t.id)}')"
+          style="background:transparent;color:var(--red);border:1px solid rgba(248,81,73,0.4);padding:0.6rem;
+                 font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.1em;cursor:pointer;
+                 text-transform:uppercase;width:100%;">
+          ✕ REJECT — Notify Customer
+        </button>
+      </div>` : `
+      <div style="padding:0.8rem;background:var(--bg-3);border:1px solid var(--border);font-size:12px;color:${statusColor};">
+        This transfer was <strong>${t.status.toUpperCase()}</strong> on ${fmtDate(t.reviewed_at)}.
+        ${t.rejection_reason ? '<br><span style="color:var(--ink-dim);">Reason: '+escH(t.rejection_reason)+'</span>' : ''}
+      </div>`;
+
+    const html = `
+      <div class="detail-header">
+        <div class="detail-title">${escH(t.customer_name||'Unknown')}</div>
+        <div class="detail-meta">
+          <span class="tier-pill ${t.tier==='onsite'?'tier-onsite':'tier-online'}">${escH(t.tier||'—')}</span>
+          <span style="color:${statusColor};font-weight:700;">${t.status.toUpperCase()}</span>
+          <span>${amt}</span>
+        </div>
+      </div>
+      <div class="detail-body">
+        <div class="detail-section">
+          <div class="detail-section-label">Customer Info</div>
+          <div class="detail-kv">
+            ${[
+              ['Booking Ref', t.booking_ref||'—'],
+              ['Name', t.customer_name||'—'],
+              ['Email', t.customer_email||'—'],
+              ['Phone', t.customer_phone||'—'],
+              ['WhatsApp', t.customer_whatsapp||'—'],
+              ['Country', t.customer_country||'—'],
+              ['Amount GH₵', t.amount_ghs ? Number(t.amount_ghs).toLocaleString('en-GH',{minimumFractionDigits:2}) : '—'],
+              ['Amount USD', t.amount_usd ? '$'+Number(t.amount_usd).toFixed(2) : '—'],
+              ['Tier', t.tier||'—'],
+              ['Experience', t.experience||'—'],
+              ['Start Date', t.start_date||'—'],
+              ['Source', t.source||'—'],
+              ['Affiliate', t.affiliate_code||'—'],
+              ['Submitted', fmtDate(t.created_at)],
+            ].map(([k,v])=>`<div class="detail-kv-row"><span>${escH(k)}</span><span>${escH(String(v))}</span></div>`).join('')}
+          </div>
+        </div>
+
+        ${t.message ? `<div class="detail-section">
+          <div class="detail-section-label">Message from customer</div>
+          <div style="background:var(--bg-3);border:1px solid var(--border);padding:0.8rem;font-size:11px;color:var(--ink-dim);line-height:1.6;">${escH(t.message)}</div>
+        </div>` : ''}
+
+        <div class="detail-section">
+          <div class="detail-section-label">Payment Receipt</div>
+          ${receiptHTML}
+        </div>
+
+        <div class="detail-section">${approveHTML}</div>
+      </div>`;
+
+    const panel = $('transfer-detail-content');
+    panel.innerHTML = html;
+    panel.style.display = 'flex';
+    panel.style.flexDirection = 'column';
+    $('transfer-detail-empty').style.display = 'none';
+  }
+
+  async function approve(id) {
+    if (!confirm('Approve this bank transfer? The customer\'s WhatsApp join link will activate immediately.')) return;
+    try {
+      const res  = await fetch('/.netlify/functions/approve-transfer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Monitor-Token': monitorSecret },
+        body: JSON.stringify({ id }),
+      });
+      const data = await res.json();
+      if (!data.success) { toast(data.message || 'Approval failed', true); return; }
+      toast(`✓ Approved! WhatsApp link is now live for ${data.customer_name}`);
+      // Send confirmation email via EmailJS automatically
+      if (typeof emailjs !== 'undefined' && EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID) {
+        try {
+          const methodLabel = data.channel === 'usdt_trc20' ? 'USDT TRC20 (Crypto)'
+                            : data.channel === 'bank_transfer_manual' ? 'Manual Bank Transfer'
+                            : data.channel || 'Manual Transfer';
+          await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+            to_email:     data.customer_email,
+            subject:      `Your PIPS BUILT ACADEMY spot is confirmed! — ${data.booking_ref}`,
+            headline:     'Payment Verified ✓',
+            tagline:      'PIPS BUILT ACADEMY · BOOKING CONFIRMED',
+            intro_line_1: `Hi ${(data.customer_name||'').split(' ')[0]},`,
+            intro_line_2: 'We have confirmed your bank transfer. Your spot is now secured!',
+            callout:      '"The market will pay you what you are. Mentorship is the shortest path."',
+            details_title:'Your booking',
+            row_1_label:'Reference',  row_1_value: data.booking_ref,
+            row_2_label:'Tier',       row_2_value: data.tier,
+            row_3_label:'Amount',     row_3_value: data.amount_ghs ? 'GH₵ '+data.amount_ghs : '—',
+            row_4_label:'Method',     row_4_value: methodLabel,
+            row_5_label:'Status',     row_5_value: 'Confirmed ✓',
+            row_6_label:'',row_6_value:'',row_7_label:'',row_7_value:'',row_8_label:'',row_8_value:'',
+            message_title:'What happens next',
+            message_body: '1. Use the button below to join the private WhatsApp channel.\n2. The team will reach out within 24 hours.\n3. Bring a notebook to the first session.',
+            closing_line: 'Welcome to the process.',
+            cta_text:     'Join the WhatsApp Channel',
+            cta_url:      `${window.location.origin}/.netlify/functions/join-channel?ref=${data.booking_ref}`,
+            signoff:      '— PipsBuiltAcademy',
+          });
+          toast('Confirmation email sent to ' + data.customer_email);
+        } catch (eErr) {
+          toast('Approved but email failed — send manually to ' + data.customer_email, true);
+        }
+      } else {
+        toast('Approved ✓ — remember to email the join link to ' + data.customer_email + ' manually');
+      }
+      await fetchTransfers();
+      showDetail(id);
+    } catch (err) { toast(err.message, true); }
+  }
+
+  async function reject(id) {
+    const reasonEl = document.getElementById('reject-reason-' + id);
+    const reason   = reasonEl ? reasonEl.value.trim() : '';
+    if (!confirm('Reject this transfer? This will notify the customer.')) return;
+    try {
+      const res  = await fetch('/.netlify/functions/reject-transfer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Monitor-Token': monitorSecret },
+        body: JSON.stringify({ id, reason }),
+      });
+      const data = await res.json();
+      if (!data.success) { toast(data.message || 'Rejection failed', true); return; }
+
+      // Send rejection email via EmailJS automatically
+      if (typeof emailjs !== 'undefined' && EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID) {
+        try {
+          await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+            to_email:     data.customer_email,
+            subject:      `Update on your PipsBuilt Academy booking — ${data.booking_ref}`,
+            headline:     'Booking Update',
+            tagline:      'PIPS BUILT ACADEMY · BOOKING UPDATE',
+            intro_line_1: `Hi ${(data.customer_name||'').split(' ')[0]},`,
+            intro_line_2: 'Unfortunately we could not verify your payment for the booking below.',
+            callout:      '"Every setback is a setup for a comeback."',
+            details_title:'Booking details',
+            row_1_label:'Reference',  row_1_value: data.booking_ref,
+            row_2_label:'Status',     row_2_value: 'Not Confirmed',
+            row_3_label:'Reason',     row_3_value: data.rejection_reason || 'Payment could not be verified',
+            row_4_label:'',row_4_value:'',row_5_label:'',row_5_value:'',
+            row_6_label:'',row_6_value:'',row_7_label:'',row_7_value:'',row_8_label:'',row_8_value:'',
+            message_title:'What to do next',
+            message_body: 'Please contact us directly at pipsbuiltacademy@gmail.com or via WhatsApp and we will sort it out for you.',
+            closing_line: 'We are happy to help.',
+            cta_text:     'Contact Us on WhatsApp',
+            cta_url:      'https://wa.me/233207050769',
+            signoff:      '— PipsBuiltAcademy',
+          });
+          toast('Rejection email sent to ' + data.customer_email);
+        } catch (eErr) {
+          toast('Rejected but email failed — notify ' + data.customer_email + ' manually', true);
+        }
+      } else {
+        toast('Transfer rejected — remember to notify ' + data.customer_email + ' manually', true);
+      }
+      await fetchTransfers();
+      showDetail(id);
+    } catch (err) { toast(err.message, true); }
+  }
+
+  function setStatus(status, el) {
+    activeStatus = status;
+    document.querySelectorAll('[data-btstatus]').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    renderTable();
+  }
+
+  return { start, forceRefresh, showDetail, setStatus, approve, reject };
 })();
 
 document.addEventListener('DOMContentLoaded',()=>{ const i=$('auth-input'); if(i) i.focus(); });

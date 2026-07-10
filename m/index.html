@@ -167,6 +167,7 @@ nav {
 .panel { display: none; }
 .panel.active { display: block; animation: fadeUp 0.4s ease; }
 @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+@keyframes spin    { to{transform:rotate(360deg)} }
 
 /* ── BUTTONS ─────────────────────────────────────────────── */
 .btn {
@@ -1552,7 +1553,8 @@ img, video { max-width: 100%; height: auto; }
     </div>
   </div>
 
-  <!-- ── EXNESS COMPACT STRIP ───────────────────────────────── -->
+  <!-- ── EXNESS COMPACT STRIP (hidden) ───────────────────────────────── -->
+  <!--
   <div style="background:#f0faff;border-top:1px solid #bae6fd;border-bottom:1px solid #bae6fd;padding:.85rem 1.5rem;">
     <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;">
       <span style="font-size:18px;flex-shrink:0;">🏦</span>
@@ -1566,6 +1568,7 @@ img, video { max-width: 100%; height: auto; }
       </a>
     </div>
   </div>
+  -->
 
   <div class="section">
     <div class="section-label">Our Philosophy</div>
@@ -1590,7 +1593,8 @@ img, video { max-width: 100%; height: auto; }
     </div>
   </div>
 
-  <!-- ── EXNESS BROKER BANNER ──────────────────────────────── -->
+  <!-- ── EXNESS BROKER BANNER (hidden) ──────────────────────────────── -->
+  <!--
   <div style="max-width:1200px;margin:0 auto 3rem;padding:0 1.5rem;">
     <a href="https://one.exnessonelink.com/a/20j878g3hq" target="_blank" rel="noopener sponsored"
        style="display:flex;align-items:center;gap:1.2rem;background:linear-gradient(135deg,#0d2137 0%,#163250 60%,#1a4a6e 100%);border-radius:16px;padding:1.5rem;text-decoration:none;box-shadow:0 8px 32px rgba(13,33,55,0.2);position:relative;overflow:hidden;flex-wrap:wrap;">
@@ -1606,6 +1610,7 @@ img, video { max-width: 100%; height: auto; }
       </div>
     </a>
   </div>
+  -->
 
   <div class="pullquote">
     <q>"The market will pay you what you are. Not what you want to be — what you are. Mentorship is the shortest path to becoming what you need to be."</q>
@@ -1737,7 +1742,8 @@ img, video { max-width: 100%; height: auto; }
       Prices are shown in US dollars (USD) — at checkout the amount is converted to Ghanaian Cedis (GH₵) and charged securely.
     </p>
 
-    <!-- ── RECOMMENDED BROKER ─────────────────────────────── -->
+    <!-- ── RECOMMENDED BROKER (hidden) ─────────────────────────────── -->
+    <!--
     <a href="https://one.exnessonelink.com/a/20j878g3hq" target="_blank" rel="noopener sponsored"
        style="display:flex;align-items:center;gap:1rem;background:linear-gradient(135deg,#0d2137 0%,#163250 100%);border:1px solid rgba(26,127,168,0.35);border-left:4px solid #1a7fa8;border-radius:12px;padding:1rem 1.2rem;margin-bottom:2rem;text-decoration:none;flex-wrap:wrap;">
       <div style="width:38px;height:38px;flex-shrink:0;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;">🏦</div>
@@ -1748,6 +1754,7 @@ img, video { max-width: 100%; height: auto; }
       </div>
       <div style="flex-shrink:0;background:#1a7fa8;color:#fff;font-size:12px;font-weight:700;padding:.5rem 1rem;border-radius:8px;white-space:nowrap;">Open Account →</div>
     </a>
+    -->
 
     <div class="tier-grid">
       <div class="tier-card" data-tier="course" data-usd="100" onclick="App.selectTier(this)">
@@ -1933,7 +1940,7 @@ img, video { max-width: 100%; height: auto; }
   <div class="section">
     <div class="section-label">Complete Your Booking</div>
     <h2 class="section-title">Secure <em>payment.</em></h2>
-    <p class="booking-intro">Card, mobile money, bank transfer, or USSD — all processed securely through Paystack.</p>
+    <p class="booking-intro">Mobile money or manual bank transfer — choose what works best for you.</p>
 
     <div class="payment-layout">
       <div class="order-summary-card">
@@ -1963,7 +1970,7 @@ img, video { max-width: 100%; height: auto; }
       <div class="payment-section">
         <h4>Select Payment Method</h4>
         <div class="pm-list">
-          <div class="pm-item selected" data-method="card" onclick="App.selectMethod(this)">
+          <div class="pm-item" data-method="card" onclick="App.selectMethod(this)" style="display:none;">
             <div class="pm-radio"></div>
             <div class="pm-text">
               <h5>Card Payment</h5>
@@ -1975,7 +1982,7 @@ img, video { max-width: 100%; height: auto; }
             </div>
           </div>
 
-          <div class="pm-item" data-method="mobile_money" onclick="App.selectMethod(this)">
+          <div class="pm-item selected" data-method="mobile_money" onclick="App.selectMethod(this)">
             <div class="pm-radio"></div>
             <div class="pm-text">
               <h5>Mobile Money</h5>
@@ -2027,7 +2034,7 @@ img, video { max-width: 100%; height: auto; }
             </div>
           </div>
 
-          <div class="pm-item" data-method="bank" onclick="App.selectMethod(this)">
+          <div class="pm-item" data-method="bank" onclick="App.selectMethod(this)" style="display:none;">
             <div class="pm-radio"></div>
             <div class="pm-text">
               <h5>Bank Transfer</h5>
@@ -2036,7 +2043,7 @@ img, video { max-width: 100%; height: auto; }
             <div class="pm-badges"><span class="pm-badge">GH</span></div>
           </div>
 
-          <div class="pm-item" data-method="ussd" onclick="App.selectMethod(this)">
+          <div class="pm-item" data-method="ussd" onclick="App.selectMethod(this)" style="display:none;">
             <div class="pm-radio"></div>
             <div class="pm-text">
               <h5>USSD</h5>
@@ -2053,20 +2060,48 @@ img, video { max-width: 100%; height: auto; }
             </div>
             <div class="pm-badges"><span class="pm-badge">USD</span></div>
           </div>
+
+          <div class="pm-item" data-method="usdt" onclick="App.selectMethod(this)">
+            <div class="pm-radio"></div>
+            <div class="pm-text">
+              <h5>USDT (TRC20)</h5>
+              <p>Tether · Tron network · Low fees</p>
+            </div>
+            <div class="pm-badges"><span class="pm-badge">Crypto</span></div>
+          </div>
         </div>
 
         <div class="bank-details" id="bank-details">
-          <h5>Wire to the following accounts</h5>
-          <div class="bank-section-head">↳ Ghana Cedis (GH₵)</div>
-          <div class="bank-row"><span class="lab">Bank</span><span class="val">Stanbic Bank Ghana</span></div>
-          <div class="bank-row"><span class="lab">Account №</span><span class="val">9040012345678</span><button class="copy-btn" onclick="App.copy('9040012345678',this)">Copy</button></div>
-          <div class="bank-row"><span class="lab">Name</span><span class="val">PipsBuiltAcademy</span></div>
-          <div class="bank-section-head">↳ US Dollar (USD) — Domiciliary</div>
-          <div class="bank-row"><span class="lab">Bank</span><span class="val">Stanbic Bank · Dom.</span></div>
-          <div class="bank-row"><span class="lab">Account №</span><span class="val">9050098765432</span><button class="copy-btn" onclick="App.copy('9050098765432',this)">Copy</button></div>
-          <div class="bank-row"><span class="lab">SWIFT</span><span class="val">SBICGHAC</span></div>
+          <!-- Bank details are loaded dynamically from the server — never hardcoded in HTML -->
+          <h5 style="display:flex;align-items:center;gap:0.5rem;" id="bank-details-heading">
+            <span>🏦</span> Wire to our Zenith Bank account
+          </h5>
+
+          <!-- Loading state -->
+          <div id="bank-loading" style="text-align:center;padding:1.5rem 0;color:var(--grey-400);font-size:13px;">
+            <span class="spinner" style="display:inline-block;width:16px;height:16px;border:2px solid var(--grey-300);border-top-color:var(--teal);border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:6px;"></span>
+            Loading bank details…
+          </div>
+
+          <!-- Bank details injected here by BankDetails.load() -->
+          <div id="bank-details-inner" style="display:none;"></div>
+
+          <!-- Receipt upload -->
+          <div id="receipt-upload-wrap" style="display:none;margin-top:1.2rem;padding:1rem;background:var(--grey-100);border-radius:var(--radius);border:1px dashed var(--grey-300);">
+            <label style="font-size:13px;font-weight:600;color:var(--navy);display:block;margin-bottom:0.5rem;">
+              📎 Upload payment receipt <span style="color:var(--grey-400);font-weight:400;">(optional but recommended)</span>
+            </label>
+            <p style="font-size:12px;color:var(--grey-600);margin-bottom:0.7rem;line-height:1.5;">
+              Uploading your bank screenshot speeds up verification. JPG, PNG, PDF — max 5 MB.
+            </p>
+            <input type="file" id="receipt-file" accept="image/jpeg,image/png,image/webp,application/pdf"
+                   style="font-size:13px;color:var(--grey-600);"
+                   onchange="App.onReceiptSelect(this)">
+            <div id="receipt-status" style="font-size:12px;margin-top:0.4rem;color:var(--grey-600);"></div>
+          </div>
+
           <div style="margin-top:1rem;font-size:13px;color:var(--grey-600);line-height:1.6;">
-            Use <strong id="manual-ref" style="color:var(--teal);">—</strong> as your transfer narration.
+            Use <strong id="manual-ref" style="color:var(--teal);">—</strong> as your transfer narration so the team can match it.
             Click <em>Confirm Booking</em> after paying — The team verifies within 24 hours.
           </div>
         </div>
@@ -2182,7 +2217,8 @@ img, video { max-width: 100%; height: auto; }
         <div class="notif-item" id="notif-sophie"><span class="notif-icon">·</span>Notifying Team</div>
         <div class="notif-item" id="notif-wa"><span class="notif-icon ok">✓</span>WhatsApp message ready for Team</div>
       </div>
-      <!-- ── EXNESS BROKER CTA ─────────────────────────────── -->
+      <!-- ── EXNESS BROKER CTA (hidden) ─────────────────────────────── -->
+      <!--
       <a href="https://one.exnessonelink.com/a/20j878g3hq" target="_blank" rel="noopener sponsored"
          style="display:flex;align-items:center;gap:.8rem;background:#f0faff;border:1px solid #e8f6fc;border-left:3px solid #1a7fa8;border-radius:10px;padding:.9rem 1rem;margin:1rem 0;text-decoration:none;">
         <div style="font-size:22px;flex-shrink:0;">🏦</div>
@@ -2193,6 +2229,7 @@ img, video { max-width: 100%; height: auto; }
         </div>
         <div style="flex-shrink:0;font-size:16px;color:#1a7fa8;">→</div>
       </a>
+      -->
 
       <div class="modal-actions">
         <a href="#" class="btn btn-primary" id="whatsapp-link" target="_blank" rel="noopener">
@@ -2291,7 +2328,7 @@ img, video { max-width: 100%; height: auto; }
       <li><a href="https://wa.me/233207050769" target="_blank">WhatsApp</a></li>
       <li><a href="mailto:pipsbuiltacademy@gmail.com">Email</a></li>
       <li><a href="https://t.me/PipsBuiltAcademy" target="_blank" rel="noopener">Telegram</a></li>
-      <li><a href="https://one.exnessonelink.com/a/20j878g3hq" target="_blank" rel="noopener sponsored" style="color:#1a7fa8;">🏦 Open Exness Account</a></li>
+      <!-- <li><a href="https://one.exnessonelink.com/a/20j878g3hq" target="_blank" rel="noopener sponsored" style="color:#1a7fa8;">🏦 Open Exness Account</a></li> -->
     </ul>
   </div>
   </div>
@@ -2439,7 +2476,7 @@ const tierName   = t => (TIERS[t] && TIERS[t].name)   || 'Mentorship';
 const tierFormat = t => (TIERS[t] && TIERS[t].format) || '—';
 
 const App = (() => {
-  const state = { tier:null, ghs:0, usd:0, method:'card', momoProvider:null, momoPhone:'', bookingRef:null, applicant:{}, paystack:null, isPaying:false };
+  const state = { tier:null, ghs:0, usd:0, method:'mobile_money', momoProvider:null, momoPhone:'', bookingRef:null, applicant:{}, paystack:null, isPaying:false };
   const $ = id => document.getElementById(id);
   const fmt = n => Number(n).toLocaleString('en-US');
 
@@ -2530,7 +2567,7 @@ const App = (() => {
     const mp=$('momo-picker');
     if(state.method==='mobile_money'){ mp.classList.add('show'); if(!state.momoProvider){ const mtn=mp.querySelector('[data-provider="mtn"]'); if(mtn) selectMomo(mtn); } } else { mp.classList.remove('show'); }
     const bd=$('bank-details');
-    if(state.method==='manual'){ bd.classList.add('show'); } else { bd.classList.remove('show'); }
+    if(['manual','usdt'].includes(state.method)){ bd.classList.add('show'); BankDetails.load(); } else { bd.classList.remove('show'); }
     updatePayButton();
   }
 
@@ -2562,7 +2599,7 @@ const App = (() => {
     navigator.clipboard.writeText(text).then(()=>{ btn.classList.add('copied'); btn.textContent='Copied ✓'; setTimeout(()=>{ btn.classList.remove('copied'); btn.textContent='Copy'; },2000); }).catch(()=>toast('Could not copy','error'));
   }
 
-  function executePayment(){
+ async function executePayment(){
     if(state.isPaying) return;
     if(state.method==='mobile_money'){
       if(!state.momoProvider){ toast('Please select a mobile money network.','error'); return; }
@@ -2570,7 +2607,11 @@ const App = (() => {
     }
     state.isPaying=true; const btn=$('pay-button'); btn.disabled=true;
     showStatus('processing','Opening secure payment…','Connecting to Paystack…');
-    if(state.method==='manual'){ setTimeout(()=>{ finalizeBooking({reference:state.bookingRef+'-MANUAL',method:'Manual Bank Transfer',status:'pending_verification',gateway_response:'Awaiting manual verification'}); },800); return; }
+    if(state.method==='manual' || state.method==='usdt'){
+      // Submit to backend which saves to pending_transfers table
+      await App.submitBankTransfer();
+      return;
+    }
     if(typeof PaystackPop==='undefined'){ showStatus('error','Could not load Paystack','Check your internet and try again.'); toast('Paystack SDK failed to load.','error'); resetPayButton(); return; }
     if(!CONFIG.PAYSTACK_PUBLIC_KEY||CONFIG.PAYSTACK_PUBLIC_KEY.includes('REPLACE')){
       showStatus('processing','Demo mode','No real charge.');
@@ -2609,7 +2650,7 @@ const App = (() => {
     } catch(err){ console.error('[ps] setup failed',err); showStatus('error','Could not start payment',err?.message||'Unexpected error.'); toast('Could not start payment.','error'); resetPayButton(); }
   }
 
-  function methodLabel(){ const m=state.method; return m==='card'?'Card':m==='mobile_money'?(state.momoProvider?MOMO_PROVIDERS[state.momoProvider].name:'Mobile Money'):m==='bank'?'Bank Transfer':m==='ussd'?'USSD':'Manual'; }
+  function methodLabel(){ const m=state.method; return m==='card'?'Card':m==='mobile_money'?(state.momoProvider?MOMO_PROVIDERS[state.momoProvider].name:'Mobile Money'):m==='bank'?'Bank Transfer':m==='ussd'?'USSD':m==='usdt'?'USDT TRC20':'Manual Wire'; }
   function resetPayButton(){ state.isPaying=false; $('pay-button').disabled=false; updatePayButton(); }
 
   async function verifyOnServer(reference){
@@ -2638,7 +2679,16 @@ const App = (() => {
     $('modal-amount').textContent=`$${fmt(state.usd)} (GH₵ ${fmt(state.ghs)})`;
     $('modal-method').textContent=payment.method;
     $('modal-status').textContent=payment.status==='success'?'Confirmed ✓':payment.status==='pending_verification'?'Pending verification':'Received';
-    if(payment.status==='pending_verification'){ $('modal-eyebrow').textContent='BOOKING RECEIVED — PENDING'; $('modal-text').textContent='Your booking is reserved. The Team will verify within 24 hours.'; }
+    if(payment.status==='pending_verification'){
+      $('modal-eyebrow').textContent='BOOKING RECEIVED — PENDING';
+      $('modal-text').innerHTML=`Your booking is reserved. The team will verify within 24 hours.<br><br>
+        <small style="color:var(--grey-400);">
+          Also send your booking reference <strong style="color:var(--gold);">${state.bookingRef}</strong> to us via
+          <a href="https://wa.me/${CONFIG.SOPHIE_WHATSAPP}?text=${encodeURIComponent(`Hi! My booking reference is ${state.bookingRef}. Please confirm my payment.`)}" target="_blank" style="color:var(--teal);font-weight:700;">WhatsApp</a>
+          or <a href="mailto:pipsbuiltacademy@gmail.com?subject=Booking Ref — ${state.bookingRef}" style="color:var(--teal);font-weight:700;">Email</a>
+          so we can match your payment quickly.
+        </small>`;
+    }
     else{ $('modal-eyebrow').textContent='BOOKING CONFIRMED'; $('modal-text').textContent="Payment received and your seat is reserved. The team has been notified and will reach out within 24 hours."; }
     setNotif('notif-email',notif.email?'ok':'failed');
     setNotif('notif-sophie',notif.sophie?'ok':'failed');
@@ -2701,9 +2751,61 @@ const App = (() => {
     document.querySelectorAll('select').forEach(s=>s.selectedIndex=0);
     document.querySelectorAll('.field-hint').forEach(h=>h.textContent='');
     document.querySelectorAll('.tier-card,.momo-option').forEach(t=>t.classList.remove('selected'));
-    Object.assign(state,{tier:null,ghs:0,usd:0,method:'card',momoProvider:null,momoPhone:'',bookingRef:null,applicant:{},paystack:null,isPaying:false});
+    Object.assign(state,{tier:null,ghs:0,usd:0,method:'mobile_money',momoProvider:null,momoPhone:'',bookingRef:null,applicant:{},paystack:null,isPaying:false});
     $('summary-tier').textContent='— none yet —'; $('summary-amount').textContent='$0';
     resetPayButton(); go('home');
+  }
+
+  async function submitBankTransfer(){
+    // Called when user clicks "I've Made the Transfer" on the Manual Wire method.
+    // Submits booking data + optional receipt to the backend, which saves to
+    // pending_transfers. The admin then approves from admin.html.
+    const btn=$('pay-button');
+    btn.disabled=true;
+    showStatus('processing','Submitting your transfer…','Saving your booking — this takes a moment.');
+    try {
+      const a=state.applicant;
+      const payload={
+        booking_ref:       state.bookingRef,
+        tier:              state.tier,
+        amount_ghs:        state.ghs,
+        amount_usd:        state.usd,
+        customer_name:     a.name,
+        customer_email:    a.email,
+        customer_phone:    a.phone||null,
+        customer_country:  a.country||null,
+        customer_whatsapp: a.whatsapp||null,
+        experience:        a.experience||null,
+        start_date:        a.startDate||null,
+        source:            a.source||null,
+        message:           a.message||null,
+        affiliate_code:    sessionStorage.getItem('_aff')||null,
+      };
+      // Attach receipt if the user uploaded one
+      const receiptData=BankDetails.getReceiptPayload();
+      if(receiptData) payload.receipt=receiptData;
+
+      const res=await fetch('/.netlify/functions/submit-bank-transfer',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(payload),
+      });
+      const data=await res.json();
+      if(!data.success) throw new Error(data.message||'Submission failed');
+
+      // Show the same success modal as Paystack, but with pending status
+      hideStatus();
+      finalizeBooking({
+        reference:    state.bookingRef+'-BANK',
+        method:       state.method === 'usdt' ? 'USDT TRC20' : 'Manual Bank Transfer',
+        status:       'pending_verification',
+        gateway_response: 'Submitted — awaiting admin verification',
+      });
+    } catch(err) {
+      console.error('[submitBankTransfer]',err);
+      showStatus('error','Submission failed',err.message||'Please try again or contact the team directly.');
+      btn.disabled=false;
+    }
   }
 
   async function sendContact(){
@@ -2744,6 +2846,129 @@ const App = (() => {
     });
   }
 
+
+// ── BANK DETAILS MODULE ─────────────────────────────────────
+// Fetches Zenith Bank account numbers from the server.
+// They never live in this HTML file — always server-side.
+const BankDetails = (() => {
+  let loaded   = false;
+  let loading  = false;
+  let _receipt = null; // { data: base64, mimeType: 'image/jpeg' }
+
+  async function load() {
+    // Reset on each call so switching methods re-renders correctly
+    loaded  = false;
+    loading = true;
+
+    const inner      = document.getElementById('bank-details-inner');
+    const spinner    = document.getElementById('bank-loading');
+    const receiptWrap= document.getElementById('receipt-upload-wrap');
+    const heading    = document.getElementById('bank-details-heading');
+    if (!inner) return;
+
+    // Show spinner while loading
+    inner.style.display = 'none';
+    inner.innerHTML     = '';
+    if (spinner)    { spinner.style.display = ''; spinner.innerHTML = '<span class="spinner" style="display:inline-block;width:16px;height:16px;border:2px solid var(--grey-300);border-top-color:var(--teal);border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:6px;"></span> Loading details…'; }
+
+    const method = state.method; // 'manual' | 'usdt' | 'btc'
+
+    try {
+      const res  = await fetch('/.netlify/functions/get-bank-details', { cache: 'no-store' });
+      const data = await res.json();
+      if (!data.success || !data.bank) throw new Error(data.message || 'Could not load bank details');
+
+      const b   = data.bank;
+      let html  = '';
+
+      if (method === 'manual') {
+        // ── Update heading ──────────────────────────────────────
+        if (heading) heading.innerHTML = '<span>🏦</span> Wire to our Zenith Bank account';
+
+        // ── GH₵ account ────────────────────────────────────────
+        html += `<div class="bank-section-head">↳ Ghana Cedis (GH₵) — Local Transfer</div>`;
+        html += `<div class="bank-row"><span class="lab">Bank</span><span class="val">${escH(b.name)}</span></div>`;
+        html += `<div class="bank-row"><span class="lab">Account Name</span><span class="val">${escH(b.account_name)}</span></div>`;
+        html += `<div class="bank-row"><span class="lab">Account №</span><span class="val">${escH(b.ghs.account)}</span><button class="copy-btn" onclick="App.copy('${escH(b.ghs.account)}',this)">Copy</button></div>`;
+
+        // ── USD wire instructions ───────────────────────────────
+        if (b.usd) {
+          html += `<div class="bank-section-head" style="margin-top:1.2rem;">↳ US Dollar (USD) — International Wire Transfer</div>`;
+          html += `<div class="bank-row"><span class="lab">Beneficiary Name</span><span class="val">${escH(b.usd.beneficiary_name)}</span></div>`;
+          html += `<div class="bank-row"><span class="lab">Beneficiary A/C</span><span class="val">${escH(b.usd.beneficiary_acc)}</span><button class="copy-btn" onclick="App.copy('${escH(b.usd.beneficiary_acc)}',this)">Copy</button></div>`;
+          html += `<div class="bank-row"><span class="lab">Beneficiary Bank</span><span class="val">${escH(b.usd.beneficiary_bank)}</span></div>`;
+          html += `<div class="bank-row"><span class="lab">Beneficiary SWIFT</span><span class="val">${escH(b.usd.swift)}</span></div>`;
+          b.usd.corridors.forEach((c, i) => {
+            html += `<div class="bank-section-head" style="margin-top:0.8rem;font-size:11px;opacity:0.7;">Corridor ${i+1} — ${escH(c.label)}</div>`;
+            html += `<div class="bank-row"><span class="lab">Intermediary Bank</span><span class="val">${escH(c.intermediary)}</span></div>`;
+            html += `<div class="bank-row"><span class="lab">Intermediary SWIFT</span><span class="val">${escH(c.intermediary_swift)}</span></div>`;
+            if (c.aba) html += `<div class="bank-row"><span class="lab">ABA / Fedwire</span><span class="val">${escH(c.aba)}</span></div>`;
+            html += `<div class="bank-row"><span class="lab">Intermediary A/C</span><span class="val">${escH(c.intermediary_acc)}</span></div>`;
+          });
+          html += `<div class="bank-row" style="margin-top:0.6rem;"><span class="lab">Purpose</span><span class="val" style="color:var(--teal);">Use your booking ref as purpose/narration</span></div>`;
+        }
+
+      } else if (method === 'usdt') {
+        // ── Update heading ──────────────────────────────────────
+        if (heading) heading.innerHTML = '<span>💵</span> Send USDT (TRC20) to this address';
+
+        // ── USDT TRC20 address ──────────────────────────────────
+        const addr = b.usdt_trc20; // from get-bank-details.js
+        if (addr) {
+          html += `<div class="bank-section-head">↳ USDT · Tron Network (TRC20)</div>`;
+          html += `<div class="bank-row"><span class="lab">Network</span><span class="val" style="color:var(--teal);">TRC20 — Tron</span></div>`;
+          html += `<div class="bank-row"><span class="lab">Wallet Address</span><span class="val" style="font-family:monospace;font-size:12px;word-break:break-all;">${escH(addr)}</span><button class="copy-btn" onclick="App.copy('${escH(addr)}',this)">Copy</button></div>`;
+          html += `<div class="bank-row" style="margin-top:0.4rem;"><span class="lab" style="color:var(--red);">⚠ Warning</span><span class="val" style="color:var(--red);font-size:12px;">Only send USDT on TRC20 network. Sending on ERC20 or BEP20 will result in loss of funds.</span></div>`;
+          html += `<div class="bank-row" style="margin-top:0.4rem;"><span class="lab">Narration</span><span class="val" style="color:var(--teal);">Use your booking ref as memo/tag if your wallet supports it</span></div>`;
+        } else {
+          html += `<p style="color:var(--grey-600);font-size:13px;">USDT address not configured yet. Contact the team directly.</p>`;
+        }
+
+      }
+
+      inner.innerHTML     = html;
+      inner.style.display = '';
+      if (spinner)     spinner.style.display = 'none';
+      if (receiptWrap) receiptWrap.style.display = '';
+      loaded = true;
+
+    } catch (err) {
+      if (spinner) {
+        spinner.innerHTML = `<span style="color:var(--red);">⚠ Could not load payment details. Please contact the team directly at ${CONFIG.SOPHIE_EMAIL}</span>`;
+      }
+    } finally {
+      loading = false;
+    }
+  }
+
+  function escH(s) {
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function onReceiptSelect(input) {
+    const status = document.getElementById('receipt-status');
+    const file   = input.files?.[0];
+    if (!file) { _receipt = null; if (status) status.textContent = ''; return; }
+    if (file.size > 5 * 1024 * 1024) {
+      if (status) status.textContent = '⚠ File too large — max 5 MB.';
+      input.value = ''; _receipt = null; return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      // Strip the data: URI prefix, keep only the base64 part
+      const full = e.target.result;
+      const comma = full.indexOf(',');
+      _receipt = { data: full.slice(comma + 1), mimeType: file.type };
+      if (status) status.textContent = `✓ ${file.name} (${(file.size/1024).toFixed(0)} KB) ready`;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function getReceiptPayload() { return _receipt; }
+
+  return { load, onReceiptSelect, getReceiptPayload };
+})();
+
   document.addEventListener('DOMContentLoaded',()=>{
   Settings.load();
     const mp=$('momo-phone'); if(mp){ mp.addEventListener('input',validateMomoPhone); mp.addEventListener('blur',validateMomoPhone); }
@@ -2761,7 +2986,7 @@ const App = (() => {
     }
   });
 
-  return { go,selectTier,selectMethod,selectMomo,copy,proceedToPayment,executePayment,closeModal,sendContact };
+  return { go,selectTier,selectMethod,selectMomo,copy,proceedToPayment,executePayment,submitBankTransfer,closeModal,sendContact,onReceiptSelect:(el)=>BankDetails.onReceiptSelect(el) };
 })();
 
 // ── TICKER ──────────────────────────────────────────────────
@@ -2785,7 +3010,8 @@ const App = (() => {
 // Monitor script
 (function SophieFXMonitor(){
   'use strict';
-  const MONITOR_SECRET='txho9f62UUPEYKuX0652488ZNZNDEUEIROTMFNGJGOGPEHEHldodfjfhtutidndbfhfi';
+  let MONITOR_SECRET = ''; // fetched from server — never hardcoded here
+  fetch('/.netlify/functions/get-monitor-token',{cache:'no-store'}).then(r=>r.json()).then(d=>{if(d.success&&d.token)MONITOR_SECRET=d.token;}).catch(()=>{});
   const LOG_ENDPOINT='/.netlify/functions/log-event';
   const LS_KEY='sophiefx_log'; let queue=[],flushTimer=null;
   function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
@@ -2806,28 +3032,7 @@ const App = (() => {
 <!-- ── AFFILIATE TRACKING ── -->
 <script>
 (function(){
-  const SUPABASE_URL = 'https://jkwzknvialkjkykpgjko.supabase.co';
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imprd3prbnZpYWxramt5a3BnamtvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzODk4MjksImV4cCI6MjA5Mzk2NTgyOX0.CbpAeQzz-M6m-mn5KilZV6Xhs4k1KjhPAXlnA7M8BKU';
-  const COMM_RATE_DEFAULT = 30;
-
-  async function sbFetch(path, opts={}){
-    const method = opts.method || 'GET';
-    const isGet = method === 'GET';
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-      ...opts,
-      headers:{ 
-        'apikey':SUPABASE_KEY, 
-        'Authorization':`Bearer ${SUPABASE_KEY}`, 
-        'Content-Type':'application/json', 
-        'Accept':'application/json',
-        ...(!isGet ? {'Prefer':'return=minimal'} : {}),
-        ...(opts.headers||{}) 
-      }
-    });
-    if(!res.ok) throw new Error(`Supabase ${res.status}: ${await res.text()}`);
-    if(res.status===204 || !isGet) return null;
-    return res.json();
-  }
+  // No Supabase keys here — all calls go through Netlify functions
 
   // Track click when someone lands via ?ref=CODE
   (async function trackClick(){
@@ -2836,31 +3041,24 @@ const App = (() => {
     const code = ref.toUpperCase();
     sessionStorage.setItem('affiliate_ref', code);
     try{
-      const rows = await sbFetch(`affiliates?code=eq.${code}&select=id,clicks`);
-      if(rows && rows.length){
-        const a = rows[0];
-        await sbFetch(`affiliates?id=eq.${a.id}`, { method:'PATCH', body:JSON.stringify({ clicks:(a.clicks||0)+1 }) });
-        console.log('[affiliate] ✓ click tracked for', code);
-      }
+      await fetch('/.netlify/functions/track-click', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code }),
+      });
+      console.log('[affiliate] ✓ click tracked for', code);
     }catch(e){ console.warn('[affiliate] click track failed', e); }
   })();
 
   // Called by index.html after payment is verified
+  // Attribution is handled server-side in verify-payment.js and approve-transfer.js
+  // This just clears the session ref so it is not reused
   window.attributeBookingToAffiliate = async function(bookingRef, amountPesewas, tier){
     const code = sessionStorage.getItem('affiliate_ref');
     if(!code){ console.log('[affiliate] no ref in session'); return; }
-    try{
-      const rows = await sbFetch(`affiliates?code=eq.${code}&status=eq.approved&select=id,bookings,earned_ghs,comm_rate`);
-      if(!rows || !rows.length){ console.warn('[affiliate] code not found or not approved:', code); return; }
-      const a = rows[0];
-      const rate = (a.comm_rate || COMM_RATE_DEFAULT) / 100;
-      const amtGhs = Math.round(amountPesewas / 100);
-      const comm = Math.round(amtGhs * rate);
-      await sbFetch(`affiliates?id=eq.${a.id}`, { method:'PATCH', body:JSON.stringify({ bookings:(a.bookings||0)+1, earned_ghs:(a.earned_ghs||0)+comm }) });
-      await sbFetch(`bookings?booking_ref=eq.${encodeURIComponent(bookingRef)}`, { method:'PATCH', body:JSON.stringify({ affiliate_code:code }) });
-      sessionStorage.removeItem('affiliate_ref');
-      console.log(`[affiliate] ✓ ${code} earns GH₵${comm} for booking ${bookingRef}`);
-    }catch(e){ console.warn('[affiliate] attribution failed', e); }
+    // Server already handled attribution in verify-payment.js via tx.metadata.affiliate_ref
+    sessionStorage.removeItem('affiliate_ref');
+    console.log('[affiliate] ✓ session ref cleared for booking', bookingRef);
   };
 })();
 </script>

@@ -1439,8 +1439,7 @@ const Controls = (() => {
 
 /* ── TRANSFERS ── */
 const Transfers = (() => {
-  const EMAILJS_SERVICE_ID  = typeof CONFIG_EMAILJS_SERVICE  !== 'undefined' ? CONFIG_EMAILJS_SERVICE  : '';
-  const EMAILJS_TEMPLATE_ID = typeof CONFIG_EMAILJS_TEMPLATE !== 'undefined' ? CONFIG_EMAILJS_TEMPLATE : '';
+  const EMAILJS_SERVICE_ID  = typeof CONFIG_EMAILJS_SERVICE !== 'undefined' ? CONFIG_EMAILJS_SERVICE : '';
   let all = [], activeStatus = 'all', selectedId = null;
 
   function start() {
@@ -1512,19 +1511,7 @@ const Transfers = (() => {
     const isPending   = t.status === 'pending';
 
     const receiptHTML = t.receipt_url
-      ? `<div style="margin-bottom:0.5rem;">
-           <button onclick="Transfers.previewReceipt('${escH(t.receipt_url)}','${escH(t.id)}')"
-             style="background:var(--bg-3);border:1px solid var(--border-2);color:var(--teal);
-                    padding:0.5rem 1rem;font-family:var(--mono);font-size:11px;font-weight:700;
-                    letter-spacing:0.08em;cursor:pointer;text-transform:uppercase;display:inline-flex;align-items:center;gap:0.4rem;">
-             📎 PREVIEW RECEIPT
-           </button>
-           <a href="${escH(t.receipt_url)}" target="_blank"
-              style="margin-left:0.8rem;font-size:11px;color:var(--ink-faint);text-decoration:none;">
-             ↗ open in new tab
-           </a>
-         </div>
-         <div id="receipt-preview-${escH(t.id)}" style="display:none;margin-top:0.5rem;border:1px solid var(--border);background:var(--bg-3);padding:0.5rem;"></div>`
+      ? `<a href="${escH(t.receipt_url)}" target="_blank" style="color:var(--blue);font-size:11px;display:block;margin-bottom:0.3rem;">📎 View uploaded receipt ↗</a>`
       : `<span style="color:var(--ink-faint);font-size:11px;">No receipt uploaded — check your banking app or Zenith Bank statement</span>`;
 
     const approveHTML = isPending ? `
@@ -1618,13 +1605,10 @@ const Transfers = (() => {
       const data = await res.json();
       if (!data.success) { toast(data.message || 'Approval failed', true); return; }
       toast(`✓ Approved! WhatsApp link is now live for ${data.customer_name}`);
-      // Send confirmation email via EmailJS automatically
-      if (typeof emailjs !== 'undefined' && EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID) {
+      // Send confirmation email via EmailJS if available
+      if (typeof emailjs !== 'undefined' && window.EMAILJS_SERVICE_ID && window.EMAILJS_TEMPLATE_ID) {
         try {
-          const methodLabel = data.channel === 'usdt_trc20' ? 'USDT TRC20 (Crypto)'
-                            : data.channel === 'bank_transfer_manual' ? 'Manual Bank Transfer'
-                            : data.channel || 'Manual Transfer';
-          await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          await emailjs.send(window.EMAILJS_SERVICE_ID, window.EMAILJS_TEMPLATE_ID, {
             to_email:     data.customer_email,
             subject:      `Your PIPS BUILT ACADEMY spot is confirmed! — ${data.booking_ref}`,
             headline:     'Payment Verified ✓',
@@ -1636,7 +1620,7 @@ const Transfers = (() => {
             row_1_label:'Reference',  row_1_value: data.booking_ref,
             row_2_label:'Tier',       row_2_value: data.tier,
             row_3_label:'Amount',     row_3_value: data.amount_ghs ? 'GH₵ '+data.amount_ghs : '—',
-            row_4_label:'Method',     row_4_value: methodLabel,
+            row_4_label:'Method',     row_4_value: 'Manual Bank Transfer',
             row_5_label:'Status',     row_5_value: 'Confirmed ✓',
             row_6_label:'',row_6_value:'',row_7_label:'',row_7_value:'',row_8_label:'',row_8_value:'',
             message_title:'What happens next',
@@ -1670,38 +1654,7 @@ const Transfers = (() => {
       });
       const data = await res.json();
       if (!data.success) { toast(data.message || 'Rejection failed', true); return; }
-
-      // Send rejection email via EmailJS automatically
-      if (typeof emailjs !== 'undefined' && EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID) {
-        try {
-          await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-            to_email:     data.customer_email,
-            subject:      `Update on your PipsBuilt Academy booking — ${data.booking_ref}`,
-            headline:     'Booking Update',
-            tagline:      'PIPS BUILT ACADEMY · BOOKING UPDATE',
-            intro_line_1: `Hi ${(data.customer_name||'').split(' ')[0]},`,
-            intro_line_2: 'Unfortunately we could not verify your payment for the booking below.',
-            callout:      '"Every setback is a setup for a comeback."',
-            details_title:'Booking details',
-            row_1_label:'Reference',  row_1_value: data.booking_ref,
-            row_2_label:'Status',     row_2_value: 'Not Confirmed',
-            row_3_label:'Reason',     row_3_value: data.rejection_reason || 'Payment could not be verified',
-            row_4_label:'',row_4_value:'',row_5_label:'',row_5_value:'',
-            row_6_label:'',row_6_value:'',row_7_label:'',row_7_value:'',row_8_label:'',row_8_value:'',
-            message_title:'What to do next',
-            message_body: 'Please contact us directly at pipsbuiltacademy@gmail.com or via WhatsApp and we will sort it out for you.',
-            closing_line: 'We are happy to help.',
-            cta_text:     'Contact Us on WhatsApp',
-            cta_url:      'https://wa.me/233207050769',
-            signoff:      '— PipsBuiltAcademy',
-          });
-          toast('Rejection email sent to ' + data.customer_email);
-        } catch (eErr) {
-          toast('Rejected but email failed — notify ' + data.customer_email + ' manually', true);
-        }
-      } else {
-        toast('Transfer rejected — remember to notify ' + data.customer_email + ' manually', true);
-      }
+      toast('Transfer rejected. Remember to notify ' + data.customer_email);
       await fetchTransfers();
       showDetail(id);
     } catch (err) { toast(err.message, true); }
