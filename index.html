@@ -168,7 +168,6 @@ nav {
 .panel.active { display: block; animation: fadeUp 0.4s ease; }
 @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
 @keyframes spin    { to{transform:rotate(360deg)} }
-@keyframes spin    { to{transform:rotate(360deg)} }
 
 /* ── BUTTONS ─────────────────────────────────────────────── */
 .btn {
@@ -1449,7 +1448,7 @@ img, video { max-width: 100%; height: auto; }
     <ul class="nav-links">
       <li><button class="tab-btn active" data-tab="home" onclick="App.go('home')">Home</button></li>
       <li><button class="tab-btn" data-tab="about" onclick="App.go('about')">About</button></li>
-      <li><button class="tab-btn" data-tab="booking" onclick="App.go('booking')" style="margin-right:.5rem;">Booking</button></li>
+      <li><button class="tab-btn" data-tab="booking" onclick="App.go('booking')">Booking</button></li>
       <li><button class="tab-btn" data-tab="contact" onclick="App.go('contact')">Contact</button></li>
       <li><a class="tab-btn" href="affiliate.html" style="text-decoration:none;color:var(--gold);font-weight:700;" title="Affiliate Programme">💰 Earn</a></li>
     </ul>
@@ -1554,7 +1553,8 @@ img, video { max-width: 100%; height: auto; }
     </div>
   </div>
 
-  <!-- ── EXNESS COMPACT STRIP ───────────────────────────────── -->
+  <!-- ── EXNESS COMPACT STRIP (hidden) ───────────────────────────────── -->
+  <!--
   <div style="background:#f0faff;border-top:1px solid #bae6fd;border-bottom:1px solid #bae6fd;padding:.85rem 1.5rem;">
     <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;">
       <span style="font-size:18px;flex-shrink:0;">🏦</span>
@@ -1568,6 +1568,7 @@ img, video { max-width: 100%; height: auto; }
       </a>
     </div>
   </div>
+  -->
 
   <div class="section">
     <div class="section-label">Our Philosophy</div>
@@ -1592,7 +1593,8 @@ img, video { max-width: 100%; height: auto; }
     </div>
   </div>
 
-  <!-- ── EXNESS BROKER BANNER ──────────────────────────────── -->
+  <!-- ── EXNESS BROKER BANNER (hidden) ──────────────────────────────── -->
+  <!--
   <div style="max-width:1200px;margin:0 auto 3rem;padding:0 1.5rem;">
     <a href="https://one.exnessonelink.com/a/20j878g3hq" target="_blank" rel="noopener sponsored"
        style="display:flex;align-items:center;gap:1.2rem;background:linear-gradient(135deg,#0d2137 0%,#163250 60%,#1a4a6e 100%);border-radius:16px;padding:1.5rem;text-decoration:none;box-shadow:0 8px 32px rgba(13,33,55,0.2);position:relative;overflow:hidden;flex-wrap:wrap;">
@@ -1608,6 +1610,7 @@ img, video { max-width: 100%; height: auto; }
       </div>
     </a>
   </div>
+  -->
 
   <div class="pullquote">
     <q>"The market will pay you what you are. Not what you want to be — what you are. Mentorship is the shortest path to becoming what you need to be."</q>
@@ -1739,7 +1742,8 @@ img, video { max-width: 100%; height: auto; }
       Prices are shown in US dollars (USD) — at checkout the amount is converted to Ghanaian Cedis (GH₵) and charged securely.
     </p>
 
-    <!-- ── RECOMMENDED BROKER ─────────────────────────────── -->
+    <!-- ── RECOMMENDED BROKER (hidden) ─────────────────────────────── -->
+    <!--
     <a href="https://one.exnessonelink.com/a/20j878g3hq" target="_blank" rel="noopener sponsored"
        style="display:flex;align-items:center;gap:1rem;background:linear-gradient(135deg,#0d2137 0%,#163250 100%);border:1px solid rgba(26,127,168,0.35);border-left:4px solid #1a7fa8;border-radius:12px;padding:1rem 1.2rem;margin-bottom:2rem;text-decoration:none;flex-wrap:wrap;">
       <div style="width:38px;height:38px;flex-shrink:0;background:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;">🏦</div>
@@ -1750,6 +1754,7 @@ img, video { max-width: 100%; height: auto; }
       </div>
       <div style="flex-shrink:0;background:#1a7fa8;color:#fff;font-size:12px;font-weight:700;padding:.5rem 1rem;border-radius:8px;white-space:nowrap;">Open Account →</div>
     </a>
+    -->
 
     <div class="tier-grid">
       <div class="tier-card" data-tier="course" data-usd="100" onclick="App.selectTier(this)">
@@ -1935,7 +1940,7 @@ img, video { max-width: 100%; height: auto; }
   <div class="section">
     <div class="section-label">Complete Your Booking</div>
     <h2 class="section-title">Secure <em>payment.</em></h2>
-    <p class="booking-intro">Card, mobile money, bank transfer, or USSD — all processed securely through Paystack.</p>
+    <p class="booking-intro">Mobile money or manual bank transfer — choose what works best for you.</p>
 
     <div class="payment-layout">
       <div class="order-summary-card">
@@ -1965,7 +1970,7 @@ img, video { max-width: 100%; height: auto; }
       <div class="payment-section">
         <h4>Select Payment Method</h4>
         <div class="pm-list">
-          <div class="pm-item selected" data-method="card" onclick="App.selectMethod(this)">
+          <div class="pm-item" data-method="card" onclick="App.selectMethod(this)" style="display:none;">
             <div class="pm-radio"></div>
             <div class="pm-text">
               <h5>Card Payment</h5>
@@ -1977,7 +1982,7 @@ img, video { max-width: 100%; height: auto; }
             </div>
           </div>
 
-          <div class="pm-item" data-method="mobile_money" onclick="App.selectMethod(this)">
+          <div class="pm-item selected" data-method="mobile_money" onclick="App.selectMethod(this)">
             <div class="pm-radio"></div>
             <div class="pm-text">
               <h5>Mobile Money</h5>
@@ -2029,7 +2034,7 @@ img, video { max-width: 100%; height: auto; }
             </div>
           </div>
 
-          <div class="pm-item" data-method="bank" onclick="App.selectMethod(this)">
+          <div class="pm-item" data-method="bank" onclick="App.selectMethod(this)" style="display:none;">
             <div class="pm-radio"></div>
             <div class="pm-text">
               <h5>Bank Transfer</h5>
@@ -2038,7 +2043,7 @@ img, video { max-width: 100%; height: auto; }
             <div class="pm-badges"><span class="pm-badge">GH</span></div>
           </div>
 
-          <div class="pm-item" data-method="ussd" onclick="App.selectMethod(this)">
+          <div class="pm-item" data-method="ussd" onclick="App.selectMethod(this)" style="display:none;">
             <div class="pm-radio"></div>
             <div class="pm-text">
               <h5>USSD</h5>
@@ -2055,22 +2060,49 @@ img, video { max-width: 100%; height: auto; }
             </div>
             <div class="pm-badges"><span class="pm-badge">USD</span></div>
           </div>
+
+          <div class="pm-item" data-method="usdt" onclick="App.selectMethod(this)">
+            <div class="pm-radio"></div>
+            <div class="pm-text">
+              <h5>USDT (TRC20)</h5>
+              <p>Tether · Tron network · Low fees</p>
+            </div>
+            <div class="pm-badges"><span class="pm-badge">Crypto</span></div>
+          </div>
         </div>
 
         <div class="bank-details" id="bank-details">
-          <h5 style="display:flex;align-items:center;gap:.5rem;"><span>🏦</span> Wire to our Zenith Bank account</h5>
+          <!-- Bank details are loaded dynamically from the server — never hardcoded in HTML -->
+          <h5 style="display:flex;align-items:center;gap:0.5rem;" id="bank-details-heading">
+            <span>🏦</span> Wire to our Zenith Bank account
+          </h5>
+
+          <!-- Loading state -->
           <div id="bank-loading" style="text-align:center;padding:1.5rem 0;color:var(--grey-400);font-size:13px;">
-            <span style="display:inline-block;width:14px;height:14px;border:2px solid var(--grey-300);border-top-color:var(--teal);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px;"></span>Loading bank details…
+            <span class="spinner" style="display:inline-block;width:16px;height:16px;border:2px solid var(--grey-300);border-top-color:var(--teal);border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:6px;"></span>
+            Loading bank details…
           </div>
+
+          <!-- Bank details injected here by BankDetails.load() -->
           <div id="bank-details-inner" style="display:none;"></div>
+
+          <!-- Receipt upload -->
           <div id="receipt-upload-wrap" style="display:none;margin-top:1.2rem;padding:1rem;background:var(--grey-100);border-radius:var(--radius);border:1px dashed var(--grey-300);">
-            <label style="font-size:13px;font-weight:600;color:var(--navy);display:block;margin-bottom:.5rem;">📎 Upload payment receipt <span style="color:var(--grey-400);font-weight:400;">(optional but recommended)</span></label>
-            <p style="font-size:12px;color:var(--grey-600);margin-bottom:.7rem;">Uploading your bank screenshot speeds up verification. JPG, PNG, PDF — max 5 MB.</p>
-            <input type="file" id="receipt-file" accept="image/jpeg,image/png,image/webp,application/pdf" style="font-size:13px;" onchange="BankDetails.onReceiptSelect(this)">
-            <div id="receipt-status" style="font-size:12px;margin-top:.4rem;color:var(--grey-600);"></div>
+            <label style="font-size:13px;font-weight:600;color:var(--navy);display:block;margin-bottom:0.5rem;">
+              📎 Upload payment receipt <span style="color:var(--grey-400);font-weight:400;">(optional but recommended)</span>
+            </label>
+            <p style="font-size:12px;color:var(--grey-600);margin-bottom:0.7rem;line-height:1.5;">
+              Uploading your bank screenshot speeds up verification. JPG, PNG, PDF — max 5 MB.
+            </p>
+            <input type="file" id="receipt-file" accept="image/jpeg,image/png,image/webp,application/pdf"
+                   style="font-size:13px;color:var(--grey-600);"
+                   onchange="App.onReceiptSelect(this)">
+            <div id="receipt-status" style="font-size:12px;margin-top:0.4rem;color:var(--grey-600);"></div>
           </div>
+
           <div style="margin-top:1rem;font-size:13px;color:var(--grey-600);line-height:1.6;">
-            Use <strong id="manual-ref" style="color:var(--teal);">—</strong> as your transfer narration so the team can match it. Click <em>Confirm Booking</em> after paying — The team verifies within 24 hours.
+            Use <strong id="manual-ref" style="color:var(--teal);">—</strong> as your transfer narration so the team can match it.
+            Click <em>Confirm Booking</em> after paying — The team verifies within 24 hours.
           </div>
         </div>
 
@@ -2185,7 +2217,8 @@ img, video { max-width: 100%; height: auto; }
         <div class="notif-item" id="notif-sophie"><span class="notif-icon">·</span>Notifying Team</div>
         <div class="notif-item" id="notif-wa"><span class="notif-icon ok">✓</span>WhatsApp message ready for Team</div>
       </div>
-      <!-- ── EXNESS BROKER CTA ─────────────────────────────── -->
+      <!-- ── EXNESS BROKER CTA (hidden) ─────────────────────────────── -->
+      <!--
       <a href="https://one.exnessonelink.com/a/20j878g3hq" target="_blank" rel="noopener sponsored"
          style="display:flex;align-items:center;gap:.8rem;background:#f0faff;border:1px solid #e8f6fc;border-left:3px solid #1a7fa8;border-radius:10px;padding:.9rem 1rem;margin:1rem 0;text-decoration:none;">
         <div style="font-size:22px;flex-shrink:0;">🏦</div>
@@ -2196,6 +2229,7 @@ img, video { max-width: 100%; height: auto; }
         </div>
         <div style="flex-shrink:0;font-size:16px;color:#1a7fa8;">→</div>
       </a>
+      -->
 
       <div class="modal-actions">
         <a href="#" class="btn btn-primary" id="whatsapp-link" target="_blank" rel="noopener">
@@ -2294,7 +2328,7 @@ img, video { max-width: 100%; height: auto; }
       <li><a href="https://wa.me/233207050769" target="_blank">WhatsApp</a></li>
       <li><a href="mailto:pipsbuiltacademy@gmail.com">Email</a></li>
       <li><a href="https://t.me/PipsBuiltAcademy" target="_blank" rel="noopener">Telegram</a></li>
-      <li><a href="https://one.exnessonelink.com/a/20j878g3hq" target="_blank" rel="noopener sponsored" style="color:#1a7fa8;">🏦 Open Exness Account</a></li>
+      <!-- <li><a href="https://one.exnessonelink.com/a/20j878g3hq" target="_blank" rel="noopener sponsored" style="color:#1a7fa8;">🏦 Open Exness Account</a></li> -->
     </ul>
   </div>
   </div>
@@ -2442,7 +2476,7 @@ const tierName   = t => (TIERS[t] && TIERS[t].name)   || 'Mentorship';
 const tierFormat = t => (TIERS[t] && TIERS[t].format) || '—';
 
 const App = (() => {
-  const state = { tier:null, ghs:0, usd:0, method:'card', momoProvider:null, momoPhone:'', bookingRef:null, applicant:{}, paystack:null, isPaying:false };
+  const state = { tier:null, ghs:0, usd:0, method:'mobile_money', momoProvider:null, momoPhone:'', bookingRef:null, applicant:{}, paystack:null, isPaying:false };
   const $ = id => document.getElementById(id);
   const fmt = n => Number(n).toLocaleString('en-US');
 
@@ -2533,7 +2567,7 @@ const App = (() => {
     const mp=$('momo-picker');
     if(state.method==='mobile_money'){ mp.classList.add('show'); if(!state.momoProvider){ const mtn=mp.querySelector('[data-provider="mtn"]'); if(mtn) selectMomo(mtn); } } else { mp.classList.remove('show'); }
     const bd=$('bank-details');
-    if(state.method==='manual'){ bd.classList.add('show'); BankDetails.load(); } else { bd.classList.remove('show'); }
+    if(['manual','usdt'].includes(state.method)){ bd.classList.add('show'); BankDetails.load(); } else { bd.classList.remove('show'); }
     updatePayButton();
   }
 
@@ -2565,7 +2599,7 @@ const App = (() => {
     navigator.clipboard.writeText(text).then(()=>{ btn.classList.add('copied'); btn.textContent='Copied ✓'; setTimeout(()=>{ btn.classList.remove('copied'); btn.textContent='Copy'; },2000); }).catch(()=>toast('Could not copy','error'));
   }
 
-  async function executePayment(){
+ async function executePayment(){
     if(state.isPaying) return;
     if(state.method==='mobile_money'){
       if(!state.momoProvider){ toast('Please select a mobile money network.','error'); return; }
@@ -2573,7 +2607,8 @@ const App = (() => {
     }
     state.isPaying=true; const btn=$('pay-button'); btn.disabled=true;
     showStatus('processing','Opening secure payment…','Connecting to Paystack…');
-    if(state.method==='manual'){
+    if(state.method==='manual' || state.method==='usdt'){
+      // Submit to backend which saves to pending_transfers table
       await App.submitBankTransfer();
       return;
     }
@@ -2615,7 +2650,7 @@ const App = (() => {
     } catch(err){ console.error('[ps] setup failed',err); showStatus('error','Could not start payment',err?.message||'Unexpected error.'); toast('Could not start payment.','error'); resetPayButton(); }
   }
 
-  function methodLabel(){ const m=state.method; return m==='card'?'Card':m==='mobile_money'?(state.momoProvider?MOMO_PROVIDERS[state.momoProvider].name:'Mobile Money'):m==='bank'?'Bank Transfer':m==='ussd'?'USSD':'Manual'; }
+  function methodLabel(){ const m=state.method; return m==='card'?'Card':m==='mobile_money'?(state.momoProvider?MOMO_PROVIDERS[state.momoProvider].name:'Mobile Money'):m==='bank'?'Bank Transfer':m==='ussd'?'USSD':m==='usdt'?'USDT TRC20':'Manual Wire'; }
   function resetPayButton(){ state.isPaying=false; $('pay-button').disabled=false; updatePayButton(); }
 
   async function verifyOnServer(reference){
@@ -2644,7 +2679,16 @@ const App = (() => {
     $('modal-amount').textContent=`$${fmt(state.usd)} (GH₵ ${fmt(state.ghs)})`;
     $('modal-method').textContent=payment.method;
     $('modal-status').textContent=payment.status==='success'?'Confirmed ✓':payment.status==='pending_verification'?'Pending verification':'Received';
-    if(payment.status==='pending_verification'){ $('modal-eyebrow').textContent='BOOKING RECEIVED — PENDING'; $('modal-text').textContent='Your booking is reserved. The Team will verify within 24 hours.'; }
+    if(payment.status==='pending_verification'){
+      $('modal-eyebrow').textContent='BOOKING RECEIVED — PENDING';
+      $('modal-text').innerHTML=`Your booking is reserved. The team will verify within 24 hours.<br><br>
+        <small style="color:var(--grey-400);">
+          Also send your booking reference <strong style="color:var(--gold);">${state.bookingRef}</strong> to us via
+          <a href="https://wa.me/${CONFIG.SOPHIE_WHATSAPP}?text=${encodeURIComponent(`Hi! My booking reference is ${state.bookingRef}. Please confirm my payment.`)}" target="_blank" style="color:var(--teal);font-weight:700;">WhatsApp</a>
+          or <a href="mailto:pipsbuiltacademy@gmail.com?subject=Booking Ref — ${state.bookingRef}" style="color:var(--teal);font-weight:700;">Email</a>
+          so we can match your payment quickly.
+        </small>`;
+    }
     else{ $('modal-eyebrow').textContent='BOOKING CONFIRMED'; $('modal-text').textContent="Payment received and your seat is reserved. The team has been notified and will reach out within 24 hours."; }
     setNotif('notif-email',notif.email?'ok':'failed');
     setNotif('notif-sophie',notif.sophie?'ok':'failed');
@@ -2707,34 +2751,57 @@ const App = (() => {
     document.querySelectorAll('select').forEach(s=>s.selectedIndex=0);
     document.querySelectorAll('.field-hint').forEach(h=>h.textContent='');
     document.querySelectorAll('.tier-card,.momo-option').forEach(t=>t.classList.remove('selected'));
-    Object.assign(state,{tier:null,ghs:0,usd:0,method:'card',momoProvider:null,momoPhone:'',bookingRef:null,applicant:{},paystack:null,isPaying:false});
+    Object.assign(state,{tier:null,ghs:0,usd:0,method:'mobile_money',momoProvider:null,momoPhone:'',bookingRef:null,applicant:{},paystack:null,isPaying:false});
     $('summary-tier').textContent='— none yet —'; $('summary-amount').textContent='$0';
     resetPayButton(); go('home');
   }
 
   async function submitBankTransfer(){
+    // Called when user clicks "I've Made the Transfer" on the Manual Wire method.
+    // Submits booking data + optional receipt to the backend, which saves to
+    // pending_transfers. The admin then approves from admin.html.
     const btn=$('pay-button');
     btn.disabled=true;
     showStatus('processing','Submitting your transfer…','Saving your booking — this takes a moment.');
     try {
-      const a=state.applicant||{};
+      const a=state.applicant;
       const payload={
-        booking_ref:state.bookingRef,tier:state.tier,
-        amount_ghs:state.ghs,amount_usd:state.usd,
-        customer_name:a.name,customer_email:a.email,
-        customer_phone:a.phone||null,customer_country:a.country||null,
-        customer_whatsapp:a.whatsapp||null,experience:a.experience||null,
-        start_date:a.startDate||null,source:a.source||null,message:a.message||null,
-        affiliate_code:sessionStorage.getItem('affiliate_ref')||null,
+        booking_ref:       state.bookingRef,
+        tier:              state.tier,
+        amount_ghs:        state.ghs,
+        amount_usd:        state.usd,
+        customer_name:     a.name,
+        customer_email:    a.email,
+        customer_phone:    a.phone||null,
+        customer_country:  a.country||null,
+        customer_whatsapp: a.whatsapp||null,
+        experience:        a.experience||null,
+        start_date:        a.startDate||null,
+        source:            a.source||null,
+        message:           a.message||null,
+        affiliate_code:    sessionStorage.getItem('_aff')||null,
       };
+      // Attach receipt if the user uploaded one
       const receiptData=BankDetails.getReceiptPayload();
       if(receiptData) payload.receipt=receiptData;
-      const res=await fetch('/.netlify/functions/submit-bank-transfer',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+
+      const res=await fetch('/.netlify/functions/submit-bank-transfer',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(payload),
+      });
       const data=await res.json();
       if(!data.success) throw new Error(data.message||'Submission failed');
+
+      // Show the same success modal as Paystack, but with pending status
       hideStatus();
-      finalizeBooking({reference:state.bookingRef+'-BANK',method:'Manual Bank Transfer',status:'pending_verification',gateway_response:'Submitted — awaiting admin verification'});
-    } catch(err){
+      finalizeBooking({
+        reference:    state.bookingRef+'-BANK',
+        method:       state.method === 'usdt' ? 'USDT TRC20' : 'Manual Bank Transfer',
+        status:       'pending_verification',
+        gateway_response: 'Submitted — awaiting admin verification',
+      });
+    } catch(err) {
       console.error('[submitBankTransfer]',err);
       showStatus('error','Submission failed',err.message||'Please try again or contact the team directly.');
       btn.disabled=false;
@@ -2779,6 +2846,129 @@ const App = (() => {
     });
   }
 
+
+// ── BANK DETAILS MODULE ─────────────────────────────────────
+// Fetches Zenith Bank account numbers from the server.
+// They never live in this HTML file — always server-side.
+const BankDetails = (() => {
+  let loaded   = false;
+  let loading  = false;
+  let _receipt = null; // { data: base64, mimeType: 'image/jpeg' }
+
+  async function load() {
+    // Reset on each call so switching methods re-renders correctly
+    loaded  = false;
+    loading = true;
+
+    const inner      = document.getElementById('bank-details-inner');
+    const spinner    = document.getElementById('bank-loading');
+    const receiptWrap= document.getElementById('receipt-upload-wrap');
+    const heading    = document.getElementById('bank-details-heading');
+    if (!inner) return;
+
+    // Show spinner while loading
+    inner.style.display = 'none';
+    inner.innerHTML     = '';
+    if (spinner)    { spinner.style.display = ''; spinner.innerHTML = '<span class="spinner" style="display:inline-block;width:16px;height:16px;border:2px solid var(--grey-300);border-top-color:var(--teal);border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:middle;margin-right:6px;"></span> Loading details…'; }
+
+    const method = state.method; // 'manual' | 'usdt' | 'btc'
+
+    try {
+      const res  = await fetch('/.netlify/functions/get-bank-details', { cache: 'no-store' });
+      const data = await res.json();
+      if (!data.success || !data.bank) throw new Error(data.message || 'Could not load bank details');
+
+      const b   = data.bank;
+      let html  = '';
+
+      if (method === 'manual') {
+        // ── Update heading ──────────────────────────────────────
+        if (heading) heading.innerHTML = '<span>🏦</span> Wire to our Zenith Bank account';
+
+        // ── GH₵ account ────────────────────────────────────────
+        html += `<div class="bank-section-head">↳ Ghana Cedis (GH₵) — Local Transfer</div>`;
+        html += `<div class="bank-row"><span class="lab">Bank</span><span class="val">${escH(b.name)}</span></div>`;
+        html += `<div class="bank-row"><span class="lab">Account Name</span><span class="val">${escH(b.account_name)}</span></div>`;
+        html += `<div class="bank-row"><span class="lab">Account №</span><span class="val">${escH(b.ghs.account)}</span><button class="copy-btn" onclick="App.copy('${escH(b.ghs.account)}',this)">Copy</button></div>`;
+
+        // ── USD wire instructions ───────────────────────────────
+        if (b.usd) {
+          html += `<div class="bank-section-head" style="margin-top:1.2rem;">↳ US Dollar (USD) — International Wire Transfer</div>`;
+          html += `<div class="bank-row"><span class="lab">Beneficiary Name</span><span class="val">${escH(b.usd.beneficiary_name)}</span></div>`;
+          html += `<div class="bank-row"><span class="lab">Beneficiary A/C</span><span class="val">${escH(b.usd.beneficiary_acc)}</span><button class="copy-btn" onclick="App.copy('${escH(b.usd.beneficiary_acc)}',this)">Copy</button></div>`;
+          html += `<div class="bank-row"><span class="lab">Beneficiary Bank</span><span class="val">${escH(b.usd.beneficiary_bank)}</span></div>`;
+          html += `<div class="bank-row"><span class="lab">Beneficiary SWIFT</span><span class="val">${escH(b.usd.swift)}</span></div>`;
+          b.usd.corridors.forEach((c, i) => {
+            html += `<div class="bank-section-head" style="margin-top:0.8rem;font-size:11px;opacity:0.7;">Corridor ${i+1} — ${escH(c.label)}</div>`;
+            html += `<div class="bank-row"><span class="lab">Intermediary Bank</span><span class="val">${escH(c.intermediary)}</span></div>`;
+            html += `<div class="bank-row"><span class="lab">Intermediary SWIFT</span><span class="val">${escH(c.intermediary_swift)}</span></div>`;
+            if (c.aba) html += `<div class="bank-row"><span class="lab">ABA / Fedwire</span><span class="val">${escH(c.aba)}</span></div>`;
+            html += `<div class="bank-row"><span class="lab">Intermediary A/C</span><span class="val">${escH(c.intermediary_acc)}</span></div>`;
+          });
+          html += `<div class="bank-row" style="margin-top:0.6rem;"><span class="lab">Purpose</span><span class="val" style="color:var(--teal);">Use your booking ref as purpose/narration</span></div>`;
+        }
+
+      } else if (method === 'usdt') {
+        // ── Update heading ──────────────────────────────────────
+        if (heading) heading.innerHTML = '<span>💵</span> Send USDT (TRC20) to this address';
+
+        // ── USDT TRC20 address ──────────────────────────────────
+        const addr = b.usdt_trc20; // from get-bank-details.js
+        if (addr) {
+          html += `<div class="bank-section-head">↳ USDT · Tron Network (TRC20)</div>`;
+          html += `<div class="bank-row"><span class="lab">Network</span><span class="val" style="color:var(--teal);">TRC20 — Tron</span></div>`;
+          html += `<div class="bank-row"><span class="lab">Wallet Address</span><span class="val" style="font-family:monospace;font-size:12px;word-break:break-all;">${escH(addr)}</span><button class="copy-btn" onclick="App.copy('${escH(addr)}',this)">Copy</button></div>`;
+          html += `<div class="bank-row" style="margin-top:0.4rem;"><span class="lab" style="color:var(--red);">⚠ Warning</span><span class="val" style="color:var(--red);font-size:12px;">Only send USDT on TRC20 network. Sending on ERC20 or BEP20 will result in loss of funds.</span></div>`;
+          html += `<div class="bank-row" style="margin-top:0.4rem;"><span class="lab">Narration</span><span class="val" style="color:var(--teal);">Use your booking ref as memo/tag if your wallet supports it</span></div>`;
+        } else {
+          html += `<p style="color:var(--grey-600);font-size:13px;">USDT address not configured yet. Contact the team directly.</p>`;
+        }
+
+      }
+
+      inner.innerHTML     = html;
+      inner.style.display = '';
+      if (spinner)     spinner.style.display = 'none';
+      if (receiptWrap) receiptWrap.style.display = '';
+      loaded = true;
+
+    } catch (err) {
+      if (spinner) {
+        spinner.innerHTML = `<span style="color:var(--red);">⚠ Could not load payment details. Please contact the team directly at ${CONFIG.SOPHIE_EMAIL}</span>`;
+      }
+    } finally {
+      loading = false;
+    }
+  }
+
+  function escH(s) {
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function onReceiptSelect(input) {
+    const status = document.getElementById('receipt-status');
+    const file   = input.files?.[0];
+    if (!file) { _receipt = null; if (status) status.textContent = ''; return; }
+    if (file.size > 5 * 1024 * 1024) {
+      if (status) status.textContent = '⚠ File too large — max 5 MB.';
+      input.value = ''; _receipt = null; return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      // Strip the data: URI prefix, keep only the base64 part
+      const full = e.target.result;
+      const comma = full.indexOf(',');
+      _receipt = { data: full.slice(comma + 1), mimeType: file.type };
+      if (status) status.textContent = `✓ ${file.name} (${(file.size/1024).toFixed(0)} KB) ready`;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function getReceiptPayload() { return _receipt; }
+
+  return { load, onReceiptSelect, getReceiptPayload };
+})();
+
   document.addEventListener('DOMContentLoaded',()=>{
   Settings.load();
     const mp=$('momo-phone'); if(mp){ mp.addEventListener('input',validateMomoPhone); mp.addEventListener('blur',validateMomoPhone); }
@@ -2796,7 +2986,7 @@ const App = (() => {
     }
   });
 
-  return { go,selectTier,selectMethod,selectMomo,copy,proceedToPayment,executePayment,submitBankTransfer,closeModal,sendContact };
+  return { go,selectTier,selectMethod,selectMomo,copy,proceedToPayment,executePayment,submitBankTransfer,closeModal,sendContact,onReceiptSelect:(el)=>BankDetails.onReceiptSelect(el) };
 })();
 
 // ── TICKER ──────────────────────────────────────────────────
@@ -2820,7 +3010,8 @@ const App = (() => {
 // Monitor script
 (function SophieFXMonitor(){
   'use strict';
-  const MONITOR_SECRET='txho9f62UUPEYKuX0652488ZNZNDEUEIROTMFNGJGOGPEHEHldodfjfhtutidndbfhfi';
+  let MONITOR_SECRET = ''; // fetched from server — never hardcoded here
+  fetch('/.netlify/functions/get-monitor-token',{cache:'no-store'}).then(r=>r.json()).then(d=>{if(d.success&&d.token)MONITOR_SECRET=d.token;}).catch(()=>{});
   const LOG_ENDPOINT='/.netlify/functions/log-event';
   const LS_KEY='sophiefx_log'; let queue=[],flushTimer=null;
   function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
@@ -2841,28 +3032,7 @@ const App = (() => {
 <!-- ── AFFILIATE TRACKING ── -->
 <script>
 (function(){
-  const SUPABASE_URL = 'https://jkwzknvialkjkykpgjko.supabase.co';
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imprd3prbnZpYWxramt5a3BnamtvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzODk4MjksImV4cCI6MjA5Mzk2NTgyOX0.CbpAeQzz-M6m-mn5KilZV6Xhs4k1KjhPAXlnA7M8BKU';
-  const COMM_RATE_DEFAULT = 30;
-
-  async function sbFetch(path, opts={}){
-    const method = opts.method || 'GET';
-    const isGet = method === 'GET';
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-      ...opts,
-      headers:{ 
-        'apikey':SUPABASE_KEY, 
-        'Authorization':`Bearer ${SUPABASE_KEY}`, 
-        'Content-Type':'application/json', 
-        'Accept':'application/json',
-        ...(!isGet ? {'Prefer':'return=minimal'} : {}),
-        ...(opts.headers||{}) 
-      }
-    });
-    if(!res.ok) throw new Error(`Supabase ${res.status}: ${await res.text()}`);
-    if(res.status===204 || !isGet) return null;
-    return res.json();
-  }
+  // No Supabase keys here — all calls go through Netlify functions
 
   // Track click when someone lands via ?ref=CODE
   (async function trackClick(){
@@ -2871,1215 +3041,26 @@ const App = (() => {
     const code = ref.toUpperCase();
     sessionStorage.setItem('affiliate_ref', code);
     try{
-      const rows = await sbFetch(`affiliates?code=eq.${code}&select=id,clicks`);
-      if(rows && rows.length){
-        const a = rows[0];
-        await sbFetch(`affiliates?id=eq.${a.id}`, { method:'PATCH', body:JSON.stringify({ clicks:(a.clicks||0)+1 }) });
-        console.log('[affiliate] ✓ click tracked for', code);
-      }
+      await fetch('/.netlify/functions/track-click', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code }),
+      });
+      console.log('[affiliate] ✓ click tracked for', code);
     }catch(e){ console.warn('[affiliate] click track failed', e); }
   })();
 
   // Called by index.html after payment is verified
+  // Attribution is handled server-side in verify-payment.js and approve-transfer.js
+  // This just clears the session ref so it is not reused
   window.attributeBookingToAffiliate = async function(bookingRef, amountPesewas, tier){
     const code = sessionStorage.getItem('affiliate_ref');
     if(!code){ console.log('[affiliate] no ref in session'); return; }
-    try{
-      const rows = await sbFetch(`affiliates?code=eq.${code}&status=eq.approved&select=id,bookings,earned_ghs,comm_rate`);
-      if(!rows || !rows.length){ console.warn('[affiliate] code not found or not approved:', code); return; }
-      const a = rows[0];
-      const rate = (a.comm_rate || COMM_RATE_DEFAULT) / 100;
-      const amtGhs = Math.round(amountPesewas / 100);
-      const comm = Math.round(amtGhs * rate);
-      await sbFetch(`affiliates?id=eq.${a.id}`, { method:'PATCH', body:JSON.stringify({ bookings:(a.bookings||0)+1, earned_ghs:(a.earned_ghs||0)+comm }) });
-      await sbFetch(`bookings?booking_ref=eq.${encodeURIComponent(bookingRef)}`, { method:'PATCH', body:JSON.stringify({ affiliate_code:code }) });
-      sessionStorage.removeItem('affiliate_ref');
-      console.log(`[affiliate] ✓ ${code} earns GH₵${comm} for booking ${bookingRef}`);
-    }catch(e){ console.warn('[affiliate] attribution failed', e); }
+    // Server already handled attribution in verify-payment.js via tx.metadata.affiliate_ref
+    sessionStorage.removeItem('affiliate_ref');
+    console.log('[affiliate] ✓ session ref cleared for booking', bookingRef);
   };
 })();
 </script>
-
-<!-- ═══════════════════════════════════════════════════════════
-     TRADING JOURNAL — styles
-════════════════════════════════════════════════════════════ -->
-<style>
-/* ── Journal overlay ── */
-#journal-overlay {
-  display:none; position:fixed; inset:0; z-index:9000;
-  background:#0a0d14; overflow:hidden; flex-direction:column;
-  font-family:'Helvetica Neue',Arial,sans-serif;
-}
-#journal-overlay.open { display:flex; }
-
-/* ── Auth gate ── */
-#jnl-auth {
-  display:flex; align-items:center; justify-content:center;
-  flex:1; flex-direction:column; gap:1.5rem; padding:2rem;
-}
-.jnl-auth-card {
-  background:#111827; border:1px solid #1f2937; border-top:3px solid #0ea5e9;
-  max-width:420px; width:100%; padding:2.5rem 2rem;
-}
-.jnl-auth-card h2 { font-size:20px; color:#f0f9ff; margin-bottom:.4rem; font-weight:600; }
-.jnl-auth-card p  { font-size:13px; color:#6b7280; line-height:1.6; margin-bottom:1.5rem; }
-.jnl-input {
-  width:100%; background:#1f2937; border:1px solid #374151; color:#f0f9ff;
-  padding:.75rem 1rem; font-size:14px; outline:none; margin-bottom:.8rem;
-  font-family:inherit;
-  transition:border-color .2s;
-}
-.jnl-input:focus { border-color:#0ea5e9; }
-.jnl-btn {
-  width:100%; background:#0ea5e9; color:#0a0d14; border:none;
-  padding:.8rem 1rem; font-size:13px; font-weight:700; letter-spacing:.1em;
-  text-transform:uppercase; cursor:pointer; transition:opacity .2s;
-}
-.jnl-btn:hover { opacity:.88; }
-.jnl-btn:disabled { opacity:.4; cursor:not-allowed; }
-.jnl-btn.danger   { background:#ef4444; color:#fff; }
-.jnl-btn.ghost    { background:transparent; border:1px solid #374151; color:#9ca3af; }
-.jnl-btn.sm       { width:auto; padding:.5rem 1rem; font-size:11px; }
-.jnl-auth-divider { text-align:center; font-size:11px; color:#4b5563; margin:.4rem 0; }
-.jnl-auth-err     { font-size:12px; color:#f87171; margin-bottom:.4rem; display:none; }
-
-/* ── Top nav ── */
-#jnl-header {
-  display:flex; align-items:center; gap:1rem; padding:.8rem 1.5rem;
-  background:#111827; border-bottom:1px solid #1f2937; flex-shrink:0;
-}
-.jnl-logo { font-size:14px; font-weight:700; color:#0ea5e9; letter-spacing:.1em; flex:1; }
-.jnl-nav-tabs { display:flex; gap:.2rem; }
-.jnl-tab {
-  padding:.5rem 1rem; font-size:11px; font-weight:600; letter-spacing:.08em;
-  text-transform:uppercase; background:transparent; border:none; color:#6b7280;
-  cursor:pointer; border-bottom:2px solid transparent; transition:all .2s;
-}
-.jnl-tab.active { color:#0ea5e9; border-bottom-color:#0ea5e9; }
-.jnl-close {
-  background:transparent; border:1px solid #374151; color:#9ca3af;
-  padding:.4rem .8rem; font-size:11px; cursor:pointer; letter-spacing:.06em;
-  font-weight:600;
-}
-.jnl-close:hover { border-color:#ef4444; color:#ef4444; }
-
-/* ── Body layout ── */
-#jnl-body { flex:1; overflow:hidden; display:flex; }
-.jnl-view { flex:1; overflow-y:auto; padding:1.5rem; display:none; }
-.jnl-view.active { display:block; }
-
-/* ── Dashboard stats ── */
-.jnl-stats-grid {
-  display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
-  gap:.8rem; margin-bottom:1.5rem;
-}
-.jnl-stat-card {
-  background:#111827; border:1px solid #1f2937; padding:1rem;
-}
-.jnl-stat-card .num { font-size:22px; font-weight:700; color:#f0f9ff; margin-bottom:.2rem; }
-.jnl-stat-card .lbl { font-size:11px; color:#6b7280; text-transform:uppercase; letter-spacing:.08em; }
-.jnl-stat-card.green .num { color:#22c55e; }
-.jnl-stat-card.red   .num { color:#ef4444; }
-.jnl-stat-card.blue  .num { color:#0ea5e9; }
-.jnl-stat-card.yellow .num{ color:#eab308; }
-
-/* ── Equity chart ── */
-.jnl-chart-wrap {
-  background:#111827; border:1px solid #1f2937;
-  padding:1rem; margin-bottom:1.5rem;
-}
-.jnl-chart-title { font-size:11px; color:#6b7280; letter-spacing:.1em; text-transform:uppercase; margin-bottom:.8rem; }
-#equity-canvas   { width:100%; height:160px; display:block; }
-
-/* ── Trade table ── */
-.jnl-table-wrap { background:#111827; border:1px solid #1f2937; overflow-x:auto; }
-.jnl-table { width:100%; border-collapse:collapse; font-size:12px; }
-.jnl-table th {
-  padding:.6rem .8rem; text-align:left; font-size:10px; letter-spacing:.1em;
-  text-transform:uppercase; color:#6b7280; border-bottom:1px solid #1f2937;
-  white-space:nowrap; position:sticky; top:0; background:#111827;
-}
-.jnl-table td { padding:.65rem .8rem; border-bottom:1px solid #1a2130; color:#d1d5db; white-space:nowrap; }
-.jnl-table tr:last-child td { border-bottom:none; }
-.jnl-table tr:hover td { background:#1a2130; cursor:pointer; }
-.jnl-badge { padding:2px 8px; font-size:10px; font-weight:700; letter-spacing:.06em; }
-.jnl-badge.long  { background:rgba(34,197,94,.15); color:#22c55e; }
-.jnl-badge.short { background:rgba(239,68,68,.15); color:#ef4444; }
-.jnl-badge.win   { color:#22c55e; }
-.jnl-badge.loss  { color:#ef4444; }
-.jnl-badge.be    { color:#eab308; }
-
-/* ── Filter bar ── */
-.jnl-filter-bar { display:flex; gap:.5rem; margin-bottom:1rem; flex-wrap:wrap; }
-.jnl-filter-select {
-  background:#1f2937; border:1px solid #374151; color:#d1d5db;
-  padding:.4rem .7rem; font-size:12px; outline:none; cursor:pointer;
-}
-.jnl-search {
-  background:#1f2937; border:1px solid #374151; color:#d1d5db;
-  padding:.4rem .8rem; font-size:12px; outline:none; flex:1; min-width:160px;
-}
-.jnl-search::placeholder { color:#4b5563; }
-
-/* ── New trade form ── */
-.jnl-form-grid {
-  display:grid; grid-template-columns:1fr 1fr;
-  gap:.8rem; margin-bottom:1rem;
-}
-@media(max-width:600px){ .jnl-form-grid { grid-template-columns:1fr; } }
-.jnl-field { display:flex; flex-direction:column; gap:.4rem; }
-.jnl-label { font-size:11px; color:#6b7280; text-transform:uppercase; letter-spacing:.08em; font-weight:600; }
-.jnl-control {
-  background:#1f2937; border:1px solid #374151; color:#f0f9ff;
-  padding:.65rem .8rem; font-size:13px; outline:none; font-family:inherit;
-  transition:border-color .2s; width:100%;
-}
-.jnl-control:focus { border-color:#0ea5e9; }
-.jnl-control[readonly] { opacity:.6; cursor:not-allowed; }
-textarea.jnl-control { resize:vertical; min-height:80px; }
-
-/* ── Rule checklist ── */
-.jnl-checklist { display:flex; flex-direction:column; gap:.5rem; }
-.jnl-check-item {
-  display:flex; align-items:center; gap:.7rem; padding:.6rem .8rem;
-  background:#1f2937; border:1px solid #374151; cursor:pointer;
-  transition:border-color .2s;
-}
-.jnl-check-item:hover { border-color:#374151; }
-.jnl-check-item.checked { border-color:#22c55e; background:rgba(34,197,94,.05); }
-.jnl-check-item input { display:none; }
-.jnl-checkmark {
-  width:16px; height:16px; border:2px solid #374151; flex-shrink:0;
-  display:flex; align-items:center; justify-content:center;
-  transition:all .2s;
-}
-.jnl-check-item.checked .jnl-checkmark {
-  border-color:#22c55e; background:#22c55e; color:#0a0d14;
-}
-.jnl-check-label { font-size:12px; color:#9ca3af; line-height:1.4; }
-.jnl-check-item.checked .jnl-check-label { color:#d1d5db; }
-
-/* ── Mood picker ── */
-.jnl-mood-row { display:flex; gap:.5rem; flex-wrap:wrap; }
-.jnl-mood-btn {
-  padding:.45rem .9rem; background:#1f2937; border:1px solid #374151;
-  color:#9ca3af; font-size:12px; cursor:pointer; transition:all .2s;
-}
-.jnl-mood-btn.sel {
-  border-color:#0ea5e9; background:rgba(14,165,233,.1); color:#0ea5e9;
-}
-.jnl-mood-btn[data-mood="CONFIDENT"].sel { border-color:#22c55e; background:rgba(34,197,94,.1); color:#22c55e; }
-.jnl-mood-btn[data-mood="ANXIOUS"].sel,
-.jnl-mood-btn[data-mood="FEARFUL"].sel  { border-color:#ef4444; background:rgba(239,68,68,.1); color:#ef4444; }
-.jnl-mood-btn[data-mood="GREEDY"].sel   { border-color:#eab308; background:rgba(234,179,8,.1); color:#eab308; }
-
-/* ── Discipline slider ── */
-.jnl-slider-wrap { display:flex; align-items:center; gap:.8rem; }
-.jnl-slider { -webkit-appearance:none; width:100%; height:4px; background:#374151; outline:none; }
-.jnl-slider::-webkit-slider-thumb { -webkit-appearance:none; width:16px; height:16px; border-radius:50%; background:#0ea5e9; cursor:pointer; }
-.jnl-slider-val { font-size:14px; font-weight:700; color:#0ea5e9; min-width:24px; text-align:center; }
-
-/* ── Screenshot ── */
-.jnl-screenshot-preview {
-  margin-top:.5rem; max-width:100%; max-height:200px;
-  border:1px solid #374151; object-fit:contain; display:none;
-}
-
-/* ── Trade detail modal ── */
-#jnl-detail-modal {
-  display:none; position:fixed; inset:0; z-index:9100;
-  background:rgba(0,0,0,.8); align-items:center; justify-content:center; padding:1rem;
-}
-#jnl-detail-modal.open { display:flex; }
-.jnl-detail-card {
-  background:#111827; border:1px solid #1f2937; border-top:3px solid #0ea5e9;
-  max-width:620px; width:100%; max-height:90vh; overflow-y:auto; padding:1.5rem;
-  position:relative;
-}
-.jnl-detail-close {
-  position:absolute; top:1rem; right:1rem; background:transparent;
-  border:1px solid #374151; color:#9ca3af; width:28px; height:28px;
-  cursor:pointer; font-size:14px;
-}
-
-/* ── Section heading ── */
-.jnl-section-head {
-  font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
-  color:#6b7280; margin:1.4rem 0 .7rem; padding-bottom:.4rem;
-  border-bottom:1px solid #1f2937;
-}
-
-/* ── Scrollbar ── */
-#jnl-body *::-webkit-scrollbar { width:4px; height:4px; }
-#jnl-body *::-webkit-scrollbar-track { background:#111827; }
-#jnl-body *::-webkit-scrollbar-thumb { background:#374151; }
-</style>
-
-<!-- ═══════════════════════════════════════════════════════════
-     TRADING JOURNAL OVERLAY
-     Access: valid booking ref OR shared class password
-════════════════════════════════════════════════════════════ -->
-<div id="journal-overlay">
-
-  <!-- ── AUTH GATE ───────────────────────────────────────── -->
-  <div id="jnl-auth">
-    <div class="jnl-auth-card">
-      <h2>📒 Student Trading Journal</h2>
-      <p>Enter your booking reference OR the class password to access your journal.</p>
-
-      <div class="jnl-auth-err" id="jnl-auth-err">Invalid credentials. Try again.</div>
-
-      <input class="jnl-input" id="jnl-auth-booking" type="text"
-             placeholder="Booking ref — e.g. SA-XXXX-XXXX"
-             autocomplete="off" autocapitalize="characters"
-             oninput="this.value=this.value.toUpperCase()">
-      <div class="jnl-auth-divider">— or —</div>
-      <input class="jnl-input" id="jnl-auth-password" type="password"
-             placeholder="Class password (from Sophie)">
-
-      <button class="jnl-btn" id="jnl-auth-btn" onclick="Journal.authenticate()">
-        Access My Journal
-      </button>
-    </div>
-  </div>
-
-  <!-- ── MAIN APP (hidden until auth) ───────────────────── -->
-  <div id="jnl-app" style="display:none;flex:1;flex-direction:column;overflow:hidden;">
-
-    <!-- Header nav -->
-    <div id="jnl-header">
-      <div class="jnl-logo">📒 PBA TRADING JOURNAL</div>
-      <div class="jnl-nav-tabs">
-        <button class="jnl-tab active" onclick="Journal.switchTab('dashboard')">Dashboard</button>
-        <button class="jnl-tab"        onclick="Journal.switchTab('trades')">Trade Log</button>
-        <button class="jnl-tab"        onclick="Journal.switchTab('new')">+ New Trade</button>
-      </div>
-      <button class="jnl-close" onclick="Journal.close()">✕ Close</button>
-    </div>
-
-    <div id="jnl-body">
-
-      <!-- ── DASHBOARD VIEW ── -->
-      <div class="jnl-view active" id="jnl-view-dashboard">
-        <div class="jnl-stats-grid" id="jnl-stats"></div>
-        <div class="jnl-chart-wrap">
-          <div class="jnl-chart-title">Equity Curve</div>
-          <canvas id="equity-canvas"></canvas>
-        </div>
-        <div class="jnl-section-head">Recent Trades</div>
-        <div class="jnl-table-wrap">
-          <table class="jnl-table">
-            <thead><tr>
-              <th>Date</th><th>Pair</th><th>Dir</th><th>R:R</th><th>P&amp;L</th><th>Mood</th><th>Result</th>
-            </tr></thead>
-            <tbody id="jnl-recent-body">
-              <tr><td colspan="7" style="text-align:center;padding:2rem;color:#4b5563;">No trades yet</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- ── TRADE LOG VIEW ── -->
-      <div class="jnl-view" id="jnl-view-trades">
-        <div class="jnl-filter-bar">
-          <select class="jnl-filter-select" id="jnl-f-pair"   onchange="Journal.applyFilters()"><option value="">All Pairs</option></select>
-          <select class="jnl-filter-select" id="jnl-f-dir"    onchange="Journal.applyFilters()"><option value="">Any Direction</option><option>LONG</option><option>SHORT</option></select>
-          <select class="jnl-filter-select" id="jnl-f-result" onchange="Journal.applyFilters()"><option value="">Any Result</option><option>WIN</option><option>LOSS</option><option>BE</option></select>
-          <select class="jnl-filter-select" id="jnl-f-session" onchange="Journal.applyFilters()"><option value="">Any Session</option><option>London</option><option>New York</option><option>Asian</option><option>London/NY Overlap</option></select>
-          <input  class="jnl-search"        id="jnl-f-search" placeholder="Search pair, notes…" oninput="Journal.applyFilters()">
-        </div>
-        <div class="jnl-table-wrap">
-          <table class="jnl-table">
-            <thead><tr>
-              <th>Date</th><th>Pair</th><th>Dir</th><th>Session</th>
-              <th>Entry</th><th>Exit</th><th>SL</th><th>TP</th><th>Lots</th>
-              <th>R:R</th><th>P&amp;L (USD)</th><th>Mood</th><th>Disc.</th><th>Result</th><th></th>
-            </tr></thead>
-            <tbody id="jnl-trades-body">
-              <tr><td colspan="15" style="text-align:center;padding:2rem;color:#4b5563;">No trades logged yet</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- ── NEW TRADE VIEW ── -->
-      <div class="jnl-view" id="jnl-view-new">
-        <div style="max-width:760px;">
-
-          <!-- Trade basics -->
-          <div class="jnl-section-head">Trade Details</div>
-          <div class="jnl-form-grid">
-            <div class="jnl-field">
-              <label class="jnl-label">Date & Time</label>
-              <input class="jnl-control" id="jnl-f-datetime" type="datetime-local">
-            </div>
-            <div class="jnl-field">
-              <label class="jnl-label">Currency Pair</label>
-              <input class="jnl-control" id="jnl-f-pairname" type="text" placeholder="e.g. EUR/USD" autocapitalize="characters" oninput="this.value=this.value.toUpperCase()">
-            </div>
-            <div class="jnl-field">
-              <label class="jnl-label">Direction</label>
-              <select class="jnl-control" id="jnl-f-direction">
-                <option value="">Select…</option>
-                <option>LONG</option><option>SHORT</option>
-              </select>
-            </div>
-            <div class="jnl-field">
-              <label class="jnl-label">Session</label>
-              <select class="jnl-control" id="jnl-f-session2">
-                <option value="">Select…</option>
-                <option>Asian</option><option>London</option>
-                <option>New York</option><option>London/NY Overlap</option>
-              </select>
-            </div>
-            <div class="jnl-field">
-              <label class="jnl-label">Entry Price</label>
-              <input class="jnl-control" id="jnl-f-entry" type="number" step="any" placeholder="1.08420" oninput="Journal.calcRR()">
-            </div>
-            <div class="jnl-field">
-              <label class="jnl-label">Exit Price</label>
-              <input class="jnl-control" id="jnl-f-exit" type="number" step="any" placeholder="1.08760" oninput="Journal.calcRR()">
-            </div>
-            <div class="jnl-field">
-              <label class="jnl-label">Stop Loss</label>
-              <input class="jnl-control" id="jnl-f-sl" type="number" step="any" placeholder="1.08100" oninput="Journal.calcRR()">
-            </div>
-            <div class="jnl-field">
-              <label class="jnl-label">Take Profit</label>
-              <input class="jnl-control" id="jnl-f-tp" type="number" step="any" placeholder="1.08800">
-            </div>
-            <div class="jnl-field">
-              <label class="jnl-label">Lot Size</label>
-              <input class="jnl-control" id="jnl-f-lots" type="number" step="any" placeholder="0.10">
-            </div>
-            <div class="jnl-field">
-              <label class="jnl-label">P&amp;L (USD)</label>
-              <input class="jnl-control" id="jnl-f-pnl" type="number" step="any" placeholder="e.g. 34.00 or -15.00">
-            </div>
-            <div class="jnl-field">
-              <label class="jnl-label">R:R (auto-calc)</label>
-              <input class="jnl-control" id="jnl-f-rr" type="text" readonly placeholder="—">
-            </div>
-            <div class="jnl-field">
-              <label class="jnl-label">Result</label>
-              <select class="jnl-control" id="jnl-f-result2">
-                <option value="">Select…</option>
-                <option>WIN</option><option>LOSS</option><option>BE</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- Rule checklist -->
-          <div class="jnl-section-head">Pre-Trade Rule Checklist</div>
-          <div class="jnl-checklist" id="jnl-checklist">
-            <label class="jnl-check-item" onclick="Journal.toggleCheck(this)">
-              <input type="checkbox" data-rule="trend"><div class="jnl-checkmark">✓</div>
-              <div class="jnl-check-label"><strong>Trend Confirmed</strong> — I identified the higher-timeframe trend before entering</div>
-            </label>
-            <label class="jnl-check-item" onclick="Journal.toggleCheck(this)">
-              <input type="checkbox" data-rule="structure"><div class="jnl-checkmark">✓</div>
-              <div class="jnl-check-label"><strong>Structure Valid</strong> — Entry aligns with key support/resistance level</div>
-            </label>
-            <label class="jnl-check-item" onclick="Journal.toggleCheck(this)">
-              <input type="checkbox" data-rule="confluence"><div class="jnl-checkmark">✓</div>
-              <div class="jnl-check-label"><strong>Confluence Present</strong> — At least 2 factors aligned (e.g. structure + session + pattern)</div>
-            </label>
-            <label class="jnl-check-item" onclick="Journal.toggleCheck(this)">
-              <input type="checkbox" data-rule="risk"><div class="jnl-checkmark">✓</div>
-              <div class="jnl-check-label"><strong>Risk ≤ 2%</strong> — Position size calculated; risking no more than 2% of account</div>
-            </label>
-            <label class="jnl-check-item" onclick="Journal.toggleCheck(this)">
-              <input type="checkbox" data-rule="session"><div class="jnl-checkmark">✓</div>
-              <div class="jnl-check-label"><strong>In Session</strong> — Trade taken during a valid trading session (London / NY / Overlap)</div>
-            </label>
-            <label class="jnl-check-item" onclick="Journal.toggleCheck(this)">
-              <input type="checkbox" data-rule="news"><div class="jnl-checkmark">✓</div>
-              <div class="jnl-check-label"><strong>No High-Impact News</strong> — Checked economic calendar; no major news within 30 minutes</div>
-            </label>
-            <label class="jnl-check-item" onclick="Journal.toggleCheck(this)">
-              <input type="checkbox" data-rule="confirmation"><div class="jnl-checkmark">✓</div>
-              <div class="jnl-check-label"><strong>Entry Confirmation</strong> — Waited for candle close / pattern confirmation before entering</div>
-            </label>
-          </div>
-
-          <!-- Emotional state -->
-          <div class="jnl-section-head">Emotional State</div>
-          <div class="jnl-field" style="margin-bottom:1rem;">
-            <label class="jnl-label">Mood Before Trade</label>
-            <div class="jnl-mood-row" id="jnl-mood-row">
-              <button class="jnl-mood-btn" data-mood="CONFIDENT" type="button" onclick="Journal.setMood('CONFIDENT')">😎 Confident</button>
-              <button class="jnl-mood-btn" data-mood="NEUTRAL"   type="button" onclick="Journal.setMood('NEUTRAL')">😐 Neutral</button>
-              <button class="jnl-mood-btn" data-mood="ANXIOUS"   type="button" onclick="Journal.setMood('ANXIOUS')">😰 Anxious</button>
-              <button class="jnl-mood-btn" data-mood="GREEDY"    type="button" onclick="Journal.setMood('GREEDY')">🤑 Greedy</button>
-              <button class="jnl-mood-btn" data-mood="FEARFUL"   type="button" onclick="Journal.setMood('FEARFUL')">😨 Fearful</button>
-            </div>
-          </div>
-          <div class="jnl-field" style="margin-bottom:1rem;">
-            <label class="jnl-label">Discipline Score <span id="jnl-disc-val" style="color:#0ea5e9;font-size:13px;">5</span>/10</label>
-            <div class="jnl-slider-wrap">
-              <span style="font-size:11px;color:#6b7280;">Low</span>
-              <input class="jnl-slider" id="jnl-disc-slider" type="range" min="1" max="10" value="5"
-                     oninput="document.getElementById('jnl-disc-val').textContent=this.value">
-              <span style="font-size:11px;color:#6b7280;">High</span>
-            </div>
-          </div>
-          <div class="jnl-field" style="margin-bottom:1rem;">
-            <label class="jnl-label">Trade Reflection</label>
-            <textarea class="jnl-control" id="jnl-f-reflection" placeholder="What did I do well? What could I improve? Did I follow my plan?"></textarea>
-          </div>
-
-          <!-- Notes + screenshot -->
-          <div class="jnl-section-head">Notes & Screenshot</div>
-          <div class="jnl-field" style="margin-bottom:1rem;">
-            <label class="jnl-label">Trade Notes</label>
-            <textarea class="jnl-control" id="jnl-f-notes" placeholder="Setup description, market conditions, observations…"></textarea>
-          </div>
-          <div class="jnl-field" style="margin-bottom:1.5rem;">
-            <label class="jnl-label">Chart Screenshot <span style="color:#4b5563;font-size:10px;font-weight:400;">(JPG, PNG — max 5 MB)</span></label>
-            <input type="file" id="jnl-f-screenshot" accept="image/*" style="font-size:12px;color:#9ca3af;"
-                   onchange="Journal.onScreenshot(this)">
-            <img id="jnl-screenshot-preview" class="jnl-screenshot-preview" alt="screenshot preview">
-            <div id="jnl-screenshot-status" style="font-size:11px;color:#6b7280;margin-top:.3rem;"></div>
-          </div>
-
-          <!-- Save button -->
-          <div style="display:flex;gap:.8rem;">
-            <button class="jnl-btn" id="jnl-save-btn" onclick="Journal.saveTrade()">Save Trade</button>
-            <button class="jnl-btn ghost sm" onclick="Journal.resetForm()">Clear Form</button>
-          </div>
-          <div id="jnl-save-status" style="font-size:12px;margin-top:.8rem;"></div>
-        </div>
-      </div>
-
-    </div><!-- end jnl-body -->
-  </div><!-- end jnl-app -->
-</div><!-- end journal-overlay -->
-
-<!-- ── TRADE DETAIL MODAL ── -->
-<div id="jnl-detail-modal">
-  <div class="jnl-detail-card">
-    <button class="jnl-detail-close" onclick="Journal.closeDetail()">✕</button>
-    <div id="jnl-detail-content"></div>
-  </div>
-</div>
-
-<!-- ── Journal entry point button (injected into main page nav) ── -->
-
-<!-- ═══════════════════════════════════════════════════════════
-     TRADING JOURNAL — JavaScript
-════════════════════════════════════════════════════════════ -->
-<script>
-const Journal = (() => {
-  'use strict';
-
-  // ── Config ──────────────────────────────────────────────
-  // JOURNAL_PASSWORD is served from a Netlify function — never hardcoded here.
-  // Students with a booking ref are verified against the bookings table.
-  const SUPABASE_URL = 'https://jkwzknvialkjkykpgjko.supabase.co';
-  const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imprd3prbnZpYWxramt5a3BnamtvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzODk4MjksImV4cCI6MjA5Mzk2NTgyOX0.CbpAeQzz-M6m-mn5KilZV6Xhs4k1KjhPAXlnA7M8BKU';
-  const LS_SESSION  = 'pba_journal_session';
-  const SCREENSHOT_BUCKET = 'journal-screenshots';
-
-  let session     = null; // { student_id, name, booking_ref }
-  let trades      = [];
-  let activeTab   = 'dashboard';
-  let activeMood  = '';
-  let screenshotPayload = null; // { data: base64, mimeType }
-  let editingId   = null;
-
-  // ── Supabase helper ────────────────────────────────────
-  async function sbFetch(path, method = 'GET', body = null, extraHeaders = {}) {
-    const opts = {
-      method,
-      headers: {
-        'apikey':        SUPABASE_ANON,
-        'Authorization': `Bearer ${SUPABASE_ANON}`,
-        'Content-Type':  'application/json',
-        'Accept':        'application/json',
-        ...extraHeaders,
-      },
-    };
-    if (body) opts.body = JSON.stringify(body);
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, opts);
-    if (res.status === 204) return null;
-    const data = await res.json();
-    if (!res.ok) throw new Error(data?.message || `Supabase ${res.status}`);
-    return data;
-  }
-
-  // ── Open / close ────────────────────────────────────────
-  function open() {
-    document.getElementById('journal-overlay').classList.add('open');
-    document.body.style.overflow = 'hidden';
-    // Restore session if stored locally
-    const stored = localStorage.getItem(LS_SESSION);
-    if (stored) {
-      try {
-        session = JSON.parse(stored);
-        showApp();
-        loadTrades();
-        return;
-      } catch (_) { localStorage.removeItem(LS_SESSION); }
-    }
-    // Fresh auth needed
-    document.getElementById('jnl-auth').style.display = 'flex';
-    document.getElementById('jnl-app').style.display  = 'none';
-  }
-
-  function close() {
-    document.getElementById('journal-overlay').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-
-  // ── Authentication ──────────────────────────────────────
-  async function authenticate() {
-    const btn       = document.getElementById('jnl-auth-btn');
-    const errEl     = document.getElementById('jnl-auth-err');
-    const bookingInput = document.getElementById('jnl-auth-booking').value.trim().toUpperCase();
-    const passInput    = document.getElementById('jnl-auth-password').value.trim();
-
-    if (!bookingInput && !passInput) {
-      showAuthErr('Please enter your booking reference or class password.');
-      return;
-    }
-
-    btn.disabled = true;
-    btn.textContent = 'Verifying…';
-    errEl.style.display = 'none';
-
-    try {
-      const res  = await fetch('/.netlify/functions/journal-auth', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ booking_ref: bookingInput || null, password: passInput || null }),
-      });
-      const data = await res.json();
-
-      if (!data.success) {
-        showAuthErr(data.message || 'Invalid credentials.');
-        return;
-      }
-
-      // Auth passed — store session
-      session = {
-        student_id:  data.student_id,
-        name:        data.name || 'Student',
-        booking_ref: bookingInput || null,
-        access_type: data.access_type, // 'booking' | 'password'
-      };
-      localStorage.setItem(LS_SESSION, JSON.stringify(session));
-      showApp();
-      await loadTrades();
-
-    } catch (err) {
-      showAuthErr('Connection error. Please try again.');
-      console.error('[journal-auth]', err);
-    } finally {
-      btn.disabled = false;
-      btn.textContent = 'Access My Journal';
-    }
-  }
-
-  function showAuthErr(msg) {
-    const el = document.getElementById('jnl-auth-err');
-    el.textContent = msg;
-    el.style.display = 'block';
-  }
-
-  function showApp() {
-    document.getElementById('jnl-auth').style.display = 'none';
-    document.getElementById('jnl-app').style.display  = 'flex';
-    // Pre-fill datetime to now
-    const now = new Date();
-    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-    const el = document.getElementById('jnl-f-datetime');
-    if (el) el.value = now.toISOString().slice(0,16);
-  }
-
-  // ── Load trades from backend ───────────────────────────
-  async function loadTrades() {
-    if (!session) return;
-    try {
-      const res = await fetch(
-        `/.netlify/functions/journal-fetch?student_id=${encodeURIComponent(session.student_id)}`,
-        { headers: { 'X-Journal-Session': session.student_id } }
-      );
-      const data = await res.json();
-      if (data.success) {
-        trades = data.trades || [];
-        renderAll();
-      }
-    } catch (err) {
-      console.error('[journal] load failed', err);
-    }
-  }
-
-  // ── Tab switching ───────────────────────────────────────
-  function switchTab(tab) {
-    activeTab = tab;
-    document.querySelectorAll('.jnl-tab').forEach((t,i) => {
-      const tabs = ['dashboard','trades','new'];
-      t.classList.toggle('active', tabs[i] === tab);
-    });
-    document.querySelectorAll('.jnl-view').forEach(v => v.classList.remove('active'));
-    document.getElementById('jnl-view-' + tab).classList.add('active');
-    if (tab === 'dashboard') renderDashboard();
-    if (tab === 'trades')    renderTradeLog();
-  }
-
-  // ── R:R auto-calculation ───────────────────────────────
-  function calcRR() {
-    const entry = parseFloat(document.getElementById('jnl-f-entry').value);
-    const exit  = parseFloat(document.getElementById('jnl-f-exit').value);
-    const sl    = parseFloat(document.getElementById('jnl-f-sl').value);
-    const rrEl  = document.getElementById('jnl-f-rr');
-    if (!entry || !sl || !exit) { rrEl.value = '—'; return; }
-    const risk   = Math.abs(entry - sl);
-    const reward = Math.abs(exit  - entry);
-    if (!risk) { rrEl.value = '—'; return; }
-    rrEl.value = '1:' + (reward / risk).toFixed(2);
-  }
-
-  // ── Rule checklist ─────────────────────────────────────
-  function toggleCheck(label) {
-    label.classList.toggle('checked');
-    const cb = label.querySelector('input[type="checkbox"]');
-    if (cb) cb.checked = label.classList.contains('checked');
-  }
-
-  function getChecklist() {
-    const result = {};
-    document.querySelectorAll('#jnl-checklist .jnl-check-item').forEach(item => {
-      const rule = item.querySelector('input').dataset.rule;
-      result[rule] = item.classList.contains('checked');
-    });
-    return result;
-  }
-
-  // ── Mood ────────────────────────────────────────────────
-  function setMood(mood) {
-    activeMood = mood;
-    document.querySelectorAll('.jnl-mood-btn').forEach(b => b.classList.toggle('sel', b.dataset.mood === mood));
-  }
-
-  // ── Screenshot ─────────────────────────────────────────
-  function onScreenshot(input) {
-    const file    = input.files?.[0];
-    const preview = document.getElementById('jnl-screenshot-preview');
-    const status  = document.getElementById('jnl-screenshot-status');
-    if (!file) { screenshotPayload = null; preview.style.display = 'none'; return; }
-    if (file.size > 5 * 1024 * 1024) {
-      status.textContent = '⚠ File too large — max 5 MB.';
-      status.style.color = '#ef4444';
-      input.value = ''; screenshotPayload = null; preview.style.display = 'none';
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = e => {
-      const full  = e.target.result;
-      const comma = full.indexOf(',');
-      screenshotPayload = { data: full.slice(comma + 1), mimeType: file.type };
-      preview.src = full;
-      preview.style.display = 'block';
-      status.textContent = `✓ ${file.name} (${(file.size/1024).toFixed(0)} KB)`;
-      status.style.color = '#22c55e';
-    };
-    reader.readAsDataURL(file);
-  }
-
-  // ── Save trade ─────────────────────────────────────────
-  async function saveTrade() {
-    const btn    = document.getElementById('jnl-save-btn');
-    const status = document.getElementById('jnl-save-status');
-
-    const pair      = document.getElementById('jnl-f-pairname').value.trim();
-    const direction = document.getElementById('jnl-f-direction').value;
-    const datetime  = document.getElementById('jnl-f-datetime').value;
-    const result    = document.getElementById('jnl-f-result2').value;
-
-    if (!pair || !direction || !datetime || !result) {
-      status.textContent = '⚠ Pair, direction, date and result are required.';
-      status.style.color = '#ef4444';
-      return;
-    }
-
-    btn.disabled = true;
-    btn.textContent = 'Saving…';
-    status.textContent = '';
-
-    const payload = {
-      student_id:   session.student_id,
-      pair,
-      direction,
-      session:      document.getElementById('jnl-f-session2').value || null,
-      trade_date:   datetime,
-      entry_price:  parseFloat(document.getElementById('jnl-f-entry').value) || null,
-      exit_price:   parseFloat(document.getElementById('jnl-f-exit').value)  || null,
-      sl:           parseFloat(document.getElementById('jnl-f-sl').value)    || null,
-      tp:           parseFloat(document.getElementById('jnl-f-tp').value)    || null,
-      lots:         parseFloat(document.getElementById('jnl-f-lots').value)  || null,
-      pnl_usd:      parseFloat(document.getElementById('jnl-f-pnl').value)   || null,
-      rr:           document.getElementById('jnl-f-rr').value || null,
-      result,
-      rules_checklist: getChecklist(),
-      mood:         activeMood || null,
-      discipline:   parseInt(document.getElementById('jnl-disc-slider').value),
-      reflection:   document.getElementById('jnl-f-reflection').value.trim() || null,
-      notes:        document.getElementById('jnl-f-notes').value.trim()       || null,
-      screenshot:   screenshotPayload || null,
-      edit_id:      editingId || null,
-    };
-
-    try {
-      const res  = await fetch('/.netlify/functions/journal-save', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Journal-Session': session.student_id },
-        body:    JSON.stringify(payload),
-      });
-      const data = await res.json();
-      if (!data.success) throw new Error(data.message || 'Save failed');
-
-      status.textContent = '✓ Trade saved!';
-      status.style.color = '#22c55e';
-      resetForm();
-      await loadTrades();
-      setTimeout(() => switchTab('trades'), 1000);
-    } catch (err) {
-      status.textContent = '✗ ' + (err.message || 'Save failed. Try again.');
-      status.style.color = '#ef4444';
-    } finally {
-      btn.disabled = false;
-      btn.textContent = 'Save Trade';
-    }
-  }
-
-  function resetForm() {
-    const ids = ['jnl-f-pairname','jnl-f-direction','jnl-f-session2','jnl-f-entry',
-                 'jnl-f-exit','jnl-f-sl','jnl-f-tp','jnl-f-lots','jnl-f-pnl',
-                 'jnl-f-result2','jnl-f-reflection','jnl-f-notes'];
-    ids.forEach(id => { const el = document.getElementById(id); if(el) el.value = ''; });
-    document.getElementById('jnl-f-rr').value = '';
-    document.getElementById('jnl-disc-slider').value = 5;
-    document.getElementById('jnl-disc-val').textContent = '5';
-    document.querySelectorAll('.jnl-check-item').forEach(c => c.classList.remove('checked'));
-    document.querySelectorAll('.jnl-mood-btn').forEach(b => b.classList.remove('sel'));
-    const preview = document.getElementById('jnl-screenshot-preview');
-    preview.style.display = 'none'; preview.src = '';
-    document.getElementById('jnl-f-screenshot').value = '';
-    document.getElementById('jnl-screenshot-status').textContent = '';
-    document.getElementById('jnl-save-status').textContent = '';
-    screenshotPayload = null; activeMood = ''; editingId = null;
-    // Reset datetime to now
-    const now = new Date();
-    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-    const dtEl = document.getElementById('jnl-f-datetime');
-    if (dtEl) dtEl.value = now.toISOString().slice(0,16);
-  }
-
-  // ── Delete trade ────────────────────────────────────────
-  async function deleteTrade(id) {
-    if (!confirm('Delete this trade? This cannot be undone.')) return;
-    try {
-      const res  = await fetch('/.netlify/functions/journal-delete', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Journal-Session': session.student_id },
-        body:    JSON.stringify({ id, student_id: session.student_id }),
-      });
-      const data = await res.json();
-      if (!data.success) throw new Error(data.message);
-      closeDetail();
-      await loadTrades();
-    } catch (err) {
-      alert('Delete failed: ' + err.message);
-    }
-  }
-
-  // ── Render helpers ──────────────────────────────────────
-  function fmtDate(iso) {
-    if (!iso) return '—';
-    const d = new Date(iso);
-    return d.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
-  }
-
-  function fmtPnl(v) {
-    if (v == null) return '—';
-    const color = v > 0 ? '#22c55e' : v < 0 ? '#ef4444' : '#eab308';
-    return `<span style="color:${color};font-weight:700;">${v > 0 ? '+' : ''}$${Number(v).toFixed(2)}</span>`;
-  }
-
-  function resultBadge(r) {
-    const cls = r === 'WIN' ? 'win' : r === 'LOSS' ? 'loss' : 'be';
-    return `<span class="jnl-badge ${cls}">${r||'—'}</span>`;
-  }
-
-  function dirBadge(d) {
-    const cls = d === 'LONG' ? 'long' : 'short';
-    return `<span class="jnl-badge ${cls}">${d}</span>`;
-  }
-
-  function moodEmoji(m) {
-    const map = { CONFIDENT:'😎', NEUTRAL:'😐', ANXIOUS:'😰', GREEDY:'🤑', FEARFUL:'😨' };
-    return (map[m] || '') + ' ' + (m || '—');
-  }
-
-  function calcStats() {
-    const total = trades.length;
-    if (!total) return { total:0, wins:0, losses:0, be:0, winRate:0, avgRR:'—', totalPnl:0, streak:0, streakType:'', avgDisc:0 };
-
-    const wins   = trades.filter(t => t.result === 'WIN').length;
-    const losses = trades.filter(t => t.result === 'LOSS').length;
-    const be     = trades.filter(t => t.result === 'BE').length;
-    const pnls   = trades.map(t => Number(t.pnl_usd) || 0);
-    const totalPnl = pnls.reduce((a,b) => a+b, 0);
-    const winRate  = total ? Math.round((wins / total) * 100) : 0;
-
-    // Average R:R from numeric RR strings like "1:2.30"
-    const rrVals = trades.map(t => {
-      const m = String(t.rr||'').match(/1:(\d+\.?\d*)/);
-      return m ? parseFloat(m[1]) : null;
-    }).filter(x => x !== null);
-    const avgRR = rrVals.length ? '1:' + (rrVals.reduce((a,b)=>a+b,0)/rrVals.length).toFixed(2) : '—';
-
-    const avgDisc = trades.length
-      ? Math.round(trades.reduce((a,t)=>a+(t.discipline||5),0)/trades.length)
-      : 0;
-
-    // Streak (most recent consecutive result)
-    let streak = 0, streakType = '';
-    const sorted = [...trades].sort((a,b) => new Date(b.trade_date)-new Date(a.trade_date));
-    if (sorted.length) {
-      streakType = sorted[0].result;
-      for (const t of sorted) {
-        if (t.result === streakType) streak++;
-        else break;
-      }
-    }
-
-    return { total, wins, losses, be, winRate, avgRR, totalPnl, streak, streakType, avgDisc };
-  }
-
-  // ── Render dashboard ────────────────────────────────────
-  function renderDashboard() {
-    const s = calcStats();
-    const statsEl = document.getElementById('jnl-stats');
-    const pnlColor = s.totalPnl >= 0 ? 'green' : 'red';
-
-    statsEl.innerHTML = `
-      <div class="jnl-stat-card blue"><div class="num">${s.total}</div><div class="lbl">Total Trades</div></div>
-      <div class="jnl-stat-card ${s.winRate>=50?'green':'red'}"><div class="num">${s.winRate}%</div><div class="lbl">Win Rate</div></div>
-      <div class="jnl-stat-card blue"><div class="num">${s.avgRR}</div><div class="lbl">Avg R:R</div></div>
-      <div class="jnl-stat-card ${pnlColor}"><div class="num">${s.totalPnl>=0?'+':''}$${Math.abs(s.totalPnl).toFixed(2)}</div><div class="lbl">Total P&amp;L (USD)</div></div>
-      <div class="jnl-stat-card green"><div class="num">${s.wins}</div><div class="lbl">Wins</div></div>
-      <div class="jnl-stat-card red"><div class="num">${s.losses}</div><div class="lbl">Losses</div></div>
-      <div class="jnl-stat-card yellow"><div class="num">${s.be}</div><div class="lbl">Breakeven</div></div>
-      <div class="jnl-stat-card yellow"><div class="num">${s.streak ? s.streak + (s.streakType==='WIN'?' 🔥':' ❄️') : '—'}</div><div class="lbl">${s.streakType||'—'} Streak</div></div>
-      <div class="jnl-stat-card blue"><div class="num">${s.avgDisc}/10</div><div class="lbl">Avg Discipline</div></div>
-    `;
-
-    // Draw equity curve
-    drawEquityCurve();
-
-    // Recent 10 trades
-    const tbody = document.getElementById('jnl-recent-body');
-    const recent = [...trades].sort((a,b)=>new Date(b.trade_date)-new Date(a.trade_date)).slice(0,10);
-    if (!recent.length) {
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:2rem;color:#4b5563;">No trades yet — log your first trade!</td></tr>';
-      return;
-    }
-    tbody.innerHTML = recent.map(t => `
-      <tr onclick="Journal.showDetail('${t.id}')">
-        <td>${fmtDate(t.trade_date)}</td>
-        <td style="font-weight:600;color:#f0f9ff;">${escH(t.pair)}</td>
-        <td>${dirBadge(t.direction)}</td>
-        <td style="color:#9ca3af;">${escH(t.rr||'—')}</td>
-        <td>${fmtPnl(t.pnl_usd)}</td>
-        <td style="font-size:14px;">${moodEmoji(t.mood).split(' ')[0]}</td>
-        <td>${resultBadge(t.result)}</td>
-      </tr>`).join('');
-  }
-
-  // ── Equity curve canvas ─────────────────────────────────
-  function drawEquityCurve() {
-    const canvas = document.getElementById('equity-canvas');
-    if (!canvas) return;
-    const ctx    = canvas.getContext('2d');
-    const sorted = [...trades].sort((a,b)=>new Date(a.trade_date)-new Date(b.trade_date));
-
-    canvas.width  = canvas.offsetWidth  || 600;
-    canvas.height = canvas.offsetHeight || 160;
-    const W = canvas.width, H = canvas.height;
-    ctx.clearRect(0, 0, W, H);
-
-    if (sorted.length < 2) {
-      ctx.fillStyle = '#4b5563';
-      ctx.font      = '12px sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('Log at least 2 trades to see your equity curve', W/2, H/2);
-      return;
-    }
-
-    // Build cumulative PnL points
-    let cum = 0;
-    const points = [0, ...sorted.map(t => { cum += (Number(t.pnl_usd)||0); return cum; })];
-    const minV = Math.min(...points), maxV = Math.max(...points);
-    const range = maxV - minV || 1;
-    const pad   = { t:16, b:24, l:50, r:16 };
-    const xStep = (W - pad.l - pad.r) / (points.length - 1);
-
-    const toX = i => pad.l + i * xStep;
-    const toY = v => pad.t + (1 - (v - minV) / range) * (H - pad.t - pad.b);
-
-    // Grid lines
-    ctx.strokeStyle = '#1f2937'; ctx.lineWidth = 1;
-    [0.25, 0.5, 0.75].forEach(p => {
-      const y = pad.t + p * (H - pad.t - pad.b);
-      ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(W - pad.r, y); ctx.stroke();
-    });
-
-    // Zero line
-    const zeroY = toY(0);
-    ctx.strokeStyle = '#374151'; ctx.lineWidth = 1; ctx.setLineDash([4,4]);
-    ctx.beginPath(); ctx.moveTo(pad.l, zeroY); ctx.lineTo(W - pad.r, zeroY); ctx.stroke();
-    ctx.setLineDash([]);
-
-    // Fill under curve
-    const isProfit = cum >= 0;
-    const grad = ctx.createLinearGradient(0, pad.t, 0, H - pad.b);
-    grad.addColorStop(0, isProfit ? 'rgba(34,197,94,.25)' : 'rgba(239,68,68,.25)');
-    grad.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.beginPath();
-    ctx.moveTo(toX(0), toY(points[0]));
-    points.forEach((v,i) => ctx.lineTo(toX(i), toY(v)));
-    ctx.lineTo(toX(points.length-1), H - pad.b);
-    ctx.lineTo(toX(0), H - pad.b);
-    ctx.closePath();
-    ctx.fillStyle = grad;
-    ctx.fill();
-
-    // Line
-    ctx.strokeStyle = isProfit ? '#22c55e' : '#ef4444';
-    ctx.lineWidth   = 2;
-    ctx.beginPath();
-    points.forEach((v,i) => i===0 ? ctx.moveTo(toX(i),toY(v)) : ctx.lineTo(toX(i),toY(v)));
-    ctx.stroke();
-
-    // Labels
-    ctx.fillStyle = '#6b7280'; ctx.font = '10px sans-serif'; ctx.textAlign = 'right';
-    ctx.fillText('$' + maxV.toFixed(0), pad.l - 4, pad.t + 4);
-    ctx.fillText('$' + minV.toFixed(0), pad.l - 4, H - pad.b);
-    ctx.fillText('$0', pad.l - 4, zeroY + 4);
-  }
-
-  // ── Render trade log ────────────────────────────────────
-  function renderTradeLog() {
-    const pairSel = document.getElementById('jnl-f-pair');
-    const pairs   = [...new Set(trades.map(t => t.pair))].sort();
-    const curPair = pairSel.value;
-    pairSel.innerHTML = '<option value="">All Pairs</option>' +
-      pairs.map(p => `<option ${p===curPair?'selected':''}>${p}</option>`).join('');
-    applyFilters();
-  }
-
-  function applyFilters() {
-    const pair    = document.getElementById('jnl-f-pair').value;
-    const dir     = document.getElementById('jnl-f-dir').value;
-    const result  = document.getElementById('jnl-f-result').value;
-    const session2= document.getElementById('jnl-f-session').value;
-    const search  = document.getElementById('jnl-f-search').value.toLowerCase();
-
-    const filtered = trades.filter(t =>
-      (!pair    || t.pair      === pair)   &&
-      (!dir     || t.direction === dir)    &&
-      (!result  || t.result    === result) &&
-      (!session2|| t.session   === session2) &&
-      (!search  || (t.pair||'').toLowerCase().includes(search) ||
-                   (t.notes||'').toLowerCase().includes(search) ||
-                   (t.reflection||'').toLowerCase().includes(search))
-    ).sort((a,b) => new Date(b.trade_date) - new Date(a.trade_date));
-
-    const tbody = document.getElementById('jnl-trades-body');
-    if (!filtered.length) {
-      tbody.innerHTML = '<tr><td colspan="15" style="text-align:center;padding:2rem;color:#4b5563;">No trades match filter.</td></tr>';
-      return;
-    }
-    tbody.innerHTML = filtered.map(t => `
-      <tr onclick="Journal.showDetail('${t.id}')">
-        <td>${fmtDate(t.trade_date)}</td>
-        <td style="font-weight:600;color:#f0f9ff;">${escH(t.pair)}</td>
-        <td>${dirBadge(t.direction)}</td>
-        <td style="color:#9ca3af;font-size:11px;">${escH(t.session||'—')}</td>
-        <td style="color:#9ca3af;">${t.entry_price||'—'}</td>
-        <td style="color:#9ca3af;">${t.exit_price||'—'}</td>
-        <td style="color:#9ca3af;">${t.sl||'—'}</td>
-        <td style="color:#9ca3af;">${t.tp||'—'}</td>
-        <td style="color:#9ca3af;">${t.lots||'—'}</td>
-        <td style="color:#9ca3af;">${escH(t.rr||'—')}</td>
-        <td>${fmtPnl(t.pnl_usd)}</td>
-        <td style="font-size:13px;">${moodEmoji(t.mood)}</td>
-        <td><span style="color:#0ea5e9;">${t.discipline||'—'}/10</span></td>
-        <td>${resultBadge(t.result)}</td>
-        <td><button class="jnl-btn ghost sm" onclick="event.stopPropagation();Journal.deleteTrade('${t.id}')">Del</button></td>
-      </tr>`).join('');
-  }
-
-  function renderAll() {
-    renderDashboard();
-    if (activeTab !== 'new') renderTradeLog();
-  }
-
-  // ── Trade detail modal ──────────────────────────────────
-  function showDetail(id) {
-    const t = trades.find(x => x.id === id);
-    if (!t) return;
-
-    const rules = t.rules_checklist || {};
-    const ruleNames = { trend:'Trend Confirmed', structure:'Structure Valid', confluence:'Confluence Present', risk:'Risk ≤ 2%', session:'In Session', news:'No High-Impact News', confirmation:'Entry Confirmation' };
-    const rulesHtml = Object.entries(ruleNames).map(([k,v]) =>
-      `<div style="display:flex;align-items:center;gap:.5rem;padding:.4rem 0;border-bottom:1px solid #1a2130;">
-        <span style="color:${rules[k]?'#22c55e':'#ef4444'};font-size:14px;">${rules[k]?'✓':'✗'}</span>
-        <span style="font-size:12px;color:${rules[k]?'#d1d5db':'#6b7280'};">${v}</span>
-      </div>`
-    ).join('');
-
-    const passed = Object.values(rules).filter(Boolean).length;
-    const total7 = Object.keys(ruleNames).length;
-
-    document.getElementById('jnl-detail-content').innerHTML = `
-      <div style="margin-bottom:1rem;">
-        <div style="display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin-bottom:.5rem;">
-          <span style="font-size:18px;font-weight:700;color:#f0f9ff;">${escH(t.pair)}</span>
-          ${dirBadge(t.direction)} ${resultBadge(t.result)}
-          <span style="font-size:12px;color:#6b7280;">${fmtDate(t.trade_date)} · ${escH(t.session||'')}</span>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.4rem .8rem;font-size:12px;">
-          ${[['Entry',t.entry_price],['Exit',t.exit_price],['SL',t.sl],['TP',t.tp],['Lots',t.lots],['R:R',t.rr],['P&L','$'+(t.pnl_usd||0)],['Discipline',(t.discipline||'—')+'/10']].map(([k,v])=>`
-            <div><span style="color:#6b7280;">${k}: </span><span style="color:#d1d5db;">${v||'—'}</span></div>`).join('')}
-        </div>
-      </div>
-
-      <div style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.1em;margin:.8rem 0 .4rem;">Rule Checklist — ${passed}/${total7} passed</div>
-      ${rulesHtml}
-
-      ${t.mood ? `<div style="margin:.8rem 0;font-size:13px;"><span style="color:#6b7280;">Mood: </span>${moodEmoji(t.mood)}</div>` : ''}
-
-      ${t.reflection ? `<div style="margin:.8rem 0;">
-        <div style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem;">Reflection</div>
-        <div style="font-size:12px;color:#d1d5db;line-height:1.6;background:#1f2937;padding:.8rem;">${escH(t.reflection)}</div>
-      </div>` : ''}
-
-      ${t.notes ? `<div style="margin:.8rem 0;">
-        <div style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.3rem;">Notes</div>
-        <div style="font-size:12px;color:#d1d5db;line-height:1.6;background:#1f2937;padding:.8rem;">${escH(t.notes)}</div>
-      </div>` : ''}
-
-      ${t.screenshot_url ? `<div style="margin:.8rem 0;">
-        <div style="font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem;">Chart Screenshot</div>
-        <a href="${escH(t.screenshot_url)}" target="_blank">
-          <img src="${escH(t.screenshot_url)}" style="max-width:100%;border:1px solid #374151;" alt="Trade screenshot">
-        </a>
-      </div>` : ''}
-
-      <div style="display:flex;gap:.5rem;margin-top:1rem;">
-        <button class="jnl-btn danger sm" onclick="Journal.deleteTrade('${t.id}')">Delete Trade</button>
-      </div>
-    `;
-    document.getElementById('jnl-detail-modal').classList.add('open');
-  }
-
-  function closeDetail() {
-    document.getElementById('jnl-detail-modal').classList.remove('open');
-  }
-
-  // ── Utility ─────────────────────────────────────────────
-  function escH(s) {
-    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-  }
-
-  // ── BankDetails module (same file, needed for bank flow) ─
-  return { open, close, authenticate, switchTab, calcRR, toggleCheck,
-           setMood, onScreenshot, saveTrade, resetForm, deleteTrade,
-           applyFilters, showDetail, closeDetail };
-})();
-</script>
-
-<script>
-// ── BANK DETAILS MODULE ──────────────────────────────────
-const BankDetails = (() => {
-  let loaded = false, loading = false, _receipt = null;
-
-  async function load() {
-    if (loaded || loading) return;
-    loading = true;
-    const inner  = document.getElementById('bank-details-inner');
-    const spinner= document.getElementById('bank-loading');
-    const wrap   = document.getElementById('receipt-upload-wrap');
-    if (!inner) return;
-    try {
-      const res  = await fetch('/.netlify/functions/get-bank-details', { cache: 'no-store' });
-      const data = await res.json();
-      if (!data.success) throw new Error(data.message || 'Could not load bank details');
-      const b = data.bank;
-      let html = '';
-      html += `<div class="bank-section-head">↳ ${esc(b.ghs.label)}</div>`;
-      html += `<div class="bank-row"><span class="lab">Bank</span><span class="val">${esc(b.name)}</span></div>`;
-      html += `<div class="bank-row"><span class="lab">Account №</span><span class="val">${esc(b.ghs.account)}</span><button class="copy-btn" onclick="App.copy('${esc(b.ghs.account)}',this)">Copy</button></div>`;
-      html += `<div class="bank-row"><span class="lab">Name</span><span class="val">${esc(b.account_name)}</span></div>`;
-      if (b.usd) {
-        html += `<div class="bank-section-head" style="margin-top:.8rem;">↳ ${esc(b.usd.label)}</div>`;
-        html += `<div class="bank-row"><span class="lab">Bank</span><span class="val">${esc(b.name)} · Dom.</span></div>`;
-        html += `<div class="bank-row"><span class="lab">Account №</span><span class="val">${esc(b.usd.account)}</span><button class="copy-btn" onclick="App.copy('${esc(b.usd.account)}',this)">Copy</button></div>`;
-        html += `<div class="bank-row"><span class="lab">SWIFT</span><span class="val">${esc(b.usd.swift)}</span></div>`;
-      }
-      inner.innerHTML = html;
-      inner.style.display = '';
-      if (spinner) spinner.style.display = 'none';
-      if (wrap)    wrap.style.display    = '';
-      loaded = true;
-    } catch (err) {
-      if (spinner) spinner.innerHTML = `<span style="color:var(--red);">⚠ Could not load bank details. Please contact the team directly.</span>`;
-    } finally { loading = false; }
-  }
-
-  function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
-  function onReceiptSelect(input) {
-    const status = document.getElementById('receipt-status');
-    const file   = input.files?.[0];
-    if (!file) { _receipt = null; if (status) status.textContent=''; return; }
-    if (file.size > 5*1024*1024) { if(status)status.textContent='⚠ File too large — max 5 MB.'; input.value=''; _receipt=null; return; }
-    const reader = new FileReader();
-    reader.onload = e => {
-      const full = e.target.result, comma = full.indexOf(',');
-      _receipt = { data: full.slice(comma+1), mimeType: file.type };
-      if (status) status.textContent = `✓ ${file.name} (${(file.size/1024).toFixed(0)} KB)`;
-    };
-    reader.readAsDataURL(file);
-  }
-
-  function getReceiptPayload() { return _receipt; }
-  return { load, onReceiptSelect, getReceiptPayload };
-})();
-</script>
-
-
-<!-- ── Journal floating access button ── -->
-<button onclick="Journal.open()"
-  id="journal-fab"
-  style="position:fixed;bottom:2rem;right:2rem;z-index:8999;
-         background:#0ea5e9;color:#0a0d14;border:none;
-         padding:.75rem 1.2rem;font-size:12px;font-weight:700;
-         letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
-         box-shadow:0 4px 24px rgba(14,165,233,.4);
-         display:none; /* shown via JS after 3s so it doesn't distract on load */">
-  📒 Student Journal
-</button>
-<script>
-  // Show journal FAB after 3 seconds so it doesn't distract the main booking flow
-  setTimeout(() => {
-    const fab = document.getElementById('journal-fab');
-    if (fab) fab.style.display = 'block';
-  }, 3000);
-</script>
-
 </body>
 </html>
