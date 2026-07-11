@@ -3299,7 +3299,7 @@ textarea.jnl-control { resize:vertical; min-height:80px; }
              oninput="this.value=this.value.toUpperCase()">
       <div class="jnl-auth-divider">— or —</div>
       <input class="jnl-input" id="jnl-auth-password" type="password"
-             placeholder="Class password (from the Team)">
+             placeholder="Class password (from the team)">
       <input class="jnl-input" id="jnl-auth-identifier" type="text"
              placeholder="Your name or email (only needed with class password)"
              autocomplete="off">
@@ -3321,6 +3321,7 @@ textarea.jnl-control { resize:vertical; min-height:80px; }
         <button class="jnl-tab"        onclick="Journal.switchTab('trades')">Trade Log</button>
         <button class="jnl-tab"        onclick="Journal.switchTab('new')">+ New Trade</button>
       </div>
+      <button class="jnl-close" onclick="Journal.logout()" style="margin-right:8px;">Logout</button>
       <button class="jnl-close" onclick="Journal.close()">✕ Close</button>
     </div>
 
@@ -3596,6 +3597,18 @@ const Journal = (() => {
   function close() {
     document.getElementById('journal-overlay').classList.remove('open');
     document.body.style.overflow = '';
+  }
+
+  function logout() {
+    if (!confirm('Log out of your journal on this device?')) return;
+    localStorage.removeItem(LS_SESSION);
+    session = null;
+    trades  = [];
+    document.getElementById('jnl-auth-booking').value    = '';
+    document.getElementById('jnl-auth-password').value   = '';
+    document.getElementById('jnl-auth-identifier').value = '';
+    document.getElementById('jnl-app').style.display  = 'none';
+    document.getElementById('jnl-auth').style.display = 'flex';
   }
 
   // ── Authentication ──────────────────────────────────────
@@ -4171,7 +4184,7 @@ const Journal = (() => {
   }
 
   // ── BankDetails module (same file, needed for bank flow) ─
-  return { open, close, authenticate, switchTab, calcRR, toggleCheck,
+  return { open, close, logout, authenticate, switchTab, calcRR, toggleCheck,
            setMood, onScreenshot, saveTrade, resetForm, deleteTrade,
            applyFilters, showDetail, closeDetail };
 })();
