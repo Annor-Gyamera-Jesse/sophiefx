@@ -3300,6 +3300,9 @@ textarea.jnl-control { resize:vertical; min-height:80px; }
       <div class="jnl-auth-divider">— or —</div>
       <input class="jnl-input" id="jnl-auth-password" type="password"
              placeholder="Class password (from Sophie)">
+      <input class="jnl-input" id="jnl-auth-identifier" type="text"
+             placeholder="Your name or email (only needed with class password)"
+             autocomplete="off">
 
       <button class="jnl-btn" id="jnl-auth-btn" onclick="Journal.authenticate()">
         Access My Journal
@@ -3599,11 +3602,16 @@ const Journal = (() => {
   async function authenticate() {
     const btn       = document.getElementById('jnl-auth-btn');
     const errEl     = document.getElementById('jnl-auth-err');
-    const bookingInput = document.getElementById('jnl-auth-booking').value.trim().toUpperCase();
-    const passInput    = document.getElementById('jnl-auth-password').value.trim();
+    const bookingInput    = document.getElementById('jnl-auth-booking').value.trim().toUpperCase();
+    const passInput       = document.getElementById('jnl-auth-password').value.trim();
+    const identifierInput = document.getElementById('jnl-auth-identifier').value.trim();
 
     if (!bookingInput && !passInput) {
       showAuthErr('Please enter your booking reference or class password.');
+      return;
+    }
+    if (passInput && !bookingInput && !identifierInput) {
+      showAuthErr('Please also enter your name or email — this keeps your journal separate from other students.');
       return;
     }
 
@@ -3615,7 +3623,7 @@ const Journal = (() => {
       const res  = await fetch('/.netlify/functions/journal-auth', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ booking_ref: bookingInput || null, password: passInput || null }),
+        body:    JSON.stringify({ booking_ref: bookingInput || null, password: passInput || null, identifier: identifierInput || null }),
       });
       const data = await res.json();
 
@@ -3624,12 +3632,16 @@ const Journal = (() => {
         return;
       }
 
-      // Auth passed — store session
+      // Auth passed — store session.
+      // NOTE: we store the opaque session_token, never a student_id.
+      // The server resolves the token to a student_id itself on every
+      // request, so this token is what's needed to view/edit a journal —
+      // treat it like a password (don't paste it anywhere).
       session = {
-        student_id:  data.student_id,
-        name:        data.name || 'Student',
-        booking_ref: bookingInput || null,
-        access_type: data.access_type, // 'booking' | 'password'
+        session_token: data.session_token,
+        name:          data.name || 'Student',
+        booking_ref:   bookingInput || null,
+        access_type:   data.access_type, // 'booking' | 'password'
       };
       localStorage.setItem(LS_SESSION, JSON.stringify(session));
       showApp();
@@ -3665,8 +3677,8 @@ const Journal = (() => {
     if (!session) return;
     try {
       const res = await fetch(
-        `/.netlify/functions/journal-fetch?student_id=${encodeURIComponent(session.student_id)}`,
-        { headers: { 'X-Journal-Session': session.student_id } }
+        `/.netlify/functions/journal-fetch`,
+        { headers: { 'X-Journal-Session': session.session_token } }
       );
       const data = await res.json();
       if (data.success) {
@@ -3772,7 +3784,6 @@ const Journal = (() => {
     status.textContent = '';
 
     const payload = {
-      student_id:   session.student_id,
       pair,
       direction,
       session:      document.getElementById('jnl-f-session2').value || null,
@@ -3797,7 +3808,7 @@ const Journal = (() => {
     try {
       const res  = await fetch('/.netlify/functions/journal-save', {
         method:  'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Journal-Session': session.student_id },
+        headers: { 'Content-Type': 'application/json', 'X-Journal-Session': session.session_token },
         body:    JSON.stringify(payload),
       });
       const data = await res.json();
@@ -3846,8 +3857,8 @@ const Journal = (() => {
     try {
       const res  = await fetch('/.netlify/functions/journal-delete', {
         method:  'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Journal-Session': session.student_id },
-        body:    JSON.stringify({ id, student_id: session.student_id }),
+        headers: { 'Content-Type': 'application/json', 'X-Journal-Session': session.session_token },
+        body:    JSON.stringify({ id }),
       });
       const data = await res.json();
       if (!data.success) throw new Error(data.message);

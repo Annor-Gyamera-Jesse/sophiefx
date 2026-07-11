@@ -4,38 +4,15 @@
  * Netlify Function: POST /.netlify/functions/journal-save
  *
  * Saves (or updates) a trade entry in the journal_trades table.
+ * The student_id used for storage and ownership checks is resolved
+ * server-side from the X-Journal-Session token — it is never taken
+ * from the request body. See JOURNAL_SESSIONS_MIGRATION.sql.
+ *
  * If a screenshot is provided, uploads it to Supabase Storage
  * (journal-screenshots bucket) and stores the signed URL.
  *
- * Supabase table — run JOURNAL_SETUP.sql:
- *
- *   CREATE TABLE IF NOT EXISTS journal_trades (
- *     id               UUID    PRIMARY KEY DEFAULT gen_random_uuid(),
- *     student_id       TEXT    NOT NULL,
- *     pair             TEXT    NOT NULL,
- *     direction        TEXT,
- *     session          TEXT,
- *     trade_date       TIMESTAMPTZ,
- *     entry_price      NUMERIC,
- *     exit_price       NUMERIC,
- *     sl               NUMERIC,
- *     tp               NUMERIC,
- *     lots             NUMERIC,
- *     pnl_usd          NUMERIC,
- *     rr               TEXT,
- *     result           TEXT,
- *     rules_checklist  JSONB,
- *     mood             TEXT,
- *     discipline       INTEGER,
- *     reflection       TEXT,
- *     notes            TEXT,
- *     screenshot_url   TEXT,
- *     created_at       TIMESTAMPTZ NOT NULL DEFAULT NOW(),
- *     updated_at       TIMESTAMPTZ NOT NULL DEFAULT NOW()
- *   );
- *
- *   CREATE INDEX IF NOT EXISTS idx_journal_student ON journal_trades(student_id);
- *   CREATE INDEX IF NOT EXISTS idx_journal_date    ON journal_trades(trade_date DESC);
+ * Supabase table — see JOURNAL_SETUP.sql for journal_trades and
+ * JOURNAL_SESSIONS_MIGRATION.sql for journal_sessions.
  *
  * ENV VARS REQUIRED:
  *   SUPABASE_URL         = https://xxxx.supabase.co
@@ -46,6 +23,26 @@
 const SUPABASE_URL         = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
 const SCREENSHOT_BUCKET    = 'journal-screenshots';
+
+// ── Session resolution ────────────────────────────────────
+async function resolveSession(token) {
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/journal_sessions?token=eq.${encodeURIComponent(token)}&select=student_id,expires_at&limit=1`,
+    {
+      headers: {
+        'apikey':        SUPABASE_SERVICE_KEY,
+        'Authorization': `Bearer ${SUPABASE_SERVICE_KEY}`,
+        'Accept':        'application/json',
+      },
+    }
+  );
+  if (!res.ok) throw new Error(`Supabase session lookup failed: ${res.status}`);
+  const rows = await res.json();
+  const row  = rows?.[0];
+  if (!row) return null;
+  if (new Date(row.expires_at).getTime() < Date.now()) return null;
+  return row.student_id;
+}
 
 // ── Screenshot upload ─────────────────────────────────────
 async function uploadScreenshot(studentId, tradeId, base64Data, mimeType) {
@@ -122,10 +119,21 @@ export const handler = async (event) => {
     return { statusCode: 500, headers: corsHeaders, body: JSON.stringify({ success: false, message: 'Server misconfiguration' }) };
   }
 
-  // ── Session validation ─────────────────────────────────
-  const sessionId = event.headers['x-journal-session'];
-  if (!sessionId || sessionId.length < 16) {
+  // ── Session check — the token is the only source of identity ──
+  const token = event.headers['x-journal-session'];
+  if (!token || token.length < 32) {
     return { statusCode: 401, headers: corsHeaders, body: JSON.stringify({ success: false, message: 'No valid session' }) };
+  }
+
+  let student_id;
+  try {
+    student_id = await resolveSession(token);
+  } catch (err) {
+    console.error('[journal-save] session lookup error:', err.message);
+    return { statusCode: 500, headers: corsHeaders, body: JSON.stringify({ success: false, message: 'Session check failed. Try again.' }) };
+  }
+  if (!student_id) {
+    return { statusCode: 401, headers: corsHeaders, body: JSON.stringify({ success: false, message: 'Session expired or invalid. Please log in again.' }) };
   }
 
   let body;
@@ -133,19 +141,16 @@ export const handler = async (event) => {
     return { statusCode: 400, headers: corsHeaders, body: JSON.stringify({ success: false, message: 'Invalid JSON' }) };
   }
 
-  const { student_id, pair, direction, result, screenshot, edit_id, ...rest } = body;
-
-  // Validate session matches body student_id
-  if (!student_id || student_id !== sessionId) {
-    return { statusCode: 401, headers: corsHeaders, body: JSON.stringify({ success: false, message: 'Session mismatch' }) };
-  }
+  // NOTE: student_id is intentionally NOT read from the body anymore —
+  // it comes only from the resolved session above. If the client sends
+  // one, it's ignored.
+  const { pair, direction, result, screenshot, edit_id, ...rest } = body;
 
   if (!pair || !direction || !result) {
     return { statusCode: 400, headers: corsHeaders, body: JSON.stringify({ success: false, message: 'pair, direction, and result are required' }) };
   }
 
   try {
-    // We need a trade ID upfront for the screenshot filename
     const { v4: uuidv4 } = await import('crypto').then(m => ({
       v4: () => m.randomUUID()
     }));
@@ -183,7 +188,9 @@ export const handler = async (event) => {
     let savedRow;
 
     if (edit_id) {
-      // Update existing trade — make sure it belongs to this student
+      // Update existing trade — the student_id filter (resolved from the
+      // session, not client input) means this can only ever match a row
+      // that belongs to the caller.
       const patchRes = await fetch(
         `${SUPABASE_URL}/rest/v1/journal_trades?id=eq.${encodeURIComponent(edit_id)}&student_id=eq.${encodeURIComponent(student_id)}`,
         {
@@ -200,6 +207,12 @@ export const handler = async (event) => {
       if (!patchRes.ok) throw new Error(`Update failed: ${patchRes.status}`);
       const rows = await patchRes.json();
       savedRow = rows?.[0];
+
+      if (!savedRow) {
+        // 0 rows matched — either the trade doesn't exist, or it belongs
+        // to someone else. Either way, don't confirm which.
+        return { statusCode: 404, headers: corsHeaders, body: JSON.stringify({ success: false, message: 'Trade not found.' }) };
+      }
     } else {
       // Insert new trade with the pre-generated ID
       const insertRow = { ...row, id: tradeId, created_at: new Date().toISOString() };
